@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReceivesTable extends Migration
+class CreateDeliveriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateReceivesTable extends Migration
      */
     public function up()
     {
-        Schema::create('receives', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id');
-            $table->string('receiving_no')->unique();
-            $table->dateTime('receiving_time');
-            $table->integer('quantity');
-            $table->string('potatoe_type'); //
-            $table->string('transport_type');
+            $table->string('delivery_no')->unique();
+            $table->dateTime('delivery_time');
+            $table->integer('quantity_bags');
+            $table->double('cost_per_bag');
+            $table->integer('quantity_bags_fanned')->default(0);
+            $table->double('fancost_per_bag')->default(0);
+            $table->double('due_charge');
             $table->timestamps();
 
             $table->foreign('booking_id')->references('id')->on('bookings');
@@ -34,6 +36,6 @@ class CreateReceivesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('receives');
+        Schema::dropIfExists('deliveries');
     }
 }
