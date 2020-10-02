@@ -17,7 +17,7 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->string('booking_no')->unique();
-            $table->dateTime('time');
+            $table->dateTime('booking_time');
             $table->integer('type'); // 0 => normal, 1 => advance
             $table->double('advance_payment');
             $table->double('discount');
