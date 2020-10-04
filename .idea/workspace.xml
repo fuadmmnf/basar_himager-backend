@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43c0708e-a0a5-4e98-8a74-524186458873" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Exceptions/UserTokenHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cold_storage-backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cold_storage-backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_02_184838_create_deliveries_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_02_184838_create_deliveries_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,9 +138,24 @@
       <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
       <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/vendor/fruitcake/laravel-cors" />
+      <path value="$PROJECT_DIR$/vendor/laravel/passport" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/vendor/defuse/php-encryption" />
+      <path value="$PROJECT_DIR$/vendor/league/oauth2-server" />
+      <path value="$PROJECT_DIR$/vendor/league/event" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
+      <path value="$PROJECT_DIR$/vendor/nyholm/psr7" />
+      <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-permission" />
     </include_path>
   </component>
   <component name="ProjectId" id="1iHor9VXnKugj1ve5bkZGv1oK6s" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -161,7 +185,7 @@
       <workItem from="1601574079166" duration="1990000" />
       <workItem from="1601581639450" duration="902000" />
       <workItem from="1601660512095" duration="3807000" />
-      <workItem from="1601806356098" duration="2124000" />
+      <workItem from="1601806356098" duration="3747000" />
     </task>
     <servers />
   </component>
@@ -173,9 +197,13 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="466" y="155" width="424" height="488" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1601662330657" />
-    <state x="687" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1601664157423">
+    <state x="233" y="117" width="889" height="565" key="NewPhpClassDialog" timestamp="1601809944382">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="687" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1601664157423" />
+    <state x="233" y="117" width="889" height="565" key="NewPhpClassDialog/0.27.1366.741@0.27.1366.741" timestamp="1601809944382" />
+    <state x="687" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1601809122400">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="687" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1601809122400" />
   </component>
 </project>
