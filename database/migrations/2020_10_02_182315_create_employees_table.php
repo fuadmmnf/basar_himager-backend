@@ -17,6 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('name');
+            $table->string('designation');
             $table->string('father_name');
             $table->string('mother_name');
             $table->json('present_address');
