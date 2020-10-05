@@ -2,11 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43c0708e-a0a5-4e98-8a74-524186458873" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Repositories/EmployeeRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repositories/Interfaces/EmployeeRepositoryInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/Interfaces/UserRepositoryInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repositories/UserRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_02_182315_create_employees_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_02_182315_create_employees_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exceptions/UserTokenHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/UserTokenHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Booking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Client.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Client.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Employee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/EmployeeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/EmployeeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/AuthorizationSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/AuthorizationSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -159,10 +168,17 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Repositories" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Repositories" />
+      <recent name="$PROJECT_DIR$/app/Repositories/Interfaces" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/Api" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -181,7 +197,9 @@
       <workItem from="1601574079166" duration="1990000" />
       <workItem from="1601581639450" duration="902000" />
       <workItem from="1601660512095" duration="3807000" />
-      <workItem from="1601806356098" duration="5809000" />
+      <workItem from="1601806356098" duration="7469000" />
+      <workItem from="1601892663595" duration="533000" />
+      <workItem from="1601893216314" duration="3712000" />
     </task>
     <servers />
   </component>
@@ -189,18 +207,22 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="472" y="78" width="411" height="642" key="#com.intellij.ide.util.MemberChooser" timestamp="1601811751862">
+    <state x="472" y="78" width="411" height="646" key="#com.intellij.ide.util.MemberChooser" timestamp="1601894219370">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="472" y="78" width="411" height="642" key="#com.intellij.ide.util.MemberChooser/0.27.1366.741@0.27.1366.741" timestamp="1601811751862" />
-    <state x="466" y="155" width="424" height="488" key="FileChooserDialogImpl" timestamp="1601662330657">
+    <state x="472" y="78" width="411" height="646" key="#com.intellij.ide.util.MemberChooser/0.27.1366.741@0.27.1366.741" timestamp="1601894219370" />
+    <state x="466" y="155" width="424" height="488" key="FileChooserDialogImpl" timestamp="1601813255663">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="466" y="155" width="424" height="488" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1601662330657" />
+    <state x="466" y="155" width="424" height="488" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1601813255663" />
     <state x="233" y="117" width="993" height="569" key="NewPhpClassDialog" timestamp="1601811741176">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="233" y="117" width="993" height="569" key="NewPhpClassDialog/0.27.1366.741@0.27.1366.741" timestamp="1601811741176" />
+    <state width="639" height="446" key="SwitcherDM" timestamp="1601896397717">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state width="639" height="446" key="SwitcherDM/0.27.1366.741@0.27.1366.741" timestamp="1601896397717" />
     <state x="687" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1601809122400">
       <screen x="0" y="27" width="1366" height="741" />
     </state>

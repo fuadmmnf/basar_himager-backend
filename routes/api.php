@@ -18,5 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+//employees
 Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'store']);
+
+
+//users
+Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'authorizeUserLogin']);

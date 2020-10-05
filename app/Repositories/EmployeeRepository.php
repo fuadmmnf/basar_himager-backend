@@ -7,11 +7,13 @@ namespace App\Repositories;
 use App\Exceptions\UserTokenHandler;
 use App\Models\Employee;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
+use Spatie\Permission\Models\Role;
 
 class EmployeeRepository implements EmployeeRepositoryInterface
 {
     public function createEmployee(array $request)
     {
+//        $role = Role::where('name', $request['role'])->firstOrFail();
         $userTokenHandler = new UserTokenHandler();
         $user = $userTokenHandler->createUser($request['nid'], $request['name'], $request['phone'], $request['name'] . '_' . $request['phone']);
         $newEmployee = new Employee();
@@ -25,6 +27,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         $newEmployee->special_salary = $request['special_salary'];
         $newEmployee->eid_bonus = $request['eid_bonus'];
         $newEmployee->save();
+        $user->assignRole($request['role']);
 
         return $newEmployee;
     }

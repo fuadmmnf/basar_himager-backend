@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\EmployeeRepository;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,11 +18,13 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $interfaces = [
-            EmployeeRepositoryInterface::class
+            EmployeeRepositoryInterface::class,
+            UserRepositoryInterface::class,
         ];
 
         $implementations = [
-            EmployeeRepository::class
+            EmployeeRepository::class,
+            UserRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
