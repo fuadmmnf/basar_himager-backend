@@ -13,7 +13,15 @@ class CreateEmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->guard('api')->user();
+
+        return $user != null && $this->has('role') && (
+                ($this->role == 'admin' && $user->hasRole('super_admin')) ||
+                ($this->role == 'manager:admin' && $user->hasAnyRole(['super_admin', 'admin'])) ||
+                ($this->role == 'manager:account' || $this->role == 'manager:store' &&
+                    $user->hasAnyRole(['super_admin', 'admin', 'manager:admin'])) ||
+                ($this->role == 'worker')
+            );
     }
 
     /**
