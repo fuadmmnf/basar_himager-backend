@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="43c0708e-a0a5-4e98-8a74-524186458873" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Employee/CreateEmployeeRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Employee/CreateEmployeeRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/AuthorizationSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/AuthorizationSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +186,9 @@
       <workItem from="1601660512095" duration="3807000" />
       <workItem from="1601806356098" duration="7469000" />
       <workItem from="1601892663595" duration="533000" />
-      <workItem from="1601893216314" duration="5473000" />
+      <workItem from="1601893216314" duration="6110000" />
+      <workItem from="1601908653282" duration="603000" />
+      <workItem from="1601978478416" duration="1069000" />
     </task>
     <servers />
   </component>

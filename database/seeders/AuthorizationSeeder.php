@@ -19,21 +19,25 @@ class AuthorizationSeeder extends Seeder
     {
         $superAdminRole = Role::create(['name' => 'super_admin']);
         $adminRole = Role::create(['name' => 'admin']);
-        $adminManagerRole = Role::create(['name' => 'manager:admin']);
-        $accountManagerRole = Role::create(['name' => 'manager:account']);
-        $storeManagerRole = Role::create(['name' => 'manager:store']);
+        $adminManagerRole = Role::create(['name' => 'manager_admin']);
+        $accountManagerRole = Role::create(['name' => 'manager_account']);
+        $storeManagerRole = Role::create(['name' => 'manager_store']);
         $workerRole = Role::create(['name' => 'worker']);
 
 
         $adminCreatePermission = Permission::create(['name' => 'crud:admin']);
-        $managerCreatePermission = Permission::create(['name' => 'crud:manager']);
+        $adminManagerCreatePermission = Permission::create(['name' => 'crud:manager_admin']);
+        $storeManagerCreatePermission = Permission::create(['name' => 'crud:manager_store']);
+        $accountManagerCreatePermission = Permission::create(['name' => 'crud:manager_account']);
         $workerCreatePermission = Permission::create(['name' => 'crud:worker']);
         $accountPermission = Permission::create(['name' => 'crud:account']);
         $storePermission = Permission::create(['name' => 'crud:store']);
 
         $adminCreatePermission->syncRoles([$superAdminRole]);
-        $managerCreatePermission->syncRoles([$superAdminRole, $adminRole]);
-        $workerCreatePermission->syncRoles([$superAdminRole, $adminRole, $adminManagerRole]);
+        $adminManagerCreatePermission->syncRoles([$superAdminRole, $adminRole]);
+        $storeManagerCreatePermission->syncRoles([$superAdminRole, $adminRole, $adminManagerRole]);
+        $accountManagerCreatePermission->syncRoles([$superAdminRole, $adminRole, $adminManagerRole]);
+        $workerCreatePermission->syncRoles([$superAdminRole, $adminRole, $adminManagerRole, $accountManagerRole]);
         $accountPermission->syncRoles([$superAdminRole, $adminRole, $adminManagerRole, $accountManagerRole]);
         $storePermission->syncRoles([$superAdminRole, $adminRole, $adminManagerRole, $accountManagerRole, $storeManagerRole]);
 
