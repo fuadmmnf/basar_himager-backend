@@ -3,6 +3,7 @@
 
 namespace App\Repositories;
 use App\Models\Delivery;
+use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Models\Receive;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
@@ -29,6 +30,13 @@ class BookingRepository implements BookingRepositoryInterface
         // TODO: Implement getPaginatedLoanDisbursementByBookingId() method.
         $disbursements = Loandisbursement::where('booking_id', $booking_id)->get();
         return $disbursements;
+    }
+
+    public function getPaginatedLoanCollectionByByBookingId($booking_id)
+    {
+        // TODO: Implement getPaginatedLoanDisbursementByBookingId() method.
+        $collections = Loancollection::where('booking_id', $booking_id)->get();
+        return $collections;
     }
 
 }

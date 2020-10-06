@@ -36,8 +36,15 @@ class BookingController extends Controller
 
     public function fetchPaginatedLoanDisbursementByBookingID($booking_id)
     {
-        $disbursement = $this->bookingRepository->getPaginatedLoanDisbursementByBookingId($booking_id)->paginate(15);
+        $disbursements = $this->bookingRepository->getPaginatedLoanDisbursementByBookingId($booking_id)->paginate(15);
 
-        return response()->json($disbursement, 201);
+        return response()->json($disbursements, 201);
+    }
+
+    public function fetchPaginatedLoanCollectionByBookingID($booking_id)
+    {
+        $collections = $this->bookingRepository->getPaginatedLoanCollectionByBookingId($booking_id)->paginate(15);
+
+        return response()->json($collections, 201);
     }
 }
