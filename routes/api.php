@@ -24,3 +24,6 @@ Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, '
 
 //users
 Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'authorizeUserLogin']);
+
+//bookings
+Route::get('bookings/{booking_id}/receives', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedReceivesByBookingID']);
