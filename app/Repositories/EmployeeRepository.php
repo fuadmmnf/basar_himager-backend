@@ -32,4 +32,10 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         return $newEmployee;
     }
 
+    public function getEmployeesByRole($role)
+    {
+        // TODO: Implement getEmployeesByRole() method.
+        $employees = Employee::where('role', $role)->get();
+        return $employees;
+    }
 }
