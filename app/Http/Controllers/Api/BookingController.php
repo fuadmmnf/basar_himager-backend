@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\CreateEmployeeRequest;
+use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -31,5 +32,12 @@ class BookingController extends Controller
         $deliveries = $this->bookingRepository->getPaginatedDeliveriesByBookingId($booking_id)->paginate(15);
 
         return response()->json($deliveries, 201);
+    }
+
+    public function fetchPaginatedLoanDisbursementByBookingID($booking_id)
+    {
+        $disbursement = $this->bookingRepository->getPaginatedLoanDisbursementByBookingId($booking_id)->paginate(15);
+
+        return response()->json($disbursement, 201);
     }
 }

@@ -28,3 +28,4 @@ Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'au
 //bookings
 Route::get('bookings/{booking_id}/receives', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedReceivesByBookingID']);
 Route::get('bookings/{booking_id}/deliveries', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedDeliveriesByBookingID']);
+Route::get('bookings/{booking_id}/loan/disbursement', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedLoanDisbursementByBookingID']);
