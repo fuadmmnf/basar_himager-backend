@@ -25,4 +25,11 @@ class BookingController extends Controller
 
         return response()->json($receives, 201);
     }
+
+    public function fetchPaginatedDeliveriesByBookingID($booking_id)
+    {
+        $deliveries = $this->bookingRepository->getPaginatedDeliveriesByBookingId($booking_id)->paginate(15);
+
+        return response()->json($deliveries, 201);
+    }
 }
