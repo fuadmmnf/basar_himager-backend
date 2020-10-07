@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\BookingRepository;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\UserRepository;
@@ -20,11 +22,13 @@ class AppServiceProvider extends ServiceProvider
         $interfaces = [
             EmployeeRepositoryInterface::class,
             UserRepositoryInterface::class,
+            BookingRepositoryInterface::class,
         ];
 
         $implementations = [
             EmployeeRepository::class,
             UserRepository::class,
+            BookingRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
