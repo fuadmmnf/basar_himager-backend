@@ -2,6 +2,7 @@
 
 
 namespace App\Repositories;
+use App\Models\Booking;
 use App\Models\Delivery;
 use App\Models\Loancollection;
 use App\Models\Loandisbursement;
@@ -14,28 +15,34 @@ class BookingRepository implements BookingRepositoryInterface
     public function getPaginatedReceivesByBookingId($booking_id)
     {
         // TODO: Implement getPaginatedReceivesByBookingId() method.
-        $receives = Receive::where('booking_id', $booking_id)->get();
+        $booking = Booking::findOrFail($booking_id);
+        $receives = $booking->receives()->paginate(15);
+
         return $receives;
     }
 
     public function getPaginatedDeliveriesByBookingId($booking_id)
     {
         // TODO: Implement getPaginatedDeliveriesByBookingId() method.
-        $deliveries = Delivery::where('booking_id', $booking_id)->get();
+        $booking = Booking::findOrFail($booking_id);
+        $deliveries = $booking->deliveries()->paginate(15);
+
         return $deliveries;
     }
 
     public function getPaginatedLoanDisbursementByBookingId($booking_id)
     {
         // TODO: Implement getPaginatedLoanDisbursementByBookingId() method.
-        $disbursements = Loandisbursement::where('booking_id', $booking_id)->get();
+        $booking = Booking::findOrFail($booking_id);
+        $disbursements = $booking->loanDisbursements()->paginate(15);
         return $disbursements;
     }
 
-    public function getPaginatedLoanCollectionByByBookingId($booking_id)
+    public function getPaginatedLoanCollectionByBookingId($booking_id)
     {
         // TODO: Implement getPaginatedLoanDisbursementByBookingId() method.
-        $collections = Loancollection::where('booking_id', $booking_id)->get();
+        $booking = Booking::findOrFail($booking_id);
+        $collections = $booking->loanCollections()->paginate(15);
         return $collections;
     }
 

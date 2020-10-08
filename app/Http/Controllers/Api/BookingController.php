@@ -22,28 +22,28 @@ class BookingController extends Controller
     }
     public function fetchPaginatedReceivesByBookingID($booking_id)
     {
-        $receives = $this->bookingRepository->getPaginatedReceivesByBookingId($booking_id)->paginate(15);
+        $receives = $this->bookingRepository->getPaginatedReceivesByBookingId($booking_id);
 
         return response()->json($receives, 201);
     }
 
     public function fetchPaginatedDeliveriesByBookingID($booking_id)
     {
-        $deliveries = $this->bookingRepository->getPaginatedDeliveriesByBookingId($booking_id)->paginate(15);
+        $deliveries = $this->bookingRepository->getPaginatedDeliveriesByBookingId($booking_id);
 
         return response()->json($deliveries, 201);
     }
 
     public function fetchPaginatedLoanDisbursementByBookingID($booking_id)
     {
-        $disbursements = $this->bookingRepository->getPaginatedLoanDisbursementByBookingId($booking_id)->paginate(15);
+        $disbursements = $this->bookingRepository->getPaginatedLoanDisbursementByBookingId($booking_id);
 
         return response()->json($disbursements, 201);
     }
 
     public function fetchPaginatedLoanCollectionByBookingID($booking_id)
     {
-        $collections = $this->bookingRepository->getPaginatedLoanCollectionByBookingId($booking_id)->paginate(15);
+        $collections = $this->bookingRepository->getPaginatedLoanCollectionByBookingId($booking_id);
 
         return response()->json($collections, 201);
     }
