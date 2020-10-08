@@ -27,7 +27,7 @@ class EmployeeController extends Controller
 
     public function fetchEmployeesByRole($role)
     {
-        $employees = $this->employeeRepository->getEmployeesByRole($role)->paginate(15);
+        $employees = $this->employeeRepository->getEmployeesByRole($role);
 
         return response()->json($employees, 201);
     }
