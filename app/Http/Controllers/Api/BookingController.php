@@ -47,4 +47,11 @@ class BookingController extends Controller
 
         return response()->json($collections, 201);
     }
+
+    public function bookingListBySearchedQuery($query)
+    {
+        $bookings = $this->bookingRepository->getBookingListBySearchedQuery($query);
+
+        return response()->json($bookings, 201);
+    }
 }
