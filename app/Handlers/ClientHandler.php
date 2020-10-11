@@ -10,11 +10,18 @@ class ClientHandler
 {
     public function saveClient($nid, $name, $father_name, $address): Client {
         $newClient = new Client();
+
+        $user = Client::where('nid', $nid)->first();
+
         $newClient->nid = $nid;
         $newClient->name = $name;
         $newClient->father_name = $father_name;
         $newClient->address = json_encode($address);
-        $newClient->save();
+
+        if(!$user){
+            $newClient->save();
+        }
+
         return $newClient;
     }
 
