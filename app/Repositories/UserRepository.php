@@ -4,7 +4,7 @@
 namespace App\Repositories;
 
 
-use App\Exceptions\UserTokenHandler;
+use App\Handlers\UserTokenHandler;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
