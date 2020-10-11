@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         Artisan::call('migrate:fresh');
-        Artisan::call('passport:client --personal');
+        Artisan::call('passport:client --personal --name=coldstorageapp');
         $this->call(AuthorizationSeeder::class);
     }
 }
