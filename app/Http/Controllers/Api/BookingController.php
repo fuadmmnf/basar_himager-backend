@@ -17,7 +17,18 @@ class BookingController extends Controller
      */
     public function __construct(BookingRepositoryInterface $bookingRepository)
     {
+        $this->middleware('auth:api');
         $this->bookingRepository = $bookingRepository;
+    }
+
+    public function fetchBookingDetail($booking_no){
+        $booking = $this->bookingRepository->getBookingDetail($booking_no);
+        return response()->json($booking);
+    }
+
+    public function fetchBookings(){
+        $bookings = $this->bookingRepository->getPaginatedRecentBookings();
+        return response()->json($bookings);
     }
 
     public function createBooking(CreateBookingRequest $request){

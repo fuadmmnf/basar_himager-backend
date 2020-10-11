@@ -11,4 +11,8 @@ class Booking extends Model
 
     public function receives(){
     }
+
+    public function client(){
+        return $this->belongsTo('App\Models\Client');
+    }
 }

@@ -22,8 +22,8 @@ class CreateBookingsTable extends Migration
             $table->double('advance_payment');
             $table->double('discount');
             $table->integer('quantity');
-            $table->integer('bags_in');
-            $table->integer('bags_out');
+            $table->integer('bags_in')->default(0);
+            $table->integer('bags_out')->default(0);
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients');

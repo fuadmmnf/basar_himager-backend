@@ -26,13 +26,15 @@ Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, '
 Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'authorizeUserLogin']);
 
 //bookings
-Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class,'createBooking']);
+Route::get('bookings/{booking_no}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingDetail']);
+Route::get('bookings', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookings']);
+Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'createBooking']);
 
-//receive
-Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class,'createReceive']);
+//receives
+Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'createReceive']);
 
-//loanDisbursement
-Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class,'createLoan']);
+//loanDisbursements
+Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'createLoan']);
 
-//loancollection
+//loancollections
 Route::post('loancollections', [\App\Http\Controllers\Api\LoancollectionController::class, 'createLoancollection']);

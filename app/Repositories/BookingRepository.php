@@ -12,6 +12,17 @@ use Carbon\Carbon;
 
 class BookingRepository implements BookingRepositoryInterface
 {
+    public function getBookingDetail($booking_no){
+        $booking = Booking::where('booking_no', $booking_no)->get();
+        $booking->load('client');
+        return $booking;
+    }
+
+    public function getPaginatedRecentBookings()
+    {
+        $bookings = Booking::orderByDesc('booking_time')->with('client')->paginate(25);
+        return $bookings;
+    }
 
     public function saveBooking(array $request)
     {
@@ -27,8 +38,7 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking->quantity = $request['quantity'];
         $newBooking->discount = $request['discount'];
         $newBooking->booking_time = Carbon::parse($request['booking_time']);
-        $newBooking->bags_in = 0;
-        $newBooking->bags_out = 0;
+
         $newBooking->save();
 
         return $newBooking;
