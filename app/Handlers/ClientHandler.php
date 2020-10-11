@@ -21,6 +21,9 @@ class ClientHandler
         if(!$user){
             $newClient->save();
         }
+        else{
+            $newClient=$user;
+        }
 
         return $newClient;
     }
