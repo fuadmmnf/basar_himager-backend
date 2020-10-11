@@ -26,4 +26,13 @@ Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, '
 Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'authorizeUserLogin']);
 
 //bookings
-Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class,'creatBooking']);
+Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class,'createBooking']);
+
+//receive
+Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class,'createReceive']);
+
+//loanDisbursement
+Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class,'createLoan']);
+
+//loancollection
+Route::post('loancollections', [\App\Http\Controllers\Api\LoancollectionController::class, 'createLoancollection']);

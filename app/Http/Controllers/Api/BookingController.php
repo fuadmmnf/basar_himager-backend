@@ -20,7 +20,7 @@ class BookingController extends Controller
         $this->bookingRepository = $bookingRepository;
     }
 
-    public function creatBooking(CreateBookingRequest $request){
+    public function createBooking(CreateBookingRequest $request){
 
         $booking = $this->bookingRepository->saveBooking($request->validated());
         return response()->json($booking, 201);
