@@ -4,17 +4,21 @@ namespace App\Providers;
 
 use App\Repositories\BookingRepository;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\ExpensecategoryRepository;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
 use App\Repositories\Interfaces\LoancollectionRepositoryInterface;
+use App\Repositories\Interfaces\DeliveryRepositoryInterface;
+use App\Repositories\Interfaces\ExpensecategoryRepositoryInterface;
+use App\Repositories\DeliveryRepository;
 use App\Repositories\LoancollectionRepository;
 use App\Repositories\LoandisbursementRepository;
 use App\Repositories\ReceiveRepository;
 use App\Repositories\UserRepository;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;use function Symfony\Component\String\u;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
             ReceiveRepositoryInterface::class,
             LoandisbursementRepositoryInterface::class,
             LoancollectionRepositoryInterface::class,
+            DeliveryRepositoryInterface::class,
+            ExpensecategoryRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -41,6 +47,8 @@ class AppServiceProvider extends ServiceProvider
             ReceiveRepository::class,
             LoandisbursementRepository::class,
             LoancollectionRepository::class,
+            DeliveryRepository::class,
+            ExpensecategoryRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {

@@ -15,7 +15,7 @@ class CreateDeliveryRequest extends FormRequest
     {
         $user = auth()->guard('api')->user();
 
-        return $user != null &&  $user->can('crud:account');
+        return $user != null && $user->can('crud:account');
     }
 
     /**
@@ -28,14 +28,13 @@ class CreateDeliveryRequest extends FormRequest
         return [
             'booking_id' => 'required | unique:bookings',
             'delivery_time' => 'required',
-//        $table->integer('potatoe_type');
-//        $table->integer('quantity_bags');
-//        $table->double('cost_per_bag');
-//        $table->integer('quantity_bags_fanned')->default(0);
-//        $table->double('fancost_per_bag')->default(0);
-//        $table->double('due_charge');
-//        $table->double('total_charge');
-//        $table->timestamps();
+            'potatoe_type' => 'required',
+            'quantity_bags' => 'equired | numeric',
+            'cost_per_bag' => 'required | numeric',
+            'quantity_bags_fanned' => ' required | numeric',
+            'fancost_per_bag' => 'required | numeric',
+            'due_charge' => 'required | numeric',
+            'total_charge' => 'required | numeric',
         ];
     }
 }
