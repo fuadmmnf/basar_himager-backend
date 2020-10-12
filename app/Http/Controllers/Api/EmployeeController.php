@@ -24,4 +24,11 @@ class EmployeeController extends Controller
         $employee = $this->employeeRepository->createEmployee($request->validated());
         return response()->json($employee, 201);
     }
+
+    public function fetchEmployeesByRole($role)
+    {
+        $employees = $this->employeeRepository->getEmployeesByRole($role);
+
+        return response()->json($employees, 201);
+    }
 }
