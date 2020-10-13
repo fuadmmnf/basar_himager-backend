@@ -36,3 +36,14 @@ Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementCont
 
 //loancollection
 Route::post('loancollections', [\App\Http\Controllers\Api\LoancollectionController::class, 'createLoancollection']);
+
+//delivery
+Route::post('delivery', [\App\Http\Controllers\Api\DeliveryController::class, 'createDelivery']);
+
+//dailyexpenses
+Route::post('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class,'createDailyexpenses']);
+
+//expensescategory
+Route::post('expensescategory', [\App\Http\Controllers\Api\ExpensecategoryController::class,'createExpensecategory']);
+
+
