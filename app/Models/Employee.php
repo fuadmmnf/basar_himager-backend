@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
-
+    protected $casts = [
+        'present_address' => 'array',
+        'permanent_address' => 'array',
+    ];
     public function user(){
         return $this->belongsTo('App\Models\User');
     }

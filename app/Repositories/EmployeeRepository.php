@@ -8,6 +8,7 @@ use App\Exceptions\UserTokenHandler;
 use App\Models\Employee;
 use App\Models\Employeesalary;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
+use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 
 class EmployeeRepository implements EmployeeRepositoryInterface
@@ -19,6 +20,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         $user = $userTokenHandler->createUser($request['nid'], $request['name'], $request['phone'], $request['name'] . '_' . $request['phone']);
         $newEmployee = new Employee();
         $newEmployee->user_id = $user->id;
+        $newEmployee->name = $request['name'];
         $newEmployee->designation = $request['designation'];
         $newEmployee->father_name = $request['father_name'];
         $newEmployee->mother_name = $request['mother_name'];
@@ -44,7 +46,6 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         $newEmployeeSalary->eid_bonus = $request['eid_bonus'];
         $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time']);
         $newEmployeeSalary->save();
-
         return $newEmployeeSalary;
 
     }
