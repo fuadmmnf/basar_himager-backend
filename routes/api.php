@@ -27,3 +27,6 @@ Route::post('employees/salaries', [\App\Http\Controllers\Api\EmployeeController:
 
 //users
 Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'authorizeUserLogin']);
+
+//banks
+Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank']);

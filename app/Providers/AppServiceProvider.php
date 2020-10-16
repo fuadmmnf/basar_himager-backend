@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\BankRepository;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\UserRepository;
@@ -20,11 +22,13 @@ class AppServiceProvider extends ServiceProvider
         $interfaces = [
             EmployeeRepositoryInterface::class,
             UserRepositoryInterface::class,
+            BankRepositoryInterface::class,
         ];
 
         $implementations = [
             EmployeeRepository::class,
             UserRepository::class,
+            BankRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
