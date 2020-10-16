@@ -34,4 +34,9 @@ class BankController extends Controller
         $deposit = $this->bankRepository->addBankDeposit($request->validated());
         return response()->json($deposit, 201);
     }
+
+    public function getBankDeposits() {
+        $deposits = $this->bankRepository->getDeposits();
+        return response()->json($deposits,200);
+    }
 }

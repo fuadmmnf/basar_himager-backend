@@ -41,6 +41,14 @@ class BankRepository implements BankRepositoryInterface
         return $newBankDeposit;
 
     }
+
+    public function getDeposits()
+    {
+        // TODO: Implement getDeposits() method.
+        $deposits = Bankdeposit::paginate(15);
+        return $deposits;
+    }
+
 }
 
 
