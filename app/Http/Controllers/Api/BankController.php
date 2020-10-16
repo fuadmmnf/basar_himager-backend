@@ -24,4 +24,8 @@ class BankController extends Controller
         $bank = $this->bankRepository->createBank($request->validated());
         return response()->json($bank, 201);
     }
+    public function getAllBanks() {
+        $banks = $this->bankRepository->getBanks();
+        return response()->json($banks,200);
+    }
 }

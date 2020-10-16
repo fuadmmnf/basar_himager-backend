@@ -4,15 +4,9 @@
 namespace App\Repositories;
 
 
-use App\Exceptions\UserTokenHandler;
+
 use App\Models\Bank;
-use App\Models\Employee;
-use App\Models\Employeesalary;
-use App\Models\User;
 use App\Repositories\Interfaces\BankRepositoryInterface;
-use App\Repositories\Interfaces\EmployeeRepositoryInterface;
-use Carbon\Carbon;
-use Spatie\Permission\Models\Role;
 
 class BankRepository implements BankRepositoryInterface
 {
@@ -24,6 +18,13 @@ class BankRepository implements BankRepositoryInterface
         $newBank->account_no = $request['account_no'];
         $newBank->save();
         return $newBank;
+    }
+
+    public function getBanks()
+    {
+        // TODO: Implement getBanks() method.
+        $banks = Bank::paginate(15);
+        return $banks;
     }
 }
 
