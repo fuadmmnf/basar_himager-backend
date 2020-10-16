@@ -31,3 +31,4 @@ Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'au
 //banks
 Route::get('banks', [\App\Http\Controllers\Api\BankController::class, 'getAllBanks']);
 Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank']);
+Route::post('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'storeBankDeposit']);
