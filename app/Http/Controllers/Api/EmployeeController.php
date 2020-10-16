@@ -30,4 +30,16 @@ class EmployeeController extends Controller
         $salary = $this->employeeRepository->storeEmployeeSalary($request->validated());
         return response()->json($salary, 201);
     }
+    public function getAllEmployees()
+    {
+        $employees = $this->employeeRepository->getEmployees();
+        return response()->json($employees, 201);
+    }
+
+    public function fetchEmployeesByRole($role)
+    {
+        $employees = $this->employeeRepository->getEmployeesByRole($role);
+
+        return response()->json($employees, 201);
+    }
 }

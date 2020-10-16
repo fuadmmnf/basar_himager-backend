@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Exceptions\UserTokenHandler;
 use App\Models\Employee;
 use App\Models\Employeesalary;
+use App\Models\User;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
@@ -35,6 +36,22 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         return $newEmployee;
     }
 
+    public function getEmployeesByRole($role)
+    {
+        // TODO: Implement getEmployeesByRole() method.
+        $users = User::role($role)->with('employee')->paginate(15);
+        //$employees = Employee::where('role', $role)->paginate(15);
+        return $users;
+    }
+
+    public function getEmployees()
+    {
+        // TODO: Implement getEmployees() method.
+        $employees = Employee::paginate(15);
+        return $employees;
+    }
+
+
     public function storeEmployeeSalary(array $request)
     {
         // TODO: Implement storeEmployeeSalary() method.
@@ -50,3 +67,5 @@ class EmployeeRepository implements EmployeeRepositoryInterface
 
     }
 }
+
+
