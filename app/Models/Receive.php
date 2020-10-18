@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Receive extends Model
 {
     use HasFactory;
+
+    public function booking ()
+    {
+        return $this->belongsTo('App\Models\Booking');
+    }
+
 }

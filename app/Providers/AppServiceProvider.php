@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
@@ -28,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         $interfaces = [
             EmployeeRepositoryInterface::class,
             UserRepositoryInterface::class,
+            BankRepositoryInterface::class,
             BookingRepositoryInterface::class,
             ReceiveRepositoryInterface::class,
             LoandisbursementRepositoryInterface::class,
@@ -37,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
         $implementations = [
             EmployeeRepository::class,
             UserRepository::class,
+            BankRepository::class,
             BookingRepository::class,
             ReceiveRepository::class,
             LoandisbursementRepository::class,

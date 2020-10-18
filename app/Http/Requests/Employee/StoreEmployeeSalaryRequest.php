@@ -4,7 +4,7 @@ namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateEmployeeRequest extends FormRequest
+class StoreEmployeeSalaryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +13,7 @@ class CreateEmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = auth()->guard('api')->user();
-
-        return $user != null && $this->has('role') && $user->can('crud:' . $this->role);
+        return true;
     }
 
     /**
@@ -26,18 +24,11 @@ class CreateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'role' => 'required',
-            'nid' => 'required| unique:users',
-            'name' => 'required',
-            'phone' => 'required',
-            'designation' => 'required',
-            'father_name' => 'required',
-            'mother_name' => 'required',
-            'present_address' => 'required',
-            'permanent_address' => 'required',
+            'employee_id' => 'required| numeric',
             'basic_salary' => 'required| numeric',
             'special_salary' => 'required| numeric',
             'eid_bonus' => 'required| numeric',
+            'payment_time' => 'required',
         ];
     }
 }
