@@ -24,4 +24,8 @@ class Booking extends Model
     public function loanCollections(){
         return $this->hasMany('App\Models\Loancollection');
     }
+
+    public function client(){
+        return $this->belongsTo('App\Models\Client');
+    }
 }

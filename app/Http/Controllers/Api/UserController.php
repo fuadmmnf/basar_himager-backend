@@ -24,7 +24,7 @@ class UserController extends Controller
         $user = $this->userRepository->login($request->validated());
 
         if($user){
-            return response()->json($user, 201);
+            return response()->json($user, 200);
         } else{
             return response()->json(['message' => 'Invalild Credentials'], 401);
         }

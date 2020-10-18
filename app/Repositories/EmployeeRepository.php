@@ -4,7 +4,7 @@
 namespace App\Repositories;
 
 
-use App\Exceptions\UserTokenHandler;
+use App\Handlers\UserTokenHandler;
 use App\Models\Employee;
 use App\Models\Employeesalary;
 use App\Models\User;

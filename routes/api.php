@@ -40,3 +40,16 @@ Route::get('bookings/{booking_id}/deliveries', [\App\Http\Controllers\Api\Bookin
 Route::get('bookings/{booking_id}/loandisbursements', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedLoanDisbursementByBookingID']);
 Route::get('bookings/{booking_id}/loancollections', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedLoanCollectionByBookingID']);
 Route::get('booking/search?query={query}', [\App\Http\Controllers\Api\BookingController::class, 'bookingListBySearchedQuery']);
+Route::get('bookings/{booking_no}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingDetail']);
+Route::get('bookings', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookings']);
+Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'createBooking']);
+
+//receives
+Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'createReceive']);
+
+//loanDisbursements
+Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'createLoan']);
+
+//loancollections
+Route::post('loancollections', [\App\Http\Controllers\Api\LoancollectionController::class, 'createLoancollection']);
+
