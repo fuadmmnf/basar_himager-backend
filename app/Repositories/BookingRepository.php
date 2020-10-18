@@ -9,7 +9,6 @@ use App\Models\Loandisbursement;
 use App\Models\Receive;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Handlers\ClientHandler;
-use App\Models\Booking;
 use Carbon\Carbon;
 
 class BookingRepository implements BookingRepositoryInterface
@@ -76,7 +75,7 @@ class BookingRepository implements BookingRepositoryInterface
     {
         $clientHandler = new ClientHandler();
 
-        $client = $clientHandler->saveClient($request['nid'], $request['name'],$request['father_name'], $request['address']);
+        $client = $clientHandler->saveClient($request['nid'], $request['name'], $request['phone'], $request['father_name'], $request['address']);
         $newBooking = new Booking();
 
         $newBooking->client_id = $client->id;

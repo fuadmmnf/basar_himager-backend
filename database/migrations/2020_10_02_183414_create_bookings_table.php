@@ -20,7 +20,7 @@ class CreateBookingsTable extends Migration
             $table->dateTime('booking_time');
             $table->integer('type'); // 0 => normal, 1 => advance
             $table->double('advance_payment');
-            $table->double('discount');
+            $table->double('discount')->default(0.0);
             $table->integer('quantity');
             $table->integer('bags_in')->default(0);
             $table->integer('bags_out')->default(0);

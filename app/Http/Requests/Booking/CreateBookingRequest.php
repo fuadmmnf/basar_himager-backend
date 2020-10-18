@@ -28,6 +28,7 @@ class CreateBookingRequest extends FormRequest
         return [
             'nid' => 'required| unique:users',
             'name' => 'required',
+            'phone' => 'required',
             'father_name' => 'required',
             'address' => 'required',
             'type' => 'required| numeric',
