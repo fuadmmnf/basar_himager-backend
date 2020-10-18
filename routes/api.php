@@ -39,4 +39,4 @@ Route::get('bookings/{booking_id}/receives', [\App\Http\Controllers\Api\BookingC
 Route::get('bookings/{booking_id}/deliveries', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedDeliveriesByBookingID']);
 Route::get('bookings/{booking_id}/loandisbursements', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedLoanDisbursementByBookingID']);
 Route::get('bookings/{booking_id}/loancollections', [\App\Http\Controllers\Api\BookingController::class, 'fetchPaginatedLoanCollectionByBookingID']);
-
+Route::get('booking/search?query={query}', [\App\Http\Controllers\Api\BookingController::class, 'bookingListBySearchedQuery']);
