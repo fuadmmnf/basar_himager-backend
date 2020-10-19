@@ -19,7 +19,7 @@ class ClientHandler
         $newClient->name = $name;
         $newClient->phone = $phone;
         $newClient->father_name = $father_name;
-        $newClient->address = json_encode($address);
+        $newClient->address = $address;
         $newClient->save();
 
         return $newClient;
