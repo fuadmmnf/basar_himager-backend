@@ -10,6 +10,13 @@ use Carbon\Carbon;
 
 class ReceiveRepository implements ReceiveRepositoryInterface
 {
+    public function getRecentReceives()
+    {
+        $receives = Receive::orderBy('receiving_time')->paginate(20);
+        $receives->load('booking:booking_no', 'booking.client');
+        return $receives;
+    }
+
 
     public function saveReceive(array $request)
     {

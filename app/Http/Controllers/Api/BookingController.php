@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    
+
     private $bookingRepository;
 
     public function __construct(BookingRepositoryInterface $bookingRepository)
@@ -64,10 +64,11 @@ class BookingController extends Controller
         return response()->json($bookings);
     }
 
+
     public function createBooking(CreateBookingRequest $request){
 
         $booking = $this->bookingRepository->saveBooking($request->validated());
         return response()->json($booking, 201);
     }
-   
+
 }

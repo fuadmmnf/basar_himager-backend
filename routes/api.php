@@ -45,6 +45,7 @@ Route::get('bookings', [\App\Http\Controllers\Api\BookingController::class, 'fet
 Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'createBooking']);
 
 //receives
+Route::get('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceives']);
 Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'createReceive']);
 
 //loanDisbursements

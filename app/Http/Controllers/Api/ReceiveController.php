@@ -16,7 +16,13 @@ class ReceiveController extends Controller{
      */
     public function __construct(ReceiveRepositoryInterface $receiveRepository)
     {
+        $this->middleware('auth:api');
         $this->receiveRepository = $receiveRepository;
+    }
+
+    public function fetchRecentReceives(){
+        $receives = $this->receiveRepository->getRecentReceives();
+        return response()->json($receives);
     }
 
     public function createReceive(CreatereceiveRequest $request){
