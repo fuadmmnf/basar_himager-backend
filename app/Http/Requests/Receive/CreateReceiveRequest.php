@@ -15,7 +15,7 @@ class CreateReceiveRequest extends FormRequest
     {
         $user = auth()->guard('api')->user();
 
-        return $user != null &&  $user->can('crud:account');
+        return $user != null && $user->can('crud:store');
     }
 
     /**
@@ -26,13 +26,11 @@ class CreateReceiveRequest extends FormRequest
     public function rules()
     {
         return [
-
-        'booking_id' => 'required',
-        'receiving_time' => 'required',
-        'quantity' => 'required| numeric',
-        'potatoe_type' => 'required',
-        'transport_type' => 'required',
-
+            'booking_id' => 'required',
+            'receiving_time' => 'required',
+            'quantity' => 'required| numeric',
+            'potatoe_type' => 'required',
+            'transport_type' => 'required',
         ];
     }
 }
