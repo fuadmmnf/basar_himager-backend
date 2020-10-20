@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
+use App\Repositories\DeliveryRepository;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
+use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -32,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
             BankRepositoryInterface::class,
             BookingRepositoryInterface::class,
             ReceiveRepositoryInterface::class,
+            DeliveryRepositoryInterface::class,
             LoandisbursementRepositoryInterface::class,
             LoancollectionRepositoryInterface::class,
         ];
@@ -42,6 +46,7 @@ class AppServiceProvider extends ServiceProvider
             BankRepository::class,
             BookingRepository::class,
             ReceiveRepository::class,
+            DeliveryRepository::class,
             LoandisbursementRepository::class,
             LoancollectionRepository::class,
         ];
