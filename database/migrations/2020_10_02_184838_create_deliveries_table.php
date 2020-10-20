@@ -18,7 +18,7 @@ class CreateDeliveriesTable extends Migration
             $table->unsignedBigInteger('booking_id');
             $table->string('delivery_no')->unique();
             $table->dateTime('delivery_time');
-            $table->integer('potatoe_type');
+            $table->string('potatoe_type');
             $table->integer('quantity_bags');
             $table->double('cost_per_bag');
             $table->integer('quantity_bags_fanned')->default(0);

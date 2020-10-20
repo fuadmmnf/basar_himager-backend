@@ -18,12 +18,18 @@ class DeliveryController extends Controller
      */
     public function __construct(DeliveryRepositoryInterface $deliveryRepository)
     {
+        $this->middleware('auth:api');
         $this->deliveryRepository = $deliveryRepository;
+    }
+
+    public function fetchRecentDeliveries(){
+        $deliveries = $this->deliveryRepository->getRecentDeliveries();
+        return response()->json($deliveries);
     }
 
     public function createDelivery(CreateDeliveryRequest $request){
 
-        $Delivery = $this->deliveryRepository->saveDelivery($request->validated());
-        return response()->json($Delivery, 201);
+        $delivery = $this->deliveryRepository->saveDelivery($request->validated());
+        return response()->json($delivery, 201);
     }
 }

@@ -48,6 +48,10 @@ Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'cr
 Route::get('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceives']);
 Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'createReceive']);
 
+//deliveries
+Route::get('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliveries']);
+Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDelivery']);
+
 //loanDisbursements
 Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'createLoan']);
 
