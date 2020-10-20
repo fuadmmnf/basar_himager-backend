@@ -12,8 +12,10 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 {
     public function getRecentReceives()
     {
-        $receives = Receive::orderBy('receiving_time')->paginate(20);
-        $receives->load('booking:booking_no', 'booking.client');
+        $receives = Receive::orderBy('receiving_time')
+            ->with('booking')
+            ->with('booking.client')
+            ->paginate(20);
         return $receives;
     }
 
