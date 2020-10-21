@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Delivery\CreateDeliveryRequest;
+use App\Http\Requests\Delivery\CreateGatepassRequest;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -31,5 +32,11 @@ class DeliveryController extends Controller
 
         $delivery = $this->deliveryRepository->saveDelivery($request->validated());
         return response()->json($delivery, 201);
+    }
+
+
+    public function createDeliveryGatepass(CreateGatepassRequest $request){
+        $gatepass = $this->deliveryRepository->saveGatepass($request->validated());
+        return response()->json($gatepass, 201);
     }
 }

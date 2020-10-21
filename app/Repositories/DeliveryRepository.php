@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 use App\Models\Delivery;
+use App\Models\Gatepass;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Carbon\Carbon;
 
@@ -44,4 +45,19 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
         return $newDelivery;
     }
+
+    public function saveGatepass(array $request)
+    {
+        $delivery = Delivery::findOrFail($request['delivery_id']);
+        $newGatepass = new Gatepass();
+        $newGatepass->delivery_id = $delivery->id;
+        $newGatepass->gatepass_no = substr(md5($request['delivery_id']), 0, 8);
+        $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time']);
+        $newGatepass->transport = $request['transport'];
+        $newGatepass->save();
+
+        return $newGatepass;
+    }
+
+
 }
