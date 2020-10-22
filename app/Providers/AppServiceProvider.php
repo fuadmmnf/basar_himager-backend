@@ -6,6 +6,7 @@ namespace App\Providers;
 use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
