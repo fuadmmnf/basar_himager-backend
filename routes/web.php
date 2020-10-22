@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/salary_report', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'getAllSalaries']);
+Route::get('/download_salary_report', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'downloadReport']);
