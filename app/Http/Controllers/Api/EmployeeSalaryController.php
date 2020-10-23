@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Employee\StoreEmployeeSalaryRequest;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use PDF;
 
@@ -23,13 +24,9 @@ class EmployeeSalaryController extends Controller
         return view('salary_report')->with('salaries', $salaries);
     }
 
-    public function downloadReport()
+    public function storeEmployeeSalary(StoreEmployeeSalaryRequest $request)
     {
-        $salaries = $this->employeeSalaryRepository->fetchAllSalaries();
-        $pdf = PDF::loadView('salary_report',[
-            'salaries' => $salaries,
-        ]);
-//        return $pdf->stream();
-        return $pdf->downloa('employees_salary_report');
+        $salary = $this->employeeSalaryRepository->storeEmployeeSalary($request->validated());
+        return response()->json($salary, 201);
     }
 }

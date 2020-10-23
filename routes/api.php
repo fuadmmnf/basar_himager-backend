@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('employees/{role}', [\App\Http\Controllers\Api\EmployeeController::class, 'fetchEmployeesByRole']);
 Route::get('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'getAllEmployees']);
 Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'store']);
-Route::post('employees/salaries', [\App\Http\Controllers\Api\EmployeeController::class, 'storeEmployeeSalary']);
+Route::post('employees/salaries', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'storeEmployeeSalary']);
 
 
 //users

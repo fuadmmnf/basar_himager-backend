@@ -11,7 +11,9 @@ use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
+use App\Repositories\Interfaces\ReportRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\ReportRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
             BankRepositoryInterface::class,
             BookingRepositoryInterface::class,
             EmployeeSalaryRepositoryInterface::class,
+            ReportRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -38,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
             BankRepository::class,
             BookingRepository::class,
             EmployeeSalaryRepository::class,
+            ReportRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
