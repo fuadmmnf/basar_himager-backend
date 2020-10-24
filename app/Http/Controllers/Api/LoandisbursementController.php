@@ -21,8 +21,8 @@ class LoandisbursementController extends Controller{
 
     public function createLoan(CreateLoandisbursementRequest $request){
 
-        $Loan = $this->loandisbursementRepository->saveLoan($request->validated());
-        return response()->json($Loan, 201);
+        $loanDisbursement = $this->loandisbursementRepository->saveLoan($request->validated());
+        return response()->json($loanDisbursement, 201);
     }
 }
 

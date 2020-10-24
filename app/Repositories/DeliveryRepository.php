@@ -8,6 +8,7 @@ use App\Models\Delivery;
 use App\Models\Gatepass;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class DeliveryRepository implements DeliveryRepositoryInterface
 {
@@ -16,6 +17,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $deliveries = Delivery::orderBy('delivery_time')
             ->with('booking')
             ->with('booking.client')
+            ->with('gatepasses')
             ->paginate(20);
         return $deliveries;
     }
@@ -26,8 +28,8 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $booking = Booking::findOrFail($request['booking_id']);
         $newDelivery = new Delivery();
         $newDelivery->booking_id = $booking->id;
-        $newDelivery->delivery_no = substr(md5($request['booking_id']), 0, 8);
-        $newDelivery->delivery_time = Carbon::parse($request['receiving_time']);
+        $newDelivery->delivery_no = Str::random(8);
+        $newDelivery->delivery_time = Carbon::parse($request['delivery_time']);
         $newDelivery->quantity_bags = $request['quantity_bags'];
         $newDelivery->cost_per_bag = $request['cost_per_bag'];
         $newDelivery->quantity_bags_fanned = $request['quantity_bags_fanned'];

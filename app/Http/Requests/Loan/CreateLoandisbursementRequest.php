@@ -26,9 +26,8 @@ class CreateLoandisbursementRequest extends FormRequest
     public function rules()
     {
         return [
-            'booking_id'=> 'required | unique:bookings',
-            'amount'=> 'required | numeric',
-            'amount_left'=> 'required | numeric',
+            'booking_id' => 'required',
+            'amount' => 'required | numeric',
             'payment_date' => 'required',
         ];
     }

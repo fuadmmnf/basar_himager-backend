@@ -27,7 +27,6 @@ class CreateGatepassRequest extends FormRequest
         return [
             'delivery_id' => 'required| numeric',
             'gatepass_time' => 'required',
-            'gatepass_no' => 'required',
             'transport' => 'required'
         ];
     }

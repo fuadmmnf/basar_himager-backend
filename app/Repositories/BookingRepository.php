@@ -10,6 +10,7 @@ use App\Models\Receive;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Handlers\ClientHandler;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class BookingRepository implements BookingRepositoryInterface
 {
@@ -79,7 +80,7 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking = new Booking();
 
         $newBooking->client_id = $client->id;
-        $newBooking->booking_no = substr(md5(time()),0,8);
+        $newBooking->booking_no = Str::random(8);
         $newBooking->type = $request['type'];
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];

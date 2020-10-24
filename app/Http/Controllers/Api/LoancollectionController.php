@@ -21,8 +21,8 @@ class LoancollectionController extends Controller{
 
     public function createLoancollection(CreateLoancollectionRequest $request){
 
-        $Loan = $this->loancollectionRepository->saveLoancollection($request->validated());
-        return response()->json($Loan, 201);
+        $loancollection = $this->loancollectionRepository->saveLoancollection($request->validated());
+        return response()->json($loancollection, 201);
     }
 }
 

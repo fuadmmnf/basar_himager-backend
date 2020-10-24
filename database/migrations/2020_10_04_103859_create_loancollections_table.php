@@ -16,6 +16,7 @@ class CreateLoancollectionsTable extends Migration
         Schema::create('loancollections', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('loandisbursement_id');
+            $table->string('loancollection_no')->unique();
             $table->double('surcharge');
             $table->double('payment_amount');
             $table->dateTime('payment_date');
