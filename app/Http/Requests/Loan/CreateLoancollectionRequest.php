@@ -26,7 +26,7 @@ class CreateLoancollectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'loandisbursement_id' => 'required | unique:bookings',
+            'loandisbursement_id' => 'required | numeric',
             'surcharge' => 'required | numeric',
             'payment_amount' => 'required | numeric',
             'payment_date' => 'required',

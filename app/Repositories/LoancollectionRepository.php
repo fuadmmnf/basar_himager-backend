@@ -20,7 +20,7 @@ class LoancollectionRepository implements LoancollectionRepositoryInterface
         $newLoancollection->loancollection_no = Str::random(8);
         $newLoancollection->surcharge = $request['surcharge'];
         $newLoancollection->payment_amount = $request['payment_amount'];
-        $newLoancollection->payment_date = Carbon::parse($request('payment_date'));
+        $newLoancollection->payment_date = Carbon::parse($request['payment_date']);
         $newLoancollection->save();
 
         $loandisbursement->amount_left = $loandisbursement->amount_left - $newLoancollection->payment_amount;
