@@ -17,4 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/salary_report', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'getAllSalaries']);
-Route::get('/download_salary_report', [\App\Http\Controllers\ReportController::class, 'downloadReport']);
+Route::get('/download_salary_report', [\App\Http\Controllers\ReportController::class, 'downloadSalaryReport']);
+Route::get('/deposit_report', [\App\Http\Controllers\ReportController::class, 'downloadBankDepositReport']);

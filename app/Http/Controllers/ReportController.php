@@ -14,7 +14,7 @@ class ReportController extends Controller
     {
         $this->reportRepository = $reportRepository;
     }
-    public function downloadReport()
+    public function downloadSalaryReport()
     {
         $salaries = $this->reportRepository->fetchAllSalaries();
         $pdf = PDF::loadView('salary_report',[
@@ -22,5 +22,14 @@ class ReportController extends Controller
         ]);
         return $pdf->stream();
         //return $pdf->download('employees_salary_report');
+    }
+
+    public function downloadBankDepositReport() {
+        $deposits = $this->reportRepository->getDeposits();
+        $pdf = PDF::loadView('bankdeposit_report',[
+            'deposits' => $deposits,
+        ]);
+        return $pdf->stream();
+        //return $pdf->download('bank_deposit_report');
     }
 }

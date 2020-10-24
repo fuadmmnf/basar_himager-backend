@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Exceptions\UserTokenHandler;
+use App\Models\Bankdeposit;
 use App\Models\Employee;
 use App\Models\Employeesalary;
 use App\Models\User;
@@ -21,6 +22,13 @@ class ReportRepository implements ReportRepositoryInterface
         // TODO: Implement fetchAllSalaries() method.
         $salaries = Employeesalary::whereMonth('payment_time',Carbon::now())->with('employee')->paginate(15);
         return $salaries;
+    }
+
+    public function getDeposits()
+    {
+        // TODO: Implement getDeposits() method.
+        $deposits = Bankdeposit::with('bank')->paginate(15);
+        return $deposits;
     }
 
 }
