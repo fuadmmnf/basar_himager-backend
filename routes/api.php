@@ -57,6 +57,7 @@ Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 
 
 
 //loanDisbursements
+Route::get('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'fetchLoandisbursements']);
 Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'createLoan']);
 
 //loancollections

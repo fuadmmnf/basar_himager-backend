@@ -9,8 +9,8 @@ class Loancollection extends Model
 {
     use HasFactory;
 
-    public function booking ()
+    public function loandisbursement()
     {
-        return $this->belongsTo('App\Models\Booking');
+        return $this->belongsTo('App\Models\Loandisbursement');
     }
 }

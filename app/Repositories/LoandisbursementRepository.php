@@ -10,6 +10,13 @@ use Illuminate\Support\Str;
 
 class LoandisbursementRepository implements LoandisbursementRepositoryInterface
 {
+    public function fetchPaginatedLoanDisbursements()
+    {
+        $loanDisbursements = Loandisbursement::orderByDesc('updated_at')->paginate(20);
+        $loanDisbursements->load('booking', 'booking.client', 'loancollections');
+        return $loanDisbursements;
+    }
+
 
     public function saveLoan(array $request)
     {
