@@ -14,9 +14,9 @@ class ReportController extends Controller
     {
         $this->reportRepository = $reportRepository;
     }
-    public function downloadSalaryReport()
+    public function downloadSalaryReport($month)
     {
-        $salaries = $this->reportRepository->fetchAllSalaries();
+        $salaries = $this->reportRepository->fetchAllSalaries($month);
         $pdf = PDF::loadView('salary_report',[
             'salaries' => $salaries,
         ]);
@@ -24,8 +24,8 @@ class ReportController extends Controller
         //return $pdf->download('employees_salary_report');
     }
 
-    public function downloadBankDepositReport() {
-        $deposits = $this->reportRepository->getDeposits();
+    public function downloadBankDepositReport($month) {
+        $deposits = $this->reportRepository->getDeposits($month);
         $pdf = PDF::loadView('bankdeposit_report',[
             'deposits' => $deposits,
         ]);

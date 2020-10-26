@@ -201,6 +201,7 @@
 
     </thead>
     <tbody>
+    @if(count($salaries))
     @foreach($salaries as $salary)
         <tr>
             <td>{{$salary->employee->name}}</td>
@@ -213,17 +214,18 @@
     <tr>
         <td></td>
         <td> <b>SUBTOTAL:</b></td>
-        <td> <b>{{$salary->sum('basic_salary')}}</b></td>
-        <td> <b>{{$salary->sum('special_salary')}}</b></td>
-        <td> <b>{{$salary->sum('eid_bonus')}}</b></td>
+        <td> <b>{{$salaries->sum('basic_salary')}}</b></td>
+        <td> <b>{{$salaries->sum('special_salary')}}</b></td>
+        <td> <b>{{$salaries->sum('eid_bonus')}}</b></td>
     </tr>
     <tr>
         <td></td>
         <td> <b>TOTAL:</b></td>
-        <td><b>{{$salary->sum('basic_salary')+ $salary->sum('special_salary') + $salary->sum('eid_bonus')}} </b></td>
+        <td><b>{{$salaries->sum('basic_salary')+ $salaries->sum('special_salary') + $salaries->sum('eid_bonus')}} </b></td>
         <td></td>
         <td></td>
     </tr>
+    @endif
     </tbody>
 </table>
 

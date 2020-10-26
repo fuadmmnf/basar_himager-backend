@@ -95,6 +95,7 @@
 
     </thead>
     <tbody>
+    @if(count($deposits))
     @foreach($deposits as $deposit)
         <tr>
             <td>{{$deposit->bank->name}}</td>
@@ -109,8 +110,9 @@
         <td></td>
         <td> </td>
         <td> <b>TOTAL:</b></td>
-        <td> <b>{{$deposit->sum('amount')}}</b></td>
+        <td> <b>{{$deposits->sum('amount')}}</b></td>
     </tr>
+    @endif
     </tbody>
 </table>
 

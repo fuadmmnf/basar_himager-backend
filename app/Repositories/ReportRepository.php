@@ -17,17 +17,17 @@ use Spatie\Permission\Models\Role;
 
 class ReportRepository implements ReportRepositoryInterface
 {
-    public function fetchAllSalaries()
+    public function fetchAllSalaries($month)
     {
         // TODO: Implement fetchAllSalaries() method.
-        $salaries = Employeesalary::whereMonth('payment_time',Carbon::now())->with('employee')->paginate(15);
+        $salaries = Employeesalary::whereMonth('payment_time',Carbon::parse($month))->with('employee')->get();
         return $salaries;
     }
 
-    public function getDeposits()
+    public function getDeposits($month)
     {
         // TODO: Implement getDeposits() method.
-        $deposits = Bankdeposit::with('bank')->paginate(15);
+        $deposits = Bankdeposit::whereMonth('created_at',Carbon::parse($month))->with('bank')->get();
         return $deposits;
     }
 
