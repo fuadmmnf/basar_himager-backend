@@ -25,11 +25,6 @@ class EmployeeController extends Controller
         $employee = $this->employeeRepository->createEmployee($request->validated());
         return response()->json($employee, 201);
     }
-    public function storeEmployeeSalary(StoreEmployeeSalaryRequest $request)
-    {
-        $salary = $this->employeeRepository->storeEmployeeSalary($request->validated());
-        return response()->json($salary, 201);
-    }
     public function getAllEmployees()
     {
         $employees = $this->employeeRepository->getEmployees();
