@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Exceptions\UserTokenHandler;
+use App\Handlers\UserTokenHandler;
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;

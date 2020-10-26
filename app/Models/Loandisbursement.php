@@ -13,4 +13,8 @@ class Loandisbursement extends Model
     {
         return $this->belongsTo('App\Models\Booking');
     }
+
+    public function loancollections(){
+        return $this->hasMany('App\Models\Loancollection');
+    }
 }

@@ -11,5 +11,7 @@ interface BookingRepositoryInterface
     public function getPaginatedLoanDisbursementByBookingId($booking_id);
     public function getPaginatedLoanCollectionByBookingId($booking_id);
     public function getBookingListBySearchedQuery($query);
-
+    public function getBookingDetail($booking_no);
+    public function getPaginatedRecentBookings();
+    public function saveBooking(array $request);
 }

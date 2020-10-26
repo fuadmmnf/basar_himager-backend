@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Exceptions;
+namespace App\Handlers;
 
 
 use App\Models\User;
