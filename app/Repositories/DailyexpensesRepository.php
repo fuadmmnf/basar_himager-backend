@@ -25,4 +25,11 @@ class DailyexpensesRepository implements DailyexpensesRepositoryInterface
         return $newDailyexpenses;
 
     }
+
+    public function getDailyExpenses()
+    {
+        $dailyexpenses = Dailyexpense::orderByDesc('updated_at')->with('expensecategory')->paginate(20);
+        return $dailyexpenses;
+        // TODO: Implement getDailyExpenses() method.
+    }
 }

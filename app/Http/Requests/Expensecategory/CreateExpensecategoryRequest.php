@@ -15,7 +15,7 @@ class CreateExpensecategoryRequest extends FormRequest
     {
         $user = auth()->guard('api')->user();
 
-        return $user != null && $this->has('role') && $user->can('crud:' . $this->role);
+        return $user != null && $user->can('crud:account');
     }
 
     /**
@@ -27,7 +27,7 @@ class CreateExpensecategoryRequest extends FormRequest
     {
         return [
             'type' => 'required',
-            'category' => 'required',
+            'category' => 'sometimes',
         ];
     }
 }

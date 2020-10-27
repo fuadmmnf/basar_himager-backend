@@ -14,11 +14,23 @@ class ExpensecategoryRepository implements ExpensecategoryRepositoryInterface
 {
     public function saveExpensecategory(array $request)
     {
+        $existingtype = Expensecategory::where('type', $request['type'])->first();
+        if($existingtype && !$request['category']){
+            return 'AlreadyExisting';
+        }
         // TODO: Implement saveExpensecategory() method.
         $newExpensecategory = new Expensecategory();
         $newExpensecategory->type = $request['type'];
-        $newExpensecategory->category = $request['category'];
+        $newExpensecategory->category = isset($request['category'])? $request['category'] : null;
+        $newExpensecategory->save();
 
         return $newExpensecategory;
+    }
+
+    public function getExpensesCategory()
+    {
+        $expensecategory = Expensecategory::orderBy('type')->get();
+        return $expensecategory;
+        // TODO: Implement getExpensesCategory() method.
     }
 }

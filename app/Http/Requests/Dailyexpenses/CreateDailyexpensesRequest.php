@@ -15,7 +15,7 @@ class CreateDailyexpensesRequest extends FormRequest
     {
         $user = auth()->guard('api')->user();
 
-        return $user != null && $this->has('role') && $user->can('crud:' . $this->role);
+        return $user != null && $user->can('crud:account');
     }
 
     /**

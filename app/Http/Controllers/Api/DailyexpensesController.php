@@ -25,4 +25,9 @@ class DailyexpensesController extends Controller
         $Dailyexpenses = $this->dailyexpensesRepository->saveDailyexpenses($request->validated());
         return response()->json($Dailyexpenses, 201);
     }
+
+    public function fetchDailyexpenses(){
+        $Dailyexpenses = $this->dailyexpensesRepository->getDailyExpenses();
+        return response()->json($Dailyexpenses,200);
+    }
 }

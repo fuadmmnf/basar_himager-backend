@@ -13,6 +13,8 @@ use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
 use App\Repositories\Interfaces\LoancollectionRepositoryInterface;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use App\Repositories\Interfaces\ExpensecategoryRepositoryInterface;
+use App\Repositories\Interfaces\DailyexpensesRepositoryInterface;
+use App\Repositories\DailyexpensesRepository;
 use App\Repositories\DeliveryRepository;
 use App\Repositories\LoancollectionRepository;
 use App\Repositories\LoandisbursementRepository;
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
             LoancollectionRepositoryInterface::class,
             DeliveryRepositoryInterface::class,
             ExpensecategoryRepositoryInterface::class,
+            DailyexpensesRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -49,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
             LoancollectionRepository::class,
             DeliveryRepository::class,
             ExpensecategoryRepository::class,
+            DailyexpensesRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
