@@ -37,6 +37,9 @@
             color: #b8cee3;
             opacity: 0.1 !important;
         }
+        .page-break {
+            page-break-after: always;
+        }
 
         @page {
             header: page-header;
@@ -82,6 +85,35 @@
     </tr>
 
 </table>
+
+<table class="bordertable">
+    <thead>
+    <tr>
+        <th>Bank</th>
+        <th>Account No</th>
+        <th>Total</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    @if(count($banks))
+        @foreach($banks as $bank)
+            <tr>
+                <td>{{$bank->name}}</td>
+                <td>{{$bank->account_no}}</td>
+                <td>{{$bank->total}}</td>
+            </tr>
+        @endforeach
+        <tr>
+            <td></td>
+            <td> <b>TOTAL:</b></td>
+            <td> <b>{{$banks->sum('total')}}</b></td>
+        </tr>
+    @endif
+    </tbody>
+</table>
+
+<div class="page-break"></div>
 
 <table class="bordertable">
     <thead>

@@ -25,7 +25,8 @@ class CreateBankRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'account_no' => 'required'
+            'account_no' => 'required',
+            'total' => 'required| numeric',
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Bank\BankDepositRequest;
+use App\Http\Requests\Bank\BankTransactionRequest;
 use App\Http\Requests\Bank\CreateBankRequest;
 use App\Repositories\Interfaces\BankRepositoryInterface;
 use Illuminate\Http\Request;
@@ -13,9 +13,6 @@ class BankController extends Controller
     //
     private $bankRepository;
 
-    /**
-     * EmployeeController constructor.
-     */
     public function __construct(BankRepositoryInterface $bankRepository)
     {
         $this->bankRepository = $bankRepository;
@@ -30,7 +27,7 @@ class BankController extends Controller
         return response()->json($banks,200);
     }
 
-    public function storeBankDeposit(BankDepositRequest $request) {
+    public function storeBankDeposit(BankTransactionRequest $request) {
         $deposit = $this->bankRepository->addBankDeposit($request->validated());
         return response()->json($deposit, 201);
     }
