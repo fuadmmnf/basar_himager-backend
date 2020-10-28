@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Expensecategory extends Model
 {
     use HasFactory;
+    public function dailyexpenses(){
+        return $this->hasMany('App\Models\Dailyexpense');
+    }
 }
