@@ -16,7 +16,6 @@ use App\Repositories\Interfaces\ReportRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\ReportRepository;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
-use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
 use App\Repositories\Interfaces\LoancollectionRepositoryInterface;
 use App\Repositories\LoancollectionRepository;
