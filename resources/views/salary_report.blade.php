@@ -126,7 +126,7 @@
         }
 
         .bordertable td, th {
-            border: 0;
+            border: 1px solid black;
         }
 
         .present {
