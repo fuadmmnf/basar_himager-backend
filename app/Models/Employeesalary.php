@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Employeesalary extends Model
 {
     use HasFactory;
+    public function employee(){
+        return $this->belongsTo('App\Models\Employee');
+    }
 }
