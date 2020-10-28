@@ -16,13 +16,19 @@ class LoandisbursementController extends Controller{
      */
     public function __construct(LoandisbursementRepositoryInterface $loandisbursementRepository)
     {
+        $this->middleware('auth:api');
         $this->loandisbursementRepository = $loandisbursementRepository;
     }
 
     public function createLoan(CreateLoandisbursementRequest $request){
 
-        $Loan = $this->loandisbursementRepository->saveLoan($request->validated());
-        return response()->json($Loan, 201);
+        $loanDisbursement = $this->loandisbursementRepository->saveLoan($request->validated());
+        return response()->json($loanDisbursement, 201);
+    }
+
+    public function fetchLoandisbursements(){
+        $loanDisbursements = $this->loandisbursementRepository->fetchPaginatedLoanDisbursements();
+        return response()->json($loanDisbursements);
     }
 }
 

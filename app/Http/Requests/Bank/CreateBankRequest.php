@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Loan;
+namespace App\Http\Requests\Bank;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateLoandisbursementRequest extends FormRequest
+class CreateBankRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +13,7 @@ class CreateLoandisbursementRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = auth()->guard('api')->user();
-
-        return $user != null &&  $user->can('crud:account');
+       return true;
     }
 
     /**
@@ -26,9 +24,8 @@ class CreateLoandisbursementRequest extends FormRequest
     public function rules()
     {
         return [
-            'booking_id' => 'required',
-            'amount' => 'required | numeric',
-            'payment_date' => 'required',
+            'name' => 'required',
+            'account_no' => 'required'
         ];
     }
 }

@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Delivery extends Model
 {
     use HasFactory;
+
+    public function booking ()
+    {
+        return $this->belongsTo('App\Models\Booking');
+    }
+
+    public function gatepasses(){
+        return $this->hasMany('App\Models\Gatepass');
+    }
 }

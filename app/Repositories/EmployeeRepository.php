@@ -6,7 +6,10 @@ namespace App\Repositories;
 
 use App\Handlers\UserTokenHandler;
 use App\Models\Employee;
+use App\Models\Employeesalary;
+use App\Models\User;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
+use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 
 class EmployeeRepository implements EmployeeRepositoryInterface
@@ -18,6 +21,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         $user = $userTokenHandler->createUser($request['nid'], $request['name'], $request['phone'], $request['name'] . '_' . $request['phone']);
         $newEmployee = new Employee();
         $newEmployee->user_id = $user->id;
+        $newEmployee->name = $request['name'];
         $newEmployee->designation = $request['designation'];
         $newEmployee->father_name = $request['father_name'];
         $newEmployee->mother_name = $request['mother_name'];
@@ -32,4 +36,20 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         return $newEmployee;
     }
 
+    public function getEmployeesByRole($role)
+    {
+        // TODO: Implement getEmployeesByRole() method.
+        $users = User::role($role)->with('employee')->paginate(15);
+        //$employees = Employee::where('role', $role)->paginate(15);
+        return $users;
+    }
+
+    public function getEmployees()
+    {
+        // TODO: Implement getEmployees() method.
+        $employees = Employee::paginate(15);
+        return $employees;
+    }
 }
+
+
