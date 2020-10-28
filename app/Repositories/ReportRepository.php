@@ -35,7 +35,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function getBanks()
     {
         // TODO: Implement getBanks() method.
-        $banks = Bank::get();
+        $banks = Bank::orderBy('name', 'asc')->get();
         return $banks;
     }
 

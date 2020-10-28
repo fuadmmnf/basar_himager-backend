@@ -20,7 +20,7 @@
         }
 
         .bordertable td, th {
-            border: 0;
+            border: 1px solid black;
         }
 
         .present {
@@ -115,6 +115,10 @@
 
 <div class="page-break"></div>
 
+<div style="text-align: center; color: darkblue">
+    <h3>Bank Transactions </h3>
+</div>
+
 <table class="bordertable">
     <thead>
     <tr>
@@ -148,10 +152,10 @@
     </tbody>
 </table>
 
-
 <htmlpageheader name="page-header">
 
 </htmlpageheader>
+
 
 
 <htmlpagefooter name="page-footer">
