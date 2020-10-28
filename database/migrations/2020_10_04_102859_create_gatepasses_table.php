@@ -16,8 +16,8 @@ class CreateGatepassesTable extends Migration
         Schema::create('gatepasses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('delivery_id');
-            $table->dateTime('gatepass_time');
             $table->string('gatepass_no')->unique();
+            $table->dateTime('gatepass_time');
             $table->json('transport');
             $table->timestamps();
 

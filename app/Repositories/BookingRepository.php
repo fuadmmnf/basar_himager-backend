@@ -8,6 +8,9 @@ use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Models\Receive;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
+use App\Handlers\ClientHandler;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class BookingRepository implements BookingRepositoryInterface
 {
@@ -57,5 +60,38 @@ class BookingRepository implements BookingRepositoryInterface
             ->get();
         return $bookings;
     }
+    public function getBookingDetail($booking_no){
+        $booking = Booking::where('booking_no', $booking_no)->firstOrFail();
+        $booking->load('client');
+        return $booking;
+    }
+
+    public function getPaginatedRecentBookings()
+    {
+        $bookings = Booking::orderByDesc('booking_time')->with('client')->paginate(25);
+        return $bookings;
+    }
+
+    public function saveBooking(array $request)
+    {
+        $clientHandler = new ClientHandler();
+
+        $client = $clientHandler->saveClient($request['nid'], $request['name'], $request['phone'], $request['father_name'], $request['address']);
+        $newBooking = new Booking();
+
+        $newBooking->client_id = $client->id;
+        $newBooking->booking_no = Str::random(8);
+        $newBooking->type = $request['type'];
+        $newBooking->advance_payment = $request['advance_payment'];
+        $newBooking->quantity = $request['quantity'];
+        $newBooking->discount = $request['discount'];
+        $newBooking->booking_time = Carbon::parse($request['booking_time']);
+
+        $newBooking->save();
+
+        return $newBooking;
+
+    }
+
 
 }

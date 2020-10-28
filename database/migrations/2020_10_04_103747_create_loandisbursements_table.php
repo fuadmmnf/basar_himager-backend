@@ -16,6 +16,7 @@ class CreateLoandisbursementsTable extends Migration
         Schema::create('loandisbursements', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id');
+            $table->string('loandisbursement_no')->unique();
             $table->double('amount');
             $table->double('amount_left');
             $table->dateTime('payment_date');
