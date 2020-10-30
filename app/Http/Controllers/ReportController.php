@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Receive;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use PDF;
 use Illuminate\Http\Request;
@@ -14,22 +15,36 @@ class ReportController extends Controller
     {
         $this->reportRepository = $reportRepository;
     }
+
+    public function downloadLoadingReport($receive_no)
+    {
+        $receive = Receive::where('receiving_no', $receive_no)->firstOrFail();
+        $receive->load('booking', 'booking.client');
+        $pdf = PDF::loadView('loading_report', [
+            'receive' => $receive,
+        ]);
+        return $pdf->stream();
+    }
+
+
     public function downloadSalaryReport($month)
     {
         $salaries = $this->reportRepository->fetchAllSalaries($month);
-        $pdf = PDF::loadView('salary_report',[
+        $pdf = PDF::loadView('salary_report', [
             'salaries' => $salaries,
         ]);
         return $pdf->stream();
         //return $pdf->download('employees_salary_report');
     }
 
-    public function downloadBankDepositReport($month) {
+    public function downloadBankDepositReport($month)
+    {
         $deposits = $this->reportRepository->getDeposits($month);
-        $pdf = PDF::loadView('bankdeposit_report',[
+        $pdf = PDF::loadView('bankdeposit_report', [
             'deposits' => $deposits,
         ]);
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
+
 }
