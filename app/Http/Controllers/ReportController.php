@@ -16,15 +16,7 @@ class ReportController extends Controller
         $this->reportRepository = $reportRepository;
     }
 
-    public function downloadLoadingReport($receive_no)
-    {
-        $receive = Receive::where('receiving_no', $receive_no)->firstOrFail();
-        $receive->load('booking', 'booking.client');
-        $pdf = PDF::loadView('loading_report', [
-            'receive' => $receive,
-        ]);
-        return $pdf->stream();
-    }
+
 
 
     public function downloadSalaryReport($month)
