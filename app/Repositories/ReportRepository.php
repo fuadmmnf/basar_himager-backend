@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Exceptions\UserTokenHandler;
 use App\Models\Bank;
+use App\Models\Dailyexpense;
 use App\Models\Bankdeposit;
 use App\Models\Employee;
 use App\Models\Employeesalary;
@@ -37,6 +38,11 @@ class ReportRepository implements ReportRepositoryInterface
         // TODO: Implement getBanks() method.
         $banks = Bank::orderBy('name', 'asc')->get();
         return $banks;
+    }
+
+    public function fetchDailyexpenses($month){
+        $expenses = Dailyexpense::whereMonth('date',Carbon::parse($month))->with('expensecategory');
+        return $expenses;
     }
 
 }

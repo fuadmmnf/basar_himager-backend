@@ -34,4 +34,12 @@ class ReportController extends Controller
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
+
+    public function downloadExpenseReport($month) {
+        $expenses = $this->reportRepository->fetchDailyexpenses($month);
+        $pdf = PDF::loadView('expense_report',[
+            'expenses' => $expenses,
+        ]);
+        return $pdf->stream();
+    }
 }

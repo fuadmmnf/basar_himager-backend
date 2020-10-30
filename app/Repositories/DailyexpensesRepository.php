@@ -16,6 +16,7 @@ class DailyexpensesRepository implements DailyexpensesRepositoryInterface
     {
         $newDailyexpenses = new Dailyexpense();
         $newDailyexpenses->expensecategory_id = $request['expensecategory_id'];
+        $newDailyexpenses->type = $request['type'];
         $newDailyexpenses->voucher_no = $request['voucher_no'];
         $newDailyexpenses->date = Carbon::parse($request['date']);
         $newDailyexpenses->amount = $request['amount'];
