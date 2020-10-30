@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Bank;
+namespace App\Http\Requests\Expensecategory;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBankRequest extends FormRequest
+class CreateExpensecategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,9 @@ class CreateBankRequest extends FormRequest
      */
     public function authorize()
     {
-       return true;
+        $user = auth()->guard('api')->user();
+
+        return $user != null && $user->can('crud:account');
     }
 
     /**
@@ -24,9 +26,8 @@ class CreateBankRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'account_no' => 'required',
-            'total' => 'required| numeric',
+            'type' => 'required',
+            'category' => 'sometimes',
         ];
     }
 }

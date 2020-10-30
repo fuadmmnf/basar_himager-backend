@@ -17,6 +17,7 @@ class CreateBanksTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('account_no');
+            $table->double('total')->default(0);
             $table->timestamps();
         });
     }

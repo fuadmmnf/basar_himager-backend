@@ -8,5 +8,7 @@ interface ReportRepositoryInterface
 {
     public function fetchAllSalaries($month);
     public function getDeposits($month);
+    public function getBanks();
+
 
 }

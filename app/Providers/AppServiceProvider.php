@@ -18,11 +18,16 @@ use App\Repositories\ReportRepository;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
 use App\Repositories\Interfaces\LoancollectionRepositoryInterface;
+use App\Repositories\Interfaces\DeliveryRepositoryInterface;
+use App\Repositories\Interfaces\ExpensecategoryRepositoryInterface;
+use App\Repositories\Interfaces\DailyexpensesRepositoryInterface;
+use App\Repositories\DailyexpensesRepository;
+use App\Repositories\DeliveryRepository;
 use App\Repositories\LoancollectionRepository;
 use App\Repositories\LoandisbursementRepository;
 use App\Repositories\ReceiveRepository;
 use App\Repositories\UserRepository;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;use function Symfony\Component\String\u;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,6 +49,9 @@ class AppServiceProvider extends ServiceProvider
             DeliveryRepositoryInterface::class,
             LoandisbursementRepositoryInterface::class,
             LoancollectionRepositoryInterface::class,
+            DeliveryRepositoryInterface::class,
+            ExpensecategoryRepositoryInterface::class,
+            DailyexpensesRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -57,6 +65,9 @@ class AppServiceProvider extends ServiceProvider
             DeliveryRepository::class,
             LoandisbursementRepository::class,
             LoancollectionRepository::class,
+            DeliveryRepository::class,
+            ExpensecategoryRepository::class,
+            DailyexpensesRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {

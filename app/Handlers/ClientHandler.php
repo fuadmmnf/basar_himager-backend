@@ -8,6 +8,7 @@ use App\Models\Client;
 
 class ClientHandler
 {
+
     public function saveClient($nid, $name, $phone, $father_name, $address): Client {
         $existingClient = Client::where('nid', $nid)->first();
         if($existingClient){

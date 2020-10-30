@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Bank;
+namespace App\Http\Requests\Dailyexpenses;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BankDepositRequest extends FormRequest
+class CreateDailyexpensesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,9 @@ class BankDepositRequest extends FormRequest
      */
     public function authorize()
     {
-       return true;
+        $user = auth()->guard('api')->user();
+
+        return $user != null && $user->can('crud:account');
     }
 
     /**
@@ -24,10 +26,10 @@ class BankDepositRequest extends FormRequest
     public function rules()
     {
         return [
-            'bank_id' => 'required',
-            'si_no' => 'required',
-            'branch' => 'required',
-            'amount' => 'required| numeric',
+            'expensecategory_id' => 'required | numeric',
+            'voucher_no' => 'required',
+            'date' => 'required',
+            'amount' => 'required | numeric',
         ];
     }
 }

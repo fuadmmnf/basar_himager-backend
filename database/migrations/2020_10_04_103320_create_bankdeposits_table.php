@@ -17,6 +17,7 @@ class CreateBankdepositsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('bank_id');
             $table->string('si_no');
+            $table->integer('type')->default(0); // 0=> deposit, 1=> withdraw
             $table->string('branch');
             $table->double('amount');
             $table->timestamps();
