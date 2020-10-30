@@ -4,7 +4,7 @@ namespace App\Http\Requests\Bank;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BankDepositRequest extends FormRequest
+class BankTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,6 +26,7 @@ class BankDepositRequest extends FormRequest
         return [
             'bank_id' => 'required',
             'si_no' => 'required',
+            'type' => 'required| numeric',
             'branch' => 'required',
             'amount' => 'required| numeric',
         ];

@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Exceptions\UserTokenHandler;
+use App\Models\Bank;
 use App\Models\Bankdeposit;
 use App\Models\Employee;
 use App\Models\Employeesalary;
@@ -29,6 +30,13 @@ class ReportRepository implements ReportRepositoryInterface
         // TODO: Implement getDeposits() method.
         $deposits = Bankdeposit::whereMonth('created_at',Carbon::parse($month))->with('bank')->get();
         return $deposits;
+    }
+
+    public function getBanks()
+    {
+        // TODO: Implement getBanks() method.
+        $banks = Bank::orderBy('name', 'asc')->get();
+        return $banks;
     }
 
 }

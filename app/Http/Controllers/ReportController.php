@@ -26,8 +26,10 @@ class ReportController extends Controller
 
     public function downloadBankDepositReport($month) {
         $deposits = $this->reportRepository->getDeposits($month);
+        $banks = $this->reportRepository->getBanks();
         $pdf = PDF::loadView('bankdeposit_report',[
             'deposits' => $deposits,
+            'banks' => $banks,
         ]);
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');

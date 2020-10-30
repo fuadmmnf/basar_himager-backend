@@ -17,6 +17,7 @@ class BankRepository implements BankRepositoryInterface
         $newBank = new Bank();
         $newBank->name = $request['name'];
         $newBank->account_no = $request['account_no'];
+        $newBank->total = $request['total'];
         $newBank->save();
         return $newBank;
     }
@@ -32,12 +33,26 @@ class BankRepository implements BankRepositoryInterface
     {
         // TODO: Implement addBankDeposit() method.
         $bank = Bank::findOrFail($request['bank_id']);
+
+//        if ($request['type'] == 0)
+//        {
+//            Bank::where('id',$request['bank_id'])->update(array('total' => $bank->total + $request['amount']));
+//        }
+//        else if ($request['type'] == 1)
+//        {
+//            Bank::where('id',$request['bank_id'])->update(array('total' => $bank->total - $request['amount']));
+//        }
         $newBankDeposit = new Bankdeposit();
         $newBankDeposit->bank_id = $bank->id;
         $newBankDeposit->si_no = $request['si_no'];
+        $newBankDeposit->type = $request['type'];
         $newBankDeposit->branch = $request['branch'];
         $newBankDeposit->amount = $request['amount'];
         $newBankDeposit->save();
+
+        $bank->total += $request['type'] ? -$newBankDeposit->amount : $newBankDeposit->amount;
+        $bank->save();
+
         return $newBankDeposit;
 
     }
