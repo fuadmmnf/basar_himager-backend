@@ -9,6 +9,7 @@ use App\Models\Bank;
 use App\Models\Bankdeposit;
 use App\Models\Employee;
 use App\Models\Employeesalary;
+use App\Models\Receive;
 use App\Models\User;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
@@ -38,6 +39,18 @@ class ReportRepository implements ReportRepositoryInterface
         $banks = Bank::orderBy('name', 'asc')->get();
         return $banks;
     }
+
+    public function fetchReceiveReceiptInfo($id)
+    {
+        $receives = Receive::where('id',$id)
+            ->with('booking')
+            ->with('booking.client')->first();
+//        $receives = Receive::
+//            with('booking')
+//            ->with('booking.client')->get();
+        return $receives;
+    }
+
 
 }
 
