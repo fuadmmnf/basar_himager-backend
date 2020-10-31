@@ -89,68 +89,31 @@
 <table class="bordertable">
     <thead>
     <tr>
+        <th>Si No.</th>
         <th>Type</th>
-        <th>Category</th>
         <th>Amount</th>
     </tr>
 
     </thead>
     <tbody>
     @if(count($expenses))
+        @php
+            $counter=1;
+        @endphp
     @foreach($expenses as $expense)
     <tr>
+        <td>{{$counter++}}</td>
         <td>{{$expense->type}}</td>
-        <td>{{$expense->category}}</td>
-        <td>{{$bank->amount}}</td>
+        <td>{{$expense->amount}}</td>
     </tr>
     @endforeach
     <tr>
-        <td></td>
-        <td> <b>TOTAL:</b></td>
-        <td> <b>{{$expenses->sum('amount')}}</b></td>
+        <td colspan="2"></td>
+        <td> <b>TOTAL:{{$expenses->sum('amount')}}</b></td>
     </tr>
     @endif
     </tbody>
 </table>
-
-<!--<div class="page-break"></div>-->
-<!---->
-<!--<div style="text-align: center; color: darkblue">-->
-<!--    <h3>Bank Transactions </h3>-->
-<!--</div>-->
-<!---->
-<!--<table class="bordertable">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th>Bank</th>-->
-<!--        <th>Account No</th>-->
-<!--        <th>SI No</th>-->
-<!--        <th>Branch </th>-->
-<!--        <th>Amount</th>-->
-<!--    </tr>-->
-<!---->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    @if(count($deposits))-->
-<!--    @foreach($deposits as $deposit)-->
-<!--    <tr>-->
-<!--        <td>{{$deposit->bank->name}}</td>-->
-<!--        <td>{{$deposit->bank->account_no}}</td>-->
-<!--        <td>{{$deposit->si_no}}</td>-->
-<!--        <td>{{$deposit->branch}}</td>-->
-<!--        <td>{{$deposit->amount}}</td>-->
-<!--    </tr>-->
-<!--    @endforeach-->
-<!--    <tr>-->
-<!--        <td></td>-->
-<!--        <td></td>-->
-<!--        <td> </td>-->
-<!--        <td> <b>TOTAL:</b></td>-->
-<!--        <td> <b>{{$deposits->sum('amount')}}</b></td>-->
-<!--    </tr>-->
-<!--    @endif-->
-<!--    </tbody>-->
-<!--</table>-->
 
 <htmlpageheader name="page-header">
 
