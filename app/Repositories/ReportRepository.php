@@ -11,6 +11,7 @@ use App\Models\Bankdeposit;
 use App\Models\Employee;
 use App\Models\Employeesalary;
 use App\Models\Expensecategory;
+use App\Models\Receive;
 use App\Models\User;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
@@ -59,6 +60,17 @@ class ReportRepository implements ReportRepositoryInterface
 
         }
         return $expensecategories;
+    }
+
+    public function fetchReceiveReceiptInfo($id)
+    {
+        $receives = Receive::where('id',$id)
+            ->with('booking')
+            ->with('booking.client')->first();
+//        $receives = Receive::
+//            with('booking')
+//            ->with('booking.client')->get();
+        return $receives;
     }
 
 }

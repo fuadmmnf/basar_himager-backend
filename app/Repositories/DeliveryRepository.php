@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 
 class DeliveryRepository implements DeliveryRepositoryInterface
 {
+
+
     public function getRecentDeliveries()
     {
         $deliveries = Delivery::orderBy('delivery_time')
@@ -46,6 +48,13 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $booking->save();
 
         return $newDelivery;
+    }
+
+
+    public function getGatepassDetails($gatepass_no){
+        $gatepass = Gatepass::where('gatepass_no', $gatepass_no)->firstOrFail();
+        $gatepass->load('receive', 'receive.booking');
+        return $gatepass;
     }
 
     public function saveGatepass(array $request)
