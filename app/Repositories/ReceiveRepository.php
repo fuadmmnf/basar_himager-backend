@@ -11,6 +11,13 @@ use Illuminate\Support\Str;
 
 class ReceiveRepository implements ReceiveRepositoryInterface
 {
+
+    public function getReceiveDetails($receive_no){
+        $receive = Receive::where('receiving_no', $receive_no)->firstOrFail();
+        $receive->load('booking', 'booking.client');
+        return $receive;
+    }
+
     public function getRecentReceives()
     {
         $receives = Receive::orderBy('receiving_time')
