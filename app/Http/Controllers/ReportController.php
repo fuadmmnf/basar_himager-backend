@@ -41,5 +41,14 @@ class ReportController extends Controller
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
+    public function getReceiveReceipt($id)
+    {
+        $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($id);
+        $pdf = PDF::loadView('receive_receipt',[
+            'receiptinfo' => $receiptinfo
+        ]);
+        return $pdf->stream();
+        //return $pdf->download('bank_deposit_report');
+    }
 
 }
