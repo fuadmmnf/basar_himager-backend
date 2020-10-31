@@ -16,6 +16,7 @@ class CreateDailyexpensesTable extends Migration
         Schema::create('dailyexpenses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('expensecategory_id');
+            $table->integer('type');
             $table->string('voucher_no')->unique();
             $table->dateTime('date');
             $table->double('amount');
