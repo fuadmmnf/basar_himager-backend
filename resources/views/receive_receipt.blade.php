@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Salary Report</title>
+    <title>Loading Receipt</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
