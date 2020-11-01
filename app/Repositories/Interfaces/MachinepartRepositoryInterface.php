@@ -6,5 +6,7 @@ namespace App\Repositories\Interfaces;
 
 interface MachinepartRepositoryInterface
 {
-    public function createMachinepart(array $request);
+    public function saveMachinepart(array $request);
+
+    public function saveMachinepartEntries(array $request);
 }

@@ -55,7 +55,6 @@ Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 
 Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliveryGatepass']);
 
 
-
 //loanDisbursements
 Route::get('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'fetchLoandisbursements']);
 Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'createLoan']);
@@ -67,11 +66,14 @@ Route::post('loancollections', [\App\Http\Controllers\Api\LoancollectionControll
 Route::post('delivery', [\App\Http\Controllers\Api\DeliveryController::class, 'createDelivery']);
 
 //dailyexpenses
-Route::post('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class,'createDailyexpenses']);
+Route::post('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class, 'createDailyexpenses']);
 Route::get('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class, 'fetchDailyexpenses']);
 
-//expensescategory
-Route::post('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryController::class,'createExpensecategory']);
-Route::get('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryController::class,'fetchExpensesCategory']);
+//expensescategories
+Route::post('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryController::class, 'createExpensecategory']);
+Route::get('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryController::class, 'fetchExpensesCategory']);
 
 
+//machineparts
+Route::post('machineparts', [\App\Http\Controllers\Api\MachinepartController::class, 'createMachinepart']);
+Route::post('machinepartentries', [\App\Http\Controllers\Api\MachinepartController::class, 'createMachinepartEntries']);
