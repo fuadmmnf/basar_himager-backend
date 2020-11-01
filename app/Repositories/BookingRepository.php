@@ -17,7 +17,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getPaginatedReceivesByBookingId($booking_id)
     {
-        // TODO: Implement getPaginatedReceivesByBookingId() method.
         $booking = Booking::findOrFail($booking_id);
         $receives = $booking->receives()->paginate(15);
 
@@ -26,7 +25,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getPaginatedDeliveriesByBookingId($booking_id)
     {
-        // TODO: Implement getPaginatedDeliveriesByBookingId() method.
         $booking = Booking::findOrFail($booking_id);
         $deliveries = $booking->deliveries()->paginate(15);
 
@@ -35,7 +33,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getPaginatedLoanDisbursementByBookingId($booking_id)
     {
-        // TODO: Implement getPaginatedLoanDisbursementByBookingId() method.
         $booking = Booking::findOrFail($booking_id);
         $disbursements = $booking->loanDisbursements()->paginate(15);
         return $disbursements;
@@ -43,7 +40,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getPaginatedLoanCollectionByBookingId($booking_id)
     {
-        // TODO: Implement getPaginatedLoanDisbursementByBookingId() method.
         $booking = Booking::findOrFail($booking_id);
         $collections = $booking->loanCollections()->paginate(15);
         return $collections;
@@ -51,7 +47,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getBookingListBySearchedQuery($query)
     {
-        // TODO: Implement getBookingListBySearchedQuery() method.
         $bookings = Booking::select('bookings.*')
             ->where('bookings.booking_no', 'LIKE', '%' . $query . '%')
             ->join('clients', 'clients.id', '=', 'bookings.client_id')
@@ -80,6 +75,7 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking = new Booking();
 
         $newBooking->client_id = $client->id;
+//        $newBooking->booking_no = Str::random(8);
         $newBooking->booking_no = Str::random(8);
         $newBooking->type = $request['type'];
         $newBooking->advance_payment = $request['advance_payment'];

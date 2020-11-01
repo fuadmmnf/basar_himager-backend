@@ -10,6 +10,7 @@ interface ReportRepositoryInterface
     public function fetchDailyexpenses($month);
     public function getDeposits($month);
     public function getBanks();
-
+    public function fetchReceiveReceiptInfo($id);
+    public function fetchGatepass($delivey_id);
 
 }

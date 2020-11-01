@@ -8,9 +8,11 @@ use App\Exceptions\UserTokenHandler;
 use App\Models\Bank;
 use App\Models\Dailyexpense;
 use App\Models\Bankdeposit;
+use App\Models\Gatepass;
 use App\Models\Employee;
 use App\Models\Employeesalary;
 use App\Models\Expensecategory;
+use App\Models\Receive;
 use App\Models\User;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
@@ -61,6 +63,28 @@ class ReportRepository implements ReportRepositoryInterface
         return $expensecategories;
     }
 
+
+    public function fetchReceiveReceiptInfo($id)
+    {
+        $receives = Receive::where('id',$id)
+            ->with('booking')
+            ->with('booking.client')->first();
+//        $receives = Receive::
+//            with('booking')
+//            ->with('booking.client')->get();
+        return $receives;
+    }
+
+
+    public function fetchGatepass($delivey_id)
+    {
+        // TODO: Implement fetchGatepass() method.
+        $gatepass= Gatepass::where('delivery_id', $delivey_id)
+            ->with('delivery')
+            ->with('delivery.booking')
+            ->with('delivery.booking.client')->first();
+        return $gatepass;
+    }
 }
 
 
