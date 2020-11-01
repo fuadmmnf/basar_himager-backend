@@ -13,7 +13,7 @@ class MachinepartRepository implements MachinepartRepositoryInterface
 {
     public function getMachineparts()
     {
-        $machineparts = Machinepart::paginate(30);
+        $machineparts = Machinepart::all();
         return $machineparts;
     }
 
