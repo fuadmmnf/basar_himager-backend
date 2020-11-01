@@ -8,7 +8,6 @@ use App\Models\Delivery;
 use App\Models\Gatepass;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 class DeliveryRepository implements DeliveryRepositoryInterface
 {
