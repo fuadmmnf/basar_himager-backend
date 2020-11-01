@@ -63,8 +63,8 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $delivery = Delivery::findOrFail($request['delivery_id']);
         $newGatepass = new Gatepass();
         $newGatepass->delivery_id = $delivery->id;
-        $newGatepass->gatepass_no = substr(md5($request['delivery_id']), 0, 8);
         $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time']);
+        $newGatepass->gatepass_no = sprintf('%04d', Gatepass::whereYear('gatepass_time', $newGatepass->gatepass_time)->count()) . $newGatepass->gatepass_time->year % 100;
         $newGatepass->transport = $request['transport'];
         $newGatepass->save();
 
