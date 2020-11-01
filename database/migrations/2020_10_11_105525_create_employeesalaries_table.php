@@ -16,9 +16,10 @@ class CreateEmployeesalariesTable extends Migration
         Schema::create('employeesalaries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employee_id');
-            $table->integer('basic_salary');
-            $table->integer('special_salary');
-            $table->integer('eid_bonus');
+            $table->integer('type'); // 0 => regular, 1 => advance
+            $table->integer('amount');
+            $table->integer('bonus');
+            $table->string('remark');
             $table->dateTime('payment_time');
             $table->timestamps();
 

@@ -27,9 +27,10 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
         $employee = Employee::findOrFail($request['employee_id']);
         $newEmployeeSalary = new Employeesalary();
         $newEmployeeSalary->employee_id = $employee->id;
-        $newEmployeeSalary->basic_salary = $request['basic_salary'];
-        $newEmployeeSalary->special_salary = $request['special_salary'];
-        $newEmployeeSalary->eid_bonus = $request['eid_bonus'];
+        $newEmployeeSalary->type = $request['type'];
+        $newEmployeeSalary->amount = $request['amount'];
+        $newEmployeeSalary->bonus = $request['bonus'];
+        $newEmployeeSalary->remark = $request['remark'];
         $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time']);
         $newEmployeeSalary->save();
         return $newEmployeeSalary;

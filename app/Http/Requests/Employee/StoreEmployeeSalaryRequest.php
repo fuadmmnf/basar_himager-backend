@@ -25,9 +25,10 @@ class StoreEmployeeSalaryRequest extends FormRequest
     {
         return [
             'employee_id' => 'required| numeric',
-            'basic_salary' => 'required| numeric',
-            'special_salary' => 'required| numeric',
-            'eid_bonus' => 'required| numeric',
+            'type' => 'required| numeric',
+            'amount' => 'required| numeric',
+            'bonus' => 'required| numeric',
+            'remark' => 'required',
             'payment_time' => 'required',
         ];
     }
