@@ -12,7 +12,8 @@ use Illuminate\Support\Str;
 class ReceiveRepository implements ReceiveRepositoryInterface
 {
 
-    public function getReceiveDetails($receive_no){
+    public function getReceiveDetails($receive_no)
+    {
         $receive = Receive::where('receiving_no', $receive_no)->firstOrFail();
         $receive->load('booking', 'booking.client');
         return $receive;
@@ -33,8 +34,8 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         $booking = Booking::findOrFail($request['booking_id']);
         $newReceive = new Receive();
         $newReceive->booking_id = $booking->id;
-        $newReceive->receiving_no = Str::random(8);
         $newReceive->receiving_time = Carbon::parse($request['receiving_time']);
+        $newReceive->receiving_no = sprintf('%04d', Receive::whereYear('receiving_time', $newReceive->receiving_time)->count()) . $newReceive->receiving_time->year % 100;
         $newReceive->quantity = $request['quantity'];
         $newReceive->potatoe_type = $request['potatoe_type'];
         $newReceive->transport_type = $request['transport_type'];

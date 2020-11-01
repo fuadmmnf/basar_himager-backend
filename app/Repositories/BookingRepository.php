@@ -2,6 +2,7 @@
 
 
 namespace App\Repositories;
+
 use App\Models\Booking;
 use App\Models\Delivery;
 use App\Models\Loancollection;
@@ -55,7 +56,9 @@ class BookingRepository implements BookingRepositoryInterface
             ->get();
         return $bookings;
     }
-    public function getBookingDetail($booking_no){
+
+    public function getBookingDetail($booking_no)
+    {
         $booking = Booking::where('booking_no', $booking_no)->firstOrFail();
         $booking->load('client', 'loandisbursements');
         return $booking;
@@ -75,13 +78,15 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking = new Booking();
 
         $newBooking->client_id = $client->id;
-//        $newBooking->booking_no = Str::random(8);
-        $newBooking->booking_no = Str::random(8);
+        $newBooking->booking_time = Carbon::parse($request['booking_time']);
         $newBooking->type = $request['type'];
+
+        $newBooking->booking_no = ($newBooking->type) ? 'A' : 'N'
+            . sprintf('%04d', Booking::whereYear('booking_time', $newBooking->booking_time)->count())
+            . $newBooking->booking_time->year % 100;
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];
         $newBooking->discount = $request['discount'];
-        $newBooking->booking_time = Carbon::parse($request['booking_time']);
 
         $newBooking->save();
 
