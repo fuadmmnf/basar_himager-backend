@@ -18,7 +18,13 @@ class MachinepartController extends Controller
 
     public function __construct(MachinepartRepositoryInterface $machinepartRepository)
     {
+        $this->middleware('auth:api');
         $this->machinepartRepository = $machinepartRepository;
+    }
+
+    public function fetchMachineparts(){
+        $machineparts = $this->machinepartRepository->getMachineparts();
+        return response()->json($machineparts);
     }
 
     public function createMachinepart(CreateMachinepartRequest $request)

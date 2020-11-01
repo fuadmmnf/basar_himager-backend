@@ -75,5 +75,6 @@ Route::get('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryContro
 
 
 //machineparts
+Route::get('machineparts', [\App\Http\Controllers\Api\MachinepartController::class, 'fetchMachineparts']);
 Route::post('machineparts', [\App\Http\Controllers\Api\MachinepartController::class, 'createMachinepart']);
 Route::post('machinepartentries', [\App\Http\Controllers\Api\MachinepartController::class, 'createMachinepartEntries']);

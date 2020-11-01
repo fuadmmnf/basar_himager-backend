@@ -11,6 +11,12 @@ use Carbon\Carbon;
 
 class MachinepartRepository implements MachinepartRepositoryInterface
 {
+    public function getMachineparts()
+    {
+        $machineparts = Machinepart::paginate(30);
+        return $machineparts;
+    }
+
     public function saveMachinepart(array $request)
     {
         $newMachinepart = new Machinepart();
@@ -29,7 +35,7 @@ class MachinepartRepository implements MachinepartRepositoryInterface
         $newMachinepartEntry->time = Carbon::parse($request['time']);
         $newMachinepartEntry->save();
 
-        $machinepart->stock += ($newMachinepartEntry->type)? $newMachinepartEntry->quantity: -$newMachinepartEntry->quantity;
+        $machinepart->stock += ($newMachinepartEntry->type) ? $newMachinepartEntry->quantity : -$newMachinepartEntry->quantity;
         $machinepart->save();
 
         return $newMachinepartEntry;
