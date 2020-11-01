@@ -18,6 +18,7 @@ class CreateMachinepartentriesTable extends Migration
             $table->unsignedBigInteger('machinepart_id');
             $table->integer('type'); // 0 => usage, 1 => entry
             $table->integer('quantity');
+            $table->dateTime('time');
             $table->timestamps();
 
             $table->foreign('machinepart_id')->references('id')->on('machineparts');

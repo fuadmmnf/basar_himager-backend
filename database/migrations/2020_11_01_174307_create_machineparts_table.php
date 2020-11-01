@@ -16,7 +16,7 @@ class CreateMachinepartsTable extends Migration
         Schema::create('machineparts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('stock');
+            $table->integer('stock')->default(0);
             $table->timestamps();
         });
     }
