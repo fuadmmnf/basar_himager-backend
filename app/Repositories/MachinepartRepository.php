@@ -29,6 +29,7 @@ class MachinepartRepository implements MachinepartRepositoryInterface
     public function getMachinepartEntries()
     {
         $machinepartEntries = Machinepartentry::orderByDesc('time')->paginate(30);
+        $machinepartEntries->load('machinepart');
         return $machinepartEntries;
     }
 
