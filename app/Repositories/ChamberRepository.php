@@ -3,14 +3,40 @@
 
 namespace App\Repositories;
 
-
-use App\Models\Machinepart;
-use App\Models\Machinepartentry;
+use App\Models\Chamber;
+use App\Models\Chamberentry;
 use App\Repositories\Interfaces\ChamberRepositoryInterface;
-use App\Repositories\Interfaces\MachinepartRepositoryInterface;
 use Carbon\Carbon;
 
 class ChamberRepository implements ChamberRepositoryInterface
 {
+    public function getChambers()
+    {
+        $chambers = Chamber::all();
+        return $chambers;
+    }
+
+    public function getChamberEntries()
+    {
+        $chamberentries = Chamberentry::orderByDesc('date')->paginate(30);
+        $chamberentries->load('chamber');
+        return $chamberentries;
+    }
+
+    public function saveChamberStageChange(array $request)
+    {
+        $chamber = Chamber::findOrFail($request['chamber_id']);
+
+        $newChamberentry = new Chamberentry();
+        $newChamberentry->chamber_id = $chamber->id;
+        $newChamberentry->stage = $request['stage'];
+        $newChamberentry->date = Carbon::parse($request['date']);
+        $newChamberentry->save();
+
+        $chamber->stage = $newChamberentry->stage = $request['stage'];
+        $chamber->save();
+
+        return $newChamberentry;
+    }
 
 }
