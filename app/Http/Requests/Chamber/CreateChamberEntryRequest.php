@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Machinepart;
+namespace App\Http\Requests\Chamber;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateMachinepartEntriesRequest extends FormRequest
+class CreateChamberEntryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,9 @@ class CreateMachinepartEntriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'machinepart_id' => 'required| numeric',
-            'type' => 'required| numeric',
-            'quantity' => 'required| numeric',
-            'time' => 'required'
+            'chamber_id' => 'required| numeric',
+            'stage' => 'required',
+            'date' => 'required'
         ];
     }
 }
