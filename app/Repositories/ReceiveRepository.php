@@ -7,7 +7,6 @@ use App\Models\Booking;
 use App\Models\Receive;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 class ReceiveRepository implements ReceiveRepositoryInterface
 {
