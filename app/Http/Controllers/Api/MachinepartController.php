@@ -22,9 +22,16 @@ class MachinepartController extends Controller
         $this->machinepartRepository = $machinepartRepository;
     }
 
-    public function fetchMachineparts(){
+    public function fetchMachineparts()
+    {
         $machineparts = $this->machinepartRepository->getMachineparts();
         return response()->json($machineparts);
+    }
+
+    public function fetchMachinepartEntries()
+    {
+        $machinepartentries = $this->machinepartRepository->getMachinepartEntries();
+        return $machinepartentries;
     }
 
     public function createMachinepart(CreateMachinepartRequest $request)

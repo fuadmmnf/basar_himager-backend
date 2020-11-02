@@ -25,6 +25,13 @@ class MachinepartRepository implements MachinepartRepositoryInterface
         return $newMachinepart;
     }
 
+
+    public function getMachinepartEntries()
+    {
+        $machinepartEntries = Machinepartentry::orderByDesc('time')->paginate(30);
+        return $machinepartEntries;
+    }
+
     public function saveMachinepartEntries(array $request)
     {
         $machinepart = Machinepart::findOrFail($request['machinepart_id']);

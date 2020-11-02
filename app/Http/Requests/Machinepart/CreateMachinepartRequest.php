@@ -25,7 +25,7 @@ class CreateMachinepartRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required| unqiue:machineparts'
+            'name' => 'required| unique:machineparts'
         ];
     }
 }
