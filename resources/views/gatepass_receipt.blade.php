@@ -108,7 +108,7 @@
                 <div>
                     <p>No: {{$gatepassInfo->gatepass_no}}</p>
                     <p>Time: {{$gatepassInfo->gatepass_time}}</p>
-{{--                    <p>Transport: {{$gatepassInfo->transport}}</p>--}}
+                    <p>Transport: {{$gatepassInfo->transport['type']}}</p>
                 </div>
             </div>
         </td>
