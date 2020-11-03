@@ -21,8 +21,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //employees
 Route::get('employees/{role}', [\App\Http\Controllers\Api\EmployeeController::class, 'fetchEmployeesByRole']);
 Route::get('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'getAllEmployees']);
+Route::get('employees/{employee_id}/loans', [\App\Http\Controllers\Api\EmployeeLoanController::class, 'getLoan']);
 Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'store']);
 Route::post('employees/salaries', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'storeEmployeeSalary']);
+Route::post('employees/loans', [\App\Http\Controllers\Api\EmployeeLoanController::class, 'store']);
+Route::get('employees/{employee_id}/salaries/advances', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'getTotalAdvanceSalary']);
 
 
 //users
@@ -30,8 +33,8 @@ Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'au
 
 //banks
 Route::get('banks', [\App\Http\Controllers\Api\BankController::class, 'getAllBanks']);
-Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank']);
 Route::get('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'getBankDeposits']);
+Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank']);
 Route::post('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'storeBankDeposit']);
 
 //bookings

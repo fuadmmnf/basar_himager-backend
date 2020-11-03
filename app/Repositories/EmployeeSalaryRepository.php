@@ -27,8 +27,8 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
         $employee = Employee::findOrFail($request['employee_id']);
         $newEmployeeSalary = new Employeesalary();
         $newEmployeeSalary->employee_id = $employee->id;
-        $newEmployeeSalary->type = $request['type'];
         $newEmployeeSalary->amount = $request['amount'];
+        $newEmployeeSalary->loan_payment = $request['loan_payment'];
         $newEmployeeSalary->bonus = $request['bonus'];
         $newEmployeeSalary->remark = $request['remark'];
         $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time']);
@@ -36,6 +36,14 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
         return $newEmployeeSalary;
 
     }
+
+    public function getAdvanceSalary($employee_id)
+    {
+        // TODO: Implement getAdvanceSalary() method.
+        $advance = Employeesalary::where('employee_id', $employee_id)->sum('amount');
+        return $advance;
+    }
+
 
 }
 

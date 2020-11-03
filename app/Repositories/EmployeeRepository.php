@@ -30,6 +30,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         $newEmployee->basic_salary = $request['basic_salary'];
         $newEmployee->special_salary = $request['special_salary'];
         $newEmployee->bonus = $request['bonus'];
+        $newEmployee->loan = $request['bonus'];
         $newEmployee->save();
         $user->assignRole($request['role']);
 

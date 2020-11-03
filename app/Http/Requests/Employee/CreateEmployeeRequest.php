@@ -38,6 +38,7 @@ class CreateEmployeeRequest extends FormRequest
             'basic_salary' => 'required| numeric',
             'special_salary' => 'required| numeric',
             'bonus' => 'required| numeric',
+            'loan' => 'required| numeric',
         ];
     }
 }

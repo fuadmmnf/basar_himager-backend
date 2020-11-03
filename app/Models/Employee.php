@@ -18,4 +18,7 @@ class Employee extends Model
     public function salary(){
         return $this->hasMany('App\Models\Employeesalary');
     }
+    public function loan(){
+        return $this->hasMany('App\Models\Employeeloan');
+    }
 }

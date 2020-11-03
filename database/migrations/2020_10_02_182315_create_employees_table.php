@@ -25,6 +25,7 @@ class CreateEmployeesTable extends Migration
             $table->integer('basic_salary');
             $table->integer('special_salary');
             $table->integer('bonus');
+            $table->integer('loan');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');        });
