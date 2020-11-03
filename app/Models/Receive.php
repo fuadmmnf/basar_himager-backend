@@ -10,7 +10,7 @@ class Receive extends Model
     use HasFactory;
     protected $casts = [
         'transport' => 'array'
-    ]
+    ];
 
     public function booking ()
     {
