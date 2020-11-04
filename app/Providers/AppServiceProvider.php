@@ -6,6 +6,7 @@ use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
 use App\Repositories\ChamberRepository;
 use App\Repositories\DeliveryRepository;
+use App\Repositories\EmployeeLoanRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\EmployeeSalaryRepository;
 use App\Repositories\ExpensecategoryRepository;
@@ -13,6 +14,7 @@ use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\ChamberRepositoryInterface;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
+use App\Repositories\Interfaces\EmployeeLoanRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
@@ -56,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
             DeliveryRepositoryInterface::class,
             ExpensecategoryRepositoryInterface::class,
             DailyexpensesRepositoryInterface::class,
+            EmployeeLoanRepositoryInterface::class,
             MachinepartRepositoryInterface::class,
             ChamberRepositoryInterface::class,
         ];
@@ -74,6 +77,7 @@ class AppServiceProvider extends ServiceProvider
             DeliveryRepository::class,
             ExpensecategoryRepository::class,
             DailyexpensesRepository::class,
+            EmployeeLoanRepository::class,
             MachinepartRepository::class,
             ChamberRepository::class,
         ];
