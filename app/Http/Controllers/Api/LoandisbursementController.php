@@ -28,7 +28,7 @@ class LoandisbursementController extends Controller{
 
     public function fetchLoandisbursements(){
         $loanDisbursements = $this->loandisbursementRepository->fetchPaginatedLoanDisbursements();
-        return response()->json($loanDisbursements);
+        return response()->json($loanDisbursements, 200);
     }
 }
 

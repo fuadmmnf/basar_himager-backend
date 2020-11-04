@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeesalariesTable extends Migration
+class CreateEmployeeloansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateEmployeesalariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('employeesalaries', function (Blueprint $table) {
+        Schema::create('employeeloans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employee_id');
+            $table->integer('type'); // 0 => loan take, 1 => loan payment
             $table->integer('amount');
-            $table->integer('loan_payment');
-            $table->integer('bonus');
-            $table->string('remark');
             $table->dateTime('payment_time');
             $table->timestamps();
 
@@ -34,6 +32,6 @@ class CreateEmployeesalariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employeesalaries');
+        Schema::dropIfExists('employeeloans');
     }
 }
