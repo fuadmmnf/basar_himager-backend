@@ -25,9 +25,9 @@ class ChamberController extends Controller
         return response()->json($chambers);
     }
 
-    public function fetchChamberentries()
+    public function fetchChamberentriesByChamber($chamber_id)
     {
-        $chamberentries = $this->chamberRepository->getChamberEntries();
+        $chamberentries = $this->chamberRepository->getChamberEntriesByChamber($chamber_id);
         return response()->json($chamberentries);
     }
 
