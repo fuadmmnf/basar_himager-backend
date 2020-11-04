@@ -20,7 +20,7 @@ class CreateReceivesTable extends Migration
             $table->dateTime('receiving_time');
             $table->integer('quantity');
             $table->string('potatoe_type'); //
-            $table->string('transport_type');
+            $table->json('transport');
             $table->timestamps();
 
             $table->foreign('booking_id')->references('id')->on('bookings');

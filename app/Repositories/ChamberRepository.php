@@ -16,9 +16,10 @@ class ChamberRepository implements ChamberRepositoryInterface
         return $chambers;
     }
 
-    public function getChamberEntries()
+    public function getChamberEntriesByChamber($chamber_id)
     {
-        $chamberentries = Chamberentry::orderByDesc('date')->paginate(30);
+        $chamberentries = Chamberentry::where('chamber_id', $chamber_id)
+            ->orderByDesc('date')->paginate(10);
         $chamberentries->load('chamber');
         return $chamberentries;
     }

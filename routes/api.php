@@ -83,5 +83,5 @@ Route::post('machinepartentries', [\App\Http\Controllers\Api\MachinepartControll
 
 //chambers
 Route::get('chambers', [\App\Http\Controllers\Api\ChamberController::class, 'fetchChambers']);
-Route::get('chamberentries', [\App\Http\Controllers\Api\ChamberController::class, 'fetchChamberentries']);
+Route::get('chambers/{chamber_id}/chamberentries', [\App\Http\Controllers\Api\ChamberController::class, 'fetchChamberentriesByChamber']);
 Route::post('chamberentries', [\App\Http\Controllers\Api\ChamberController::class, 'createChamberentry']);

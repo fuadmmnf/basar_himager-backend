@@ -37,7 +37,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         $newReceive->receiving_no = sprintf('%04d', Receive::whereYear('receiving_time', $newReceive->receiving_time)->count()) . $newReceive->receiving_time->year % 100;
         $newReceive->quantity = $request['quantity'];
         $newReceive->potatoe_type = $request['potatoe_type'];
-        $newReceive->transport_type = $request['transport_type'];
+        $newReceive->transport = $request['transport'];
 
         $newReceive->save();
 
