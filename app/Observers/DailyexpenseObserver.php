@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Handlers\TransactionHandler;
 use App\Models\Dailyexpense;
 
 class DailyexpenseObserver
@@ -14,7 +15,10 @@ class DailyexpenseObserver
      */
     public function created(Dailyexpense $dailyexpense)
     {
-        //
+        $transactionHandler = new TransactionHandler();
+        $transactionHandler->createTransaction(1, $dailyexpense->amount, $dailyexpense->date,
+            $dailyexpense, 'Daily Expense'
+        );
     }
 
     /**

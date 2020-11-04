@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Handlers\TransactionHandler;
 use App\Models\Booking;
 
 class BookingObserver
@@ -14,7 +15,10 @@ class BookingObserver
      */
     public function created(Booking $booking)
     {
-        //
+        $transactionHandler = new TransactionHandler();
+        $transactionHandler->createTransaction(1, $booking->advance_payment, $booking->booking_time,
+            $booking, 'New Booking'
+        );
     }
 
     /**
