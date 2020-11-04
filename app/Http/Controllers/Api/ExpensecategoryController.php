@@ -23,7 +23,7 @@ class ExpensecategoryController extends Controller
     public function createExpensecategory(CreateExpensecategoryRequest $request){
 
         $Expensecategory = $this->expensecategoryRepository->saveExpensecategory($request->validated());
-        if($Expensecategory === 'AlreadyExisting'){
+        if($Expensecategory == 'AlreadyExisting'){
             return response()->json($Expensecategory, 204);
         }
         else return response()->json($Expensecategory, 201);

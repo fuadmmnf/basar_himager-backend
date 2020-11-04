@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Receive extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'transport' => 'array'
+    ];
 
     public function booking ()
     {

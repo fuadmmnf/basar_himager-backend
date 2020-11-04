@@ -30,7 +30,7 @@ class CreateReceiveRequest extends FormRequest
             'receiving_time' => 'required',
             'quantity' => 'required| numeric',
             'potatoe_type' => 'required',
-            'transport_type' => 'required',
+            'transport' => 'required',
         ];
     }
 }

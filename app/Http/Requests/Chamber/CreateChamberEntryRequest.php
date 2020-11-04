@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Dailyexpenses;
+namespace App\Http\Requests\Chamber;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateDailyexpensesRequest extends FormRequest
+class CreateChamberEntryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,8 +14,7 @@ class CreateDailyexpensesRequest extends FormRequest
     public function authorize()
     {
         $user = auth()->guard('api')->user();
-
-        return $user != null && $user->can('crud:account');
+        return $user != null && $user->can('crud:store');
     }
 
     /**
@@ -26,11 +25,9 @@ class CreateDailyexpensesRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required | numeric',
-            'expensecategory_id' => 'required | numeric',
-            'voucher_no' => 'required',
-            'date' => 'required',
-            'amount' => 'required | numeric',
+            'chamber_id' => 'required| numeric',
+            'stage' => 'required',
+            'date' => 'required'
         ];
     }
 }
