@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\Booking;
 
-class UserObserver
+class BookingObserver
 {
     /**
      * Handle the booking "created" event.
