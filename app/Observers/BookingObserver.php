@@ -10,21 +10,24 @@ class BookingObserver
     /**
      * Handle the booking "created" event.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param \App\Models\Booking $booking
      * @return void
      */
     public function created(Booking $booking)
     {
-        $transactionHandler = new TransactionHandler();
-        $transactionHandler->createTransaction(1, $booking->advance_payment, $booking->booking_time,
-            $booking, 'New Booking'
-        );
+        if ($booking->advance_payment > 0) {
+            $transactionHandler = new TransactionHandler();
+            $transactionHandler->createTransaction(1, $booking->advance_payment, $booking->booking_time,
+                $booking, 'New Booking'
+            );
+        }
+
     }
 
     /**
      * Handle the booking "updated" event.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param \App\Models\Booking $booking
      * @return void
      */
     public function updated(Booking $booking)
@@ -35,7 +38,7 @@ class BookingObserver
     /**
      * Handle the booking "deleted" event.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param \App\Models\Booking $booking
      * @return void
      */
     public function deleted(Booking $booking)
@@ -46,7 +49,7 @@ class BookingObserver
     /**
      * Handle the booking "restored" event.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param \App\Models\Booking $booking
      * @return void
      */
     public function restored(Booking $booking)
@@ -57,7 +60,7 @@ class BookingObserver
     /**
      * Handle the booking "force deleted" event.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param \App\Models\Booking $booking
      * @return void
      */
     public function forceDeleted(Booking $booking)

@@ -15,10 +15,13 @@ class DeliveryObserver
      */
     public function created(Delivery $delivery)
     {
-        $transactionHandler = new TransactionHandler();
-        $transactionHandler->createTransaction(0, $delivery->total_charge, $delivery->delivery_time,
-            $delivery, 'Booking Delivery'
-        );
+        if($delivery->total_charge > 0){
+            $transactionHandler = new TransactionHandler();
+            $transactionHandler->createTransaction(0, $delivery->total_charge, $delivery->delivery_time,
+                $delivery, 'Booking Delivery'
+            );
+        }
+
     }
 
     /**
