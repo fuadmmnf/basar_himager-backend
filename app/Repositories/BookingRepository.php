@@ -77,7 +77,7 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking->booking_time = Carbon::parse($request['booking_time']);
         $newBooking->type = $request['type'];
 
-        $newBooking->booking_no = ($newBooking->type) ? 'A' : 'N'
+        $newBooking->booking_no = (($newBooking->type) ? 'A' : 'N')
             . sprintf('%04d', Booking::whereYear('booking_time', $newBooking->booking_time)->count())
             . $newBooking->booking_time->year % 100;
         $newBooking->advance_payment = $request['advance_payment'];
