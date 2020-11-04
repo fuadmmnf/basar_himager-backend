@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Handlers\TransactionHandler;
 use App\Models\Employeeloan;
 
 class EmployeeloanObserver
@@ -14,7 +15,10 @@ class EmployeeloanObserver
      */
     public function created(Employeeloan $employeeloan)
     {
-        //
+        $transactionHandler = new TransactionHandler();
+        $transactionHandler->createTransaction($employeeloan->type == 0? 1: 0, $employeeloan->amount, $employeeloan->payment_time,
+            $employeeloan, 'Employee Loan'
+        );
     }
 
     /**

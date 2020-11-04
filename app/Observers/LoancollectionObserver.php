@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Handlers\TransactionHandler;
 use App\Models\Loancollection;
 
 class LoancollectionObserver
@@ -14,7 +15,10 @@ class LoancollectionObserver
      */
     public function created(Loancollection $loancollection)
     {
-        //
+        $transactionHandler = new TransactionHandler();
+        $transactionHandler->createTransaction(0, $loancollection->payment_amount + $loancollection->surcharge, $loancollection->payment_date,
+            $loancollection, 'Booking Loan Collection'
+        );
     }
 
     /**

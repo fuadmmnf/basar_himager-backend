@@ -17,8 +17,8 @@ class CreateEmployeesalariesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->integer('amount');
-            $table->integer('loan_payment');
-            $table->integer('bonus');
+            $table->integer('loan_payment')->default(0);
+            $table->integer('bonus')->default(0);
             $table->string('remark');
             $table->dateTime('payment_time');
             $table->timestamps();
