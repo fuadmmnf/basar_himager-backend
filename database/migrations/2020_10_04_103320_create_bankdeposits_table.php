@@ -16,6 +16,7 @@ class CreateBankdepositsTable extends Migration
         Schema::create('bankdeposits', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('bank_id');
+            $table->dateTime('time');
             $table->string('si_no');
             $table->integer('type')->default(0); // 0=> deposit, 1=> withdraw
             $table->string('branch');
