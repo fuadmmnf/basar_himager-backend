@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Salary Report</title>
+    <title>Download Booking Receipt</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -50,8 +50,8 @@
 </head>
 <body>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Loading Receipt</p>
-    <p><b>Recive No:</b> {{$receiptinfo->receiving_no}}</p>
+    <p style="font-size: 1.4rem; font-weight: bold">Booking Receipt</p>
+    <p><b>Booking No:</b> {{$bookinginfo->booking_no}}</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 
@@ -61,9 +61,9 @@
             <div   >
                 <h3>Client</h3>
                 <div>
-                    <p>Name: {{$receiptinfo->booking->client->name}}</p>
-                    <p>Phone: {{$receiptinfo->booking->client->phone}}</p>
-                    <p>Father's Name: {{$receiptinfo->booking->client->father_name}}</p>
+                    <p>Name: {{$bookinginfo->client->name}}</p>
+                    <p>Phone: {{$bookinginfo->client->phone}}</p>
+                    <p>Father's Name: {{$bookinginfo->client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -75,26 +75,22 @@
 
 <table>
     <tr>
-        <td style="width: 50%; text-align: left">
+        <td style="width: 70%; text-align: left">
             <div   >
                 <h3>Booking Information</h3>
                 <div>
-                    <p>No: {{$receiptinfo->booking->booking_no}}</p>
-                    <p>Date: {{$receiptinfo->booking->booking_time}}</p>
-                    <p>Total Quantity: {{$receiptinfo->booking->quantity}}</p>
-                    <p>Remaining Quantity: {{$receiptinfo->booking->quantity - $receiptinfo->quantity}}</p>
+                    <p>No: {{$bookinginfo->booking_no}}</p>
+                    <p>Date: {{$bookinginfo->booking_time}}</p>
+                    <p>Total Quantity: {{$bookinginfo->quantity}}</p>
+                    <p>Bags In: {{$bookinginfo->bags_in}}</p>
                 </div>
             </div>
         </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
+        <td  class="td-right-align" style="width: 30%; text-align: left">
             <div>
-                <h3>Receive Information</h3>
-                <div>
-                    <p>No: {{$receiptinfo->receiving_no}}</p>
-                    <p>Quantity: {{$receiptinfo->quantity}}</p>
-                    <p>Potato Type: {{$receiptinfo->potato_type}}</p>
-                    <p>Transport Type: {{$receiptinfo->transport_type}}</p>
-                </div>
+                <p>Total Amount:</p>
+                <p>Advance Payment: {{$bookinginfo->advance_payment}}</p>
+                <p>Discount: {{$bookinginfo->discount}} %</p>
             </div>
         </td>
     </tr>

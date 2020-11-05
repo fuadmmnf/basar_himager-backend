@@ -51,4 +51,33 @@ class ReportController extends Controller
         //return $pdf->download('bank_deposit_report');
     }
 
+    public function getBookingReceipt($id)
+    {
+        $bookinginfo = $this->reportRepository->fetchBookingReceiptInfo($id);
+        $pdf = PDF::loadView('booking_receipt',[
+            'bookinginfo' => $bookinginfo
+        ]);
+        return $pdf->stream();
+        //return $pdf->download('bank_deposit_report');
+    }
+    public function getLoandisbursementReport($id)
+    {
+        $loandisbursement = $this->reportRepository->fetchLoanDisbursementInfo($id);
+        $pdf = PDF::loadView('loandisbursement_report',[
+            'loandisbursement' => $loandisbursement
+        ]);
+        return $pdf->stream();
+        //return $pdf->download('bank_deposit_report');
+    }
+
+    public function getLoancollectionReceipt($id)
+    {
+        $loancollection = $this->reportRepository->fetchLoanCollectionInfo($id);
+        $pdf = PDF::loadView('loancollection_receipt',[
+            'loancollection' => $loancollection
+        ]);
+        return $pdf->stream();
+        //return $pdf->download('bank_deposit_report');
+    }
+
 }

@@ -23,3 +23,6 @@ Route::get('/salary_report', [\App\Http\Controllers\Api\EmployeeSalaryController
 Route::get('/download/report/salary/month/{month}', [\App\Http\Controllers\ReportController::class, 'downloadSalaryReport']);
 Route::get('/download/report/deposit/month/{month}', [\App\Http\Controllers\ReportController::class, 'downloadBankDepositReport']);
 Route::get('/download/report/receive/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getReceiveReceipt']);
+Route::get('/download/report/booking/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getBookingReceipt']);
+Route::get('/download/report/loandisbursement/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoandisbursementReport']);
+Route::get('/download/report/loancollection/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoancollectionReceipt']);

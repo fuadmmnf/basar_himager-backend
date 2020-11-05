@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Salary Report</title>
+    <title>Download Loan Collection Receipt</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -50,8 +50,8 @@
 </head>
 <body>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Loading Receipt</p>
-    <p><b>Recive No:</b> {{$receiptinfo->receiving_no}}</p>
+    <p style="font-size: 1.4rem; font-weight: bold">Loan Collection Receipt</p>
+    <p><b>Collection No:</b> {{$loancollection->loancollection_no}}</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 
@@ -59,11 +59,11 @@
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Client</h3>
+                <h3>Client Information</h3>
                 <div>
-                    <p>Name: {{$receiptinfo->booking->client->name}}</p>
-                    <p>Phone: {{$receiptinfo->booking->client->phone}}</p>
-                    <p>Father's Name: {{$receiptinfo->booking->client->father_name}}</p>
+                    <p>Name: {{$loancollection->loandisbursement->booking->client->name}}</p>
+                    <p>Phone: {{$loancollection->loandisbursement->booking->client->phone}}</p>
+                    <p>Father's Name: {{$loancollection->loandisbursement->booking->client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -75,27 +75,28 @@
 
 <table>
     <tr>
-        <td style="width: 50%; text-align: left">
+        <td style="width: 60%; text-align: left">
             <div   >
-                <h3>Booking Information</h3>
+                <h3>Loan Disbursement Information</h3>
                 <div>
-                    <p>No: {{$receiptinfo->booking->booking_no}}</p>
-                    <p>Date: {{$receiptinfo->booking->booking_time}}</p>
-                    <p>Total Quantity: {{$receiptinfo->booking->quantity}}</p>
-                    <p>Remaining Quantity: {{$receiptinfo->booking->quantity - $receiptinfo->quantity}}</p>
+                    <p>No:{{$loancollection->loandisbursement->loandisbursement_no}} </p>
+                    <p>Date: {{$loancollection->loandisbursement->payment_date}}</p>
+                    <p>Loan Amount: {{$loancollection->loandisbursement->amount}}</p>
+                    <p>Remaining Amount: {{$loancollection->loandisbursement->amount_left}}</p>
                 </div>
             </div>
         </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-                <h3>Receive Information</h3>
+        <td class="td-right-align" style="text-align: left; width: 40%">
+            <div   >
+                <h3>Loan Collection Information</h3>
                 <div>
-                    <p>No: {{$receiptinfo->receiving_no}}</p>
-                    <p>Quantity: {{$receiptinfo->quantity}}</p>
-                    <p>Potato Type: {{$receiptinfo->potato_type}}</p>
-                    <p>Transport Type: {{$receiptinfo->transport_type}}</p>
+                    <p>No:{{$loancollection->loancollection_no}} </p>
+                    <p>Date: {{$loancollection->payment_date}}</p>
+                    <p>Surcharge: {{$loancollection->surcharge}}</p>
+                    <p>Payment Amount: {{$loancollection->payment_amount}}</p>
                 </div>
             </div>
+
         </td>
     </tr>
 

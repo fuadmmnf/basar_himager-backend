@@ -7,8 +7,11 @@ namespace App\Repositories;
 use App\Exceptions\UserTokenHandler;
 use App\Models\Bank;
 use App\Models\Bankdeposit;
+use App\Models\Booking;
 use App\Models\Employee;
 use App\Models\Employeesalary;
+use App\Models\Loancollection;
+use App\Models\Loandisbursement;
 use App\Models\Receive;
 use App\Models\User;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
@@ -49,6 +52,31 @@ class ReportRepository implements ReportRepositoryInterface
 //            with('booking')
 //            ->with('booking.client')->get();
         return $receives;
+    }
+
+    public function fetchBookingReceiptInfo($id)
+    {
+        // TODO: Implement fetchBookingReceiptInfo() method.
+        $booking = Booking::where('id',$id)
+            ->with('client')
+            ->first();
+        return $booking;
+    }
+
+    public function fetchLoanDisbursementInfo($id)
+    {
+        // TODO: Implement fetchLoanDisbursementInfo() method.
+        $loanDisbursements = Loandisbursement::where('id',$id)->first();
+        $loanDisbursements->load('booking', 'booking.client', 'loancollections');
+        return $loanDisbursements;
+    }
+
+    public function fetchLoanCollectionInfo($id)
+    {
+        // TODO: Implement fetchLoanCollectionInfo() method.
+        $loanCollection = Loancollection::where('id',$id)->first();
+        $loanCollection->load('loandisbursement', 'loandisbursement.booking.client');
+        return $loanCollection;
     }
 
 
