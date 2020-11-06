@@ -17,6 +17,7 @@ class CreateReceiveitemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('receive_id');
             $table->integer('quantity');
+            $table->integer('quantity_left');
             $table->string('potatoe_type');
             $table->timestamps();
 

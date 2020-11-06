@@ -47,6 +47,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
             $newReceiveItem = new Receiveitem();
             $newReceiveItem->receive_id = $newReceive->id;
             $newReceiveItem->quantity = $receiveitem['quantity'];
+            $newReceiveItem->quantity_left = $newReceiveItem->quantity;
             $newReceiveItem->potatoe_type = $receiveitem['potatoe_type'];
             $newReceiveItem->save();
         }

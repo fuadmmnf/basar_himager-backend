@@ -42,20 +42,34 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newDelivery->save();
 
         $totalQuantity = 0;
-        foreach ($request['deliveryitems'] as $deliveryitem){
+        $receiveitems = $booking->receives->receiveitems;
+        foreach ($request['deliveryitems'] as $deliveryitem) {
             $newDeliveyItem = new Deliveryitem();
-            $newDeliveyItem->receive_id = $newDelivery->id;
+            $newDeliveyItem->delivery_id = $newDelivery->id;
             $newDeliveyItem->quantity = $deliveryitem['quantity'];
             $newDeliveyItem->potatoe_type = $deliveryitem['potatoe_type'];
             $newDeliveyItem->save();
-
             $totalQuantity += $newDeliveyItem->quantity;
+
+            $quantity = $newDeliveyItem->quantity;
+            foreach ($receiveitems as $receiveitem) {
+                if ($receiveitem->quantity_left > 0 &&
+                    $receiveitem->potatoe_type == $newDeliveyItem->potatoe_type
+                    && $quantity > 0) {
+                    $used = min($quantity, $receiveitem->quantity_left);
+                    $receiveitem->quantity_left = $receiveitem->quantity_left - $used;
+                    $receiveitem->save();
+
+                    $quantity -= $used;
+                }
+            }
+
         }
 
         $newDelivery->total_charge = $newDelivery->total_charge + ($totalQuantity * $newDelivery->cost_per_bag);
         $newDelivery->save();
 
-        $booking->bags_out = $booking->bags_out + $newDelivery->quantity_bags;
+        $booking->bags_out = $booking->bags_out + $totalQuantity;
         $booking->save();
 
         return $newDelivery;
