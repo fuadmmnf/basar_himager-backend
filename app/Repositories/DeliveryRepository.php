@@ -42,7 +42,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newDelivery->save();
 
         $totalQuantity = 0;
-        $receiveitems = $booking->receives->receiveitems;
+        $receiveitems = $booking->receiveitems;
         foreach ($request['deliveryitems'] as $deliveryitem) {
             $newDeliveyItem = new Deliveryitem();
             $newDeliveyItem->delivery_id = $newDelivery->id;

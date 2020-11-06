@@ -13,6 +13,10 @@ class Booking extends Model
         return $this->hasMany('App\Models\Receive');
     }
 
+    public function receiveitems(){
+        return $this->hasManyThrough('App\Models\Receiveitem', 'App\Models\Receive');
+    }
+
     public function deliveries(){
         return $this->hasMany('App\Models\Delivery');
     }

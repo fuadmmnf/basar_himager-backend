@@ -56,7 +56,7 @@ class BookingRepository implements BookingRepositoryInterface
     public function getBookingDetail($booking_no)
     {
         $booking = Booking::where('booking_no', $booking_no)->firstOrFail();
-        $booking->load('client', 'loandisbursements');
+        $booking->load('client', 'receives', 'receives.receiveitems', 'loandisbursements');
         return $booking;
     }
 
