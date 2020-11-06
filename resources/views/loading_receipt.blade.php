@@ -51,7 +51,7 @@
 <body>
 <span align="center" style="line-height: 1.2;">
     <p style="font-size: 1.4rem; font-weight: bold">Loading Receipt</p>
-    <p><b>Recive No:</b> {{$receiptinfo->receiving_no}}</p>
+    <p><b>Report No:</b> 03edkd</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 
@@ -59,46 +59,68 @@
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Client</h3>
+                <h3>Recipient</h3>
                 <div>
-                    <p>Name: {{$receiptinfo->booking->client->name}}</p>
-                    <p>Phone: {{$receiptinfo->booking->client->phone}}</p>
-                    <p>Father's Name: {{$receiptinfo->booking->client->father_name}}</p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-        </td>
-    </tr>
-
-</table>
-
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Booking Information</h3>
-                <div>
-                    <p>No: {{$receiptinfo->booking->booking_no}}</p>
-                    <p>Date: {{$receiptinfo->booking->booking_time}}</p>
-                    <p>Total Quantity: {{$receiptinfo->booking->quantity}}</p>
-                    <p>Remaining Quantity: {{$receiptinfo->booking->quantity - $receiptinfo->quantity}}</p>
+                    <p>House #5, Road #20, Sector #4</p>
+                    <p>Uttara, Dhaka-1230</p>
+                    <p>coldstorage@gmail.com</p>
+                    <p>+8801234567890</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <h3>Receive Information</h3>
+                <h3>Cold Storage</h3>
                 <div>
-                    <p>No: {{$receiptinfo->receiving_no}}</p>
-                    <p>Quantity: {{$receiptinfo->quantity}}</p>
-                    <p>Potato Type: {{$receiptinfo->potatoe_type}}</p>
-                    <p>Transport Type: {{$receiptinfo->transport['type']}}</p>
+                    <p>House #5, Road #20, Sector #4</p>
+                    <p>Uttara, Dhaka-1230</p>
+                    <p>coldstorage@gmail.com</p>
+                    <p>+8801234567890</p>
                 </div>
             </div>
         </td>
     </tr>
 
+</table>
+
+<table class="bordertable">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Basic Salary</th>
+        <th>Special Salary </th>
+        <th>Eid Bonus</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    @if(count($salaries))
+    @foreach($salaries as $salary)
+        <tr>
+            <td>{{$salary->employee->name}}</td>
+            <td>{{$salary->employee->designation}}</td>
+            <td>{{$salary->basic_salary}}</td>
+            <td>{{$salary->special_salary}}</td>
+            <td>{{$salary->eid_bonus}}</td>
+        </tr>
+    @endforeach
+    <tr>
+        <td></td>
+        <td> <b>SUBTOTAL:</b></td>
+        <td> <b>{{$salaries->sum('basic_salary')}}</b></td>
+        <td> <b>{{$salaries->sum('special_salary')}}</b></td>
+        <td> <b>{{$salaries->sum('eid_bonus')}}</b></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td> <b>TOTAL:</b></td>
+        <td><b>{{$salaries->sum('basic_salary')+ $salaries->sum('special_salary') + $salaries->sum('eid_bonus')}} </b></td>
+        <td></td>
+        <td></td>
+    </tr>
+    @endif
+    </tbody>
 </table>
 
 

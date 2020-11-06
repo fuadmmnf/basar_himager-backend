@@ -2,22 +2,18 @@
 
 
 namespace App\Repositories;
+
 use App\Models\Booking;
-use App\Models\Delivery;
-use App\Models\Loancollection;
-use App\Models\Loandisbursement;
-use App\Models\Receive;
+
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Handlers\ClientHandler;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 class BookingRepository implements BookingRepositoryInterface
 {
 
     public function getPaginatedReceivesByBookingId($booking_id)
     {
-        // TODO: Implement getPaginatedReceivesByBookingId() method.
         $booking = Booking::findOrFail($booking_id);
         $receives = $booking->receives()->paginate(15);
 
@@ -26,7 +22,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getPaginatedDeliveriesByBookingId($booking_id)
     {
-        // TODO: Implement getPaginatedDeliveriesByBookingId() method.
         $booking = Booking::findOrFail($booking_id);
         $deliveries = $booking->deliveries()->paginate(15);
 
@@ -35,7 +30,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getPaginatedLoanDisbursementByBookingId($booking_id)
     {
-        // TODO: Implement getPaginatedLoanDisbursementByBookingId() method.
         $booking = Booking::findOrFail($booking_id);
         $disbursements = $booking->loanDisbursements()->paginate(15);
         return $disbursements;
@@ -43,7 +37,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getPaginatedLoanCollectionByBookingId($booking_id)
     {
-        // TODO: Implement getPaginatedLoanDisbursementByBookingId() method.
         $booking = Booking::findOrFail($booking_id);
         $collections = $booking->loanCollections()->paginate(15);
         return $collections;
@@ -51,7 +44,6 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function getBookingListBySearchedQuery($query)
     {
-        // TODO: Implement getBookingListBySearchedQuery() method.
         $bookings = Booking::select('bookings.*')
             ->where('bookings.booking_no', 'LIKE', '%' . $query . '%')
             ->join('clients', 'clients.id', '=', 'bookings.client_id')
@@ -60,7 +52,9 @@ class BookingRepository implements BookingRepositoryInterface
             ->get();
         return $bookings;
     }
-    public function getBookingDetail($booking_no){
+
+    public function getBookingDetail($booking_no)
+    {
         $booking = Booking::where('booking_no', $booking_no)->firstOrFail();
         $booking->load('client', 'loandisbursements');
         return $booking;
@@ -80,12 +74,15 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking = new Booking();
 
         $newBooking->client_id = $client->id;
-        $newBooking->booking_no = Str::random(8);
+        $newBooking->booking_time = Carbon::parse($request['booking_time']);
         $newBooking->type = $request['type'];
+
+        $newBooking->booking_no = ($newBooking->type) ? 'A' : 'N'
+            . sprintf('%04d', Booking::whereYear('booking_time', $newBooking->booking_time)->count())
+            . $newBooking->booking_time->year % 100;
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];
         $newBooking->discount = $request['discount'];
-        $newBooking->booking_time = Carbon::parse($request['booking_time']);
 
         $newBooking->save();
 

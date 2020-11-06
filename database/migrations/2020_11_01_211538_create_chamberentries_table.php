@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDailyexpensesTable extends Migration
+class CreateChamberentriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateDailyexpensesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dailyexpenses', function (Blueprint $table) {
+        Schema::create('chamberentries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('expensecategory_id');
-            $table->integer('type');
-            $table->string('voucher_no')->unique();
+            $table->unsignedBigInteger('chamber_id');
+            $table->string('stage');
             $table->dateTime('date');
-            $table->double('amount');
             $table->timestamps();
 
-            $table->foreign('expensecategory_id')->references('id')->on('expensecategories');
+            $table->foreign('chamber_id')->references('id')->on('chambers');
         });
     }
 
@@ -33,6 +31,6 @@ class CreateDailyexpensesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dailyexpenses');
+        Schema::dropIfExists('chamberentries');
     }
 }

@@ -18,7 +18,7 @@ class UserRepository implements UserRepositoryInterface
         } elseif ($user->hasAnyRole(['manager:admin', 'manager:account', 'manager:store', 'worker'])){
             $user->employee;
         } else{
-            $user->client;
+            return null;
         }
         return $user;
     }

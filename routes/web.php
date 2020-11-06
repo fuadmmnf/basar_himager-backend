@@ -17,12 +17,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/clear', function () {
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:cache');
+    return 'cache cleared';
+});
+
+
+
 Route::get('/download/report/loading/{receive_no}', [\App\Http\Controllers\ReportController::class, '']);
 
 Route::get('/salary_report', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'getAllSalaries']);
 Route::get('/download/report/salary/month/{month}', [\App\Http\Controllers\ReportController::class, 'downloadSalaryReport']);
 Route::get('/download/report/deposit/month/{month}', [\App\Http\Controllers\ReportController::class, 'downloadBankDepositReport']);
+
+Route::get('/download/report/expenses/month/{month}',[\App\Http\Controllers\ReportController::class,'downloadExpenseReport']);
 Route::get('/download/report/receive/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getReceiveReceipt']);
+Route::get('/download/report/delivery/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getDeliveryReceipt']);
 Route::get('/download/report/booking/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getBookingReceipt']);
 Route::get('/download/report/loandisbursement/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoandisbursementReport']);
 Route::get('/download/report/loancollection/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoancollectionReceipt']);

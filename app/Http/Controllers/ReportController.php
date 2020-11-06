@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Receive;
+use App\Repositories\DeliveryRepository;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
+use App\Repositories\ReceiveRepository;
 use PDF;
-use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -17,7 +17,23 @@ class ReportController extends Controller
     }
 
 
+    public function downloadLoadingReport($receive_no)
+    {
+        $receiveRepository = new ReceiveRepository();
+        $pdf = PDF::loadView('loading_receipt', [
+            'receive' => $receiveRepository->getReceiveDetails($receive_no),
+        ]);
+        return $pdf->stream();
+    }
 
+    public function downloadGatepass($gatepass_no)
+    {
+        $deliveryRepository = new DeliveryRepository();
+        $pdf = PDF::loadView('gatepass_receipt', [
+            'receive' => $deliveryRepository->getGatepassDetails($gatepass_no),
+        ]);
+        return $pdf->stream();
+    }
 
     public function downloadSalaryReport($month)
     {
@@ -34,17 +50,35 @@ class ReportController extends Controller
         $deposits = $this->reportRepository->getDeposits($month);
 
         $banks = $this->reportRepository->getBanks();
-        $pdf = PDF::loadView('bankdeposit_report',[
+        $pdf = PDF::loadView('bankdeposit_report', [
             'deposits' => $deposits,
             'banks' => $banks,
         ]);
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
+
+    public function downloadExpenseReport($month) {
+        $expenses = $this->reportRepository->fetchDailyexpenses($month);
+        $pdf = PDF::loadView('expense_report',[
+            'expenses' => $expenses,
+        ]);
+        return $pdf->stream();
+    }
     public function getReceiveReceipt($id)
     {
         $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($id);
         $pdf = PDF::loadView('receive_receipt',[
+            'receiptinfo' => $receiptinfo
+        ]);
+        return $pdf->stream();
+        //return $pdf->download('bank_deposit_report');
+    }
+
+    public function getDeliveryReceipt($id)
+    {
+        $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($id);
+        $pdf = PDF::loadView('delivery_receipt',[
             'receiptinfo' => $receiptinfo
         ]);
         return $pdf->stream();

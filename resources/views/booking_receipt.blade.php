@@ -82,13 +82,11 @@
                     <p>No: {{$bookinginfo->booking_no}}</p>
                     <p>Date: {{$bookinginfo->booking_time}}</p>
                     <p>Total Quantity: {{$bookinginfo->quantity}}</p>
-                    <p>Bags In: {{$bookinginfo->bags_in}}</p>
                 </div>
             </div>
         </td>
         <td  class="td-right-align" style="width: 30%; text-align: left">
             <div>
-                <p>Total Amount:</p>
                 <p>Advance Payment: {{$bookinginfo->advance_payment}}</p>
                 <p>Discount: {{$bookinginfo->discount}} %</p>
             </div>

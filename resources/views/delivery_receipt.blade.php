@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Loading Receipt</title>
+    <title>Download Delivery Receipt</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -50,8 +50,8 @@
 </head>
 <body>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Loading Receipt</p>
-    <p><b>Recive No:</b> {{$receiptinfo->receiving_no}}</p>
+    <p style="font-size: 1.4rem; font-weight: bold">Delivery Receipt</p>
+    <p><b>Receipt No:</b> {{$receiptinfo->delivery_no}}</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 
@@ -72,32 +72,75 @@
     </tr>
 
 </table>
+<div style="text-align: center">
+    <span><b>Booking Information</b></span>
+</div>
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Booking Information</h3>
                 <div>
                     <p>No: {{$receiptinfo->booking->booking_no}}</p>
-                    <p>Date: {{$receiptinfo->booking->booking_time}}</p>
                     <p>Total Quantity: {{$receiptinfo->booking->quantity}}</p>
-                    <p>Remaining Quantity: {{$receiptinfo->booking->quantity - $receiptinfo->quantity}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <h3>Receive Information</h3>
-                <div>
-                    <p>No: {{$receiptinfo->receiving_no}}</p>
-                    <p>Quantity: {{$receiptinfo->quantity}}</p>
-                    <p>Potato Type: {{$receiptinfo->potatoe_type}}</p>
-                    <p>Transport Type: {{$receiptinfo->transport['type']}}</p>
-                </div>
+                <p>Date: {{$receiptinfo->booking->booking_time}}</p>
+                <p>Bag Received: {{$receiptinfo->booking->bags_in}}</p>
+
             </div>
         </td>
     </tr>
+
+</table>
+
+<div style="text-align: center; padding-bottom: 10px">
+    <span><b>Delivery Information</b></span>
+</div>
+
+<table class="bordertable">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Number of Bags</th>
+            <th>Cost per Bag</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Type: {{$receiptinfo->potatoe_type}}</td>
+            <td>{{$receiptinfo->quantity_bags}}</td>
+            <td>{{$receiptinfo->cost_per_bag}}</td>
+            <td>{{$receiptinfo->quantity_bags * $receiptinfo->cost_per_bag}}</td>
+        </tr>
+        <tr>
+            <td>Fanned Bags</td>
+            <td>{{$receiptinfo->quantity_bags_fanned}}</td>
+            <td>{{$receiptinfo->fancost_per_bag}}</td>
+            <td>{{$receiptinfo->quantity_bags_fanned * $receiptinfo->fancost_per_bag}}</td>
+        </tr>
+        <tr>
+            <td>Due Charge</td>
+            <td></td>
+            <td></td>
+            <td>{{$receiptinfo->due_charge}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><b>Total</b></td>
+            <td>{{$receiptinfo->quantity_bags * $receiptinfo->cost_per_bag +
+                    $receiptinfo->quantity_bags_fanned * $receiptinfo->fancost_per_bag+
+                    $receiptinfo->due_charge}}
+            </td>
+        </tr>
+    </tbody>
+
+
 
 </table>
 
