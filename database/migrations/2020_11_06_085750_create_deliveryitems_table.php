@@ -17,7 +17,7 @@ class CreateDeliveryitemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('delivery_id');
             $table->string('potatoe_type');
-            $table->integer('quantity_bags');
+            $table->integer('quantity');
             $table->timestamps();
 
             $table->foreign('delivery_id')->references('id')->on('deliveries');
