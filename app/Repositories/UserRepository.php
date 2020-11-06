@@ -35,4 +35,21 @@ class UserRepository implements UserRepositoryInterface
         return null;
     }
 
+    public function changePassword(array $request)
+    {
+        $user = User::where('phone', $request['phone'])->firstOrFail();
+        if(!$user || !Hash::check($request['old_password'], $user->password)){
+            return null;
+        }
+
+        $user->password = Hash::make($request['password']);
+        $user->save();
+
+        $userTokenHandler = new UserTokenHandler();
+        $userTokenHandler->revokeTokens($user);
+
+        return $user;
+    }
+
+
 }

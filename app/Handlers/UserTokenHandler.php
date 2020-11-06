@@ -21,11 +21,13 @@ class UserTokenHandler
     }
 
 
-    public function regenerateUserToken($user){
+    public function regenerateUserToken(User $user){
 //        $user->tokens()->delete();
         $user->token = $user->createToken($user->name. $user->phone)->accessToken;
         return $user;
     }
 
-
+    public function revokeTokens(User $user){
+        $user->tokens()->delete();
+    }
 }

@@ -13,7 +13,9 @@ class BankTransactionRequest extends FormRequest
      */
     public function authorize()
     {
-       return true;
+        $user = auth()->guard('api')->user();
+
+        return $user != null &&  $user->can('crud:account');
     }
 
     /**
@@ -29,6 +31,7 @@ class BankTransactionRequest extends FormRequest
             'type' => 'required| numeric',
             'branch' => 'required',
             'amount' => 'required| numeric',
+            'time' => 'required',
         ];
     }
 }

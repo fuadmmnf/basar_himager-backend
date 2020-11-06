@@ -18,6 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//users
+Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'authorizeUserLogin']);
+Route::put('users/password', [\App\Http\Controllers\Api\UserController::class, 'changePassowrd']);
+
 //employees
 Route::get('employees/{role}', [\App\Http\Controllers\Api\EmployeeController::class, 'fetchEmployeesByRole']);
 Route::get('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'getAllEmployees']);
@@ -28,8 +32,7 @@ Route::post('employees/loans', [\App\Http\Controllers\Api\EmployeeLoanController
 Route::get('employees/{employee_id}/salaries/advances', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'getTotalAdvanceSalary']);
 
 
-//users
-Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'authorizeUserLogin']);
+
 
 //banks
 Route::get('banks', [\App\Http\Controllers\Api\BankController::class, 'getAllBanks']);

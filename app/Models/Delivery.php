@@ -14,6 +14,10 @@ class Delivery extends Model
         return $this->belongsTo('App\Models\Booking');
     }
 
+    public function deliveryitems(){
+        return $this->hasMany('App\Models\Deliveryitem');
+    }
+
     public function gatepasses(){
         return $this->hasMany('App\Models\Gatepass');
     }

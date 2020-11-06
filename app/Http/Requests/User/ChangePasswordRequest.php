@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Receive;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateReceiveRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,8 +14,7 @@ class CreateReceiveRequest extends FormRequest
     public function authorize()
     {
         $user = auth()->guard('api')->user();
-
-        return $user != null && $user->can('crud:store');
+        return $user != null && $this->has('phone') && $this->phone == $user->phone;
     }
 
     /**
@@ -26,10 +25,9 @@ class CreateReceiveRequest extends FormRequest
     public function rules()
     {
         return [
-            'booking_id' => 'required',
-            'receiving_time' => 'required',
-            'receiveitems' => 'required| array',
-            'transport' => 'required',
+            'phone' => 'required',
+            'old_password' => 'required',
+            'password' => 'required| min: 8| confirmed'
         ];
     }
 }

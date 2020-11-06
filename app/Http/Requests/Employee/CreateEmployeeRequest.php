@@ -27,9 +27,9 @@ class CreateEmployeeRequest extends FormRequest
     {
         return [
             'role' => 'required',
-            'nid' => 'required| unique:users',
+            'nid' => 'required',
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => 'required| unique:users',
             'designation' => 'required',
             'father_name' => 'required',
             'mother_name' => 'required',
