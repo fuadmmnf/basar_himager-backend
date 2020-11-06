@@ -8,13 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Receive extends Model
 {
     use HasFactory;
+
     protected $casts = [
         'transport' => 'array'
     ];
 
-    public function booking ()
+    public function booking()
     {
         return $this->belongsTo('App\Models\Booking');
     }
 
+    public function receiveitems()
+    {
+        return $this->hasMany('App\Models\Receiveitem');
+    }
 }

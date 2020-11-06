@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReceivesTable extends Migration
+class CreateReceiveitemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateReceivesTable extends Migration
      */
     public function up()
     {
-        Schema::create('receives', function (Blueprint $table) {
+        Schema::create('receiveitems', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('booking_id');
-            $table->string('receiving_no')->unique();
-            $table->dateTime('receiving_time');
-            $table->json('transport');
+            $table->unsignedBigInteger('receive_id');
+            $table->integer('quantity');
+            $table->string('potatoe_type');
             $table->timestamps();
 
-            $table->foreign('booking_id')->references('id')->on('bookings');
+            $table->foreign('receive_id')->references('id')->on('receives');
         });
     }
 
@@ -32,6 +31,6 @@ class CreateReceivesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('receives');
+        Schema::dropIfExists('receiveitems');
     }
 }
