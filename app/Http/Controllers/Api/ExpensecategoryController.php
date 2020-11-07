@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Expensecategory\CreateExpensecategoryRequest;
 use App\Repositories\Interfaces\ExpensecategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
-class ExpensecategoryController extends Controller
+class ExpensecategoryController extends ApiController
 {
     //
     private $expensecategoryRepository;

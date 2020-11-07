@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use \App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Loan\CreateLoancollectionRequest;
 use App\Repositories\Interfaces\LoancollectionRepositoryInterface;
 
 
-class LoancollectionController extends Controller{
+class LoancollectionController extends ApiController
+{
 
     private $loancollectionRepository;
 

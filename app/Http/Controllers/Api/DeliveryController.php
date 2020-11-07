@@ -3,13 +3,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Delivery\CreateDeliveryRequest;
 use App\Http\Requests\Delivery\CreateGatepassRequest;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Illuminate\Http\Request;
 
-class DeliveryController extends Controller
+class DeliveryController extends ApiController
 {
     //
     private $deliveryRepository;

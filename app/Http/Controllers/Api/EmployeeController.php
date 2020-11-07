@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Employee\CreateEmployeeRequest;
 use App\Http\Requests\Employee\StoreEmployeeSalaryRequest;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
+class EmployeeController extends ApiController
 {
     //
     private $employeeRepository;

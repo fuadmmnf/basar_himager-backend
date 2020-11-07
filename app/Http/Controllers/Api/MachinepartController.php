@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Bank\BankTransactionRequest;
-use App\Http\Requests\Bank\CreateBankRequest;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Machinepart\CreateMachinepartEntriesRequest;
 use App\Http\Requests\Machinepart\CreateMachinepartRequest;
-use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
 use Illuminate\Http\Request;
 
-class MachinepartController extends Controller
+class MachinepartController extends ApiController
 {
     //
     private $machinepartRepository;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Employee\CreateEmployeeRequest;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
@@ -10,7 +10,7 @@ use App\Http\Requests\Booking\CreateBookingRequest;
 
 use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class BookingController extends ApiController
 {
 
     private $bookingRepository;
