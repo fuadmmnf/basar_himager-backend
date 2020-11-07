@@ -1,5 +1,6 @@
 <?php
 
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,10 @@ Route::get('/clear', function () {
 });
 
 
+Route::get('/report', function(){
+    $pdf = PDF::loadView('template', []);
+    return $pdf->stream();
+});
 
 Route::get('/download/report/loading/{receive_no}', [\App\Http\Controllers\ReportController::class, '']);
 
