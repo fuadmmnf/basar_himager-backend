@@ -74,5 +74,12 @@ class ReportController extends Controller
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
+    public function getGatePass($delivery_id){
+        $gatePass = $this->reportRepository->fetchGatepass($delivery_id);
+        $pdf = PDF::loadView('gatepass_receipt',[
+            'gatepassInfo' => $gatePass
+        ]);
+        return $pdf->stream();
+    }
 
 }
