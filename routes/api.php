@@ -21,8 +21,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //employees
 Route::get('employees/{role}', [\App\Http\Controllers\Api\EmployeeController::class, 'fetchEmployeesByRole']);
 Route::get('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'getAllEmployees']);
+Route::get('employees/{employee_id}/loans', [\App\Http\Controllers\Api\EmployeeLoanController::class, 'getLoan']);
 Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'store']);
 Route::post('employees/salaries', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'storeEmployeeSalary']);
+Route::post('employees/loans', [\App\Http\Controllers\Api\EmployeeLoanController::class, 'store']);
+Route::get('employees/{employee_id}/salaries/advances', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'getTotalAdvanceSalary']);
 
 
 //users
@@ -30,8 +33,8 @@ Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'au
 
 //banks
 Route::get('banks', [\App\Http\Controllers\Api\BankController::class, 'getAllBanks']);
-Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank']);
 Route::get('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'getBankDeposits']);
+Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank']);
 Route::post('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'storeBankDeposit']);
 
 //bookings
@@ -55,7 +58,6 @@ Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 
 Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliveryGatepass']);
 
 
-
 //loanDisbursements
 Route::get('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'fetchLoandisbursements']);
 Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'createLoan']);
@@ -67,11 +69,22 @@ Route::post('loancollections', [\App\Http\Controllers\Api\LoancollectionControll
 Route::post('delivery', [\App\Http\Controllers\Api\DeliveryController::class, 'createDelivery']);
 
 //dailyexpenses
-Route::post('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class,'createDailyexpenses']);
+Route::post('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class, 'createDailyexpenses']);
 Route::get('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class, 'fetchDailyexpenses']);
 
-//expensescategory
-Route::post('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryController::class,'createExpensecategory']);
-Route::get('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryController::class,'fetchExpensesCategory']);
+//expensescategories
+Route::post('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryController::class, 'createExpensecategory']);
+Route::get('expensecategories', [\App\Http\Controllers\Api\ExpensecategoryController::class, 'fetchExpensesCategory']);
 
 
+//machineparts
+Route::get('machineparts', [\App\Http\Controllers\Api\MachinepartController::class, 'fetchMachineparts']);
+Route::get('machinepartentries', [\App\Http\Controllers\Api\MachinepartController::class, 'fetchMachinepartEntries']);
+Route::post('machineparts', [\App\Http\Controllers\Api\MachinepartController::class, 'createMachinepart']);
+Route::post('machinepartentries', [\App\Http\Controllers\Api\MachinepartController::class, 'createMachinepartEntries']);
+
+
+//chambers
+Route::get('chambers', [\App\Http\Controllers\Api\ChamberController::class, 'fetchChambers']);
+Route::get('chambers/{chamber_id}/chamberentries', [\App\Http\Controllers\Api\ChamberController::class, 'fetchChamberentriesByChamber']);
+Route::post('chamberentries', [\App\Http\Controllers\Api\ChamberController::class, 'createChamberentry']);

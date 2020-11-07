@@ -1,109 +1,3 @@
-{{--<!DOCTYPE html>--}}
-{{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
-{{--    <head>--}}
-{{--        <meta charset="utf-8">--}}
-{{--        <meta name="viewport" content="width=device-width, initial-scale=1">--}}
-
-{{--        <title>Salary Report</title>--}}
-{{--        <style>--}}
-{{--            /*#tabl{*/--}}
-{{--            /*    width: 100%;*/--}}
-{{--            /*}*/--}}
-{{--            /*#tabl td, th{*/--}}
-{{--            /*    padding: 8px;*/--}}
-{{--            /*    text-align: center;*/--}}
-{{--            /*}*/--}}
-{{--            /*.td-right-align{*/--}}
-{{--            /*    text-align: right;*/--}}
-{{--            /*}*/--}}
-
-{{--        </style>--}}
-
-{{--    </head>--}}
-{{--    <body style="padding-top: 20px" >--}}
-{{--    <div align="right" style="padding-right: 30px">--}}
-{{--        <h3>Salary Report</h3>--}}
-{{--        <div>--}}
-{{--            <p><b>Report No</b></p>--}}
-{{--            <span>0kqs1</span>--}}
-{{--        </div>--}}
-{{--        <div>--}}
-{{--            <p><b>Date</b></p>--}}
-{{--                <?php--}}
-{{--                    echo date("d/m/Y");--}}
-{{--                ?>--}}
-{{--            {{}}--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    <table>--}}
-{{--        <tr>--}}
-{{--            <td style="width: 50%">--}}
-{{--                <div   >--}}
-{{--                    <h3>Recipient</h3>--}}
-{{--                    <div>--}}
-{{--                        <p>House #5, Road #20, Sector #4</p>--}}
-{{--                        <p>Uttara, Dhaka-1230</p>--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <p>coldstorage@gmail.com</p>--}}
-{{--                        <p>+8801234567890</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </td>--}}
-{{--            <td class="td-right-align" style="float: right; width: 50%">--}}
-{{--                <div>--}}
-{{--                    <h3>Cold Storage</h3>--}}
-{{--                    <div>--}}
-{{--                        <p>House #5, Road #20, Sector #4</p>--}}
-{{--                        <p>Uttara, Dhaka-1230</p>--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <p>coldstorage@gmail.com</p>--}}
-{{--                        <p>+8801234567890</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </td>--}}
-{{--        </tr>--}}
-
-{{--    </table>--}}
-
-{{--    <table  >--}}
-{{--        <thead>--}}
-{{--            <th>Name</th>--}}
-{{--            <th>Designation</th>--}}
-{{--            <th>Basic Salary</th>--}}
-{{--            <th>Special Salary </th>--}}
-{{--            <th>Eid Bonus</th>--}}
-{{--        </thead>--}}
-{{--        <tbody>--}}
-{{--        @foreach($salaries as $salary)--}}
-{{--            <tr>--}}
-{{--                <td>{{$salary->employee->name}}</td>--}}
-{{--                <td>{{$salary->employee->designation}}</td>--}}
-{{--                <td>{{$salary->basic_salary}}</td>--}}
-{{--                <td>{{$salary->special_salary}}</td>--}}
-{{--                <td>{{$salary->eid_bonus}}</td>--}}
-{{--            </tr>--}}
-{{--        @endforeach--}}
-{{--        <tr>--}}
-{{--            <td></td>--}}
-{{--            <td> <b>SUBTOTAL:</b></td>--}}
-{{--            <td> <b>{{$salary->sum('basic_salary')}}</b></td>--}}
-{{--            <td> <b>{{$salary->sum('special_salary')}}</b></td>--}}
-{{--            <td> <b>{{$salary->sum('eid_bonus')}}</b></td>--}}
-{{--        </tr>--}}
-{{--        <tr>--}}
-{{--            <td></td>--}}
-{{--            <td> <b>TOTAL:</b></td>--}}
-{{--            <td><b>{{$salary->sum('basic_salary')+ $salary->sum('special_salary') + $salary->sum('eid_bonus')}} </b></td>--}}
-{{--            <td></td>--}}
-{{--            <td></td>--}}
-{{--        </tr>--}}
-{{--        </tbody>--}}
-{{--    </table>--}}
-{{--    </body>--}}
-{{--</html>--}}
-
 <html>
 <head>
     <title>Salary Report</title>
@@ -194,9 +88,9 @@
     <tr>
         <th>Name</th>
         <th>Designation</th>
-        <th>Basic Salary</th>
-        <th>Special Salary </th>
-        <th>Eid Bonus</th>
+        <th>Salary</th>
+        <th>Bonus</th>
+        <th>Loan Receive</th>
     </tr>
 
     </thead>
@@ -206,22 +100,22 @@
         <tr>
             <td>{{$salary->employee->name}}</td>
             <td>{{$salary->employee->designation}}</td>
-            <td>{{$salary->basic_salary}}</td>
-            <td>{{$salary->special_salary}}</td>
-            <td>{{$salary->eid_bonus}}</td>
+            <td>{{$salary->amount}}</td>
+            <td>{{$salary->bonus}}</td>
+            <td>{{$salary->loan_payment}}</td>
         </tr>
     @endforeach
     <tr>
         <td></td>
         <td> <b>SUBTOTAL:</b></td>
-        <td> <b>{{$salaries->sum('basic_salary')}}</b></td>
-        <td> <b>{{$salaries->sum('special_salary')}}</b></td>
-        <td> <b>{{$salaries->sum('eid_bonus')}}</b></td>
+        <td> <b>{{$salaries->sum('amount')}}</b></td>
+        <td> <b>{{$salaries->sum('bonus')}}</b></td>
+        <td> <b>{{$salaries->sum('loan_payment')}}</b></td>
     </tr>
     <tr>
         <td></td>
         <td> <b>TOTAL:</b></td>
-        <td><b>{{$salaries->sum('basic_salary')+ $salaries->sum('special_salary') + $salaries->sum('eid_bonus')}} </b></td>
+        <td><b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('loan_payment')}} </b></td>
         <td></td>
         <td></td>
     </tr>

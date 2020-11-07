@@ -24,7 +24,7 @@ class ExpensecategoryController extends Controller
 
         $Expensecategory = $this->expensecategoryRepository->saveExpensecategory($request->validated());
         if($Expensecategory == 'AlreadyExisting'){
-            return response()->json($Expensecategory, 204);
+            return response()->json($Expensecategory, 203);
         }
         else return response()->json($Expensecategory, 201);
     }

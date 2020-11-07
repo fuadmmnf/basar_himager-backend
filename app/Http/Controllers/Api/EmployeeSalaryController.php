@@ -29,4 +29,9 @@ class EmployeeSalaryController extends Controller
         $salary = $this->employeeSalaryRepository->storeEmployeeSalary($request->validated());
         return response()->json($salary, 201);
     }
+    public function getTotalAdvanceSalary($employee_id){
+        $advance = $this->employeeSalaryRepository->getAdvanceSalary($employee_id);
+        return response()->json($advance, 200);
+
+    }
 }

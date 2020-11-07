@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Receive;
+namespace App\Http\Requests\Chamber;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateReceiveRequest extends FormRequest
+class CreateChamberEntryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,6 @@ class CreateReceiveRequest extends FormRequest
     public function authorize()
     {
         $user = auth()->guard('api')->user();
-
         return $user != null && $user->can('crud:store');
     }
 
@@ -26,11 +25,9 @@ class CreateReceiveRequest extends FormRequest
     public function rules()
     {
         return [
-            'booking_id' => 'required',
-            'receiving_time' => 'required',
-            'quantity' => 'required| numeric',
-            'potatoe_type' => 'required',
-            'transport' => 'required',
+            'chamber_id' => 'required| numeric',
+            'stage' => 'required',
+            'date' => 'required'
         ];
     }
 }

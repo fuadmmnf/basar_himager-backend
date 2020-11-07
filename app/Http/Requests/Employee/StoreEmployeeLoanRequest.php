@@ -4,7 +4,7 @@ namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEmployeeSalaryRequest extends FormRequest
+class StoreEmployeeLoanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,8 @@ class StoreEmployeeSalaryRequest extends FormRequest
     {
         return [
             'employee_id' => 'required| numeric',
+            'type' => 'required| numeric',
             'amount' => 'required| numeric',
-            'loan_payment' => 'required| numeric',
-            'bonus' => 'required| numeric',
-            'remark' => 'required',
             'payment_time' => 'required',
         ];
     }

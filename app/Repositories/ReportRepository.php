@@ -63,7 +63,6 @@ class ReportRepository implements ReportRepositoryInterface
         return $expensecategories;
     }
 
-
     public function fetchReceiveReceiptInfo($id)
     {
         $receives = Receive::where('id',$id)
@@ -74,6 +73,18 @@ class ReportRepository implements ReportRepositoryInterface
 //            ->with('booking.client')->get();
         return $receives;
     }
+
+
+//    public function fetchReceiveReceiptInfo($id)
+//    {
+//        $receives = Receive::where('id',$id)
+//            ->with('booking')
+//            ->with('booking.client')->first();
+////        $receives = Receive::
+////            with('booking')
+////            ->with('booking.client')->get();
+//        return $receives;
+//    }
 
 
     public function fetchGatepass($delivey_id)

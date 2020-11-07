@@ -2,19 +2,39 @@
 
 namespace App\Providers;
 
+use App\Models\Booking;
+use App\Models\Dailyexpense;
+use App\Models\Delivery;
+use App\Models\Employeeloan;
+use App\Models\Employeesalary;
+use App\Models\Loancollection;
+use App\Models\Loandisbursement;
+use App\Observers\BookingObserver;
+use App\Observers\DailyexpenseObserver;
+use App\Observers\DeliveryObserver;
+use App\Observers\EmployeeloanObserver;
+use App\Observers\EmployeesalaryObserver;
+use App\Observers\LoancollectionObserver;
+use App\Observers\LoandisbursementObserver;
 use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
+use App\Repositories\ChamberRepository;
 use App\Repositories\DeliveryRepository;
+use App\Repositories\EmployeeLoanRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\EmployeeSalaryRepository;
 use App\Repositories\ExpensecategoryRepository;
 use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
+use App\Repositories\Interfaces\ChamberRepositoryInterface;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
+use App\Repositories\Interfaces\EmployeeLoanRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
+use App\Repositories\Interfaces\MachinepartRepositoryInterface;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\MachinepartRepository;
 use App\Repositories\ReportRepository;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
@@ -26,7 +46,8 @@ use App\Repositories\LoancollectionRepository;
 use App\Repositories\LoandisbursementRepository;
 use App\Repositories\ReceiveRepository;
 use App\Repositories\UserRepository;
-use Illuminate\Support\ServiceProvider;use function Symfony\Component\String\u;
+use Illuminate\Support\ServiceProvider;
+use function Symfony\Component\String\u;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -51,6 +72,9 @@ class AppServiceProvider extends ServiceProvider
             DeliveryRepositoryInterface::class,
             ExpensecategoryRepositoryInterface::class,
             DailyexpensesRepositoryInterface::class,
+            EmployeeLoanRepositoryInterface::class,
+            MachinepartRepositoryInterface::class,
+            ChamberRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -67,6 +91,9 @@ class AppServiceProvider extends ServiceProvider
             DeliveryRepository::class,
             ExpensecategoryRepository::class,
             DailyexpensesRepository::class,
+            EmployeeLoanRepository::class,
+            MachinepartRepository::class,
+            ChamberRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
@@ -81,6 +108,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Booking::observe(BookingObserver::class);
+        Dailyexpense::observe(DailyexpenseObserver::class);
+        Delivery::observe(DeliveryObserver::class);
+        Employeeloan::observe(EmployeeloanObserver::class);
+        Employeesalary::observe(EmployeesalaryObserver::class);
+        Loandisbursement::observe(LoandisbursementObserver::class);
+        Loancollection::observe(LoancollectionObserver::class);
     }
 }
