@@ -19,6 +19,7 @@ class CreateReceivesTable extends Migration
             $table->string('receiving_no')->unique();
             $table->dateTime('receiving_time');
             $table->integer('quantity');
+            $table->integer('quantity_left');
             $table->string('potatoe_type'); //
             $table->json('transport');
             $table->timestamps();

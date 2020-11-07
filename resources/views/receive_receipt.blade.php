@@ -82,7 +82,7 @@
                     <p>No: {{$receiptinfo->booking->booking_no}}</p>
                     <p>Date: {{$receiptinfo->booking->booking_time}}</p>
                     <p>Total Quantity: {{$receiptinfo->booking->quantity}}</p>
-                    <p>Remaining Quantity: {{$receiptinfo->booking->quantity - $receiptinfo->quantity}}</p>
+                    <p>Remaining Quantity: {{$receiptinfo->quantity_left}}</p>
                 </div>
             </div>
         </td>

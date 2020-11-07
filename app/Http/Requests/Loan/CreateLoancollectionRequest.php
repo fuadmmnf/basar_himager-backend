@@ -29,6 +29,7 @@ class CreateLoancollectionRequest extends FormRequest
             'loandisbursement_id' => 'required | numeric',
             'surcharge' => 'required | numeric',
             'payment_amount' => 'required | numeric',
+            'pending_loan_amount' => 'required | numeric',
             'payment_date' => 'required',
         ];
     }

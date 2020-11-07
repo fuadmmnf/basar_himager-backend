@@ -29,6 +29,7 @@ class CreateReceiveRequest extends FormRequest
             'booking_id' => 'required',
             'receiving_time' => 'required',
             'quantity' => 'required| numeric',
+            'quantity_left' => 'required| numeric',
             'potatoe_type' => 'required',
             'transport' => 'required',
         ];

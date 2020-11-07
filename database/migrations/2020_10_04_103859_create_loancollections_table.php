@@ -19,6 +19,7 @@ class CreateLoancollectionsTable extends Migration
             $table->string('loancollection_no')->unique();
             $table->double('surcharge');
             $table->double('payment_amount');
+            $table->double('pending_loan_amount');
             $table->dateTime('payment_date');
             $table->timestamps();
 

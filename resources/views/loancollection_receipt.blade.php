@@ -82,7 +82,7 @@
                     <p>No:{{$loancollection->loandisbursement->loandisbursement_no}} </p>
                     <p>Date: {{$loancollection->loandisbursement->payment_date}}</p>
                     <p>Loan Amount: {{$loancollection->loandisbursement->amount}}</p>
-                    <p>Remaining Amount: {{$loancollection->loandisbursement->amount_left}}</p>
+                    <p>Remaining Amount: {{$loancollection->pending_loan_amount}}</p>
                 </div>
             </div>
         </td>
