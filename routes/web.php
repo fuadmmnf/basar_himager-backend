@@ -39,5 +39,5 @@ Route::get('/download/report/deposit/month/{month}', [\App\Http\Controllers\Repo
 Route::get('/download/report/expenses/month/{month}',[\App\Http\Controllers\ReportController::class,'downloadExpenseReport']);
 Route::get('/download/report/receive/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getReceiveReceipt']);
 Route::get('/download/report/gatepass/receipt/{delivery_id}', [\App\Http\Controllers\ReportController::class, 'getGatePass']);
-
+Route::get('/download/report/accounting/start/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadAccountingReport']);
 

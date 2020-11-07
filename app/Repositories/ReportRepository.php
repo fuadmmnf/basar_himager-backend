@@ -13,6 +13,7 @@ use App\Models\Employee;
 use App\Models\Employeesalary;
 use App\Models\Expensecategory;
 use App\Models\Receive;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
@@ -28,14 +29,14 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchAllSalaries($month)
     {
         // TODO: Implement fetchAllSalaries() method.
-        $salaries = Employeesalary::whereMonth('payment_time',Carbon::parse($month))->with('employee')->get();
+        $salaries = Employeesalary::whereMonth('payment_time', Carbon::parse($month))->with('employee')->get();
         return $salaries;
     }
 
     public function getDeposits($month)
     {
         // TODO: Implement getDeposits() method.
-        $deposits = Bankdeposit::whereMonth('created_at',Carbon::parse($month))->with('bank')->get();
+        $deposits = Bankdeposit::whereMonth('created_at', Carbon::parse($month))->with('bank')->get();
         return $deposits;
     }
 
@@ -46,14 +47,15 @@ class ReportRepository implements ReportRepositoryInterface
         return $banks;
     }
 
-    public function fetchDailyexpenses($month){
-        $expensecategories= Expensecategory::where('category',null)->orderBy('type')->get();
-        $expenses = Dailyexpense::whereMonth('date',Carbon::parse($month))->with('expensecategory')->get();
+    public function fetchDailyexpenses($month)
+    {
+        $expensecategories = Expensecategory::where('category', null)->orderBy('type')->get();
+        $expenses = Dailyexpense::whereMonth('date', Carbon::parse($month))->with('expensecategory')->get();
 
-        foreach ($expensecategories as $expensecategory){
+        foreach ($expensecategories as $expensecategory) {
             $cost = 0;
-            foreach ($expenses as $e){
-                if($expensecategory->type == $e->expensecategory->type){
+            foreach ($expenses as $e) {
+                if ($expensecategory->type == $e->expensecategory->type) {
                     $cost = $e->amount + $cost;
                 }
             }
@@ -65,7 +67,7 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function fetchReceiveReceiptInfo($id)
     {
-        $receives = Receive::where('id',$id)
+        $receives = Receive::where('id', $id)
             ->with('booking')
             ->with('booking.client')->first();
 //        $receives = Receive::
@@ -90,12 +92,35 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchGatepass($delivey_id)
     {
         // TODO: Implement fetchGatepass() method.
-        $gatepass= Gatepass::where('delivery_id', $delivey_id)
+        $gatepass = Gatepass::where('delivery_id', $delivey_id)
             ->with('delivery')
             ->with('delivery.booking')
             ->with('delivery.booking.client')->first();
         return $gatepass;
     }
+
+    public function fetchAccountingInformation($start_date, $end_date): array
+    {
+        $transactions = Transaction::whereDate('time', '>=', Carbon::parse($start_date))
+            ->whereDate('time', '<=', Carbon::parse($end_date))
+            ->get();
+
+        $transactionsSum = [];
+        foreach ($transactions as $transaction){
+            if (isset($transactionsSum[$transaction->remark])){
+                $transactionsSum[$transaction->remark]['amount'] += $transaction->amount;
+            } else {
+                $transactionsSum[$transaction->remark] = [
+                    'type' => $transaction->type,
+                    'amount' => $transaction->amount
+                ];
+            }
+        }
+
+        return $transactionsSum;
+    }
+
+
 }
 
 
