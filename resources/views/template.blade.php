@@ -66,7 +66,6 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-{{--    <p style="font-size: 1.4rem; font-weight: bold">Salary Report</p>--}}
     <p><b>Report No:</b> 03edkd</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
