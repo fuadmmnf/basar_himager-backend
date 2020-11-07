@@ -1,112 +1,6 @@
-{{--<!DOCTYPE html>--}}
-{{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
-{{--    <head>--}}
-{{--        <meta charset="utf-8">--}}
-{{--        <meta name="viewport" content="width=device-width, initial-scale=1">--}}
-
-{{--        <title>Salary Report</title>--}}
-{{--        <style>--}}
-{{--            /*#tabl{*/--}}
-{{--            /*    width: 100%;*/--}}
-{{--            /*}*/--}}
-{{--            /*#tabl td, th{*/--}}
-{{--            /*    padding: 8px;*/--}}
-{{--            /*    text-align: center;*/--}}
-{{--            /*}*/--}}
-{{--            /*.td-right-align{*/--}}
-{{--            /*    text-align: right;*/--}}
-{{--            /*}*/--}}
-
-{{--        </style>--}}
-
-{{--    </head>--}}
-{{--    <body style="padding-top: 20px" >--}}
-{{--    <div align="right" style="padding-right: 30px">--}}
-{{--        <h3>Salary Report</h3>--}}
-{{--        <div>--}}
-{{--            <p><b>Report No</b></p>--}}
-{{--            <span>0kqs1</span>--}}
-{{--        </div>--}}
-{{--        <div>--}}
-{{--            <p><b>Date</b></p>--}}
-{{--                <?php--}}
-{{--                    echo date("d/m/Y");--}}
-{{--                ?>--}}
-{{--            {{}}--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    <table>--}}
-{{--        <tr>--}}
-{{--            <td style="width: 50%">--}}
-{{--                <div   >--}}
-{{--                    <h3>Recipient</h3>--}}
-{{--                    <div>--}}
-{{--                        <p>House #5, Road #20, Sector #4</p>--}}
-{{--                        <p>Uttara, Dhaka-1230</p>--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <p>coldstorage@gmail.com</p>--}}
-{{--                        <p>+8801234567890</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </td>--}}
-{{--            <td class="td-right-align" style="float: right; width: 50%">--}}
-{{--                <div>--}}
-{{--                    <h3>Cold Storage</h3>--}}
-{{--                    <div>--}}
-{{--                        <p>House #5, Road #20, Sector #4</p>--}}
-{{--                        <p>Uttara, Dhaka-1230</p>--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <p>coldstorage@gmail.com</p>--}}
-{{--                        <p>+8801234567890</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </td>--}}
-{{--        </tr>--}}
-
-{{--    </table>--}}
-
-{{--    <table  >--}}
-{{--        <thead>--}}
-{{--            <th>Name</th>--}}
-{{--            <th>Designation</th>--}}
-{{--            <th>Basic Salary</th>--}}
-{{--            <th>Special Salary </th>--}}
-{{--            <th>Eid Bonus</th>--}}
-{{--        </thead>--}}
-{{--        <tbody>--}}
-{{--        @foreach($salaries as $salary)--}}
-{{--            <tr>--}}
-{{--                <td>{{$salary->employee->name}}</td>--}}
-{{--                <td>{{$salary->employee->designation}}</td>--}}
-{{--                <td>{{$salary->basic_salary}}</td>--}}
-{{--                <td>{{$salary->special_salary}}</td>--}}
-{{--                <td>{{$salary->eid_bonus}}</td>--}}
-{{--            </tr>--}}
-{{--        @endforeach--}}
-{{--        <tr>--}}
-{{--            <td></td>--}}
-{{--            <td> <b>SUBTOTAL:</b></td>--}}
-{{--            <td> <b>{{$salary->sum('basic_salary')}}</b></td>--}}
-{{--            <td> <b>{{$salary->sum('special_salary')}}</b></td>--}}
-{{--            <td> <b>{{$salary->sum('eid_bonus')}}</b></td>--}}
-{{--        </tr>--}}
-{{--        <tr>--}}
-{{--            <td></td>--}}
-{{--            <td> <b>TOTAL:</b></td>--}}
-{{--            <td><b>{{$salary->sum('basic_salary')+ $salary->sum('special_salary') + $salary->sum('eid_bonus')}} </b></td>--}}
-{{--            <td></td>--}}
-{{--            <td></td>--}}
-{{--        </tr>--}}
-{{--        </tbody>--}}
-{{--    </table>--}}
-{{--    </body>--}}
-{{--</html>--}}
-
 <html>
 <head>
-    <title>Salary Report</title>
+    <title>Gate Pass</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -156,8 +50,8 @@
 </head>
 <body>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Salary Report</p>
-    <p><b>Report No:</b> 03edkd</p>
+    <p style="font-size: 1.4rem; font-weight: bold">Gate Pass</p>
+    <p><b>Recive No:</b> {{$gatepassInfo->gatepass_no}}</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 
@@ -165,23 +59,40 @@
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Recipient</h3>
+                <h3>Client</h3>
                 <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
+                    <p>Name: {{$gatepassInfo->delivery->booking->client->name}}</p>
+                    <p>Phone: {{$gatepassInfo->delivery->booking->client->phone}}</p>
+                    <p>Father's Name: {{$gatepassInfo->delivery->booking->client->father_name}}</p>
+
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+        </td>
+    </tr>
+
+</table>
+
+<table>
+    <tr>
+        <td style="width: 50%; text-align: left">
+            <div   >
+                <h3>Booking Information</h3>
+                <div>
+                    <p>No: {{$gatepassInfo->delivery->booking->booking_no}}</p>
+                    <p>Date: {{$gatepassInfo->delivery->booking->booking_time}}</p>
+                    <p>Total Quantity: {{$gatepassInfo->delivery->booking->quantity}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <h3>Cold Storage</h3>
+                <h3>Receive Information</h3>
                 <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
+                    <p>Quantity: {{$gatepassInfo->delivery->quantity_bags}}</p>
+                    <p>Time: {{$gatepassInfo->delivery->delivery_time}}</p>
+                    <p>Potato Type: {{$gatepassInfo->delivery->potatoe_type}}</p>
                 </div>
             </div>
         </td>
@@ -189,44 +100,19 @@
 
 </table>
 
-<table class="bordertable">
-    <thead>
+<table>
     <tr>
-        <th>Name</th>
-        <th>Designation</th>
-        <th>Basic Salary</th>
-        <th>Special Salary </th>
-        <th>Eid Bonus</th>
+        <td style="width: 50%; text-align: left">
+            <div   >
+                <h3>GatePas Information</h3>
+                <div>
+                    <p>No: {{$gatepassInfo->gatepass_no}}</p>
+                    <p>Time: {{$gatepassInfo->gatepass_time}}</p>
+                    <p>Transport: {{$gatepassInfo->transport['type']}}</p>
+                </div>
+            </div>
+        </td>
     </tr>
-
-    </thead>
-    <tbody>
-    @if(count($salaries))
-    @foreach($salaries as $salary)
-        <tr>
-            <td>{{$salary->employee->name}}</td>
-            <td>{{$salary->employee->designation}}</td>
-            <td>{{$salary->basic_salary}}</td>
-            <td>{{$salary->special_salary}}</td>
-            <td>{{$salary->eid_bonus}}</td>
-        </tr>
-    @endforeach
-    <tr>
-        <td></td>
-        <td> <b>SUBTOTAL:</b></td>
-        <td> <b>{{$salaries->sum('basic_salary')}}</b></td>
-        <td> <b>{{$salaries->sum('special_salary')}}</b></td>
-        <td> <b>{{$salaries->sum('eid_bonus')}}</b></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td> <b>TOTAL:</b></td>
-        <td><b>{{$salaries->sum('basic_salary')+ $salaries->sum('special_salary') + $salaries->sum('eid_bonus')}} </b></td>
-        <td></td>
-        <td></td>
-    </tr>
-    @endif
-    </tbody>
 </table>
 
 
