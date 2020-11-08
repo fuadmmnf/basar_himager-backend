@@ -37,11 +37,11 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         $newReceive->booking_id = $booking->id;
 
         $totalQuantity = 0;
-        foreach ($request['receiveitems'] as $receiveitem){
+        foreach ($request['receiveitems'] as $receiveitem) {
             $totalQuantity += $receiveitem['quantity'];
         }
 
-        if($booking->bags_in + $totalQuantity < $booking->quantity){
+        if ($booking->bags_in + $totalQuantity > $booking->quantity) {
             return null;
         }
 
@@ -51,7 +51,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
         $newReceive->save();
 
-        foreach ($request['receiveitems'] as $receiveitem){
+        foreach ($request['receiveitems'] as $receiveitem) {
             $newReceiveItem = new Receiveitem();
             $newReceiveItem->receive_id = $newReceive->id;
             $newReceiveItem->quantity = $receiveitem['quantity'];
