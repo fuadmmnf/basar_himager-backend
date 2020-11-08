@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use \App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Loan\CreateLoandisbursementRequest;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
 
 
-class LoandisbursementController extends Controller{
+class LoandisbursementController extends ApiController
+{
 
     private $loandisbursementRepository;
 

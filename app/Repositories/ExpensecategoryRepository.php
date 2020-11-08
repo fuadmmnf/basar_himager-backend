@@ -14,8 +14,8 @@ class ExpensecategoryRepository implements ExpensecategoryRepositoryInterface
 {
     public function saveExpensecategory(array $request)
     {
-        $existingtype = Expensecategory::where('type', $request['type'])->first();
-        if($existingtype && !$request['category']){
+        $existingtype = Expensecategory::where('type', $request['type'])->where('category', $request['category'])->first();
+        if($existingtype){
             return 'AlreadyExisting';
         }
         // TODO: Implement saveExpensecategory() method.

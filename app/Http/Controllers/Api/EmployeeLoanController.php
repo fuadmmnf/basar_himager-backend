@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Employee\StoreEmployeeLoanRequest;
 use App\Repositories\Interfaces\EmployeeLoanRepositoryInterface;
 use Illuminate\Http\Request;
 
-class EmployeeLoanController extends Controller
+class EmployeeLoanController extends ApiController
 {
     private $employeeLoanRepository;
 

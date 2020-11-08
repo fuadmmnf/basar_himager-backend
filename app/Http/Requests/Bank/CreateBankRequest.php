@@ -13,7 +13,9 @@ class CreateBankRequest extends FormRequest
      */
     public function authorize()
     {
-       return true;
+        $user = auth()->guard('api')->user();
+
+        return $user != null && $user->can('crud:account');
     }
 
     /**

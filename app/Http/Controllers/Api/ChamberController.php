@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Chamber\CreateChamberEntryRequest;
 use App\Repositories\Interfaces\ChamberRepositoryInterface;
 
 
-class ChamberController extends Controller
+class ChamberController extends ApiController
 {
     //
     private $chamberRepository;

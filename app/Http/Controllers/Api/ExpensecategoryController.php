@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Expensecategory\CreateExpensecategoryRequest;
 use App\Repositories\Interfaces\ExpensecategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
-class ExpensecategoryController extends Controller
+class ExpensecategoryController extends ApiController
 {
     //
     private $expensecategoryRepository;
@@ -24,7 +24,7 @@ class ExpensecategoryController extends Controller
 
         $Expensecategory = $this->expensecategoryRepository->saveExpensecategory($request->validated());
         if($Expensecategory == 'AlreadyExisting'){
-            return response()->json($Expensecategory, 204);
+            return response()->json($Expensecategory, 203);
         }
         else return response()->json($Expensecategory, 201);
     }

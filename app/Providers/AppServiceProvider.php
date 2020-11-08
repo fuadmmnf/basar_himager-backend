@@ -2,6 +2,20 @@
 
 namespace App\Providers;
 
+use App\Models\Booking;
+use App\Models\Dailyexpense;
+use App\Models\Delivery;
+use App\Models\Employeeloan;
+use App\Models\Employeesalary;
+use App\Models\Loancollection;
+use App\Models\Loandisbursement;
+use App\Observers\BookingObserver;
+use App\Observers\DailyexpenseObserver;
+use App\Observers\DeliveryObserver;
+use App\Observers\EmployeeloanObserver;
+use App\Observers\EmployeesalaryObserver;
+use App\Observers\LoancollectionObserver;
+use App\Observers\LoandisbursementObserver;
 use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
 use App\Repositories\ChamberRepository;
@@ -94,6 +108,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Booking::observe(BookingObserver::class);
+        Dailyexpense::observe(DailyexpenseObserver::class);
+        Delivery::observe(DeliveryObserver::class);
+        Employeeloan::observe(EmployeeloanObserver::class);
+        Employeesalary::observe(EmployeesalaryObserver::class);
+        Loandisbursement::observe(LoandisbursementObserver::class);
+        Loancollection::observe(LoancollectionObserver::class);
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Employee\StoreEmployeeSalaryRequest;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use PDF;
 
-class EmployeeSalaryController extends Controller
+class EmployeeSalaryController extends ApiController
 {
     private $employeeSalaryRepository;
 

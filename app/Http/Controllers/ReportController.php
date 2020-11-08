@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\DeliveryRepository;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use App\Repositories\ReceiveRepository;
+use Carbon\Carbon;
 use PDF;
 
 class ReportController extends Controller
@@ -58,17 +59,19 @@ class ReportController extends Controller
         //return $pdf->download('bank_deposit_report');
     }
 
-    public function downloadExpenseReport($month) {
+    public function downloadExpenseReport($month)
+    {
         $expenses = $this->reportRepository->fetchDailyexpenses($month);
-        $pdf = PDF::loadView('expense_report',[
+        $pdf = PDF::loadView('expense_report', [
             'expenses' => $expenses,
         ]);
         return $pdf->stream();
     }
+
     public function getReceiveReceipt($id)
     {
         $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($id);
-        $pdf = PDF::loadView('receive_receipt',[
+        $pdf = PDF::loadView('receive_receipt', [
             'receiptinfo' => $receiptinfo
         ]);
         return $pdf->stream();
@@ -114,4 +117,33 @@ class ReportController extends Controller
         //return $pdf->download('bank_deposit_report');
     }
 
+    public function getGatePass($delivery_id)
+    {
+        $gatePass = $this->reportRepository->fetchGatepass($delivery_id);
+        $pdf = PDF::loadView('gatepass_receipt', [
+            'gatepassInfo' => $gatePass
+        ]);
+        return $pdf->stream();
+    }
+
+
+    public function downloadAccountingReport($start_date, $end_date)
+    {
+        try {
+            $transactions = $this->reportRepository->fetchAccountingInformation($start_date, $end_date);
+        } catch (\Exception $e) {
+            dd("Please Provide Appropriate Date");
+        }
+
+
+        $pdf = PDF::loadView('accounting', [
+            'expenses' => array_filter($transactions, function ($transaction) {
+                return $transaction['type'] == 1;
+            }),
+            'incomes' => array_filter($transactions, function ($transaction) {
+                return $transaction['type'] == 0;
+            }),
+        ]);
+        return $pdf->stream();
+    }
 }

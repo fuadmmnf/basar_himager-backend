@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Dailyexpenses\CreateDailyexpensesRequest;
 use App\Repositories\Interfaces\DailyexpensesRepositoryInterface;
 use Illuminate\Http\Request;
 
-class DailyexpensesController extends Controller
+class DailyexpensesController extends ApiController
 {
     //
     private $dailyexpensesRepository;

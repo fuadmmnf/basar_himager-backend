@@ -48,7 +48,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     public function getEmployees()
     {
         // TODO: Implement getEmployees() method.
-        $employees = Employee::paginate(15);
+        $employees = Employee::with('user')->paginate(15);
         return $employees;
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use \App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\Receive\CreateReceiveRequest;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 
 
-class ReceiveController extends Controller{
+class ReceiveController extends ApiController
+{
 
     private $receiveRepository;
 
