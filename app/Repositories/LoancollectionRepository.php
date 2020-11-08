@@ -14,7 +14,11 @@ class LoancollectionRepository implements LoancollectionRepositoryInterface
     public function saveLoancollection(array $request)
     {
         $loandisbursement = Loandisbursement::findOrFail($request['loandisbursement_id']);
-        // TODO: Implement saveLoan() method.
+
+        if($loandisbursement->amount_left < $request['payment_amount']){
+            return null;
+        }
+
         $newLoancollection = new Loancollection();
         $newLoancollection->loandisbursement_id = $loandisbursement->id;
         $newLoancollection->loancollection_no = Str::random(8);

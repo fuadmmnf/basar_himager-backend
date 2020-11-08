@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Handlers\EmployeeLoanHandler;
 use App\Handlers\UserTokenHandler;
 use App\Models\Employee;
 use App\Models\Employeeloan;
@@ -20,17 +21,11 @@ class EmployeeLoanRepository implements EmployeeLoanRepositoryInterface
     {
         // TODO: Implement createEmployeeLoan() method.
         $employee = Employee::findOrFail($request['employee_id']);
-        $newEmployeeLoan = new Employeeloan();
-        $newEmployeeLoan->employee_id = $employee->id;
-        $newEmployeeLoan->type = $request['type'];
-        $newEmployeeLoan->amount = $request['amount'];
-        $newEmployeeLoan->payment_time = Carbon::parse($request['payment_time']);
-        $newEmployeeLoan->save();
 
-        $employee->loan += $request['type'] ? -$newEmployeeLoan->amount : $newEmployeeLoan->amount;
-        $employee->save();
+        $employeeloanHandler = new EmployeeLoanHandler();
+        $employeeloan = $employeeloanHandler->createEmployeeLoan($employee, $request['type'], $request['amount'], Carbon::parse($request['payment_time']));
 
-        return $newEmployeeLoan;
+        return $employeeloan;
     }
 
     public function getEmployeeLoan($employee_id)

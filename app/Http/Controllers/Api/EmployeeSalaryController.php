@@ -27,6 +27,9 @@ class EmployeeSalaryController extends ApiController
     public function storeEmployeeSalary(StoreEmployeeSalaryRequest $request)
     {
         $salary = $this->employeeSalaryRepository->storeEmployeeSalary($request->validated());
+        if(!$salary){
+            return response()->json('Loan Payment exceeding Salary', 400);
+        }
         return response()->json($salary, 201);
     }
     public function getTotalAdvanceSalary($employee_id){

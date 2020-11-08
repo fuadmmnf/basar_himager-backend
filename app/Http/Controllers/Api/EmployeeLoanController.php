@@ -18,6 +18,9 @@ class EmployeeLoanController extends ApiController
 
     public function store(StoreEmployeeLoanRequest $request){
         $loan = $this->employeeLoanRepository->createEmployeeLoan($request->validated());
+        if(!$loan){
+            return response()->json('Loan payment exceeding pending loan', 400);
+        }
         return response()->json($loan, 201);
     }
     public function getLoan($employee_id){

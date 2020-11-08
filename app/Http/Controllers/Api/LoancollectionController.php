@@ -23,6 +23,9 @@ class LoancollectionController extends ApiController
     public function createLoancollection(CreateLoancollectionRequest $request){
 
         $loancollection = $this->loancollectionRepository->saveLoancollection($request->validated());
+        if(!$loancollection){
+            return response()->json('Amount exceeding loan left', 400);
+        }
         return response()->json($loancollection, 201);
     }
 }
