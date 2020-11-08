@@ -24,6 +24,11 @@ class EmployeeSalaryController extends Controller
         return view('salary_report')->with('salaries', $salaries);
     }
 
+    public function getSalaryByEmployeeId($employee_id){
+        $salary = $this->employeeSalaryRepository->fetchEmployeeSalaryByid($employee_id);
+        return response()->json($salary,200);
+    }
+
     public function storeEmployeeSalary(StoreEmployeeSalaryRequest $request)
     {
         $salary = $this->employeeSalaryRepository->storeEmployeeSalary($request->validated());
