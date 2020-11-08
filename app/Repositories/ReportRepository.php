@@ -73,7 +73,8 @@ class ReportRepository implements ReportRepositoryInterface
     {
         $receives = Receive::where('id', $id)
             ->with('booking')
-            ->with('booking.client')->first();
+            ->with('booking.client')
+            ->with('receiveitems')->first();
 //        $receives = Receive::
 //            with('booking')
 //            ->with('booking.client')->get();
