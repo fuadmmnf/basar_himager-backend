@@ -4,7 +4,6 @@
 namespace App\Repositories;
 
 
-
 use App\Models\Bank;
 use App\Models\Bankdeposit;
 use App\Repositories\Interfaces\BankRepositoryInterface;
@@ -59,10 +58,13 @@ class BankRepository implements BankRepositoryInterface
 
     }
 
-    public function getDeposits()
+    public function getDeposits($type)
     {
         // TODO: Implement getDeposits() method.
-        $deposits = Bankdeposit::with('bank')->paginate(30);
+        $deposits = Bankdeposit::where('type', $type)
+            ->orderByDesc('time')
+            ->with('bank')
+            ->paginate(30);
         return $deposits;
     }
 

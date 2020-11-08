@@ -32,8 +32,8 @@ class BankController extends ApiController
         return response()->json($deposit, 201);
     }
 
-    public function getBankDeposits() {
-        $deposits = $this->bankRepository->getDeposits();
+    public function fetchBankDepositsByType($type) {
+        $deposits = $this->bankRepository->getDeposits($type);
         return response()->json($deposits,200);
     }
 }

@@ -36,7 +36,7 @@ Route::get('employees/{employee_id}/salaries/advances', [\App\Http\Controllers\A
 
 //banks
 Route::get('banks', [\App\Http\Controllers\Api\BankController::class, 'getAllBanks']);
-Route::get('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'getBankDeposits']);
+Route::get('banks/deposits/type/{type}', [\App\Http\Controllers\Api\BankController::class, 'fetchBankDepositsByType']);
 Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank']);
 Route::post('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'storeBankDeposit']);
 
