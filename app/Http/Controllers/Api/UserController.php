@@ -32,6 +32,11 @@ class UserController extends ApiController
         }
     }
 
+    public function getUserbyId($user_id){
+        $user = $this->userRepository->fetchUserById($user_id);
+        return response()->json($user, 200);
+    }
+
 
     public function changePassowrd(ChangePasswordRequest $request)
     {

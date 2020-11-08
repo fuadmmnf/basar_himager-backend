@@ -9,4 +9,5 @@ interface EmployeeSalaryRepositoryInterface
     public function fetchAllSalaries();
     public function storeEmployeeSalary(array $request);
     public function getAdvanceSalary($employee_id);
+    public function fetchEmployeeSalaryByid($employee_id);
 }

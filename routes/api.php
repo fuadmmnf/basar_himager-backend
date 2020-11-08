@@ -20,17 +20,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //users
 Route::post('users/login', [\App\Http\Controllers\Api\UserController::class, 'authorizeUserLogin']);
+Route::get('users/{user_id}',[\App\Http\Controllers\Api\UserController::class, 'getUserbyId']);
 Route::put('users/password', [\App\Http\Controllers\Api\UserController::class, 'changePassowrd']);
 
 //employees
 Route::get('employees/{role}', [\App\Http\Controllers\Api\EmployeeController::class, 'fetchEmployeesByRole']);
 Route::get('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'getAllEmployees']);
 Route::get('employees/{employee_id}/loans', [\App\Http\Controllers\Api\EmployeeLoanController::class, 'getLoan']);
+Route::get('employees/salaries/{employee_id}',[\App\Http\Controllers\Api\EmployeeSalaryController::class,'getSalaryByEmployeeId']);
 Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'store']);
 Route::post('employees/salaries', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'storeEmployeeSalary']);
 Route::post('employees/loans', [\App\Http\Controllers\Api\EmployeeLoanController::class, 'store']);
-Route::get('employees/{employee_id}/salaries/advances', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'getTotalAdvanceSalary']);
-
 
 
 
