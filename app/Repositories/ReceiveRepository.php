@@ -35,13 +35,22 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         $booking = Booking::findOrFail($request['booking_id']);
         $newReceive = new Receive();
         $newReceive->booking_id = $booking->id;
+
+        $totalQuantity = 0;
+        foreach ($request['receiveitems'] as $receiveitem){
+            $totalQuantity += $receiveitem['quantity'];
+        }
+
+        if($booking->bags_in + $totalQuantity < $booking->quantity){
+            return null;
+        }
+
         $newReceive->receiving_time = Carbon::parse($request['receiving_time']);
         $newReceive->receiving_no = sprintf('%04d', Receive::whereYear('receiving_time', $newReceive->receiving_time)->count()) . $newReceive->receiving_time->year % 100;
 
         $newReceive->transport = $request['transport'];
 
         $newReceive->save();
-
 
         foreach ($request['receiveitems'] as $receiveitem){
             $newReceiveItem = new Receiveitem();
@@ -53,7 +62,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         }
 
 
-        $booking->bags_in = $booking->bags_in + $newReceive->quantity;
+        $booking->bags_in = $booking->bags_in + $totalQuantity;
         $booking->save();
 
         return $newReceive;

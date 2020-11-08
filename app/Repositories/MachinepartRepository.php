@@ -36,6 +36,11 @@ class MachinepartRepository implements MachinepartRepositoryInterface
     public function saveMachinepartEntries(array $request)
     {
         $machinepart = Machinepart::findOrFail($request['machinepart_id']);
+
+        if($request['type'] == 0 && $machinepart->stock < $request['quantity']){
+            return null;
+        }
+
         $newMachinepartEntry = new Machinepartentry();
         $newMachinepartEntry->machinepart_id = $machinepart->id;
         $newMachinepartEntry->type = $request['type'];

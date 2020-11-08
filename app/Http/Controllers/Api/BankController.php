@@ -29,6 +29,9 @@ class BankController extends ApiController
 
     public function storeBankDeposit(BankTransactionRequest $request) {
         $deposit = $this->bankRepository->addBankDeposit($request->validated());
+        if(!$deposit){
+            return response()->json('withdraw limit exceeded', 400);
+        }
         return response()->json($deposit, 201);
     }
 

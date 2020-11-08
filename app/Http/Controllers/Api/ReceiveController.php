@@ -29,6 +29,9 @@ class ReceiveController extends ApiController
     public function createReceive(CreatereceiveRequest $request){
 
         $receive = $this->receiveRepository->saveReceive($request->validated());
+        if(!$receive){
+            return response()->json('booking quantity limit exceeded', 400);
+        }
         return response()->json($receive, 201);
     }
 }

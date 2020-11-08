@@ -25,10 +25,43 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $deliveries;
     }
 
+    private function validateDeliveryQuantity($receiveItems, $deliveryItems)
+    {
+        $receivesLeft = [];
+        foreach ($receiveItems as $receiveItem) {
+            if (isset($receivesLeft[$receiveItem->potatoe_type])) {
+                $receivesLeft[$receiveItem->potatoe_type] += $receiveItem->quantity_left;
+            } else {
+                $receivesLeft[$receiveItem->potatoe_type] = $receiveItem->quantity_left;
+            }
+        }
+
+        $deliveryQuantities = [];
+        foreach ($deliveryItems as $deliveryItem) {
+            if (isset($deliveryQuantities[$deliveryItem->potatoe_type])) {
+                $deliveryQuantities[$deliveryItem['potatoe_type']] += $deliveryItem['quantity'];
+            } else {
+                $deliveryQuantities[$deliveryItem->potatoe_type] = $deliveryItem->quantity_left;
+            }
+        }
+
+        foreach ($deliveryQuantities as $key => $value) {
+            if (!isset($receivesLeft[$key]) || $receivesLeft[$key] < $value) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public function saveDelivery(array $request)
     {
         $booking = Booking::findOrFail($request['booking_id']);
+
+        if (!$this->validateDeliveryQuantity($booking->receiveitems, $request['deliveryitems'])) {
+            return null;
+        }
+
         $newDelivery = new Delivery();
         $newDelivery->booking_id = $booking->id;
         $newDelivery->delivery_time = Carbon::parse($request['delivery_time']);
@@ -54,8 +87,8 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             $quantity = $newDeliveyItem->quantity;
             foreach ($receiveitems as $receiveitem) {
                 if ($receiveitem->quantity_left > 0 &&
-                    $receiveitem->potatoe_type == $newDeliveyItem->potatoe_type
-                    && $quantity > 0) {
+                    $receiveitem->potatoe_type == $newDeliveyItem->potatoe_type &&
+                    $quantity > 0) {
                     $used = min($quantity, $receiveitem->quantity_left);
                     $receiveitem->quantity_left = $receiveitem->quantity_left - $used;
                     $receiveitem->save();

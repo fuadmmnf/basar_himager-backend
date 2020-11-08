@@ -31,6 +31,9 @@ class DeliveryController extends ApiController
     public function createDelivery(CreateDeliveryRequest $request){
 
         $delivery = $this->deliveryRepository->saveDelivery($request->validated());
+        if(!$delivery){
+            return response()->json('delivery limit exceeding bags left', 400);
+        }
         return response()->json($delivery, 201);
     }
 

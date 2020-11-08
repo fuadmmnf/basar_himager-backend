@@ -40,6 +40,9 @@ class MachinepartController extends ApiController
     public function createMachinepartEntries(CreateMachinepartEntriesRequest $request)
     {
         $machinepartentry = $this->machinepartRepository->saveMachinepartEntries($request->validated());
+        if(!$machinepartentry){
+            return response()->json('usage limit exceeded', 400);
+        }
         return response()->json($machinepartentry, 201);
     }
 }
