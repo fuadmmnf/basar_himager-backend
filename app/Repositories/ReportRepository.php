@@ -3,26 +3,21 @@
 
 namespace App\Repositories;
 
-
-use App\Exceptions\UserTokenHandler;
 use App\Models\Bank;
 use App\Models\Dailyexpense;
 use App\Models\Bankdeposit;
+use App\Models\Booking;
+use App\Models\Delivery;
 use App\Models\Gatepass;
-use App\Models\Employee;
 use App\Models\Employeesalary;
+use App\Models\Loancollection;
+use App\Models\Loandisbursement;
 use App\Models\Expensecategory;
 use App\Models\Receive;
 use App\Models\Transaction;
-use App\Models\User;
-use App\Repositories\Interfaces\EmployeeRepositoryInterface;
-use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use Carbon\Carbon;
-use phpDocumentor\Reflection\Types\Array_;
-use phpDocumentor\Reflection\Types\Collection;
-use Spatie\Permission\Models\Role;
-use function Sodium\add;
+
 
 class ReportRepository implements ReportRepositoryInterface
 {
@@ -65,18 +60,51 @@ class ReportRepository implements ReportRepositoryInterface
         return $expensecategories;
     }
 
+    public function fetchBookingReceiptInfo($id)
+    {
+        // TODO: Implement fetchBookingReceiptInfo() method.
+        $booking = Booking::where('id',$id)
+            ->with('client')
+            ->first();
+        return $booking;
+    }
+
     public function fetchReceiveReceiptInfo($id)
     {
         $receives = Receive::where('id', $id)
             ->with('booking')
-            ->with('booking.client')->first();
+            ->with('booking.client')
+            ->with('receiveitems')->first();
 //        $receives = Receive::
 //            with('booking')
 //            ->with('booking.client')->get();
         return $receives;
     }
 
+    public function fetchDeliveryReceiptInfo($id)
+    {
+        $delivery = Delivery::where('id',$id)
+            ->with('booking')
+            ->with('booking.client')->first();
+        return $delivery;
+    }
 
+
+    public function fetchLoanDisbursementInfo($id)
+    {
+        // TODO: Implement fetchLoanDisbursementInfo() method.
+        $loanDisbursements = Loandisbursement::where('id',$id)->first();
+        $loanDisbursements->load('booking', 'booking.client', 'loancollections');
+        return $loanDisbursements;
+    }
+
+    public function fetchLoanCollectionInfo($id)
+    {
+        // TODO: Implement fetchLoanCollectionInfo() method.
+        $loanCollection = Loancollection::where('id',$id)->first();
+        $loanCollection->load('loandisbursement', 'loandisbursement.booking.client');
+        return $loanCollection;
+    }
 //    public function fetchReceiveReceiptInfo($id)
 //    {
 //        $receives = Receive::where('id',$id)

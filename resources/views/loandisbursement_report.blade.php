@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Bank Deposit Report</title>
+    <title>Loan Disbursement Report</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -60,103 +60,102 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Bank Deposit Report</b> <br />
+        <b style="font-size: 1.3rem;padding: 20px">Loan Disbursement Report</b> <br />
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Report No:</b> 03edkd</p>
+    <p><b>Disbursement No:</b> {{$loandisbursement->loandisbursement_no}}</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Recipient</h3>
+            <div  >
+                <h3>Client Information</h3>
                 <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
+                    <p>Name: {{$loandisbursement->booking->client->name}}</p>
+                    <p>Phone: {{$loandisbursement->booking->client->phone}}</p>
+                    <p>Father's Name: {{$loandisbursement->booking->client->father_name}}</p>
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+        </td>
+    </tr>
+
+</table>
+
+
+<table>
+    <tr>
+        <td style="width: 50%; text-align: left">
+            <div   >
+                <h3>Booking Information</h3>
+                <div>
+                    <p>No: {{$loandisbursement->booking->booking_no}}</p>
+                    <p>Date: {{$loandisbursement->booking->booking_time}}</p>
+                    <p>Total Quantity: {{$loandisbursement->booking->quantity}}</p>
+                    <p>Remaining Quantity: {{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
+                <h3>Loan Information</h3>
+                <div>
+                    <p>No: {{$loandisbursement->loandisbursement_no}}</p>
+                    <p>Date: {{$loandisbursement->payment_date}}</p>
+                    <p>Loan Amount: {{$loandisbursement->amount}}</p>
+                    <p>Have To Pay: {{$loandisbursement->amount_left}}</p>
+                </div>
             </div>
         </td>
     </tr>
 
 </table>
 
-<table class="bordertable">
-    <thead>
-    <tr>
-        <th>Bank</th>
-        <th>Account No</th>
-        <th>Total</th>
-    </tr>
-
-    </thead>
-    <tbody>
-    @if(count($banks))
-        @foreach($banks as $bank)
-            <tr>
-                <td>{{$bank->name}}</td>
-                <td>{{$bank->account_no}}</td>
-                <td>{{$bank->total}}</td>
-            </tr>
-        @endforeach
-        <tr>
-            <td></td>
-            <td> <b>TOTAL:</b></td>
-            <td> <b>{{$banks->sum('total')}}</b></td>
-        </tr>
-    @endif
-    </tbody>
-</table>
-
-<div class="page-break"></div>
-
 <div style="text-align: center; color: darkblue">
-    <h3>Bank Transactions </h3>
+    <h3>Loan Collections </h3>
 </div>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Bank</th>
-        <th>Account No</th>
-        <th>SI No</th>
-        <th>Branch </th>
+        <th>Collection No</th>
+        <th>Date</th>
+        <th>Surcharge</th>
         <th>Amount</th>
     </tr>
 
     </thead>
     <tbody>
-    @if(count($deposits))
-        @foreach($deposits as $deposit)
+    @if(count($loandisbursement->loancollections))
+        @foreach($loandisbursement->loancollections as $collection)
             <tr>
-                <td>{{$deposit->bank->name}}</td>
-                <td>{{$deposit->bank->account_no}}</td>
-                <td>{{$deposit->si_no}}</td>
-                <td>{{$deposit->branch}}</td>
-                <td>{{$deposit->amount}}</td>
+                <td>{{$collection->loancollection_no}}</td>
+                <td>{{$collection->payment_date}}</td>
+                <td>{{$collection->surcharge}}</td>
+                <td>{{$collection->payment_amount}}</td>
             </tr>
         @endforeach
         <tr>
             <td></td>
+            <td> <b>SUBTOTAL:</b></td>
+            <td> <b>{{$loandisbursement->loancollections->sum('surcharge')}}</b></td>
+            <td> <b>{{$loandisbursement->loancollections->sum('payment_amount')}}</b></td>
+        </tr>
+        <tr>
             <td></td>
-            <td> </td>
+            <td></td>
             <td> <b>TOTAL:</b></td>
-            <td> <b>{{$deposits->sum('amount')}}</b></td>
+            <td><b>{{$loandisbursement->loancollections->sum('surcharge')+ $loandisbursement->loancollections->sum('payment_amount')}} </b></td>
         </tr>
     @endif
     </tbody>
 </table>
-
 
 <div class="footer">
     <table >

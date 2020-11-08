@@ -47,7 +47,6 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
         $newReceive->receiving_time = Carbon::parse($request['receiving_time']);
         $newReceive->receiving_no = sprintf('%04d', Receive::whereYear('receiving_time', $newReceive->receiving_time)->count()) . $newReceive->receiving_time->year % 100;
-
         $newReceive->transport = $request['transport'];
 
         $newReceive->save();

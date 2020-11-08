@@ -38,6 +38,10 @@ Route::get('/download/report/salary/month/{month}', [\App\Http\Controllers\Repor
 Route::get('/download/report/deposit/month/{month}', [\App\Http\Controllers\ReportController::class, 'downloadBankDepositReport']);
 Route::get('/download/report/expenses/month/{month}',[\App\Http\Controllers\ReportController::class,'downloadExpenseReport']);
 Route::get('/download/report/receive/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getReceiveReceipt']);
+Route::get('/download/report/delivery/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getDeliveryReceipt']);
+Route::get('/download/report/booking/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getBookingReceipt']);
+Route::get('/download/report/loandisbursement/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoandisbursementReport']);
+Route::get('/download/report/loancollection/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoancollectionReceipt']);
 Route::get('/download/report/gatepass/receipt/{delivery_id}', [\App\Http\Controllers\ReportController::class, 'getGatePass']);
 Route::get('/download/report/accounting/start/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadAccountingReport']);
 
