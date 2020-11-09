@@ -6,10 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasRoles, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -40,4 +42,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function admin(){
+        return $this->hasOne('App\Models\Admin');
+    }
+
+    public function employee(){
+        return $this->hasOne('App\Models\Employee');
+    }
+
+    public function client(){
+        return $this->hasOne('App\Models\Client');
+    }
 }
