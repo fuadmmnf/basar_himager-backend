@@ -20,6 +20,7 @@ class CreateEmployeesalariesTable extends Migration
             $table->integer('loan_payment')->default(0);
             $table->integer('bonus')->default(0);
             $table->string('remark');
+            $table->dateTime('salary_month');
             $table->dateTime('payment_time');
             $table->timestamps();
 

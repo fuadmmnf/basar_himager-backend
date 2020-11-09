@@ -122,7 +122,7 @@
         </tr>
         <tr>
             <td></td>
-            <td> <b>TOTAL:</b></td>
+            <td> <b>TOTAL<small>(Pay)</small>:</b></td>
             <td><b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('loan_payment')}} </b></td>
             <td></td>
             <td></td>

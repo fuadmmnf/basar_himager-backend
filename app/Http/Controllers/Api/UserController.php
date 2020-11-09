@@ -41,7 +41,7 @@ class UserController extends ApiController
     public function changePassowrd(ChangePasswordRequest $request)
     {
         $user = $this->userRepository->changePassword($request->validated());
-        if ($user) {
+        if (!$user) {
             return response()->json([], 400);
         } else {
             return response()->noContent();
