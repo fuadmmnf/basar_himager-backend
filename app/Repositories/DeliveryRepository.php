@@ -38,10 +38,10 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
         $deliveryQuantities = [];
         foreach ($deliveryItems as $deliveryItem) {
-            if (isset($deliveryQuantities[$deliveryItem->potatoe_type])) {
+            if (isset($deliveryQuantities[$deliveryItem['potatoe_type']])) {
                 $deliveryQuantities[$deliveryItem['potatoe_type']] += $deliveryItem['quantity'];
             } else {
-                $deliveryQuantities[$deliveryItem->potatoe_type] = $deliveryItem->quantity_left;
+                $deliveryQuantities[$deliveryItem['potatoe_type']] = $deliveryItem['quantity'];
             }
         }
 
