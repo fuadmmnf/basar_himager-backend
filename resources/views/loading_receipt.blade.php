@@ -71,33 +71,6 @@
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Recipient</h3>
-                <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-                <h3>Cold Storage</h3>
-                <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
-                </div>
-            </div>
-        </td>
-    </tr>
-
-</table>
 
 <table class="bordertable">
     <thead>

@@ -102,7 +102,7 @@
         </td>
         <td  class="td-right-align" style="width: 30%; text-align: left">
             <div>
-                <p>Date: {{$bookinginfo->booking_time}}</p>
+                <p>Date: {{ date('F d, Y', strtotime($bookinginfo->booking_time)) }}</p>
                 <p>Advance Payment: {{$bookinginfo->advance_payment}}</p>
                 <p>Discount: {{$bookinginfo->discount}} %</p>
             </div>

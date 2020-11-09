@@ -96,7 +96,7 @@
                 <h3>Loan Disbursement Information</h3>
                 <div>
                     <p>No:{{$loancollection->loandisbursement->loandisbursement_no}} </p>
-                    <p>Date: {{$loancollection->loandisbursement->payment_date}}</p>
+                    <p>Date: {{ date('F d, Y', strtotime($loancollection->loandisbursement->payment_date)) }}</p>
                     <p>Loan Amount: {{$loancollection->loandisbursement->amount}}</p>
                     <p>Remaining Amount: {{$loancollection->pending_loan_amount}}</p>
                 </div>
@@ -107,7 +107,7 @@
                 <h3>Loan Collection Information</h3>
                 <div>
                     <p>No:{{$loancollection->loancollection_no}} </p>
-                    <p>Date: {{$loancollection->payment_date}}</p>
+                    <p>Date: {{ date('F d, Y', strtotime($loancollection->payment_date)) }}</p>
                     <p>Surcharge: {{$loancollection->surcharge}}</p>
                     <p>Payment Amount: {{$loancollection->payment_amount}}</p>
                 </div>

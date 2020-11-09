@@ -41,6 +41,7 @@ class ReportController extends Controller
         $salaries = $this->reportRepository->fetchAllSalaries($month);
         $pdf = PDF::loadView('salary_report', [
             'salaries' => $salaries,
+            'month' => $month,
         ]);
         return $pdf->stream();
         //return $pdf->download('employees_salary_report');
@@ -54,6 +55,7 @@ class ReportController extends Controller
         $pdf = PDF::loadView('bankdeposit_report', [
             'deposits' => $deposits,
             'banks' => $banks,
+            'month' => $month
         ]);
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
@@ -64,6 +66,7 @@ class ReportController extends Controller
         $expenses = $this->reportRepository->fetchDailyexpenses($month);
         $pdf = PDF::loadView('expense_report', [
             'expenses' => $expenses,
+            'month' => $month
         ]);
         return $pdf->stream();
     }
@@ -143,6 +146,8 @@ class ReportController extends Controller
             'incomes' => array_filter($transactions, function ($transaction) {
                 return $transaction['type'] == 0;
             }),
+            'start_date' => $start_date,
+            'end_date' => $end_date,
         ]);
         return $pdf->stream();
     }

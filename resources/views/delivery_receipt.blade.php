@@ -103,7 +103,7 @@
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <p>Date: {{$receiptinfo->booking->booking_time}}</p>
+                <p>Date: {{ date('F d, Y', strtotime($receiptinfo->booking->booking_time)) }}</p>
                 <p>Bag Received: {{$receiptinfo->booking->bags_in}}</p>
 
             </div>
