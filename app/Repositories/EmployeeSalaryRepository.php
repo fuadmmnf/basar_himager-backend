@@ -61,8 +61,8 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
     public function fetchEmployeeSalaryByid($employee_id)
     {
         // TODO: Implement fetchEmployeeSalaryByid() method.
-        $salary= Employeesalary::where('employee_id', $employee_id)->orderBy('payment_time')->get();
-        return $salary;
+        $salaries = Employeesalary::where('employee_id', $employee_id)->orderByDesc('salary_month')->paginate(15);
+        return $salaries;
     }
 }
 

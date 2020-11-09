@@ -24,7 +24,7 @@ class EmployeeLoanController extends ApiController
         return response()->json($loan, 201);
     }
     public function getLoan($employee_id){
-        $loan = $this->employeeLoanRepository->getEmployeeLoan($employee_id);
-        return response()->json($loan, 200);
+        $loans = $this->employeeLoanRepository->getEmployeeLoan($employee_id);
+        return response()->json($loans, 200);
     }
 }
