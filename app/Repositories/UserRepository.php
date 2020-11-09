@@ -55,7 +55,8 @@ class UserRepository implements UserRepositoryInterface
     public function fetchUserById($user_id)
     {
         // TODO: Implement fetchUserById() method.
-        $user = User::where('id', $user_id)->with('employee')->firstOrFail();
+        $user = User::findOrFail('id', $user_id);
+        $user = $this->getUserType($user);
         return $user;
 
     }
