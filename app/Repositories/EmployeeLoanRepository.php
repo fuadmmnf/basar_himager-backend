@@ -31,7 +31,9 @@ class EmployeeLoanRepository implements EmployeeLoanRepositoryInterface
     public function getEmployeeLoan($employee_id)
     {
         // TODO: Implement getEmployeeLoan() method.
-        $loan = Employeeloan::where('employee_id', $employee_id)->orderByDesc('payment_time')->paginate(15);
+        $loan = Employeeloan::where('employee_id', $employee_id)
+            ->orderByDesc('payment_time')
+            ->paginate(15);
         return $loan;
     }
 

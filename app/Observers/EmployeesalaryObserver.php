@@ -16,7 +16,7 @@ class EmployeesalaryObserver
     public function created(Employeesalary $employeesalary)
     {
         $transactionHandler = new TransactionHandler();
-        $transactionHandler->createTransaction($employeesalary->type == 0? 1: 0, $employeesalary->amount + $employeesalary->bonus, $employeesalary->payment_time,
+        $transactionHandler->createTransaction(1, $employeesalary->amount + $employeesalary->bonus, $employeesalary->payment_time,
             $employeesalary, 'Employee Monthly Salary'
         );
     }

@@ -23,9 +23,8 @@ class CreateEmployeesTable extends Migration
             $table->json('present_address');
             $table->json('permanent_address');
             $table->integer('basic_salary');
-            $table->integer('special_salary');
-            $table->integer('bonus');
-            $table->integer('loan');
+            $table->integer('special_salary')->default(0);
+            $table->integer('loan')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');        });

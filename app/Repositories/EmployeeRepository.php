@@ -29,8 +29,6 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         $newEmployee->permanent_address = $request['permanent_address'];
         $newEmployee->basic_salary = $request['basic_salary'];
         $newEmployee->special_salary = $request['special_salary'];
-        $newEmployee->bonus = $request['bonus'];
-        $newEmployee->loan = $request['loan'];
         $newEmployee->save();
         $user->assignRole($request['role']);
 

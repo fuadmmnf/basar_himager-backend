@@ -30,15 +30,18 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
             return null;
         }
 
-        $employeeloanHandler = new EmployeeLoanHandler();
-        $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time']));
-        if (!$employeeLoan) {
-            return null;
+        if($request['loan_payment'] > 0){
+            $employeeloanHandler = new EmployeeLoanHandler();
+            $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time']));
+            if (!$employeeLoan) {
+                return null;
+            }
         }
+
 
         $newEmployeeSalary = new Employeesalary();
         $newEmployeeSalary->employee_id = $employee->id;
-        $newEmployeeSalary->amount = $request['amount'];
+        $newEmployeeSalary->amount = $employee->basic_salary + $employee->special_salary - $request['loan_payment'];
         $newEmployeeSalary->loan_payment = $request['loan_payment'];
         $newEmployeeSalary->bonus = $request['bonus'];
         $newEmployeeSalary->remark = $request['remark'];
