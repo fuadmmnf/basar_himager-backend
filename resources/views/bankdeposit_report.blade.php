@@ -158,29 +158,6 @@
 </table>
 
 
-<div class="footer">
-    <table >
-        <tr>
-            <td width="50%">
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Recepient</b>
-                </div>
-
-            </td>
-            <td>
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Authority</b>
-                </div>
-
-            </td>
-        </tr>
-    </table>
-
-
-</div>
-
 <htmlpageheader name="page-header">
     <table>
         <tr>
