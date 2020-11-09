@@ -66,7 +66,7 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Recive No:</b> {{$gatepassInfo->gatepass_no}}</p>
+    <p><b>Gate Pass No:</b> {{$gatepassInfo->gatepass_no}}</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 

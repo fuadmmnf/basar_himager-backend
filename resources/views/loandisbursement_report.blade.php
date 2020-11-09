@@ -96,7 +96,7 @@
                 <h3>Booking Information</h3>
                 <div>
                     <p>No: {{$loandisbursement->booking->booking_no}}</p>
-                    <p>Date: {{$loandisbursement->booking->booking_time}}</p>
+                    <p>Date: {{ date('F d, Y', strtotime($loandisbursement->booking->booking_time)) }}</p>
                     <p>Total Quantity: {{$loandisbursement->booking->quantity}}</p>
                     <p>Remaining Quantity: {{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
                 </div>
@@ -107,7 +107,7 @@
                 <h3>Loan Information</h3>
                 <div>
                     <p>No: {{$loandisbursement->loandisbursement_no}}</p>
-                    <p>Date: {{$loandisbursement->payment_date}}</p>
+                    <p>Date: {{ date('F d, Y', strtotime($loandisbursement->payment_date)) }}</p>
                     <p>Loan Amount: {{$loandisbursement->amount}}</p>
                     <p>Have To Pay: {{$loandisbursement->amount_left}}</p>
                 </div>

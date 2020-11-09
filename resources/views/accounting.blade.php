@@ -65,8 +65,12 @@
     </div>
 
 </div>
+<br>
 
-<br/> <br/> <br/>
+<div>
+    <p><b>Start Date:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
+    <p><b>End Date:</b> {{ date('F d, Y', strtotime($end_date)) }}</p>
+</div>
 
 <div style="font-size: 1.2rem"><b><u>Expenses</u></b></div>
 <br/>

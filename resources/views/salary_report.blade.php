@@ -66,30 +66,8 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Report No:</b> 03edkd</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>Month:</b> {{ date('F, Y', strtotime($month)) }}</p>
 </span>
-
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div>
-                <h3>Recipient</h3>
-                <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-            </div>
-        </td>
-    </tr>
-
-</table>
 
 <table class="bordertable">
     <thead>
@@ -98,7 +76,8 @@
         <th>Designation</th>
         <th>Salary</th>
         <th>Bonus</th>
-        <th>Loan Receive</th>
+        <th>Loan Collection</th>
+        <th>Payment Date</th>
     </tr>
 
     </thead>
@@ -111,6 +90,7 @@
                 <td>{{$salary->amount}}</td>
                 <td>{{$salary->bonus}}</td>
                 <td>{{$salary->loan_payment}}</td>
+                <td>{{ date('F d, Y', strtotime($salary->payment_time)) }}</td>
             </tr>
         @endforeach
         <tr>
@@ -119,11 +99,13 @@
             <td> <b>{{$salaries->sum('amount')}}</b></td>
             <td> <b>{{$salaries->sum('bonus')}}</b></td>
             <td> <b>{{$salaries->sum('loan_payment')}}</b></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
             <td> <b>TOTAL<small>(Pay)</small>:</b></td>
             <td><b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('loan_payment')}} </b></td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
