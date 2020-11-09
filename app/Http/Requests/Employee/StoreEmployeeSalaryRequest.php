@@ -29,6 +29,7 @@ class StoreEmployeeSalaryRequest extends FormRequest
             'loan_payment' => 'required| numeric',
             'bonus' => 'required| numeric',
             'remark' => 'required',
+            'salary_month' => 'required',
             'payment_time' => 'required',
         ];
     }

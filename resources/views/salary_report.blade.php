@@ -122,7 +122,7 @@
         </tr>
         <tr>
             <td></td>
-            <td> <b>TOTAL:</b></td>
+            <td> <b>TOTAL<small>(Pay)</small>:</b></td>
             <td><b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('loan_payment')}} </b></td>
             <td></td>
             <td></td>
@@ -131,28 +131,6 @@
     </tbody>
 </table>
 
-<div class="footer">
-    <table >
-        <tr>
-            <td width="50%">
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Recepient</b>
-                </div>
-
-            </td>
-            <td>
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Authority</b>
-                </div>
-
-            </td>
-        </tr>
-    </table>
-
-
-</div>
 
 <htmlpageheader name="page-header">
     <table>

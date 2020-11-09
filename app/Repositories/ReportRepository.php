@@ -24,7 +24,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchAllSalaries($month)
     {
         // TODO: Implement fetchAllSalaries() method.
-        $salaries = Employeesalary::whereMonth('payment_time', Carbon::parse($month))->with('employee')->get();
+        $salaries = Employeesalary::whereMonth('salary_month', Carbon::parse($month))->with('employee')->get();
         return $salaries;
     }
 

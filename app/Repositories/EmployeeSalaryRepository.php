@@ -31,6 +31,7 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
         $newEmployeeSalary->loan_payment = $request['loan_payment'];
         $newEmployeeSalary->bonus = $request['bonus'];
         $newEmployeeSalary->remark = $request['remark'];
+        $newEmployeeSalary->salary_month = Carbon::parse($request['salary_month']);
         $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time']);
         $newEmployeeSalary->save();
         return $newEmployeeSalary;
