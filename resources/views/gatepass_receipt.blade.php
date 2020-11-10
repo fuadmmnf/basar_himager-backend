@@ -74,11 +74,11 @@
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Client</h3>
+                <h3>Client Information</h3>
                 <div>
-                    <p>Name: {{$gatepassInfo->delivery->booking->client->name}}</p>
-                    <p>Phone: {{$gatepassInfo->delivery->booking->client->phone}}</p>
-                    <p>Father's Name: {{$gatepassInfo->delivery->booking->client->father_name}}</p>
+                    <p><b>Name:</b> {{$gatepassInfo->delivery->booking->client->name}}</p>
+                    <p><b>Phone:</b> {{$gatepassInfo->delivery->booking->client->phone}}</p>
+                    <p><b>Father's Name:</b> {{$gatepassInfo->delivery->booking->client->father_name}}</p>
 
                 </div>
             </div>
@@ -89,20 +89,53 @@
 
 </table>
 
+<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>Gate Pass Information</b></span>
+</div>
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>GatePass Information</h3>
                 <div>
-                    <p>No: {{$gatepassInfo->gatepass_no}}</p>
-                    <p>Time: {{$gatepassInfo->gatepass_time}}</p>
-                    <p>Transport: {{$gatepassInfo->transport['type']}}</p>
+                    <p><b>Gate Pass No:</b> {{$gatepassInfo->gatepass_no}}</p>
+                    <p><b>Time:</b> {{ date('F d, Y', strtotime($gatepassInfo->gatepass_time)) }}</p>
+
                 </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+            <div>
+                <p><b>Transport Type:</b> {{$gatepassInfo->transport['type']}}</p>
+                <p><b>Transport Number:</b> {{$gatepassInfo->transport['number']}}</p>
             </div>
         </td>
     </tr>
+</table>
+
+<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>Delivery Information</b></span>
+</div>
+
+<table class="bordertable">
+    <thead>
+        <tr>
+            <th>Potato Type</th>
+            <th>Quantity(Bags)</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if(count($gatepassInfo->delivery->deliveryitems))
+        @foreach($gatepassInfo->delivery->deliveryitems as $item)
+            <tr>
+                <td>{{$item->potatoe_type}}</td>
+                <td>{{$item->quantity}}</td>
+            </tr>
+        @endforeach
+        <tr>
+            <td><b>Total</b></td>
+            <td>{{$gatepassInfo->delivery->deliveryitems->sum('quantity')}}</td>
+        </tr>
+    @endif
+    </tbody>
 </table>
 
 <div class="footer">

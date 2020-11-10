@@ -99,7 +99,7 @@
 <div class="page-break"></div>
 
 <div style="text-align: center; color: darkblue">
-    <h3>Bank Transactions </h3>
+    <h3>Bank Transactions<small>(Deposit)</small> </h3>
 </div>
 
 <table class="bordertable">
@@ -116,6 +116,7 @@
     <tbody>
     @if(count($deposits))
         @foreach($deposits as $deposit)
+            @if($deposit->type == 0)
             <tr>
                 <td>{{$deposit->bank->name}}</td>
                 <td>{{$deposit->bank->account_no}}</td>
@@ -123,6 +124,46 @@
                 <td>{{$deposit->branch}}</td>
                 <td>{{$deposit->amount}}</td>
             </tr>
+            @endif
+        @endforeach
+        <tr>
+            <td></td>
+            <td></td>
+            <td> </td>
+            <td> <b>TOTAL:</b></td>
+            <td> <b>{{$deposits->sum('amount')}}</b></td>
+        </tr>
+    @endif
+    </tbody>
+</table>
+
+<div style="text-align: center; color: darkblue">
+    <h3>Bank Transactions<small>(Withdraw)</small> </h3>
+</div>
+
+<table class="bordertable">
+    <thead>
+    <tr>
+        <th>Bank</th>
+        <th>Account No</th>
+        <th>SI No</th>
+        <th>Branch </th>
+        <th>Amount</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    @if(count($deposits))
+        @foreach($deposits as $deposit)
+            @if($deposit->type == 1)
+                <tr>
+                    <td>{{$deposit->bank->name}}</td>
+                    <td>{{$deposit->bank->account_no}}</td>
+                    <td>{{$deposit->si_no}}</td>
+                    <td>{{$deposit->branch}}</td>
+                    <td>{{$deposit->amount}}</td>
+                </tr>
+            @endif
         @endforeach
         <tr>
             <td></td>

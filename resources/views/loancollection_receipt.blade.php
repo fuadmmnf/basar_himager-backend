@@ -77,9 +77,9 @@
             <div   >
                 <h3>Client Information</h3>
                 <div>
-                    <p>Name: {{$loancollection->loandisbursement->booking->client->name}}</p>
-                    <p>Phone: {{$loancollection->loandisbursement->booking->client->phone}}</p>
-                    <p>Father's Name: {{$loancollection->loandisbursement->booking->client->father_name}}</p>
+                    <p><b>Name:</b> {{$loancollection->loandisbursement->booking->client->name}}</p>
+                    <p><b>Phone:</b> {{$loancollection->loandisbursement->booking->client->phone}}</p>
+                    <p><b>Father's Name:</b> {{$loancollection->loandisbursement->booking->client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -94,22 +94,24 @@
         <td style="width: 60%; text-align: left">
             <div   >
                 <h3>Loan Disbursement Information</h3>
+                <br>
                 <div>
-                    <p>No:{{$loancollection->loandisbursement->loandisbursement_no}} </p>
-                    <p>Date: {{ date('F d, Y', strtotime($loancollection->loandisbursement->payment_date)) }}</p>
-                    <p>Loan Amount: {{$loancollection->loandisbursement->amount}}</p>
-                    <p>Remaining Amount: {{$loancollection->pending_loan_amount}}</p>
+                    <p><b>Disbursement No:</b> {{$loancollection->loandisbursement->loandisbursement_no}} </p>
+                    <p><b>Date:</b> {{ date('F d, Y', strtotime($loancollection->loandisbursement->payment_date)) }}</p>
+                    <p><b>Loan Amount:</b> {{$loancollection->loandisbursement->amount}}</p>
+                    <p><b>Remaining Amount:</b> {{$loancollection->pending_loan_amount}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: left; width: 40%">
             <div   >
                 <h3>Loan Collection Information</h3>
+                <br>
                 <div>
-                    <p>No:{{$loancollection->loancollection_no}} </p>
-                    <p>Date: {{ date('F d, Y', strtotime($loancollection->payment_date)) }}</p>
-                    <p>Surcharge: {{$loancollection->surcharge}}</p>
-                    <p>Payment Amount: {{$loancollection->payment_amount}}</p>
+                    <p><b>Collection No:</b>{{$loancollection->loancollection_no}} </p>
+                    <p><b>Date:</b> {{ date('F d, Y', strtotime($loancollection->payment_date)) }}</p>
+                    <p><b>Surcharge:</b> {{$loancollection->surcharge}}</p>
+                    <p><b>Payment Amount:</b> {{$loancollection->payment_amount}}</p>
                 </div>
             </div>
 

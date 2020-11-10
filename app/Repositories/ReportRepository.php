@@ -8,6 +8,7 @@ use App\Models\Dailyexpense;
 use App\Models\Bankdeposit;
 use App\Models\Booking;
 use App\Models\Delivery;
+use App\Models\Employeeloan;
 use App\Models\Gatepass;
 use App\Models\Employeesalary;
 use App\Models\Loancollection;
@@ -24,7 +25,17 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchAllSalaries($month)
     {
         // TODO: Implement fetchAllSalaries() method.
-        $salaries = Employeesalary::whereMonth('salary_month', Carbon::parse($month))->with('employee')->get();
+        $salaries = Employeesalary::whereMonth('salary_month', Carbon::parse($month))
+            ->with('employee')->get();
+        foreach ($salaries as $salary)
+        {
+            $salary->loan_taken = Employeeloan::where('employee_id', $salary->employee->id)
+            ->whereMonth('payment_time', Carbon::parse($month))
+            ->where('type', 0)->sum('amount');
+            $salary->loan_returned = Employeeloan::where('employee_id', $salary->employee->id)
+                ->whereMonth('payment_time', Carbon::parse($month))
+                ->where('type', 1)->sum('amount');
+        }
         return $salaries;
     }
 
@@ -85,7 +96,8 @@ class ReportRepository implements ReportRepositoryInterface
     {
         $delivery = Delivery::where('id',$id)
             ->with('booking')
-            ->with('booking.client')->first();
+            ->with('booking.client')
+            ->with('deliveryitems')->first();
         return $delivery;
     }
 
@@ -123,7 +135,8 @@ class ReportRepository implements ReportRepositoryInterface
         $gatepass = Gatepass::where('delivery_id', $delivey_id)
             ->with('delivery')
             ->with('delivery.booking')
-            ->with('delivery.booking.client')->first();
+            ->with('delivery.booking.client')
+            ->with('delivery.deliveryitems')->first();
         return $gatepass;
     }
 
