@@ -74,11 +74,11 @@
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Client</h3>
+                <h3>Client Information</h3>
                 <div>
-                    <p>Name: {{$bookinginfo->client->name}}</p>
-                    <p>Phone: {{$bookinginfo->client->phone}}</p>
-                    <p>Father's Name: {{$bookinginfo->client->father_name}}</p>
+                    <p><b>Name:</b> {{$bookinginfo->client->name}}</p>
+                    <p><b>Phone:</b> {{$bookinginfo->client->phone}}</p>
+                    <p><b>Father's Name</b>: {{$bookinginfo->client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -95,16 +95,24 @@
         <td style="width: 70%; text-align: left">
             <div   >
                 <div>
-                    <p>No: {{$bookinginfo->booking_no}}</p>
-                    <p>Total Quantity: {{$bookinginfo->quantity}}</p>
+                    <p><b>Booking Date:</b> {{ date('F d, Y', strtotime($bookinginfo->booking_time)) }}</p>
+                    <p><b>Booking Type:</b>
+                       @if($bookinginfo->type == 0)
+                           Normal
+                        @elseif($bookinginfo->type == 1)
+                            Advance
+                        @endif
+                    </p>
+                    <p><b>Total Quantity:</b> {{$bookinginfo->quantity}}</p>
                 </div>
             </div>
         </td>
         <td  class="td-right-align" style="width: 30%; text-align: left">
             <div>
-                <p>Date: {{ date('F d, Y', strtotime($bookinginfo->booking_time)) }}</p>
-                <p>Advance Payment: {{$bookinginfo->advance_payment}}</p>
-                <p>Discount: {{$bookinginfo->discount}} %</p>
+                <p><b>Bags In:</b> {{$bookinginfo->bags_in}}</p>
+                <p><b>Bags Out:</b> {{$bookinginfo->bags_out}}</p>
+                <p><b>Advance Payment:</b> {{$bookinginfo->advance_payment}}</p>
+                <p><b>Discount:</b> {{$bookinginfo->discount}} %</p>
             </div>
         </td>
     </tr>
