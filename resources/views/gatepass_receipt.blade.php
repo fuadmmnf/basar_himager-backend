@@ -99,6 +99,7 @@
                     <p>No: {{$gatepassInfo->gatepass_no}}</p>
                     <p>Time: {{$gatepassInfo->gatepass_time}}</p>
                     <p>Transport: {{$gatepassInfo->transport['type']}}</p>
+                    <p>Transport: {{$gatepassInfo->transport['number']}}</p>
                 </div>
             </div>
         </td>

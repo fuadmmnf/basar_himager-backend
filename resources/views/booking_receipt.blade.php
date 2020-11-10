@@ -95,7 +95,7 @@
         <td style="width: 70%; text-align: left">
             <div   >
                 <div>
-                    <p>No: {{$bookinginfo->booking_no}}</p>
+                    <p>Type: {{$bookinginfo->booking_no}}</p>
                     <p>Total Quantity: {{$bookinginfo->quantity}}</p>
                 </div>
             </div>
