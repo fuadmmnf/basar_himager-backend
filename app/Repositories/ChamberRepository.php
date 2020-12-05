@@ -5,10 +5,12 @@ namespace App\Repositories;
 
 use App\Models\Chamber;
 use App\Models\Chamberentry;
+use App\Models\Inventory;
 use App\Repositories\Interfaces\ChamberRepositoryInterface;
+use App\Repositories\Interfaces\InventoryRepositoryInterface;
 use Carbon\Carbon;
 
-class ChamberRepository implements ChamberRepositoryInterface
+class ChamberRepository implements ChamberRepositoryInterface,InventoryRepositoryInterface
 {
     public function getChambers()
     {
@@ -40,4 +42,30 @@ class ChamberRepository implements ChamberRepositoryInterface
         return $newChamberentry;
     }
 
+    public function saveInventory(array $request)
+    {
+        // TODO: Implement saveInventory() method.
+        $chamber = Inventory::findOrFail($request['chamber_name']);
+
+        if($chamber){
+            return 'AlreadyExisting';
+        }
+        // TODO: Implement saveExpensecategory() method.
+        $newInventory = new Inventory();
+        $newInventory->parent_id = null;
+        $newInventory->category = 'chamber';
+        $newInventory->name = $request['chamber_name'];
+        $newInventory->capacity = $request['chamber_capacity'];
+        $newInventory->save();
+
+        return $newInventory;
+
+    }
+
+    public function getInventory()
+    {
+        // TODO: Implement getInventory() method.
+        $chambers = Inventory::where('category', 'chamber');
+        return $chambers;
+    }
 }
