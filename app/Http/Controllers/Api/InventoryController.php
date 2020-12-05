@@ -4,36 +4,34 @@
 namespace App\Http\Controllers\Api;
 
 use \App\Http\Controllers\ApiController;
+use App\Http\Requests\Inventory\CreateInventoryRequest;
 use App\Repositories\ChamberRepository;
-use \App\Http\Requests\Inventory\CreateChamberRequest;
 use App\Repositories\Interfaces\InventoryRepositoryInterface;
 
 
 class InventoryController extends ApiController
 {
-    private $inevntoryRepository;
+    private $inventoryRepository;
     /**
      * InventoryController constructor.
      */
     public function __construct(InventoryRepositoryInterface $inventoryRepository)
     {
-        $this->inevntoryRepository = $inventoryRepository;
+        $this->inventoryRepository = $inventoryRepository;
     }
 
-    public function CreateChamber(CreateChamberRequest $request){
-        $chamberRepository = new ChamberRepository();
-        $chamber = $chamberRepository->saveInventory($request->validated());
-        if($chamber == 'AlreadyExisting'){
-            return response()->json($chamber, 203);
+    public function createInventory(CreateInventoryRequest $request){
+        $inventory = $this->inventoryRepository->saveInventory($request->validated());
+        if($inventory == 'AlreadyExisting' || $inventory==='NotEnoughCapacity'){
+            return response()->json($inventory, 203);
         }
-        else return response()->json($chamber, 201);
+        else return response()->json($inventory, 201);
     }
 
-    public function fetchChamber()
+    public function fetchInventory($inventory_type)
     {
-        $chamberRepository = new ChamberRepository();
-        $chamber = $chamberRepository->getInventory();
-        return response()->json($chamber, 200);
+        $inventory = $this->inventoryRepository->getInventory($inventory_type);
+        return response()->json($inventory, 200);
     }
 
 }

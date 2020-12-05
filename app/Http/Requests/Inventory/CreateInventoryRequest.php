@@ -1,9 +1,12 @@
 <?php
 
+
 namespace App\Http\Requests\Inventory;
 
-class CreatePocketRequest extends \Illuminate\Foundation\Http\FormRequest
+
+class CreateInventoryRequest extends \Illuminate\Foundation\Http\FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,9 +27,12 @@ class CreatePocketRequest extends \Illuminate\Foundation\Http\FormRequest
     public function rules()
     {
         return [
-            'parent_id' => 'required',
-            'pocket_name' => 'required',
-            'pocket_capacity' => 'required | numeric',
+            'parent_id' => 'sometimes',
+            'category' => 'required',
+            'name' => 'required',
+            'capacity' => 'required | numeric',
+            'remaining_capacity' => 'required | numeric',
         ];
     }
+
 }

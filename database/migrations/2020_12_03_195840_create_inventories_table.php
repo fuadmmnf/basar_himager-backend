@@ -19,6 +19,7 @@ class CreateInventoriesTable extends Migration
             $table->string('category');
             $table->string('name');
             $table->integer('capacity')->default(0);
+            $table->integer('remaining_capacity')->default(0);
             $table->timestamps();
         });
     }

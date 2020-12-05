@@ -35,6 +35,7 @@ use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\InventoryRepository;
 use App\Repositories\LineRepository;
 use App\Repositories\MachinepartRepository;
 use App\Repositories\PocketRepository;
@@ -81,10 +82,6 @@ class AppServiceProvider extends ServiceProvider
             MachinepartRepositoryInterface::class,
             ChamberRepositoryInterface::class,
             InventoryRepositoryInterface::class,
-            InventoryRepositoryInterface::class,
-            InventoryRepositoryInterface::class,
-            InventoryRepositoryInterface::class,
-            InventoryRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -104,11 +101,7 @@ class AppServiceProvider extends ServiceProvider
             EmployeeLoanRepository::class,
             MachinepartRepository::class,
             ChamberRepository::class,
-            ChamberRepository::class,
-            FloorRepository::class,
-            LineRepository::class,
-            PocketRepository::class,
-            PositionRepository::class,
+            InventoryRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {

@@ -42,30 +42,4 @@ class ChamberRepository implements ChamberRepositoryInterface,InventoryRepositor
         return $newChamberentry;
     }
 
-    public function saveInventory(array $request)
-    {
-        // TODO: Implement saveInventory() method.
-        $chamber = Inventory::where('name',$request['chamber_name'])->first();
-
-        if($chamber){
-            return 'AlreadyExisting';
-        }
-        // TODO: Implement saveExpensecategory() method.
-        $newInventory = new Inventory();
-        $newInventory->parent_id = null;
-        $newInventory->category = 'chamber';
-        $newInventory->name = $request['chamber_name'];
-        $newInventory->capacity = $request['chamber_capacity'];
-        $newInventory->save();
-
-        return $newInventory;
-
-    }
-
-    public function getInventory()
-    {
-        // TODO: Implement getInventory() method.
-        $chambers = Inventory::where('category', 'chamber')->get();
-        return $chambers;
-    }
 }
