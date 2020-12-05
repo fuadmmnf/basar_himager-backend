@@ -24,6 +24,7 @@ use App\Repositories\EmployeeLoanRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\EmployeeSalaryRepository;
 use App\Repositories\ExpensecategoryRepository;
+use App\Repositories\FloorRepository;
 use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\ChamberRepositoryInterface;
@@ -34,7 +35,11 @@ use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\InventoryRepository;
+use App\Repositories\LineRepository;
 use App\Repositories\MachinepartRepository;
+use App\Repositories\PocketRepository;
+use App\Repositories\PositionRepository;
 use App\Repositories\ReportRepository;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
@@ -48,6 +53,7 @@ use App\Repositories\ReceiveRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use function Symfony\Component\String\u;
+use \App\Repositories\Interfaces\InventoryRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -75,6 +81,7 @@ class AppServiceProvider extends ServiceProvider
             EmployeeLoanRepositoryInterface::class,
             MachinepartRepositoryInterface::class,
             ChamberRepositoryInterface::class,
+            InventoryRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -94,6 +101,7 @@ class AppServiceProvider extends ServiceProvider
             EmployeeLoanRepository::class,
             MachinepartRepository::class,
             ChamberRepository::class,
+            InventoryRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {

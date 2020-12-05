@@ -91,3 +91,9 @@ Route::post('machinepartentries', [\App\Http\Controllers\Api\MachinepartControll
 Route::get('chambers', [\App\Http\Controllers\Api\ChamberController::class, 'fetchChambers']);
 Route::get('chambers/{chamber_id}/chamberentries', [\App\Http\Controllers\Api\ChamberController::class, 'fetchChamberentriesByChamber']);
 Route::post('chamberentries', [\App\Http\Controllers\Api\ChamberController::class, 'createChamberentry']);
+
+
+//====>Inventory
+//Chamber
+Route::get('inventory/{inventory_type}', [\App\Http\Controllers\Api\InventoryController::class, 'fetchInventory']);
+Route::post('inventory/create', [\App\Http\Controllers\Api\InventoryController::class, 'createInventory']);
