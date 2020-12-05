@@ -45,7 +45,7 @@ class ChamberRepository implements ChamberRepositoryInterface,InventoryRepositor
     public function saveInventory(array $request)
     {
         // TODO: Implement saveInventory() method.
-        $chamber = Inventory::findOrFail($request['chamber_name']);
+        $chamber = Inventory::where('name',$request['chamber_name'])->first();
 
         if($chamber){
             return 'AlreadyExisting';
@@ -65,7 +65,7 @@ class ChamberRepository implements ChamberRepositoryInterface,InventoryRepositor
     public function getInventory()
     {
         // TODO: Implement getInventory() method.
-        $chambers = Inventory::where('category', 'chamber');
+        $chambers = Inventory::where('category', 'chamber')->get();
         return $chambers;
     }
 }

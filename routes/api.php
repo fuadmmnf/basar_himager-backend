@@ -95,5 +95,5 @@ Route::post('chamberentries', [\App\Http\Controllers\Api\ChamberController::clas
 
 //====>Inventory
 //Chamber
-Route::get('inventory\chambers', [\App\Http\Controllers\Api\InventoryController::class, 'fetchChamber']);
-Route::post('inventory\create\chambers', [\App\Http\Controllers\Api\InventoryController::class, 'CreateChamber']);
+Route::get('inventory/chambers', [\App\Http\Controllers\Api\InventoryController::class, 'fetchChamber']);
+Route::post('inventory/create/chambers', [\App\Http\Controllers\Api\InventoryController::class, 'CreateChamber']);
