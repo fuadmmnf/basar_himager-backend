@@ -47,8 +47,21 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
     public function getInventory($inventory_type)
     {
         // TODO: Implement getInventory() method.
-        $inventory = Inventory::where('category', $inventory_type)->get();
-        return $inventory;
+        $inventories = Inventory::where('category', $inventory_type)->get();
+        if($inventory_type !== 'chamber' || $inventory_type!== 'position'){
+            foreach ($inventories as $inventory){
+                $this->getFullInventoryDecisionWithParent($inventory);
+            }
+        }
+        return $inventories;
+    }
+    public function getFullInventoryDecisionWithParent($inventory){
+                while($inventory->parent_id !== null){
+                    $temp= Inventory::where('parent_id', $inventory->parent_id)->get();
+                    $inventory->parent_info = $temp;
+                    $this->getFullInventoryDecisionWithParent($inventory->parent_info);
+                }
+                return $inventory;
     }
 
 }
