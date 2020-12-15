@@ -13,7 +13,10 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
     public function saveInventory(array $request)
     {
         // TODO: Implement saveInventory() method.
-        $inventory = Inventory::where('name',$request['name'])->where('category', $request['category'])->first();
+        $inventory = Inventory::where('name',$request['name'])
+                                ->where('category', $request['category'])
+                                ->where('parent_id',$request['parent_id'])->first();
+        $newInventory = new Inventory();
 
         if($inventory){
             return 'AlreadyExisting';
@@ -22,14 +25,15 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
         DB::beginTransaction();
         try{
             if($request['parent_id'] !== null){
-                $parentInventory = Inventory::where('parent_id',$request['parent_id'])->first();
+                $parentInventory = Inventory::where('id',$request['parent_id'])->first();
                 if($parentInventory->remaining_capacity < $request['capacity']){
                     return 'NotEnoughCapacity';
                 }
-                else Inventory::where('parent_id',$request['parent_id'])->decrement('remaing_capacity', $request['capacity']);
+                else {
+                    Inventory::where('id',$request['parent_id'])->decrement('remaining_capacity', $request['capacity']);
+                }
 
             }
-            $newInventory = new Inventory();
             $newInventory->parent_id = $request['parent_id'];
             $newInventory->category = $request['category'];
             $newInventory->name = $request['name'];
@@ -48,16 +52,16 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
     {
         // TODO: Implement getInventory() method.
         $inventories = Inventory::where('category', $inventory_type)->get();
-        if($inventory_type !== 'chamber' || $inventory_type!== 'position'){
+        //if($inventory_type !== 'chamber' && $inventory_type!== 'position'){
             foreach ($inventories as $inventory){
                 $this->getFullInventoryDecisionWithParent($inventory);
             }
-        }
+       // }
         return $inventories;
     }
-    public function getFullInventoryDecisionWithParent($inventory){
-                while($inventory->parent_id !== null){
-                    $temp= Inventory::where('parent_id', $inventory->parent_id)->get();
+    private function getFullInventoryDecisionWithParent($inventory){
+                if($inventory->parent_id !== null){
+                    $temp= Inventory::where('id', $inventory->parent_id)->first();
                     $inventory->parent_info = $temp;
                     $this->getFullInventoryDecisionWithParent($inventory->parent_info);
                 }
