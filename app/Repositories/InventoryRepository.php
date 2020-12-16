@@ -68,4 +68,11 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
                 return $inventory;
     }
 
+
+    public function fetchInventoryByParentId($parent_id)
+    {
+        // TODO: Implement fetchInventoryByParentId() method.
+        $temp = Inventory::where('parent_id', $parent_id)->get();
+        return $temp;
+    }
 }

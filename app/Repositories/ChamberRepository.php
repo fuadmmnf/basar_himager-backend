@@ -10,7 +10,7 @@ use App\Repositories\Interfaces\ChamberRepositoryInterface;
 use App\Repositories\Interfaces\InventoryRepositoryInterface;
 use Carbon\Carbon;
 
-class ChamberRepository implements ChamberRepositoryInterface,InventoryRepositoryInterface
+class ChamberRepository implements ChamberRepositoryInterface
 {
     public function getChambers()
     {

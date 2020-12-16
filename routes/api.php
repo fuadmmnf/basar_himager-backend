@@ -94,6 +94,6 @@ Route::post('chamberentries', [\App\Http\Controllers\Api\ChamberController::clas
 
 
 //====>Inventory
-//Chamber
 Route::get('inventory/{inventory_type}', [\App\Http\Controllers\Api\InventoryController::class, 'fetchInventory']);
+Route::get('inventory/parent/{parent_id}', [\App\Http\Controllers\Api\InventoryController::class, 'getInventoryWithParentId']);
 Route::post('inventory/create', [\App\Http\Controllers\Api\InventoryController::class, 'createInventory']);
