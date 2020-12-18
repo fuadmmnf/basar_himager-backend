@@ -66,37 +66,8 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Report No:</b> 03edkd</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>Month:</b> {{ date('F, Y', strtotime($month)) }}</p>
 </span>
-
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Recipient</h3>
-                <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-                <h3>Cold Storage</h3>
-                <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
-                </div>
-            </div>
-        </td>
-    </tr>
-
-</table>
 
 <table class="bordertable">
     <thead>
@@ -127,28 +98,28 @@
     </tbody>
 </table>
 
-<div class="footer">
-    <table >
-        <tr>
-            <td width="50%">
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Recepient</b>
-                </div>
+{{--<div class="footer">--}}
+{{--    <table >--}}
+{{--        <tr>--}}
+{{--            <td width="50%">--}}
+{{--                <div>--}}
+{{--                    <hr style="width: 60%"/>--}}
+{{--                    <b>Recepient</b>--}}
+{{--                </div>--}}
 
-            </td>
-            <td>
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Authority</b>
-                </div>
+{{--            </td>--}}
+{{--            <td>--}}
+{{--                <div>--}}
+{{--                    <hr style="width: 60%"/>--}}
+{{--                    <b>Authority</b>--}}
+{{--                </div>--}}
 
-            </td>
-        </tr>
-    </table>
+{{--            </td>--}}
+{{--        </tr>--}}
+{{--    </table>--}}
 
 
-</div>
+{{--</div>--}}
 
 <htmlpageheader name="page-header">
     <table>

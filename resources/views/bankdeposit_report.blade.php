@@ -66,30 +66,8 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Report No:</b> 03edkd</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>Month:</b> {{ date('F, Y', strtotime($month)) }}</p>
 </span>
-
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Recipient</h3>
-                <div>
-                    <p>House #5, Road #20, Sector #4</p>
-                    <p>Uttara, Dhaka-1230</p>
-                    <p>coldstorage@gmail.com</p>
-                    <p>+8801234567890</p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-            </div>
-        </td>
-    </tr>
-
-</table>
 
 <table class="bordertable">
     <thead>
@@ -121,7 +99,7 @@
 <div class="page-break"></div>
 
 <div style="text-align: center; color: darkblue">
-    <h3>Bank Transactions </h3>
+    <h3>Bank Transactions<small>(Deposit)</small> </h3>
 </div>
 
 <table class="bordertable">
@@ -138,6 +116,7 @@
     <tbody>
     @if(count($deposits))
         @foreach($deposits as $deposit)
+            @if($deposit->type == 0)
             <tr>
                 <td>{{$deposit->bank->name}}</td>
                 <td>{{$deposit->bank->account_no}}</td>
@@ -145,6 +124,7 @@
                 <td>{{$deposit->branch}}</td>
                 <td>{{$deposit->amount}}</td>
             </tr>
+            @endif
         @endforeach
         <tr>
             <td></td>
@@ -157,29 +137,45 @@
     </tbody>
 </table>
 
-
-<div class="footer">
-    <table >
-        <tr>
-            <td width="50%">
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Recepient</b>
-                </div>
-
-            </td>
-            <td>
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Authority</b>
-                </div>
-
-            </td>
-        </tr>
-    </table>
-
-
+<div style="text-align: center; color: darkblue">
+    <h3>Bank Transactions<small>(Withdraw)</small> </h3>
 </div>
+
+<table class="bordertable">
+    <thead>
+    <tr>
+        <th>Bank</th>
+        <th>Account No</th>
+        <th>SI No</th>
+        <th>Branch </th>
+        <th>Amount</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    @if(count($deposits))
+        @foreach($deposits as $deposit)
+            @if($deposit->type == 1)
+                <tr>
+                    <td>{{$deposit->bank->name}}</td>
+                    <td>{{$deposit->bank->account_no}}</td>
+                    <td>{{$deposit->si_no}}</td>
+                    <td>{{$deposit->branch}}</td>
+                    <td>{{$deposit->amount}}</td>
+                </tr>
+            @endif
+        @endforeach
+        <tr>
+            <td></td>
+            <td></td>
+            <td> </td>
+            <td> <b>TOTAL:</b></td>
+            <td> <b>{{$deposits->sum('amount')}}</b></td>
+        </tr>
+    @endif
+    </tbody>
+</table>
+
 
 <htmlpageheader name="page-header">
     <table>

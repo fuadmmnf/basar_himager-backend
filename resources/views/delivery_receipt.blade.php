@@ -76,9 +76,9 @@
             <div   >
                 <h3>Client</h3>
                 <div>
-                    <p>Name: {{$receiptinfo->booking->client->name}}</p>
-                    <p>Phone: {{$receiptinfo->booking->client->phone}}</p>
-                    <p>Father's Name: {{$receiptinfo->booking->client->father_name}}</p>
+                    <p><b>Name:</b> {{$receiptinfo->booking->client->name}}</p>
+                    <p><b>Phone:</b> {{$receiptinfo->booking->client->phone}}</p>
+                    <p><b>Father's Name:</b> {{$receiptinfo->booking->client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -95,16 +95,24 @@
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <div>
-                    <p>No: {{$receiptinfo->booking->booking_no}}</p>
-                    <p>Total Quantity: {{$receiptinfo->booking->quantity}}</p>
+
+                    <p><b>Booking No:</b> {{$receiptinfo->booking->booking_no}}</p>
+                    <p><b>Booking Date:</b> {{ date('F d, Y', strtotime($receiptinfo->booking->booking_time)) }}</p>
+                    <p><b>Booking Type:</b>
+                        @if($receiptinfo->booking->type == 0)
+                            Normal
+                        @elseif($receiptinfo->booking->type == 1)
+                            Advance
+                        @endif
+                    </p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <p>Date: {{$receiptinfo->booking->booking_time}}</p>
-                <p>Bag Received: {{$receiptinfo->booking->bags_in}}</p>
+                <p><b>Total Quantity:</b> {{$receiptinfo->booking->quantity}}</p>
+                <p><b>Bags In:</b> {{$receiptinfo->booking->bags_in}}</p>
+                <p><b>Bags Out:</b> {{$receiptinfo->booking->bags_out}}</p>
 
             </div>
         </td>
@@ -126,12 +134,22 @@
     </tr>
     </thead>
     <tbody>
+    @if(count($receiptinfo->deliveryitems))
+        @php
+            $totalCost = 0;
+        @endphp
+        @foreach($receiptinfo->deliveryitems as $deliveryitem)
     <tr>
-        <td>Type: {{$receiptinfo->potatoe_type}}</td>
-        <td>{{$receiptinfo->quantity_bags}}</td>
+        <td>Type: {{$deliveryitem->potatoe_type}}</td>
+        <td>{{$deliveryitem->quantity}}</td>
         <td>{{$receiptinfo->cost_per_bag}}</td>
-        <td>{{$receiptinfo->quantity_bags * $receiptinfo->cost_per_bag}}</td>
+        <td>{{$deliveryitem->quantity * $receiptinfo->cost_per_bag}}</td>
     </tr>
+    @php
+        $totalCost += $deliveryitem->quantity * $receiptinfo->cost_per_bag;
+    @endphp
+        @endforeach
+    @endif
     <tr>
         <td>Fanned Bags</td>
         <td>{{$receiptinfo->quantity_bags_fanned}}</td>
@@ -148,8 +166,7 @@
         <td></td>
         <td></td>
         <td><b>Total</b></td>
-        <td>{{$receiptinfo->quantity_bags * $receiptinfo->cost_per_bag +
-                    $receiptinfo->quantity_bags_fanned * $receiptinfo->fancost_per_bag+
+        <td>{{ $totalCost +($receiptinfo->quantity_bags_fanned * $receiptinfo->fancost_per_bag) +
                     $receiptinfo->due_charge}}
         </td>
     </tr>

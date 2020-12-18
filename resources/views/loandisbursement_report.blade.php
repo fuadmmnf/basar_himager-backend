@@ -76,9 +76,9 @@
             <div  >
                 <h3>Client Information</h3>
                 <div>
-                    <p>Name: {{$loandisbursement->booking->client->name}}</p>
-                    <p>Phone: {{$loandisbursement->booking->client->phone}}</p>
-                    <p>Father's Name: {{$loandisbursement->booking->client->father_name}}</p>
+                    <p><b>Name:</b> {{$loandisbursement->booking->client->name}}</p>
+                    <p><b>Phone:</b> {{$loandisbursement->booking->client->phone}}</p>
+                    <p><b>Father's Name:</b> {{$loandisbursement->booking->client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -94,22 +94,31 @@
         <td style="width: 50%; text-align: left">
             <div   >
                 <h3>Booking Information</h3>
+                <br>
                 <div>
-                    <p>No: {{$loandisbursement->booking->booking_no}}</p>
-                    <p>Date: {{$loandisbursement->booking->booking_time}}</p>
-                    <p>Total Quantity: {{$loandisbursement->booking->quantity}}</p>
-                    <p>Remaining Quantity: {{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
+                    <p><b>Booking No:</b> {{$loandisbursement->booking->booking_no}}</p>
+                    <p><b>Booking Type:</b>
+                        @if($loandisbursement->booking->type == 0)
+                            Normal
+                        @elseif($loandisbursement->booking->type == 1)
+                            Advance
+                        @endif
+                    </p>
+                    <p><b>Date:</b> {{ date('F d, Y', strtotime($loandisbursement->booking->booking_time)) }}</p>
+                    <p><b>Total Quantity:</b> {{$loandisbursement->booking->quantity}}</p>
+                    <p><b>Remaining Quantity:</b> {{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
                 <h3>Loan Information</h3>
+                <br>
                 <div>
-                    <p>No: {{$loandisbursement->loandisbursement_no}}</p>
-                    <p>Date: {{$loandisbursement->payment_date}}</p>
-                    <p>Loan Amount: {{$loandisbursement->amount}}</p>
-                    <p>Have To Pay: {{$loandisbursement->amount_left}}</p>
+                    <p><b>Disbursement No:</b> {{$loandisbursement->loandisbursement_no}}</p>
+                    <p><b>Date:</b> {{ date('F d, Y', strtotime($loandisbursement->payment_date)) }}</p>
+                    <p><b>Loan Amount:</b> {{$loandisbursement->amount}}</p>
+                    <p><b>Have To Pay:</b> {{$loandisbursement->amount_left}}</p>
                 </div>
             </div>
         </td>
@@ -156,29 +165,6 @@
     @endif
     </tbody>
 </table>
-
-<div class="footer">
-    <table >
-        <tr>
-            <td width="50%">
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Recepient</b>
-                </div>
-
-            </td>
-            <td>
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>Authority</b>
-                </div>
-
-            </td>
-        </tr>
-    </table>
-
-
-</div>
 
 <htmlpageheader name="page-header">
     <table>

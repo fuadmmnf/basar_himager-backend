@@ -25,23 +25,27 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
     public function storeEmployeeSalary(array $request)
     {
         $employee = Employee::findOrFail($request['employee_id']);
-
-        if ($request['amount'] + $request['bonus'] < $request['loan_payment']) {
+        $salary = $employee->basic_salary + $employee->special_salary;
+        if ($salary + $request['bonus'] < $request['loan_payment']) {
             return null;
         }
 
-        $employeeloanHandler = new EmployeeLoanHandler();
-        $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time']));
-        if (!$employeeLoan) {
-            return null;
+        if($request['loan_payment'] > 0){
+            $employeeloanHandler = new EmployeeLoanHandler();
+            $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time']));
+            if (!$employeeLoan) {
+                return null;
+            }
         }
+
 
         $newEmployeeSalary = new Employeesalary();
         $newEmployeeSalary->employee_id = $employee->id;
-        $newEmployeeSalary->amount = $request['amount'];
+        $newEmployeeSalary->amount = $salary - $request['loan_payment'];
         $newEmployeeSalary->loan_payment = $request['loan_payment'];
         $newEmployeeSalary->bonus = $request['bonus'];
         $newEmployeeSalary->remark = $request['remark'];
+        $newEmployeeSalary->salary_month = Carbon::parse($request['salary_month']);
         $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time']);
         $newEmployeeSalary->save();
 
@@ -60,8 +64,8 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
     public function fetchEmployeeSalaryByid($employee_id)
     {
         // TODO: Implement fetchEmployeeSalaryByid() method.
-        $salary= Employeesalary::where('employee_id', $employee_id)->orderBy('payment_time')->get();
-        return $salary;
+        $salaries = Employeesalary::where('employee_id', $employee_id)->orderByDesc('salary_month')->paginate(15);
+        return $salaries;
     }
 }
 

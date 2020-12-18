@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Receive Receipt</title>
+    <title>Loading Receipt</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -95,15 +95,25 @@
         <td style="width: 50%; text-align: left">
             <div   >
                 <div>
-                    <p>No: {{$receiptinfo->booking->booking_no}}</p>
-                    <p>Total Quantity: {{$receiptinfo->booking->quantity}}</p>
+
+                    <p><b>Booking No:</b> {{$receiptinfo->booking->booking_no}}</p>
+                    <p><b>Booking Date:</b> {{ date('F d, Y', strtotime($receiptinfo->booking->booking_time)) }}</p>
+                    <p><b>Booking Type:</b>
+                        @if($receiptinfo->booking->type == 0)
+                            Normal
+                        @elseif($receiptinfo->booking->type == 1)
+                            Advance
+                        @endif
+                    </p>
+                    <p><b>Total Quantity:</b> {{$receiptinfo->booking->quantity}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <p>Date: {{$receiptinfo->booking->booking_time}}</p>
-                <p>Remaining Quantity: {{$receiptinfo->booking->quantity - $receiptinfo->receiveitems->sum('quantity')}}</p>
+                <p><b>Bags In:</b> {{$receiptinfo->booking->bags_in}}</p>
+                <p><b>Bags Out:</b> {{$receiptinfo->booking->bags_out}}</p>
+                <p><b>Remaining Quantity:</b> {{$receiptinfo->booking->quantity - $receiptinfo->receiveitems->sum('quantity')}}</p>
             </div>
         </td>
     </tr>
@@ -116,12 +126,12 @@
     <tr>
         <td style="width: 50%; text-align: left">
             <div>
-               <b>No:</b> {{$receiptinfo->receiving_no}}
+               <b>Receive No:</b> {{$receiptinfo->receiving_no}}
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <b>Date:</b> {{$receiptinfo->receiving_time}}
+                <b>Date:</b> {{ date('F d, Y', strtotime($receiptinfo->receiving_time)) }}
             </div>
         </td>
     </tr>
