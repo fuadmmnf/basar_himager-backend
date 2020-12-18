@@ -24,21 +24,21 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
 
         DB::beginTransaction();
         try{
-            if($request['parent_id'] !== null){
-                $parentInventory = Inventory::where('id',$request['parent_id'])->first();
-                if($parentInventory->remaining_capacity < $request['capacity']){
-                    return 'NotEnoughCapacity';
-                }
-                else {
-                    Inventory::where('id',$request['parent_id'])->decrement('remaining_capacity', $request['capacity']);
-                }
-
-            }
+//            if($request['parent_id'] !== null){
+//                $parentInventory = Inventory::where('id',$request['parent_id'])->first();
+//                if($parentInventory->remaining_capacity < $request['capacity']){
+//                    return 'NotEnoughCapacity';
+//                }
+//                else {
+//                    Inventory::where('id',$request['parent_id'])->decrement('remaining_capacity', $request['capacity']);
+//                }
+//
+//            }
             $newInventory->parent_id = $request['parent_id'];
             $newInventory->category = $request['category'];
             $newInventory->name = $request['name'];
-            $newInventory->capacity = $request['capacity'];
-            $newInventory->remaining_capacity = $request['remaining_capacity'];
+            $newInventory->current_quantity = $request['current_quantity'];
+//            $newInventory->remaining_capacity = $request['remaining_capacity'];
             $newInventory->save();
 
         }catch (\Exception $e){
