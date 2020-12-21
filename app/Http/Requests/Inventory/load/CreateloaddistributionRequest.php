@@ -29,7 +29,7 @@ class CreateloaddistributionRequest extends \Illuminate\Foundation\Http\FormRequ
         return [
             'receiving_no' => 'required',
             'compartment_id' => 'required',
-            'potato' => 'required | array',
+            'distributions' => 'required | array',
         ];
     }
 
