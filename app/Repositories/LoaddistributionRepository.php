@@ -10,4 +10,8 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 {
 
 
+    public function saveLoaddistrbution(array $request)
+    {
+        // TODO: Implement saveLoaddistrbution() method.
+    }
 }
