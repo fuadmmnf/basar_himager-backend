@@ -15,11 +15,13 @@ class CreateLoaddistributionsTable extends Migration
     {
         Schema::create('loaddistributions', function (Blueprint $table) {
             $table->id();
-            $table->string('receiving_no');
+            $table->string('receive_id');
             $table->unsignedBigInteger('compartment_id');
             $table->string('potato_type');
             $table->integer('quantity');
             $table->timestamps();
+
+            $table->foreign('receive_id')->references('id')->on('receives');
         });
     }
 

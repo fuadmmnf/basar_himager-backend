@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Loaddistribution;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 
 class LoaddistributionRepository implements LoaddistributionRepositoryInterface
@@ -17,7 +18,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         DB::beginTransaction();
         try{
             $newLoaddistribution=new Loaddistribution();
-            $newLoaddistribution->receiving_no = $request['receiving_no'];
+            $newLoaddistribution->receive_id = $request['receive_id'];
             $newLoaddistribution->compartment_id = $request['compartment_id'];
 
             foreach ($request['distributions'] as $distribution){
@@ -27,6 +28,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
             }
         }catch (\Exception $e){
             DB::rollback();
+            throw new \Exception($e->getMessage());
         }
         DB::commit();
 

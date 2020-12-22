@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Loaddistribution extends Model
 {
     use HasFactory;
+
+    public function receive(){
+        return $this->belongsTo('App\Models\Receive');
+    }
 }
