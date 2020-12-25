@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReceiveitemsTable extends Migration
+class CreateLoaddistributionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateReceiveitemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('receiveitems', function (Blueprint $table) {
+        Schema::create('loaddistributions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('receive_id');
+            $table->string('receive_id');
+            $table->unsignedBigInteger('compartment_id');
+            $table->string('potato_type');
             $table->integer('quantity');
-            $table->integer('quantity_left');
-            $table->integer('loaded_quantity')->default(0);
-            $table->string('potatoe_type');
             $table->timestamps();
 
-            $table->foreign('receive_id')->references('id')->on('receives');
+//            $table->foreign('receive_id')->references('id')->on('receives');
         });
     }
 
@@ -33,6 +32,6 @@ class CreateReceiveitemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('receiveitems');
+        Schema::dropIfExists('loaddistributions');
     }
 }
