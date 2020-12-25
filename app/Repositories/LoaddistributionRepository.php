@@ -60,6 +60,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         foreach ($loaddistributions as $loaddistribution){
             $loaddistribution->inventory = $this->fetchFullInventoryWithParentBYId($loaddistribution->compartment_id);
         }
+        return $loaddistributions;
     }
 
     private function fetchFullInventoryWithParentBYId($id){

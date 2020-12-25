@@ -44,4 +44,4 @@ Route::get('/download/report/loandisbursement/receipt/{id}', [\App\Http\Controll
 Route::get('/download/report/loancollection/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoancollectionReceipt']);
 Route::get('/download/report/gatepass/receipt/{delivery_id}', [\App\Http\Controllers\ReportController::class, 'getGatePass']);
 Route::get('/download/report/accounting/start/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadAccountingReport']);
-
+Route::get('/download/report/receive/loaddistributions/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getLoaddistributionReport']);

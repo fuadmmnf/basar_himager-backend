@@ -84,29 +84,19 @@
 
     </thead>
     <tbody>
-    @if(count($salaries))
-        @foreach($salaries as $salary)
+    @if(count($loads))
+        @foreach($loads as $load)
             <tr>
-                <td>{{$salary->employee->name}}</td>
-                <td>{{$salary->employee->designation}}</td>
-                <td>{{$salary->basic_salary}}</td>
-                <td>{{$salary->special_salary}}</td>
-                <td>{{$salary->eid_bonus}}</td>
+                <td>{{$load->inventory->parent_info->parent_info->name}}</td>
+                <td>{{$load->inventory->parent_info->name}}</td>
+                <td>{{$load->inventory->name}}</td>
+                <td>{{$load->potato_type}}</td>
+                <td>{{$load->quantity}}</td>
             </tr>
         @endforeach
         <tr>
-            <td></td>
-            <td> <b>SUBTOTAL:</b></td>
-            <td> <b>{{$salaries->sum('basic_salary')}}</b></td>
-            <td> <b>{{$salaries->sum('special_salary')}}</b></td>
-            <td> <b>{{$salaries->sum('eid_bonus')}}</b></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td> <b>TOTAL:</b></td>
-            <td><b>{{$salaries->sum('basic_salary')+ $salaries->sum('special_salary') + $salaries->sum('eid_bonus')}} </b></td>
-            <td></td>
-            <td></td>
+            <td colspan="4"> <b>SUBTOTAL:</b></td>
+            <td> <b>{{$salaries->sum('quantity')}}</b></td>
         </tr>
     @endif
     </tbody>
