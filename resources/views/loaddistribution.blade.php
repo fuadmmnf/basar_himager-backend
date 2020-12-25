@@ -75,6 +75,7 @@
 <table class="bordertable">
     <thead>
     <tr>
+        <th>Date</th>
         <th>Chamber</th>
         <th>Floor</th>
         <th>Compartment</th>
@@ -87,6 +88,7 @@
     @if(count($loads))
         @foreach($loads as $load)
             <tr>
+                <td>{{$load->created_at->format('F d, Y')}}</td>
                 <td>{{$load->inventory->parent_info->parent_info->name}}</td>
                 <td>{{$load->inventory->parent_info->name}}</td>
                 <td>{{$load->inventory->name}}</td>
@@ -95,8 +97,8 @@
             </tr>
         @endforeach
         <tr>
-            <td colspan="4"> <b>SUBTOTAL:</b></td>
-            <td> <b>{{$salaries->sum('quantity')}}</b></td>
+            <td colspan="5"> <b>SUBTOTAL:</b></td>
+            <td> <b>{{$loads->sum('quantity')}}</b></td>
         </tr>
     @endif
     </tbody>

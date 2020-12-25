@@ -56,7 +56,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
     }
 
     public function getLoadDistributions($receive_id){
-        $loaddistributions = Loaddistribution::where('receive_id',$receive_id)->orderByDesc('createded_at')->all();
+        $loaddistributions = Loaddistribution::where('receive_id',$receive_id)->get();
         foreach ($loaddistributions as $loaddistribution){
             $loaddistribution->inventory = $this->fetchFullInventoryWithParentBYId($loaddistribution->compartment_id);
         }
@@ -68,6 +68,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         $this->getFullInventoryDecisionWithParent($inventory);
         return $inventory;
     }
+
     private function getFullInventoryDecisionWithParent($inventory){
         if($inventory->parent_id !== null){
             $temp= Inventory::where('id', $inventory->parent_id)->first();

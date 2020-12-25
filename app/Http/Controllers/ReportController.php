@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\DeliveryRepository;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
+use App\Repositories\LoaddistributionRepository;
 use App\Repositories\ReceiveRepository;
 use Carbon\Carbon;
 use PDF;
@@ -32,6 +33,14 @@ class ReportController extends Controller
         $deliveryRepository = new DeliveryRepository();
         $pdf = PDF::loadView('gatepass_receipt', [
             'receive' => $deliveryRepository->getGatepassDetails($gatepass_no),
+        ]);
+        return $pdf->stream();
+    }
+
+    public function getLoaddistributionReport($receive_id){
+        $loaddistributionRepository = new LoaddistributionRepository();
+        $pdf = PDF::loadView('loaddistribution', [
+            'loads' => $loaddistributionRepository->getLoadDistributions($receive_id),
         ]);
         return $pdf->stream();
     }

@@ -25,11 +25,5 @@ class LoaddistributionController extends ApiController
             return response()->json($load, 201);
     }
 
-    public function getLoaddistributionReport($receive_id){
-        $loads = $this->loaddistributionRepository->getLoadDistributions($receive_id);
-        return view('loaddistribution')->with('loads', $loads);
-
-    }
-
 }
 
