@@ -25,7 +25,6 @@ class ReceiveRepository implements ReceiveRepositoryInterface
             ->with('booking')
             ->with('booking.client')
             ->with('receiveitems')
-            ->with('loaddistributions')
             ->paginate(20);
         return $receives;
     }

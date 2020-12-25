@@ -59,6 +59,12 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
        // }
         return $inventories;
     }
+
+//    public function fetchFullInventoryWithParentBYId($id){
+//        $inventory = Inventory::where('id',$id)->first();
+//        $this->getFullInventoryDecisionWithParent($inventory);
+//        return $inventory;
+//    }
     private function getFullInventoryDecisionWithParent($inventory){
                 if($inventory->parent_id !== null){
                     $temp= Inventory::where('id', $inventory->parent_id)->first();

@@ -27,7 +27,7 @@ class CreateloaddistributionRequest extends \Illuminate\Foundation\Http\FormRequ
     public function rules()
     {
         return [
-            'receiving_no' => 'required',
+            'receive_id' => 'required',
             'compartment_id' => 'required',
             'distributions' => 'required | array',
         ];

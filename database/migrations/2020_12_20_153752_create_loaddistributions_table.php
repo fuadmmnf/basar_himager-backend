@@ -21,7 +21,7 @@ class CreateLoaddistributionsTable extends Migration
             $table->integer('quantity');
             $table->timestamps();
 
-            $table->foreign('receive_id')->references('id')->on('receives');
+//            $table->foreign('receive_id')->references('id')->on('receives');
         });
     }
 
