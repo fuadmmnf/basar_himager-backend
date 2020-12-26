@@ -99,3 +99,4 @@ Route::get('inventories/{parent_id}/parents', [\App\Http\Controllers\Api\Invento
 Route::post('inventories', [\App\Http\Controllers\Api\InventoryController::class, 'createInventory']);
 //====>load
 Route::post('loaddistributions', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createLoadDistribution']);
+Route::get('loaddistributions/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceiveId']);
