@@ -26,6 +26,11 @@ class ReceiveController extends ApiController
         return response()->json($receives);
     }
 
+    public function fetchReceivesById($id){
+        $receive =$this->receiveRepository->getReceiveById($id);
+        return response()->json($receive, 200);
+    }
+
     public function createReceive(CreatereceiveRequest $request){
 
         $receive = $this->receiveRepository->saveReceive($request->validated());
