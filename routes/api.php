@@ -52,6 +52,7 @@ Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'cr
 
 //receives
 Route::get('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceives']);
+Route::get('receives/{id}',[\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesById']);
 Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'createReceive']);
 
 //deliveries

@@ -19,6 +19,16 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         return $receive;
     }
 
+    public function getReceiveById($id)
+    {
+        // TODO: Implement getReceiveById() method.
+        $receive = Receive::where('id', $id)
+            ->with('booking')
+            ->with('booking.client')
+            ->with('receiveitems')->first();
+        return $receive;
+    }
+
     public function getRecentReceives()
     {
         $receives = Receive::orderBy('receiving_time')
@@ -66,4 +76,5 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
         return $newReceive;
     }
+
 }
