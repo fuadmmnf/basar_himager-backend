@@ -101,7 +101,7 @@ Route::post('inventories', [\App\Http\Controllers\Api\InventoryController::class
 //====>load
 Route::post('loaddistributions', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createLoadDistribution']);
 Route::get('loaddistributions/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceiveId']);
-Route::get('loaddistributions/{booking_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionbybooking_id']);
+Route::get('loaddistributions/booking/{booking_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionbybooking_id']);
 
 //unloading
 Route::post('unloading', [\App\Http\Controllers\Api\UnloadingController::class,'saveUnloading']);
