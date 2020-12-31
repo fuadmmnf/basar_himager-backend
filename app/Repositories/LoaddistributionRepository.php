@@ -21,7 +21,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         try{
             $id = $request['receive_id'];
             $compartment = $request['compartment_id'];
-            $booking = $request['bookin_id'];
+            $booking = $request['booking_id'];
 
             $inventories = Inventory::where('id', $compartment)->first();
             $floor = Inventory::where('id',$inventories->parent_id)->first();
