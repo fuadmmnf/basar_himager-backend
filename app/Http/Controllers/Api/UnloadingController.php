@@ -16,6 +16,8 @@ class UnloadingController extends ApiController{
     }
 
     public function saveUnloading(CreateUnloadingRequest $request){
+        $unloads=$this->unloadingRepository->createUnloadingEntry($request->validated());
+        return response()->json($unloads, 201);
 
     }
 }
