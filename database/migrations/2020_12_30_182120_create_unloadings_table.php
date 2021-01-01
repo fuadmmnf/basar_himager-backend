@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLoaddistributionsTable extends Migration
+class CreateUnloadingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateLoaddistributionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('loaddistributions', function (Blueprint $table) {
+        Schema::create('unloadings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id');
-            $table->string('receive_id');
-            $table->unsignedBigInteger('compartment_id');
+            $table->unsignedBigInteger('delivery_id');
+            $table->unsignedBigInteger('loaddistribution_id');
             $table->string('potato_type');
             $table->integer('quantity');
-            $table->integer('current_quantity');
             $table->timestamps();
-
-//            $table->foreign('receive_id')->references('id')->on('receives');
         });
     }
 
@@ -34,6 +31,6 @@ class CreateLoaddistributionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loaddistributions');
+        Schema::dropIfExists('unloadings');
     }
 }

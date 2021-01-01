@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Http\Requests\Inventory\load;
+namespace App\Http\Requests\Inventory\unloading;
 
 
-class CreateloaddistributionRequest extends \Illuminate\Foundation\Http\FormRequest
+class CreateUnloadingRequest extends \Illuminate\Foundation\Http\FormRequest
 {
 
     /**
@@ -28,9 +28,8 @@ class CreateloaddistributionRequest extends \Illuminate\Foundation\Http\FormRequ
     {
         return [
             'booking_id' => 'required',
-            'receive_id' => 'required',
-            'compartment_id' => 'required',
-            'distributions' => 'required | array',
+            'delivery_id' => 'required',
+            'unloadings' => 'required | array',
         ];
     }
 

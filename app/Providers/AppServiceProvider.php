@@ -35,6 +35,7 @@ use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
+use App\Repositories\Interfaces\UnloadingRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\InventoryRepository;
 use App\Repositories\LineRepository;
@@ -52,6 +53,7 @@ use App\Repositories\DailyexpensesRepository;
 use App\Repositories\LoancollectionRepository;
 use App\Repositories\LoandisbursementRepository;
 use App\Repositories\ReceiveRepository;
+use App\Repositories\UnloadingRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use function Symfony\Component\String\u;
@@ -85,6 +87,7 @@ class AppServiceProvider extends ServiceProvider
             ChamberRepositoryInterface::class,
             InventoryRepositoryInterface::class,
             LoaddistributionRepositoryInterface::class,
+            UnloadingRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -106,6 +109,7 @@ class AppServiceProvider extends ServiceProvider
             ChamberRepository::class,
             InventoryRepository::class,
             LoaddistributionRepository::class,
+            UnloadingRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
