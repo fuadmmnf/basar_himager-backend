@@ -12,7 +12,7 @@ class UnloadingController extends ApiController{
 
     public function __construct(UnloadingRepositoryInterface $unloadingRepository)
     {
-        $this->unloadingController = $unloadingRepository;
+        $this->unloadingRepository = $unloadingRepository;
     }
 
     public function saveUnloading(CreateUnloadingRequest $request){

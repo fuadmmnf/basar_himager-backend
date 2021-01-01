@@ -104,4 +104,4 @@ Route::get('loaddistributions/{receive_id}',[\App\Http\Controllers\Api\Loaddistr
 Route::get('loaddistributions/booking/{booking_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionbybooking_id']);
 
 //unloading
-Route::post('unloading', [\App\Http\Controllers\Api\UnloadingController::class,'saveUnloading']);
+Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,'saveUnloading']);

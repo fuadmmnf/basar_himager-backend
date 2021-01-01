@@ -17,7 +17,7 @@ class CreateUnloadingsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('booking_id');
             $table->unsignedBigInteger('delivery_id');
-            $table->unsignedBigInteger('compartment_id');
+            $table->unsignedBigInteger('loaddistribution_id');
             $table->string('potato_type');
             $table->integer('quantity');
             $table->timestamps();

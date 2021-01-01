@@ -20,10 +20,16 @@ class UnloadingRepository implements UnloadingRepositoryInterface
         try{
             $booking_id = $request['booking_id'];
             $delivery_id = $request['delivery_id'];
-
+//loaddistribution_id
             foreach ($request['unloadings'] as $unloading){
 
-                $inventories = Inventory::where('id', $unloading['compartment_id'])->first();
+                $loaddistribution = Loaddistribution::where('id', $unloading['loaddistribution_id'])->first();
+                $loaddistribution->current_quantity = $loaddistribution->current_quantity - $unloading['quantity'];
+                $compartment_id = $loaddistribution->compartment_id;
+                $loaddistribution->save();
+
+
+                $inventories = Inventory::where('id', $compartment_id)->first();
                 $floor = Inventory::where('id',$inventories->parent_id)->first();
                 $chamber = Inventory::where('id',$floor->parent_id)->first();
 
@@ -42,19 +48,13 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                     $chamber->save();
                 }else return 'QuantityNotAvailable';
 
-                $loaddistribution = Loaddistribution::where('booking_id', $booking_id)
-                    ->where('compartment_id',$unloading['compartment_id'])
-                    ->where('potato_type',$unloading['potato_type'])-get();
-                $loaddistribution->current_quantity = $loaddistribution->current_quantity - $unloading['quantity'];
-                $loaddistribution->save();
-
                 $newUnloading =new Unloading();
 
                 $newUnloading->booking_id = $booking_id;
                 $newUnloading->delivery_id = $delivery_id;
-                $newUnloading->compartment_id = $unloading['compartment_id'];
+                $newUnloading->loaddistribution_id = $unloading['loaddistribution_id'];
                 $newUnloading->potato_type = $unloading['potato_type'];
-                $newUnloading->quantity = $newUnloading['quantity'];
+                $newUnloading->quantity = $unloading['quantity'];
                 $newUnloading->save();
 
             }
