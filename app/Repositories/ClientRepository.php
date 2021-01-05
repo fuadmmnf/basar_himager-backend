@@ -26,4 +26,9 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
         $clients = Client::paginate(15);
         return $clients;
     }
+
+    public function fetchClientList(){
+        $clients = Client::all();
+        return $clients;
+    }
 }

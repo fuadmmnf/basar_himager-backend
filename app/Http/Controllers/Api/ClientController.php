@@ -24,4 +24,9 @@ class ClientController extends \App\Http\Controllers\ApiController
         $clients = $this->clientRepository->fetchClient();
         return response()->json($clients,200);
     }
+
+    public function getClientList(){
+        $clients = $this->clientRepository->fetchClientList();
+        return response()->json($clients,200);
+    }
 }
