@@ -20,7 +20,7 @@ class UnloadingRepository implements UnloadingRepositoryInterface
         try{
             $booking_id = $request['booking_id'];
             $delivery_id = $request['delivery_id'];
-//loaddistribution_id
+
             foreach ($request['unloadings'] as $unloading){
 
                 $loaddistribution = Loaddistribution::where('id', $unloading['loaddistribution_id'])->first();

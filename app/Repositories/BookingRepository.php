@@ -68,12 +68,9 @@ class BookingRepository implements BookingRepositoryInterface
 
     public function saveBooking(array $request)
     {
-        $clientHandler = new ClientHandler();
-
-        $client = $clientHandler->saveClient($request['nid'], $request['name'], $request['phone'], $request['father_name'], $request['address']);
         $newBooking = new Booking();
 
-        $newBooking->client_id = $client->id;
+        $newBooking->client_id = $request['client_id'];
         $newBooking->booking_time = Carbon::parse($request['booking_time']);
         $newBooking->type = $request['type'];
 

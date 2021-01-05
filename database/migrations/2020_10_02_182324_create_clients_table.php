@@ -19,6 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('phone');
             $table->string('nid')->unique();
             $table->string('father_name');
+            $table->string('mother_name');
             $table->json('address');
             $table->timestamps();
 

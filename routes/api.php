@@ -105,3 +105,6 @@ Route::get('loaddistributions/booking/{booking_id}',[\App\Http\Controllers\Api\L
 
 //unloading
 Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,'saveUnloading']);
+//client
+Route::post('clients', [\App\Http\Controllers\Api\ClientController::class, 'createClient']);
+Route::get('clients', [\App\Http\Controllers\Api\ClientController::class, 'getClients']);
