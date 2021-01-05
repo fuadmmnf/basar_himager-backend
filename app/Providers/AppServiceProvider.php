@@ -19,6 +19,7 @@ use App\Observers\LoandisbursementObserver;
 use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
 use App\Repositories\ChamberRepository;
+use App\Repositories\ClientRepository;
 use App\Repositories\DeliveryRepository;
 use App\Repositories\EmployeeLoanRepository;
 use App\Repositories\EmployeeRepository;
@@ -28,6 +29,7 @@ use App\Repositories\FloorRepository;
 use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\ChamberRepositoryInterface;
+use App\Repositories\Interfaces\ClientRepositoryInterface;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeLoanRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
@@ -88,6 +90,7 @@ class AppServiceProvider extends ServiceProvider
             InventoryRepositoryInterface::class,
             LoaddistributionRepositoryInterface::class,
             UnloadingRepositoryInterface::class,
+            ClientRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -110,6 +113,7 @@ class AppServiceProvider extends ServiceProvider
             InventoryRepository::class,
             LoaddistributionRepository::class,
             UnloadingRepository::class,
+            ClientRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {

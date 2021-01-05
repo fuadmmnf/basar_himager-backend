@@ -26,11 +26,7 @@ class CreateBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'nid' => 'required| unique:users',
-            'name' => 'required',
-            'phone' => 'required',
-            'father_name' => 'required',
-            'address' => 'required',
+            'client_id' => 'required',
             'type' => 'required| numeric',
             'quantity' => 'required| numeric',
             'cost_per_bag' => 'required| numeric',
