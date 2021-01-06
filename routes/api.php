@@ -109,3 +109,7 @@ Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,
 Route::post('clients', [\App\Http\Controllers\Api\ClientController::class, 'createClient']);
 Route::get('clients', [\App\Http\Controllers\Api\ClientController::class, 'getClients']);
 Route::get('clients/list', [\App\Http\Controllers\Api\ClientController::class,'getClientList']);
+
+//settings
+Route::get('settings/{key}', [\App\Http\Controllers\Api\SettingsController::class,'fetch']);
+Route::post('settings',[\App\Http\Controllers\Api\SettingsController::class, 'updateSettings']);

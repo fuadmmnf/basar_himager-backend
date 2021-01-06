@@ -37,6 +37,7 @@ use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
+use App\Repositories\Interfaces\SettingsRepositoryInterface;
 use App\Repositories\Interfaces\UnloadingRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\InventoryRepository;
@@ -55,6 +56,7 @@ use App\Repositories\DailyexpensesRepository;
 use App\Repositories\LoancollectionRepository;
 use App\Repositories\LoandisbursementRepository;
 use App\Repositories\ReceiveRepository;
+use App\Repositories\SettingsRepositopry;
 use App\Repositories\UnloadingRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -91,6 +93,7 @@ class AppServiceProvider extends ServiceProvider
             LoaddistributionRepositoryInterface::class,
             UnloadingRepositoryInterface::class,
             ClientRepositoryInterface::class,
+            SettingsRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -114,6 +117,7 @@ class AppServiceProvider extends ServiceProvider
             LoaddistributionRepository::class,
             UnloadingRepository::class,
             ClientRepository::class,
+            SettingsRepositopry::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
