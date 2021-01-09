@@ -40,6 +40,10 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
                 $receiveItem = Receiveitem::where('receive_id',$id)->where('potatoe_type',$distribution['potato_type'])->first();
                 $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
+                if($receiveItem->loaded_quantity > $receiveItem->quantity)
+                {
+                    throw new \Exception('Loading amount limit exceed.');
+                }
                 $receiveItem->save();
 
                 $inventories->current_quantity = $inventories->current_quantity + $distribution['quantity'];
