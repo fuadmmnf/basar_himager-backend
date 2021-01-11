@@ -17,6 +17,11 @@ class ChamberRepository implements ChamberRepositoryInterface
         $chambers = Chamber::all();
         return $chambers;
     }
+//    public function getChamberEntries($chamber_id)
+//        {
+//            $chamberentries = Chamberentry::all();
+//            return $chamberentries;
+//        }
 
     public function getChamberEntriesByChamber($chamber_id)
     {
