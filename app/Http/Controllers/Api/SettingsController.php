@@ -24,8 +24,8 @@ class SettingsController extends \App\Http\Controllers\ApiController
         return response()->json($setting, 201);
     }
 
-    public function fetch($key){
-        $setting = $this->settingsRepository->get($key);
+    public function fetch(){
+        $setting = $this->settingsRepository->getSettings();
         return response()->json($setting, 200);
     }
 }
