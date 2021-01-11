@@ -24,6 +24,11 @@ class ChamberController extends ApiController
         $chambers = $this->chamberRepository->getChambers();
         return response()->json($chambers);
     }
+//     public function getChamberentriesById($chamber_id)
+//        {
+//            $chamberentries = $this->chamberRepository->getChamberEntries($chamber_id);
+//            return response()->json($chamberentries);
+//        }
 
     public function fetchChamberentriesByChamber($chamber_id)
     {
