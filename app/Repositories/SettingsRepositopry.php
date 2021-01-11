@@ -26,4 +26,9 @@ class SettingsRepositopry implements Interfaces\SettingsRepositoryInterface
         return $setting;
 
     }
+
+    public function getSettings(){
+        $settings = settings::all();
+        return $settings;
+    }
 }

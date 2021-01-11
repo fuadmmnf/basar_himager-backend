@@ -39,12 +39,12 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                 if($inventories->current_quantity >= $unloading['quantity']){
                     $inventories->current_quantity = $inventories->current_quantity - $unloading['quantity'];
                     $inventories->save();
-                }else return 'QuantityNotAvailable';
+                }else throw new \Exception('Loading amount limit exceed.');
 
                 if($floor->current_quantity >= $unloading['quantity']){
                     $floor->current_quantity = $floor->current_quantity - $unloading['quantity'];
                     $floor->save();
-                }else return 'QuantityNotAvailable';
+                }else throw new \Exception('Loading amount limit exceed.');
 
                 if($chamber->current_quantity >= $unloading['quantity']){
                     $chamber->current_quantity = $chamber->current_quantity - $unloading['quantity'];
@@ -62,7 +62,7 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                         $chamberStage->stage ='Stage-0';
                         $chamberStage->save();
                     }
-                }else return 'QuantityNotAvailable';
+                 }else throw new \Exception('Loading amount limit exceed.');
 
                 $newUnloading =new Unloading();
 
