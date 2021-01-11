@@ -4,10 +4,13 @@
 namespace App\Repositories;
 
 
+use App\Models\Chamber;
+use App\Models\Chamberentry;
 use App\Models\Inventory;
 use App\Models\Loaddistribution;
 use App\Models\Unloading;
 use App\Repositories\Interfaces\UnloadingRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class UnloadingRepository implements UnloadingRepositoryInterface
@@ -46,7 +49,20 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                 if($chamber->current_quantity >= $unloading['quantity']){
                     $chamber->current_quantity = $chamber->current_quantity - $unloading['quantity'];
                     $chamber->save();
-                }else throw new \Exception('Loading amount limit exceed.');
+                    if($chamber->current_quantity == 0)
+                    {
+                        $chamberStage = Chamber::where('name', $chamber->name)->firstOrFail();
+                        //$chamberStage->stage = 'Stage-0';
+                        $newChamberentry = new Chamberentry();
+                        $newChamberentry->chamber_id = $chamber->id;
+                        $newChamberentry->stage = 'Stage-0';
+                        $newChamberentry->date = Carbon::now();
+                        $newChamberentry->save();
+
+                        $chamberStage->stage ='Stage-0';
+                        $chamberStage->save();
+                    }
+                 }else throw new \Exception('Loading amount limit exceed.');
 
                 $newUnloading =new Unloading();
 
