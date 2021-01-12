@@ -11,6 +11,7 @@ use App\Models\Delivery;
 use App\Models\Employeeloan;
 use App\Models\Gatepass;
 use App\Models\Employeesalary;
+use App\Models\Loaddistribution;
 use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Models\Expensecategory;
@@ -18,6 +19,7 @@ use App\Models\Receive;
 use App\Models\Transaction;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use Carbon\Carbon;
+use App\Models\Client;
 
 
 class ReportRepository implements ReportRepositoryInterface
@@ -162,6 +164,24 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
 
+    public function downloadStorePotatoReceipt($client_id, $date)
+    {
+        // TODO: Implement downloadStorePotatoReceipt() method.
+        $client = Client::where('id',$client_id)->first();
+        $client->booking = Booking::where('client_id',$client_id)->get();
+        foreach ($client->booking as $booking){
+            $booking->receive = Receive::where('booking_id',$booking->id)->get();
+        }
+        $client->report_date = Carbon::parse($date);
+//        if($client->booking === null){
+//            return $client;
+//        }
+//        foreach ($client->booking->receive as $receive ){
+//            $receive->loaddistribution = Loaddistribution::where('receive_id',$receive->id)
+//                ->whereDate('created_at', '==', Carbon::parse($date))->get();
+//        }
+        return $client;
+    }
 }
 
 

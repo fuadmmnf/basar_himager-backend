@@ -24,6 +24,9 @@ class ClientHandler
         $newClient->address = $address;
         $newClient->save();
 
+        $newClient->client_no = sprintf('%04d',$newClient->id);
+        $newClient->save();
+
         return $newClient;
     }
 

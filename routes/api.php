@@ -109,6 +109,7 @@ Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,
 Route::post('clients', [\App\Http\Controllers\Api\ClientController::class, 'createClient']);
 Route::get('clients', [\App\Http\Controllers\Api\ClientController::class, 'getClients']);
 Route::get('clients/list', [\App\Http\Controllers\Api\ClientController::class,'getClientList']);
+Route::get('clients/list/customized', [\App\Http\Controllers\Api\ClientController::class,'getClientsWithFewerAttributes']);
 
 //settings
 Route::get('settings', [\App\Http\Controllers\Api\SettingsController::class,'fetch']);
