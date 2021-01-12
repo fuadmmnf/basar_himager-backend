@@ -30,6 +30,7 @@ class CreateBookingRequest extends FormRequest
             'type' => 'required| numeric',
             'quantity' => 'required| numeric',
             'cost_per_bag' => 'required| numeric',
+            'booking_amount' => 'required| numeric',
             'advance_payment' => 'required| numeric',
             'discount' => 'required| numeric',
             'booking_time' => 'required',
