@@ -105,8 +105,8 @@
             </tr>
             </thead>
         <tbody>
-            @if(count($client->booking))
-                @foreach($client->booking as $booking)
+            @if(count($client->bookings))
+                @foreach($client->bookings as $booking)
                     @foreach($booking->receive as $receive)
                         <tr>
 {{--                            <td>{{$booking->booking_no}}</td>--}}
