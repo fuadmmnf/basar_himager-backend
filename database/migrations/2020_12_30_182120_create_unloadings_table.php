@@ -21,6 +21,8 @@ class CreateUnloadingsTable extends Migration
             $table->string('potato_type');
             $table->integer('quantity');
             $table->timestamps();
+
+            $table->foreign('delivery_id')->references('id')->on('deliveries');
         });
     }
 

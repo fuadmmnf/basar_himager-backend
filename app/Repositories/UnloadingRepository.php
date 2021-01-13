@@ -27,7 +27,9 @@ class UnloadingRepository implements UnloadingRepositoryInterface
             foreach ($request['unloadings'] as $unloading){
 
                 $loaddistribution = Loaddistribution::where('id', $unloading['loaddistribution_id'])->first();
-                $loaddistribution->current_quantity = $loaddistribution->current_quantity - $unloading['quantity'];
+                if($unloading['quantity'] <= $loaddistribution->current_quantity){
+                    $loaddistribution->current_quantity = $loaddistribution->current_quantity - $unloading['quantity'];
+                }else throw new \Exception('Loading amount limit exceed.');
                 $compartment_id = $loaddistribution->compartment_id;
                 $loaddistribution->save();
 

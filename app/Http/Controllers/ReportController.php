@@ -138,6 +138,14 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
+    public function downloadStorePotatoReceipt($client_id,$date){
+        $client = $this->reportRepository->downloadStorePotatoReceipt($client_id,$date);
+        $pdf = PDF::loadView('store_potato_receipt',[
+            'client' => $client
+        ]);
+        return $pdf->stream();
+    }
+
 
     public function downloadAccountingReport($start_date, $end_date)
     {

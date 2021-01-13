@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Receive Wise potato store report</title>
+    <title>Potato Store Receipt</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -60,48 +60,80 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Potato Store Receipt</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">আলু সংরক্ষণের দলিল</b> <br />
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Loading Distribution for Receive No: {{$loads->receive_info->receiving_no}}</p>
+    <p style="font-size: 1.4rem; font-weight: bold">Potato Store Receipt</p>
     <p><b>Report No:</b> 03edkd</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>Date:</b>{{$client->report_date}}</p>
 </span>
-
-
-<table class="bordertable">
-    <thead>
+<table>
     <tr>
-        <th>Date</th>
-        <th>Chamber</th>
-        <th>Floor</th>
-        <th>Compartment</th>
-        <th>Potato Type </th>
-        <th>Quantity</th>
+        <td style="width: 50%; text-align: left">
+            <div   >
+                <h3>Client Information</h3>
+                <br/>
+                <div>
+                    <p><b>Client No:</b> {{$client->client_no}}</p>
+                    <p><b>NID:</b> {{$client->nid}}</p>
+                    <p><b>Name:</b> {{$client->name}}</p>
+                    <p><b>Phone:</b> {{$client->phone}}</p>
+                    <p><b>Father's Name:</b> {{$client->father_name}}</p>
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+        </td>
     </tr>
-
-    </thead>
-    <tbody>
-    @if(count($loads))
-        @foreach($loads as $load)
+</table>
+<br/>
+<table class="bordertable">
+        <thead>
             <tr>
-                <td>{{$load->created_at->format('F d, Y')}}</td>
-                <td>{{$load->inventory->parent_info->parent_info->name}}</td>
-                <td>{{$load->inventory->parent_info->name}}</td>
-                <td>{{$load->inventory->name}}</td>
-                <td>{{$load->potato_type}}</td>
-                <td>{{$load->quantity}}</td>
+                <th>Booking No</th>
+                <th>Booking Time</th>
+                <th>Booking Quantity</th>
+                <th>Receive No.</th>
+                <th>Date</th>
+                <th>Potato Type</th>
+                <th>Quantity</th>
+                <th>Bag No</th>
+                <th>Inventory</th>
             </tr>
-        @endforeach
-        <tr>
-            <td colspan="5"> <b>SUBTOTAL:</b></td>
-            <td> <b>{{$loads->sum('quantity')}}</b></td>
-        </tr>
-    @endif
-    </tbody>
+            </thead>
+        <tbody>
+            @if(count($client->bookings))
+                @foreach($client->bookings as $booking)
+                    @foreach($booking->receives as $receive)
+                        @foreach($receive->receiveitems as $receiveitem)
+                            <tr>
+                                <td>{{$booking->booking_no}}</td>
+                                <td>{{$booking->booking_time}}</td>
+                                <td>{{$booking->quantity}}</td>
+                                <td>{{$receive->receiving_no}}</td>
+                                <td>{{$receive->receiving_time}}</td>
+                                <td>{{$receiveitem->potatoe_type}}</td>
+                                <td>{{$receiveitem->quantity}}</td>
+                                <td></td>
+                                <td>
+                                    @foreach($receive->loaddistributions as $load)
+                                        @if($receiveitem->potatoe_type == $load->potato_type)
+                                            <b>Ch: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>
+                                            <b>FL: </b>{{$load->inventory->parent_info->name}}<br/>
+                                            <b>Co: </b>{{$load->inventory->name}}<br/>
+                                            ({{$load->quantity}})<hr/>
+                                        @endif
+                                    @endforeach
+                                </td>
+                                </tr>
+                        @endforeach
+                    @endforeach
+                @endforeach
+            @endif
+            </tbody>
 </table>
 
 <div class="footer">

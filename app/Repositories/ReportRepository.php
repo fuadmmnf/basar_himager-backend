@@ -11,6 +11,8 @@ use App\Models\Delivery;
 use App\Models\Employeeloan;
 use App\Models\Gatepass;
 use App\Models\Employeesalary;
+use App\Models\Inventory;
+use App\Models\Loaddistribution;
 use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Models\Expensecategory;
@@ -18,6 +20,7 @@ use App\Models\Receive;
 use App\Models\Transaction;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use Carbon\Carbon;
+use App\Models\Client;
 
 
 class ReportRepository implements ReportRepositoryInterface
@@ -162,6 +165,46 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
 
+    public function downloadStorePotatoReceipt($client_id, $date)
+    {
+        $temp_date = Carbon::parse($date);
+        // TODO: Implement downloadStorePotatoReceipt() method.
+        $client = Client::where('id',$client_id)->with('bookings')
+            ->with('bookings.receives')
+            ->with('bookings.receives.receiveitems')
+            ->first();
+        $client->report_date = $temp_date;
+
+        foreach ($client->bookings as $booking){
+            foreach ($booking->receives as $receive){
+                $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->whereDate('created_at',$temp_date)->get();
+            }
+        }
+
+        foreach ($client->bookings as $booking){
+            foreach ($booking->receives as $receive){
+                foreach ($receive->loaddistributions as $loads ){
+                    $loads->inventory = $this->fetchFullInventoryWithParentBYId($loads->compartment_id);
+                }
+            }
+        }
+        return $client;
+    }
+
+    private function fetchFullInventoryWithParentBYId($id){
+        $inventory = Inventory::where('id',$id)->first();
+        $this->getFullInventoryDecisionWithParent($inventory);
+        return $inventory;
+    }
+
+    private function getFullInventoryDecisionWithParent($inventory){
+        if($inventory->parent_id !== null){
+            $temp= Inventory::where('id', $inventory->parent_id)->first();
+            $inventory->parent_info = $temp;
+            $this->getFullInventoryDecisionWithParent($inventory->parent_info);
+        }
+        return $inventory;
+    }
 }
 
 

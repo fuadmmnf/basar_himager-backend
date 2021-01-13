@@ -31,4 +31,9 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
         $clients = Client::all();
         return $clients;
     }
+
+    public function fetchClientListWithFewerAttributes(){
+        $clients = Client::select('id','nid','name','phone')->get();
+        return $clients;
+    }
 }

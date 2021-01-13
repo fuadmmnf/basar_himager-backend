@@ -23,7 +23,7 @@ class Receive extends Model
         return $this->hasMany('App\Models\Receiveitem');
     }
 
-//    public function loaddistributions(){
-//        return $this->hasMany('App\Models\Loaddistribution');
-//    }
+    public function loaddistributions(){
+        return $this->hasMany('App\Models\Loaddistribution');
+    }
 }
