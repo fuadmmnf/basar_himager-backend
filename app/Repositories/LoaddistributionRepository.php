@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Inventory;
 use App\Models\Loaddistribution;
+use App\Models\Receive;
 use App\Models\Receiveitem;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
 use Illuminate\Support\Facades\DB;
@@ -67,6 +68,9 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         foreach ($loaddistributions as $loaddistribution){
             $loaddistribution->inventory = $this->fetchFullInventoryWithParentBYId($loaddistribution->compartment_id);
         }
+        $loaddistributions->receive_info = Receive::where('id',$receive_id)
+            ->select('receiving_no')
+            ->first();
         return $loaddistributions;
     }
 

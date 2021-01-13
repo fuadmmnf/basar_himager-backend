@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Unloading extends Model
 {
     use HasFactory;
+
+    public function delivery ()
+    {
+        return $this->belongsTo('App\Models\Delivery');
+    }
 }
