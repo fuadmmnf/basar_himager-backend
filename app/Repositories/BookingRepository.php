@@ -80,6 +80,7 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];
         $newBooking->cost_per_bag = $request['cost_per_bag'];
+        $newBooking->booking_amount = $request['booking_amount'];
         $newBooking->discount = $request['discount'];
 
         $newBooking->save();
