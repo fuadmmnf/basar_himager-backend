@@ -82,6 +82,7 @@
                     <p><b>Name:</b> {{$client->name}}</p>
                     <p><b>Phone:</b> {{$client->phone}}</p>
                     <p><b>Father's Name:</b> {{$client->father_name}}</p>
+                    <p>{{$client->bookings}}</p>
                 </div>
             </div>
         </td>
@@ -107,13 +108,13 @@
         <tbody>
             @if(count($client->bookings))
                 @foreach($client->bookings as $booking)
-                    @foreach($booking->receive as $receive)
+                    @foreach($booking->receives as $receive)
                         <tr>
-{{--                            <td>{{$booking->booking_no}}</td>--}}
-{{--                            <td>{{$booking->booking_time->format('F d, Y')}}</td>--}}
-{{--                            <td>{{$booking->quantity}}</td>--}}
-{{--                            <td>{{$receive->receive_no}}</td>--}}
-{{--                            <td>{{$receive->receive_time->format('F d, Y')}}</td>--}}
+                            <td>{{$booking->booking_no}}</td>
+                            <td>{{$booking->booking_time}}</td>
+                            <td>{{$booking->quantity}}</td>
+                            <td>{{$receive->receiving_no}}</td>
+                            <td>{{$receive->receiving_time}}</td>
 {{--                            <td>{{$load->inventory->parent_info->parent_info->name}}</td>--}}
 {{--                            <td>{{$load->inventory->parent_info->name}}</td>--}}
 {{--                            <td>{{$load->inventory->name}}</td>--}}
