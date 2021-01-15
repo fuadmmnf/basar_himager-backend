@@ -118,17 +118,18 @@
                                 <td>{{$receive->receiving_time}}</td>
                                 <td>{{$receiveitem->potatoe_type}}</td>
                                 <td>{{$receiveitem->quantity}}</td>
-                                <td></td>
-                                <td>
-                                    @foreach($receive->loaddistributions as $load)
-                                        @if($receiveitem->potatoe_type == $load->potato_type)
+                                @foreach($receive->loaddistributions as $load)
+                                    @if($receiveitem->potatoe_type == $load->potato_type)
+                                        <td>{{$load->bag_no}}</td>
+                                        <td>
                                             <b>Ch: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>
                                             <b>FL: </b>{{$load->inventory->parent_info->name}}<br/>
                                             <b>Co: </b>{{$load->inventory->name}}<br/>
-                                            ({{$load->quantity}})<hr/>
-                                        @endif
-                                    @endforeach
-                                </td>
+                                            ({{$load->quantity}})
+
+                                        </td>
+                                    @endif
+                                @endforeach
                                 </tr>
                         @endforeach
                         @endif

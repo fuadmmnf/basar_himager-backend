@@ -37,6 +37,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $newLoaddistribution->compartment_id = $compartment;
                 $newLoaddistribution->potato_type = $distribution['potato_type'];
                 $newLoaddistribution->quantity = $distribution['quantity'];
+                $newLoaddistribution->bag_no = $distribution['bag_no'];
                 $newLoaddistribution->current_quantity = $distribution['quantity'];
                 $newLoaddistribution->save();
 
