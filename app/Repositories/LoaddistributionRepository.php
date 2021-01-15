@@ -68,7 +68,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
     public function getLoadDistributions($receive_id){
         $inventoryHandler = new InventoryHandler();
 
-        $loaddistributions = Loaddistribution::where('receive_id',$receive_id)->get();
+        $loaddistributions = Loaddistribution::orderByDesc('created_at')->where('receive_id',$receive_id)->get();
         foreach ($loaddistributions as $loaddistribution){
             $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentBYId($loaddistribution->compartment_id);
         }
