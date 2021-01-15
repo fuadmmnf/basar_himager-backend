@@ -10,7 +10,7 @@ class Chamber extends Model
     use HasFactory;
     protected $fillable = ['name'];
 
-    public function chamberentries(){
-        return $this->hasMany('App\Models\Chamberentry');
-    }
+//    public function chamberentries(){
+//        return $this->hasMany('App\Models\Chamberentry');
+//    }
 }

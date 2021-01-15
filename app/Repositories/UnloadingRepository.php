@@ -27,9 +27,11 @@ class UnloadingRepository implements UnloadingRepositoryInterface
             foreach ($request['unloadings'] as $unloading){
 
                 $loaddistribution = Loaddistribution::where('id', $unloading['loaddistribution_id'])->first();
-                if($unloading['quantity'] <= $loaddistribution->current_quantity){
+
+                if($this->checkVisibility($loaddistribution->current_quantity , $unloading['quantity'])){
                     $loaddistribution->current_quantity = $loaddistribution->current_quantity - $unloading['quantity'];
                 }else throw new \Exception('Loading amount limit exceed.');
+
                 $compartment_id = $loaddistribution->compartment_id;
                 $loaddistribution->save();
 
@@ -38,22 +40,22 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                 $floor = Inventory::where('id',$inventories->parent_id)->first();
                 $chamber = Inventory::where('id',$floor->parent_id)->first();
 
-                if($inventories->current_quantity >= $unloading['quantity']){
+                if($this->checkVisibility($inventories->current_quantity , $unloading['quantity'])){
                     $inventories->current_quantity = $inventories->current_quantity - $unloading['quantity'];
                     $inventories->save();
                 }else throw new \Exception('Loading amount limit exceed.');
 
-                if($floor->current_quantity >= $unloading['quantity']){
+                if($this->checkVisibility($floor->current_quantity , $unloading['quantity'])){
                     $floor->current_quantity = $floor->current_quantity - $unloading['quantity'];
                     $floor->save();
                 }else throw new \Exception('Loading amount limit exceed.');
 
-                if($chamber->current_quantity >= $unloading['quantity']){
+                if($this->checkVisibility($chamber->current_quantity , $unloading['quantity'])){
+
                     $chamber->current_quantity = $chamber->current_quantity - $unloading['quantity'];
                     $chamber->save();
                     if($chamber->current_quantity == 0)
                     {
-                        $chamberStage = Chamber::where('name', $chamber->name)->firstOrFail();
                         //$chamberStage->stage = 'Stage-0';
                         $newChamberentry = new Chamberentry();
                         $newChamberentry->chamber_id = $chamber->id;
@@ -61,8 +63,8 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                         $newChamberentry->date = Carbon::now();
                         $newChamberentry->save();
 
-                        $chamberStage->stage ='Stage-0';
-                        $chamberStage->save();
+                        $chamber->stage ='Stage-0';
+                        $chamber->save();
                     }
                  }else throw new \Exception('Loading amount limit exceed.');
 
@@ -83,5 +85,12 @@ class UnloadingRepository implements UnloadingRepositoryInterface
         DB::commit();
 
         return $newUnloading;
+    }
+
+    private function checkVisibility($a,$b){
+        if($a-$b <0){
+            return false;
+        }
+        else return true;
     }
 }

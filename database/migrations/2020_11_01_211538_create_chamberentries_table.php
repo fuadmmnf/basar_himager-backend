@@ -19,8 +19,6 @@ class CreateChamberentriesTable extends Migration
             $table->string('stage');
             $table->dateTime('date');
             $table->timestamps();
-
-            $table->foreign('chamber_id')->references('id')->on('chambers');
         });
     }
 

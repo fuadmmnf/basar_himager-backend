@@ -18,8 +18,8 @@ class CreateInventoriesTable extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('category');
             $table->string('name');
+            $table->string('stage')->nullable();
             $table->integer('current_quantity')->default(0);
-//            $table->integer('remaining_capacity')->default(0);
             $table->timestamps();
         });
     }

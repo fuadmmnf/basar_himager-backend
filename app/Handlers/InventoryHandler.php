@@ -22,4 +22,8 @@ class InventoryHandler
         }
         return $inventory;
     }
+
+    public function makeChamberStage0($name){
+
+    }
 }
