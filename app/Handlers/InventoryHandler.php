@@ -4,7 +4,9 @@
 namespace App\Handlers;
 
 
+use App\Models\Chamberentry;
 use App\Models\Inventory;
+use Carbon\Carbon;
 
 class InventoryHandler
 {
@@ -22,8 +24,19 @@ class InventoryHandler
         }
         return $inventory;
     }
+    public function saveChamberStageChange($chamber_id,$stage,Carbon $date)
+    {
+        $chamber = Inventory::findOrFail($chamber_id);
 
-    public function makeChamberStage0($name){
+        $newChamberentry = new Chamberentry();
+        $newChamberentry->chamber_id = $chamber->id;
+        $newChamberentry->stage = $stage;
+        $newChamberentry->date = $date;
+        $newChamberentry->save();
 
+        $chamber->stage = $newChamberentry->stage = $stage;
+        $chamber->save();
+
+        return $newChamberentry;
     }
 }

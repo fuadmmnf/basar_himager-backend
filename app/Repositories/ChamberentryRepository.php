@@ -3,6 +3,7 @@
 
 namespace App\Repositories;
 
+use App\Handlers\InventoryHandler;
 use App\Models\Chamber;
 use App\Models\Chamberentry;
 use App\Models\Inventory;
@@ -28,16 +29,8 @@ class ChamberentryRepository implements ChamberentryRepositoryInterface
 
     public function saveChamberStageChange(array $request)
     {
-        $chamber = Inventory::findOrFail($request['chamber_id']);
-
-        $newChamberentry = new Chamberentry();
-        $newChamberentry->chamber_id = $chamber->id;
-        $newChamberentry->stage = $request['stage'];
-        $newChamberentry->date = Carbon::parse($request['date']);
-        $newChamberentry->save();
-
-        $chamber->stage = $newChamberentry->stage = $request['stage'];
-        $chamber->save();
+        $inventoryHandler = new InventoryHandler();
+        $newChamberentry = $inventoryHandler->saveChamberStageChange($request['chamber_id'], $request['stage'], Carbon::parse($request['date']));
 
         return $newChamberentry;
     }
