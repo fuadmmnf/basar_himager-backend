@@ -104,12 +104,12 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         {
             $newDelivery->charge_from_booking_amount = $newDelivery->total_charge;
             $booking->booking_amount = $booking->booking_amount - $newDelivery->total_charge;
-            $newDelivery->total_charge = 0;
+            //$newDelivery->total_charge = 0;
         }
         else
         {
             $newDelivery->charge_from_booking_amount = $booking->booking_amount;
-            $newDelivery->total_charge = $newDelivery->total_charge - $booking->booking_amount;
+           // $newDelivery->total_charge = $newDelivery->total_charge - $booking->booking_amount;
             $booking->booking_amount = 0;
         }
         $newDelivery->save();
