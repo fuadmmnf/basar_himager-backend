@@ -3,6 +3,7 @@
 
 namespace App\Repositories;
 
+use App\Handlers\InventoryHandler;
 use App\Models\Bank;
 use App\Models\Dailyexpense;
 use App\Models\Bankdeposit;
@@ -181,29 +182,15 @@ class ReportRepository implements ReportRepositoryInterface
             }
         }
 
+        $inventoryHandler = new InventoryHandler();
         foreach ($client->bookings as $booking){
             foreach ($booking->receives as $receive){
                 foreach ($receive->loaddistributions as $loads ){
-                    $loads->inventory = $this->fetchFullInventoryWithParentBYId($loads->compartment_id);
+                    $loads->inventory = $inventoryHandler->fetchFullInventoryWithParentBYId($loads->compartment_id);
                 }
             }
         }
         return $client;
-    }
-
-    private function fetchFullInventoryWithParentBYId($id){
-        $inventory = Inventory::where('id',$id)->first();
-        $this->getFullInventoryDecisionWithParent($inventory);
-        return $inventory;
-    }
-
-    private function getFullInventoryDecisionWithParent($inventory){
-        if($inventory->parent_id !== null){
-            $temp= Inventory::where('id', $inventory->parent_id)->first();
-            $inventory->parent_info = $temp;
-            $this->getFullInventoryDecisionWithParent($inventory->parent_info);
-        }
-        return $inventory;
     }
 }
 

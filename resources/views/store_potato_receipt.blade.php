@@ -108,6 +108,7 @@
             @if(count($client->bookings))
                 @foreach($client->bookings as $booking)
                     @foreach($booking->receives as $receive)
+                        @if(count($receive->loaddistributions))
                         @foreach($receive->receiveitems as $receiveitem)
                             <tr>
                                 <td>{{$booking->booking_no}}</td>
@@ -130,6 +131,7 @@
                                 </td>
                                 </tr>
                         @endforeach
+                        @endif
                     @endforeach
                 @endforeach
             @endif
