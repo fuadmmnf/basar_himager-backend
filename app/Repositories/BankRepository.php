@@ -45,7 +45,7 @@ class BankRepository implements BankRepositoryInterface
         $newBankDeposit->type = $request['type'];
         $newBankDeposit->branch = $request['branch'];
         $newBankDeposit->amount = $request['amount'];
-        $newBankDeposit->time = Carbon::parse($request['time']);
+        $newBankDeposit->time = Carbon::parse($request['time'])->setTimezone('Asia/Dhaka');
         $newBankDeposit->save();
 
         $bank->total += $request['type'] ? -$newBankDeposit->amount : $newBankDeposit->amount;

@@ -30,7 +30,7 @@ class ChamberentryRepository implements ChamberentryRepositoryInterface
     public function saveChamberStageChange(array $request)
     {
         $inventoryHandler = new InventoryHandler();
-        $newChamberentry = $inventoryHandler->saveChamberStageChange($request['chamber_id'], $request['stage'], Carbon::parse($request['date']));
+        $newChamberentry = $inventoryHandler->saveChamberStageChange($request['chamber_id'], $request['stage'], Carbon::parse($request['date'])->setTimezone('Asia/Dhaka'));
 
         return $newChamberentry;
     }

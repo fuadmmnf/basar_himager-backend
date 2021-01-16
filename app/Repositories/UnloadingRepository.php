@@ -77,7 +77,7 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                     {
                         //$chamberStage->stage = 'Stage-0';
                         $inventoryHandler = new InventoryHandler();
-                        $inventoryHandler->saveChamberStageChange($chamber->id,'Stage-0',Carbon::now());
+                        $inventoryHandler->saveChamberStageChange($chamber->id,'Stage-0',Carbon::now()->setTimezone('Asia/Dhaka'));
                     }
                  }else throw new \Exception('Loading amount limit exceed.');
 

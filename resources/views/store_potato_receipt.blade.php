@@ -67,7 +67,6 @@
 </div>
 <span align="center" style="line-height: 1.2;">
     <p style="font-size: 1.4rem; font-weight: bold">Potato Store Receipt</p>
-    <p><b>Report No:</b> 03edkd</p>
     <p><b>Date:</b>{{$client->report_date}}</p>
 </span>
 <table>
