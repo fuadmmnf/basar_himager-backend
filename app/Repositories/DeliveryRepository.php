@@ -21,6 +21,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             ->with('booking.client')
             ->with('gatepasses')
             ->with('deliveryitems')
+            ->with('unloading')
             ->paginate(20);
         return $deliveries;
     }

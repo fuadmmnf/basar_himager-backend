@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Handlers\InventoryHandler;
 use App\Models\Chamber;
 use App\Models\Chamberentry;
+use App\Models\Deliveryitem;
 use App\Models\Inventory;
 use App\Models\Loaddistribution;
 use App\Models\Unloading;
@@ -25,6 +26,22 @@ class UnloadingRepository implements UnloadingRepositoryInterface
         try{
             $booking_id = $request['booking_id'];
             $delivery_id = $request['delivery_id'];
+            $deliveryItems = Deliveryitem::where('delivery_id', $delivery_id)->get();
+
+            $unloadingItems = [];
+            foreach ($request['unloadings'] as $unloading){
+                if(isset($unloadingItems[$unloading['potatoe_type']])){
+                    $unloadingItems[$unloading['potatoe_type']] += $unloading['quantity'];
+                } else {
+                    $unloadingItems[$unloading['potatoe_type']] = $unloading['quantity'];
+                }
+            }
+            foreach ($deliveryItems as $deliveryItem){
+                if($unloadingItems[$deliveryItem['potatoe_type']] > $deliveryItem->quantity){
+                    throw new \Exception('Unloading amount must be less then loading amount');
+                }
+            }
+
 
             foreach ($request['unloadings'] as $unloading){
 
