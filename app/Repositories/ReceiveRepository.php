@@ -31,7 +31,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
     public function getRecentReceives()
     {
-        $receives = Receive::orderBy('receiving_time')
+        $receives = Receive::orderByDesc('receiving_time')
             ->with('booking')
             ->with('booking.client')
             ->with('receiveitems')

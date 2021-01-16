@@ -18,6 +18,7 @@ use App\Observers\LoancollectionObserver;
 use App\Observers\LoandisbursementObserver;
 use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
+use App\Repositories\ChamberentryRepository;
 use App\Repositories\ChamberRepository;
 use App\Repositories\ClientRepository;
 use App\Repositories\DeliveryRepository;
@@ -28,6 +29,7 @@ use App\Repositories\ExpensecategoryRepository;
 use App\Repositories\FloorRepository;
 use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
+use App\Repositories\Interfaces\ChamberentryRepositoryInterface;
 use App\Repositories\Interfaces\ChamberRepositoryInterface;
 use App\Repositories\Interfaces\ClientRepositoryInterface;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
@@ -89,6 +91,7 @@ class AppServiceProvider extends ServiceProvider
             EmployeeLoanRepositoryInterface::class,
             MachinepartRepositoryInterface::class,
             ChamberRepositoryInterface::class,
+            ChamberentryRepositoryInterface::class,
             InventoryRepositoryInterface::class,
             LoaddistributionRepositoryInterface::class,
             UnloadingRepositoryInterface::class,
@@ -113,6 +116,7 @@ class AppServiceProvider extends ServiceProvider
             EmployeeLoanRepository::class,
             MachinepartRepository::class,
             ChamberRepository::class,
+            ChamberentryRepository::class,
             InventoryRepository::class,
             LoaddistributionRepository::class,
             UnloadingRepository::class,

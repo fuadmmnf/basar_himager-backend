@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Chamber;
+namespace App\Http\Requests\Inventory\Chamber;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,7 +25,7 @@ class CreateChamberEntryRequest extends FormRequest
     public function rules()
     {
         return [
-            'chamber_id' => 'required| numeric',
+            'chamber_id' => 'required',
             'stage' => 'required',
             'date' => 'required'
         ];
