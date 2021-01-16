@@ -25,7 +25,7 @@ class LoancollectionRepository implements LoancollectionRepositoryInterface
         $newLoancollection->surcharge = $request['surcharge'];
         $newLoancollection->payment_amount = $request['payment_amount'];
         $newLoancollection->pending_loan_amount = $request['pending_loan_amount'];
-        $newLoancollection->payment_date = Carbon::parse($request['payment_date']);
+        $newLoancollection->payment_date = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');
         $newLoancollection->save();
 
         $loandisbursement->amount_left = $loandisbursement->amount_left - $newLoancollection->payment_amount;

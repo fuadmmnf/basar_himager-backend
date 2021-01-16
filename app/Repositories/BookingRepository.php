@@ -71,7 +71,7 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking = new Booking();
 
         $newBooking->client_id = $request['client_id'];
-        $newBooking->booking_time = Carbon::parse($request['booking_time']);
+        $newBooking->booking_time = Carbon::parse($request['booking_time'])->setTimezone('Asia/Dhaka');
         $newBooking->type = $request['type'];
 
         $newBooking->booking_no = (($newBooking->type) ? 'A' : 'N')

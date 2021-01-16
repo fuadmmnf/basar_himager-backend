@@ -45,7 +45,7 @@ class MachinepartRepository implements MachinepartRepositoryInterface
         $newMachinepartEntry->machinepart_id = $machinepart->id;
         $newMachinepartEntry->type = $request['type'];
         $newMachinepartEntry->quantity = $request['quantity'];
-        $newMachinepartEntry->time = Carbon::parse($request['time']);
+        $newMachinepartEntry->time = Carbon::parse($request['time'])->setTimezone('Asia/Dhaka');
         $newMachinepartEntry->save();
 
         $machinepart->stock += ($newMachinepartEntry->type) ? $newMachinepartEntry->quantity : -$newMachinepartEntry->quantity;

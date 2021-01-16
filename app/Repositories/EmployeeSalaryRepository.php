@@ -18,7 +18,7 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
     public function fetchAllSalaries()
     {
         // TODO: Implement fetchAllSalaries() method.
-        $salaries = Employeesalary::whereMonth('payment_time', Carbon::now())->with('employee')->paginate(15);
+        $salaries = Employeesalary::whereMonth('payment_time', Carbon::now()->setTimezone('Asia/Dhaka'))->with('employee')->paginate(15);
         return $salaries;
     }
 
@@ -32,7 +32,7 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
 
         if($request['loan_payment'] > 0){
             $employeeloanHandler = new EmployeeLoanHandler();
-            $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time']));
+            $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka'));
             if (!$employeeLoan) {
                 return null;
             }
@@ -45,8 +45,8 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
         $newEmployeeSalary->loan_payment = $request['loan_payment'];
         $newEmployeeSalary->bonus = $request['bonus'];
         $newEmployeeSalary->remark = $request['remark'];
-        $newEmployeeSalary->salary_month = Carbon::parse($request['salary_month']);
-        $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time']);
+        $newEmployeeSalary->salary_month = Carbon::parse($request['salary_month'])->setTimezone('Asia/Dhaka');
+        $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka');
         $newEmployeeSalary->save();
 
 
