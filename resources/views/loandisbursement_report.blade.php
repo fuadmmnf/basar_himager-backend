@@ -104,6 +104,12 @@
                             Advance
                         @endif
                     </p>
+
+                    @if($loandisbursement->booking->advance_payment > 0)
+                        <p><b>Advance Payment:</b> {{$loandisbursement->booking->advance_payment}}</p>
+                    @elseif($loandisbursement->booking->booking_amount > 0)
+                        <p><b>Booking Money:</b> {{$loandisbursement->booking->booking_amount}}</p>
+                    @endif
                     <p><b>Date:</b> {{ date('F d, Y', strtotime($loandisbursement->booking->booking_time)) }}</p>
                     <p><b>Total Quantity:</b> {{$loandisbursement->booking->quantity}}</p>
                     <p><b>Remaining Quantity:</b> {{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
