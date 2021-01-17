@@ -78,11 +78,13 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
     public function getLoadDistributionsByClient($client_id){
         $bookingIds = Booking::where('client_id', $client_id)->pluck('id');
-        $loaddistributions = Loaddistribution::whereIn('booking_id', $bookingIds)
+        $loaddistributions = Loaddistribution::orderByDesc('created_at')
+            ->whereIn('booking_id', $bookingIds)
             ->with('receive')
             ->paginate(20);
         $loaddistributions->getCollection()->transform(function ($loaddistribution) {
             $loaddistribution->inventory = $this->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+            return $loaddistribution;
         });
 //        $loaddistributions->receive_info = Receive::where('id',$receive_id)
 //            ->select('receiving_no')
@@ -92,7 +94,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
 
     private function fetchFullInventoryWithParentById($compartment_id){
-        $inventory = Inventory::FindOrFail('id',$compartment_id);
+        $inventory = Inventory::FindOrFail($compartment_id);
         $this->getFullInventoryDecisionWithParent($inventory);
         return $inventory;
     }
@@ -106,7 +108,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         return $inventory;
     }
 
-    public function getLoadDistrbutionByBooking_id($booking_id){
+    public function getLoadDistrbutionByBooking($booking_id){
         $loads = Loaddistribution::where('booking_id',$booking_id)->get();
         foreach($loads as $load){
             $load->inventory = $this->fetchFullInventoryWithParentById($load->compartment_id);
