@@ -60,7 +60,7 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Receiving Receipt</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">আলু গ্রহণের রশিদ</b> <br />
 
     </div>
 
@@ -98,22 +98,25 @@
 
                     <p><b>Booking No:</b> {{$receiptinfo->booking->booking_no}}</p>
                     <p><b>Booking Date:</b> {{ date('F d, Y', strtotime($receiptinfo->booking->booking_time)) }}</p>
-                    <p><b>Booking Type:</b>
-                        @if($receiptinfo->booking->type == 0)
-                            Normal
-                        @elseif($receiptinfo->booking->type == 1)
-                            Advance
-                        @endif
-                    </p>
                     <p><b>Total Quantity:</b> {{$receiptinfo->booking->quantity}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <p><b>Bags In:</b> {{$receiptinfo->booking->bags_in}}</p>
-                <p><b>Bags Out:</b> {{$receiptinfo->booking->bags_out}}</p>
-                <p><b>Remaining Quantity:</b> {{$receiptinfo->booking->quantity - $receiptinfo->receiveitems->sum('quantity')}}</p>
+                <p><b>Booking Type:</b>
+                    @if($receiptinfo->booking->type == 0)
+                        Normal
+                    @elseif($receiptinfo->booking->type == 1)
+                        Advance
+                    @endif
+                </p>
+
+                @if($receiptinfo->booking->advance_payment > 0)
+                    <p><b>Advance Payment:</b> {{$receiptinfo->booking->advance_payment}}</p>
+                @elseif($receiptinfo->booking->booking_amount > 0)
+                    <p><b>Booking Money:</b> {{$receiptinfo->booking->booking_amount}}</p>
+                @endif
             </div>
         </td>
     </tr>
