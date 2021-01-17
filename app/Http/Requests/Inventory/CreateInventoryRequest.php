@@ -30,6 +30,7 @@ class CreateInventoryRequest extends \Illuminate\Foundation\Http\FormRequest
             'parent_id' => 'sometimes',
             'category' => 'required',
             'name' => 'required',
+            'stage' => 'sometimes',
             'current_quantity' => 'required | numeric',
         ];
     }

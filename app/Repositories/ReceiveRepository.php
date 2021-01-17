@@ -31,7 +31,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
     public function getRecentReceives()
     {
-        $receives = Receive::orderBy('receiving_time')
+        $receives = Receive::orderByDesc('receiving_time')
             ->with('booking')
             ->with('booking.client')
             ->with('receiveitems')
@@ -62,7 +62,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
             return null;
         }
 
-        $newReceive->receiving_time = Carbon::parse($request['receiving_time']);
+        $newReceive->receiving_time = Carbon::parse($request['receiving_time'])->setTimezone('Asia/Dhaka');
         $newReceive->receiving_no = sprintf('%04d', Receive::whereYear('receiving_time', $newReceive->receiving_time)->count()) . $newReceive->receiving_time->year % 100;
         $newReceive->transport = $request['transport'];
 

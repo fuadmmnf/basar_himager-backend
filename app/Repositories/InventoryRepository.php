@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Handlers\InventoryHandler;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\DB;
 
@@ -38,6 +39,7 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
             $newInventory->category = $request['category'];
             $newInventory->name = $request['name'];
             $newInventory->current_quantity = $request['current_quantity'];
+            $newInventory->stage = $request['stage'];
 //            $newInventory->remaining_capacity = $request['remaining_capacity'];
             $newInventory->save();
 
@@ -50,30 +52,14 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
 
     public function getInventory($inventory_type)
     {
+        $inventoryHandler = new InventoryHandler();
         // TODO: Implement getInventory() method.
         $inventories = Inventory::where('category', $inventory_type)->get();
-        //if($inventory_type !== 'chamber' && $inventory_type!== 'position'){
             foreach ($inventories as $inventory){
-                $this->getFullInventoryDecisionWithParent($inventory);
+                $inventoryHandler->getFullInventoryDecisionWithParent($inventory);
             }
-       // }
         return $inventories;
     }
-
-//    public function fetchFullInventoryWithParentBYId($id){
-//        $inventory = Inventory::where('id',$id)->first();
-//        $this->getFullInventoryDecisionWithParent($inventory);
-//        return $inventory;
-//    }
-    private function getFullInventoryDecisionWithParent($inventory){
-                if($inventory->parent_id !== null){
-                    $temp= Inventory::where('id', $inventory->parent_id)->first();
-                    $inventory->parent_info = $temp;
-                    $this->getFullInventoryDecisionWithParent($inventory->parent_info);
-                }
-                return $inventory;
-    }
-
 
     public function fetchInventoryByParentId($parent_id)
     {

@@ -60,14 +60,13 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Potato Store Receipt</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">আলু সংরক্ষণ</b> <br />
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
     <p style="font-size: 1.4rem; font-weight: bold">Loading Distribution for Receive No: {{$loads->receive_info->receiving_no}}</p>
-    <p><b>Report No:</b> 03edkd</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 

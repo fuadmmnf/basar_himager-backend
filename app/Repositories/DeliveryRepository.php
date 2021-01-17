@@ -21,6 +21,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             ->with('booking.client')
             ->with('gatepasses')
             ->with('deliveryitems')
+            ->with('unloading')
             ->paginate(20);
         return $deliveries;
     }
@@ -64,7 +65,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
         $newDelivery = new Delivery();
         $newDelivery->booking_id = $booking->id;
-        $newDelivery->delivery_time = Carbon::parse($request['delivery_time']);
+        $newDelivery->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
         $newDelivery->delivery_no = sprintf('%04d', Delivery::whereYear('delivery_time', $newDelivery->delivery_time)->count()) . $newDelivery->delivery_time->year % 100;
         $newDelivery->cost_per_bag = $request['cost_per_bag'];
         $newDelivery->quantity_bags_fanned = $request['quantity_bags_fanned'];
@@ -133,7 +134,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $delivery = Delivery::findOrFail($request['delivery_id']);
         $newGatepass = new Gatepass();
         $newGatepass->delivery_id = $delivery->id;
-        $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time']);
+        $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time'])->setTimezone('Asia/Dhaka');
         $newGatepass->gatepass_no = sprintf('%04d', Gatepass::whereYear('gatepass_time', $newGatepass->gatepass_time)->count()) . $newGatepass->gatepass_time->year % 100;
         $newGatepass->transport = $request['transport'];
         $newGatepass->save();

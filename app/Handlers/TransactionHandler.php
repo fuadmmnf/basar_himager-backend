@@ -15,7 +15,7 @@ class TransactionHandler
         $newTransaction->model_id = $relatedModel->id;
         $newTransaction->type = $transactionType;
         $newTransaction->amount = $amount;
-        $newTransaction->time = $dateTime;
+        $newTransaction->time = $dateTime->setTimezone('Asia/Dhaka');
         $newTransaction->remark = $remark;
         $newTransaction->save();
     }
