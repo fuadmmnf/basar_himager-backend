@@ -40,7 +40,7 @@ class ReportController extends Controller
     public function getLoaddistributionReport($receive_id){
         $loaddistributionRepository = new LoaddistributionRepository();
         $pdf = PDF::loadView('loaddistribution', [
-            'loads' => $loaddistributionRepository->getLoadDistributions($receive_id),
+            'loads' => $loaddistributionRepository->getLoadDistributionsByReceive($receive_id),
         ]);
         return $pdf->stream();
     }

@@ -25,12 +25,19 @@ class LoaddistributionController extends ApiController
             return response()->json($load, 201);
     }
 
-    public function getloaddistributionByReceiveId($receive_id){
-        $load = $this->loaddistributionRepository->getLoadDistributions($receive_id);
+    public function getloaddistributionByReceive($receive_id){
+        $load = $this->loaddistributionRepository->getLoadDistributionsByReceive($receive_id);
         return response()->json($load,200);
     }
 
-    public function fetchLoaddistributionbybooking_id($booking_id){
+    public function getloaddistributionByClient($client_id){
+        $load = $this->loaddistributionRepository->getLoadDistributionsByClient($client_id);
+        return response()->json($load,200);
+    }
+
+
+
+    public function fetchLoaddistributionByBooking($booking_id){
         $load = $this->loaddistributionRepository->getLoadDistrbutionByBooking_id($booking_id);
         return response()->json($load,200);
     }

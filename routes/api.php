@@ -100,8 +100,9 @@ Route::get('inventories/{parent_id}/parents', [\App\Http\Controllers\Api\Invento
 Route::post('inventories', [\App\Http\Controllers\Api\InventoryController::class, 'createInventory']);
 //====>load
 Route::post('loaddistributions', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createLoadDistribution']);
-Route::get('loaddistributions/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceiveId']);
-Route::get('loaddistributions/booking/{booking_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionbybooking_id']);
+Route::get('clients/{client_id}/loaddistributions',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByClient']);
+Route::get('loaddistributions/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceive']);
+Route::get('loaddistributions/booking/{booking_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionByBooking']);
 
 //unloading
 Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,'saveUnloading']);

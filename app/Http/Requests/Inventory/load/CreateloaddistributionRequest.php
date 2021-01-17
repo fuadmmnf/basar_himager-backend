@@ -16,7 +16,7 @@ class CreateloaddistributionRequest extends \Illuminate\Foundation\Http\FormRequ
     {
         $user = auth()->guard('api')->user();
 
-        return $user != null && $user->can('crud:account');
+        return $user != null && $user->can('crud:store');
     }
 
     /**
