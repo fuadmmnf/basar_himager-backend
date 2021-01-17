@@ -95,25 +95,26 @@
         <td style="width: 70%; text-align: left">
             <div   >
                 <div>
-
                     <p><b>Booking Date:</b> {{ date('F d, Y', strtotime($bookinginfo->booking_time)) }}</p>
-                    <p><b>Booking Type:</b>
-                       @if($bookinginfo->type == 0)
-                           Normal
-                        @elseif($bookinginfo->type == 1)
-                            Advance
-                        @endif
-                    </p>
                     <p><b>Total Quantity:</b> {{$bookinginfo->quantity}}</p>
                 </div>
             </div>
         </td>
         <td  class="td-right-align" style="width: 30%; text-align: left">
             <div>
-                <p><b>Bags In:</b> {{$bookinginfo->bags_in}}</p>
-                <p><b>Bags Out:</b> {{$bookinginfo->bags_out}}</p>
-                <p><b>Advance Payment:</b> {{$bookinginfo->advance_payment}}</p>
-                <p><b>Discount:</b> {{$bookinginfo->discount}} %</p>
+                <p><b>Booking Type:</b>
+                    @if($bookinginfo->type == 0)
+                        Normal
+                    @elseif($bookinginfo->type == 1)
+                        Advance
+                    @endif
+                </p>
+
+                @if($bookinginfo->advance_payment > 0)
+                    <p><b>Advance Payment:</b> {{$bookinginfo->advance_payment}}</p>
+                @elseif($bookinginfo->booking_amount > 0)
+                    <p><b>Booking Money:</b> {{$bookinginfo->booking_amount}}</p>
+                @endif
             </div>
         </td>
     </tr>
