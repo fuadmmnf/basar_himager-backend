@@ -33,7 +33,7 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
     }
 
     public function fetchClientListWithFewerAttributes(){
-        $clients = Client::select('id','nid','name','phone')->get();
+        $clients = Client::select('id', 'client_no','nid','name','phone')->get();
         return $clients;
     }
 }

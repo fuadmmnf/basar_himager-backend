@@ -109,27 +109,26 @@
                     @foreach($booking->receives as $receive)
                         @if(count($receive->loaddistributions))
                         @foreach($receive->receiveitems as $receiveitem)
-                            <tr>
-                                <td>{{$booking->booking_no}}</td>
-                                <td>{{$booking->booking_time}}</td>
-                                <td>{{$booking->quantity}}</td>
-                                <td>{{$receive->receiving_no}}</td>
-                                <td>{{$receive->receiving_time}}</td>
-                                <td>{{$receiveitem->potatoe_type}}</td>
-                                <td>{{$receiveitem->quantity}}</td>
                                 @foreach($receive->loaddistributions as $load)
                                     @if($receiveitem->potatoe_type == $load->potato_type)
-                                        <td>{{$load->bag_no}}</td>
-                                        <td>
-                                            <b>Ch: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>
-                                            <b>FL: </b>{{$load->inventory->parent_info->name}}<br/>
-                                            <b>Co: </b>{{$load->inventory->name}}<br/>
-                                            ({{$load->quantity}})
-
-                                        </td>
+                                        <tr>
+                                            <td>{{$booking->booking_no}}</td>
+                                            <td>{{$booking->booking_time}}</td>
+                                            <td>{{$booking->quantity}}</td>
+                                            <td>{{$receive->receiving_no}}</td>
+                                            <td>{{$receive->receiving_time}}</td>
+                                            <td>{{$receiveitem->potatoe_type}}</td>
+                                            <td>{{$receiveitem->quantity}}</td>
+                                            <td>{{$load->bag_no}}</td>
+                                            <td>
+                                                <b>Ch: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>
+                                                <b>FL: </b>{{$load->inventory->parent_info->name}}<br/>
+                                                <b>Co: </b>{{$load->inventory->name}}<br/>
+                                                ({{$load->quantity}})
+                                            </td>
+                                        </tr>
                                     @endif
                                 @endforeach
-                                </tr>
                         @endforeach
                         @endif
                     @endforeach
