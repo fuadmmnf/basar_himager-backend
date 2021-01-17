@@ -60,7 +60,7 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Receiving Receipt</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">আলু গ্রহণের রশিদ</b> <br />
 
     </div>
 
