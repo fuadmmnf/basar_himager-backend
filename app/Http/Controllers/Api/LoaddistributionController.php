@@ -30,8 +30,8 @@ class LoaddistributionController extends ApiController
         return response()->json($load,200);
     }
 
-    public function getloaddistributionByClient($client_id){
-        $load = $this->loaddistributionRepository->getLoadDistributionsByClient($client_id);
+    public function getloaddistributionDatesByClient($client_id){
+        $load = $this->loaddistributionRepository->getLoadDistributionDatesByClient($client_id);
         return response()->json($load,200);
     }
 

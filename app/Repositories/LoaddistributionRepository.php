@@ -4,12 +4,12 @@ namespace App\Repositories;
 
 use App\Handlers\InventoryHandler;
 use App\Models\Booking;
-use App\Models\Client;
 use App\Models\Inventory;
 use App\Models\Loaddistribution;
 use App\Models\Receive;
 use App\Models\Receiveitem;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -69,8 +69,9 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
     public function getLoadDistributionsByReceive($receive_id){
         $loaddistributions = Loaddistribution::where('receive_id',$receive_id)->get();
+        $inventoryHandler = new InventoryHandler();
         foreach ($loaddistributions as $loaddistribution){
-            $loaddistribution->inventory = $this->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+            $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
 
         }
         $loaddistributions->receive_info = Receive::where('id',$receive_id)
@@ -79,21 +80,14 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         return $loaddistributions;
     }
 
-    public function getLoadDistributionsByClient($client_id){
+    public function getLoadDistributionDatesByClient($client_id){
         $bookingIds = Booking::where('client_id', $client_id)->pluck('id');
-        $loaddistributions = Loaddistribution::orderByDesc('created_at')
-            ->whereIn('booking_id', $bookingIds)
-            ->with('receive')
-            ->paginate(20);
-        $inventoryHandler = new InventoryHandler();
-        $loaddistributions->getCollection()->transform(function ($loaddistribution) use($inventoryHandler) {
-            $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
-            return $loaddistribution;
-        });
-//        $loaddistributions->receive_info = Receive::where('id',$receive_id)
-//            ->select('receiving_no')
-//            ->first();
-        return $loaddistributions;
+        $loaddistributionDates = Loaddistribution::whereIn('booking_id', $bookingIds)
+                    ->select(DB::raw('DATE(created_at) as date'))
+                    ->distinct()
+                    ->orderBy('date','desc')
+                    ->pluck('date');
+        return $loaddistributionDates;
     }
 
     public function getLoadDistrbutionByBooking($booking_id){
