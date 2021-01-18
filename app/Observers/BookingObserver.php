@@ -21,7 +21,7 @@ class BookingObserver
                 $booking, 'New Booking'
             );
         }
-        else if ($booking->booking_amount > 0) {
+        if ($booking->booking_amount > 0) {
             $transactionHandler = new TransactionHandler();
             $transactionHandler->createTransaction(0, $booking->booking_amount, $booking->booking_time,
                 $booking, 'Booking Money'
