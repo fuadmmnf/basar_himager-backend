@@ -12,7 +12,7 @@ return [
     'font_path'             => base_path('resources/fonts/'),
     'font_data'             => [
 
-        'kalpurush' => [
+        'Kalpurush' => [
             'R'  => 'Kalpurush.ttf',    // regular font
             'B'  => 'Kalpurush.ttf',       // optional: bold font
             'I'  => 'Kalpurush.ttf',     // optional: italic font
