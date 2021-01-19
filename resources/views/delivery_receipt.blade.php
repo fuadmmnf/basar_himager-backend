@@ -14,7 +14,6 @@
         }
 
         th, td {
-            padding: 7px;
             font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
@@ -114,7 +113,8 @@
                 @if($receiptinfo->booking->advance_payment > 0)
                     <p><b>Advance Payment:</b> {{$receiptinfo->booking->advance_payment}}</p>
                 @elseif($receiptinfo->booking->booking_amount > 0)
-                    <p><b>Booking Money:</b> {{$receiptinfo->booking->booking_amount}}</p>
+                    <p><b>Booking Money:</b> {{$receiptinfo->booking->initial_booking_amount}}</p>
+                    <p><b>Remaining:</b> {{$receiptinfo->booking->booking_amount}}</p>
                 @endif
 
             </div>

@@ -14,7 +14,6 @@
         }
 
         th, td {
-            padding: 7px;
             font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }

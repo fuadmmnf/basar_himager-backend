@@ -14,7 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
+            /*padding: 7px;*/
             font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
@@ -113,7 +113,8 @@
                 @if($bookinginfo->advance_payment > 0)
                     <p><b>Advance Payment:</b> {{$bookinginfo->advance_payment}}</p>
                 @elseif($bookinginfo->booking_amount > 0)
-                    <p><b>Booking Money:</b> {{$bookinginfo->booking_amount}}</p>
+                    <p><b>Booking Money:</b> {{$bookinginfo->initial_booking_amount}}</p>
+                    <p><b>Remaining:</b> {{$bookinginfo->booking_amount}}</p>
                 @endif
             </div>
         </td>

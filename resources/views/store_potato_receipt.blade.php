@@ -13,8 +13,7 @@
             text-align: center;
         }
 
-        th, td {
-            padding: 7px;
+        th, td {;
             font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
@@ -67,7 +66,7 @@
 </div>
 <span align="center" style="line-height: 1.2;">
     <p style="font-size: 1.4rem; font-weight: bold">Potato Store Receipt</p>
-    <p><b>Date:</b>{{$client->report_date}}</p>
+    <p><b>Date:</b>{{ date('F d, Y') }}</p>
 </span>
 <table>
     <tr>
