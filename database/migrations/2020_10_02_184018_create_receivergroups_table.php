@@ -15,6 +15,8 @@ class CreateReceivegroupsTable extends Migration
     {
         Schema::create('receivegroups', function (Blueprint $table) {
             $table->id();
+            $table->string('receiving_no')->unique();
+            $table->dateTime('receiving_time');
             $table->timestamps();
         });
     }

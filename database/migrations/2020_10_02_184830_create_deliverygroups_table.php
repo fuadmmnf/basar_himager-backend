@@ -15,6 +15,8 @@ class CreateDeliverygroupsTable extends Migration
     {
         Schema::create('deliverygroups', function (Blueprint $table) {
             $table->id();
+            $table->string('delivery_no')->unique();
+            $table->dateTime('delivery_time');
             $table->timestamps();
         });
     }

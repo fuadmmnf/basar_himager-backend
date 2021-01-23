@@ -17,8 +17,6 @@ class CreateReceivesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('receivegroup_id');
             $table->unsignedBigInteger('booking_id');
-            $table->string('receiving_no')->unique();
-            $table->dateTime('receiving_time');
             $table->json('transport');
             $table->timestamps();
 
