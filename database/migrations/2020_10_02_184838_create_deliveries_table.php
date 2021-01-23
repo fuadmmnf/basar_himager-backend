@@ -15,6 +15,7 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('deliverygroup_id');
             $table->unsignedBigInteger('booking_id');
             $table->string('delivery_no')->unique();
             $table->dateTime('delivery_time');
@@ -26,6 +27,7 @@ class CreateDeliveriesTable extends Migration
             $table->double('charge_from_booking_amount');
             $table->timestamps();
 
+            $table->foreign('deliverygroup_id')->references('id')->on('deliverygroups');
             $table->foreign('booking_id')->references('id')->on('bookings');
         });
     }
