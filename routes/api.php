@@ -57,7 +57,7 @@ Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'cr
 
 //deliveries
 Route::get('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliveries']);
-Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDelivery']);
+Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliverygroup']);
 //Delivery Gatepasses
 Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliveryGatepass']);
 
@@ -70,7 +70,7 @@ Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementCont
 Route::post('loancollections', [\App\Http\Controllers\Api\LoancollectionController::class, 'createLoancollection']);
 
 //delivery
-Route::post('delivery', [\App\Http\Controllers\Api\DeliveryController::class, 'createDelivery']);
+Route::post('delivery', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliverygroup']);
 
 //dailyexpenses
 Route::post('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class, 'createDailyexpenses']);

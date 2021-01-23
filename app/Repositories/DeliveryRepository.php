@@ -5,10 +5,12 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 use App\Models\Delivery;
+use App\Models\Deliverygroup;
 use App\Models\Deliveryitem;
 use App\Models\Gatepass;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryRepository implements DeliveryRepositoryInterface
 {
@@ -55,35 +57,32 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return true;
     }
 
-    public function saveDelivery(array $request)
+    private function createDelivery(Deliverygroup $deliverygroup, array $deliveryRequest)
     {
-        $booking = Booking::findOrFail($request['booking_id']);
-
-        if (!$this->validateDeliveryQuantity($booking->receiveitems, $request['deliveryitems'])) {
+        $booking = Booking::findOrFail($deliveryRequest['booking_id']);
+        if (!$this->validateDeliveryQuantity($booking->receiveitems, $deliveryRequest['deliveryitems'])) {
             return null;
         }
 
         $newDelivery = new Delivery();
+        $newDelivery->deliverygroup_id = $deliverygroup->id;
         $newDelivery->booking_id = $booking->id;
-        $newDelivery->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
-        $newDelivery->delivery_no = sprintf('%04d', Delivery::whereYear('delivery_time', $newDelivery->delivery_time)->count()) . $newDelivery->delivery_time->year % 100;
-        $newDelivery->cost_per_bag = $request['cost_per_bag'];
-        $newDelivery->quantity_bags_fanned = $request['quantity_bags_fanned'];
-        $newDelivery->fancost_per_bag = $request['fancost_per_bag'];
-        $newDelivery->due_charge = $request['due_charge'];
+        $newDelivery->cost_per_bag = $deliveryRequest['cost_per_bag'];
+        $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
+        $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
+        $newDelivery->due_charge = $deliveryRequest['due_charge'];
         $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + $newDelivery->due_charge;
 
         $newDelivery->save();
 
         $totalQuantity = 0;
         $receiveitems = $booking->receiveitems;
-        foreach ($request['deliveryitems'] as $deliveryitem) {
+        foreach ($deliveryRequest['deliveryitems'] as $deliveryitem) {
             $newDeliveyItem = new Deliveryitem();
             $newDeliveyItem->delivery_id = $newDelivery->id;
             $newDeliveyItem->quantity = $deliveryitem['quantity'];
             $newDeliveyItem->potatoe_type = $deliveryitem['potatoe_type'];
             $newDeliveyItem->save();
-            $totalQuantity += $newDeliveyItem->quantity;
 
             $quantity = $newDeliveyItem->quantity;
             foreach ($receiveitems as $receiveitem) {
@@ -97,20 +96,21 @@ class DeliveryRepository implements DeliveryRepositoryInterface
                     $quantity -= $used;
                 }
             }
-
+            $totalQuantity += $newDeliveyItem->quantity;
         }
 
+        if ($booking->bags_out + $totalQuantity > $booking->bags_in) {
+            throw new \Exception('total amount greater than bags received');
+        }
+        $newDelivery->bags_currently_remaining = $booking->bags_in - $booking->bags_out - $totalQuantity;
         $newDelivery->total_charge = $newDelivery->total_charge + ($totalQuantity * $newDelivery->cost_per_bag);
-        if($newDelivery->total_charge <= $booking->booking_amount)
-        {
+        if ($newDelivery->total_charge <= $booking->booking_amount) {
             $newDelivery->charge_from_booking_amount = $newDelivery->total_charge;
             $booking->booking_amount = $booking->booking_amount - $newDelivery->total_charge;
             //$newDelivery->total_charge = 0;
-        }
-        else
-        {
+        } else {
             $newDelivery->charge_from_booking_amount = $booking->booking_amount;
-           // $newDelivery->total_charge = $newDelivery->total_charge - $booking->booking_amount;
+            // $newDelivery->total_charge = $newDelivery->total_charge - $booking->booking_amount;
             $booking->booking_amount = 0;
         }
         $newDelivery->save();
@@ -119,6 +119,27 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $booking->save();
 
         return $newDelivery;
+    }
+
+    public function saveDeliverygroup(array $request)
+    {
+        DB::beginTransaction();
+        try {
+            $newDeliverygroup = new Deliverygroup();
+            $newDeliverygroup->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
+            $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count()) . $newDeliverygroup->delivery_time->year % 100;
+            $newDeliverygroup->save();
+
+            foreach ($request['deliveries'] as $deliveryRequest) {
+                $this->createDelivery($newDeliverygroup, $deliveryRequest);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+
+        DB::commit();
+        return $newDeliverygroup;
     }
 
 

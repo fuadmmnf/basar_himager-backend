@@ -17,6 +17,7 @@ class CreateDeliveriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('deliverygroup_id');
             $table->unsignedBigInteger('booking_id');
+            $table->integer('bags_currently_remaining');
             $table->double('cost_per_bag');
             $table->integer('quantity_bags_fanned')->default(0);
             $table->double('fancost_per_bag')->default(0);
