@@ -27,6 +27,6 @@ class CreatePotatotypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('potatotypes');
+        Schema::dropIfExists('potatotypes')->unique();
     }
 }

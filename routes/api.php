@@ -119,3 +119,5 @@ Route::get('settings', [\App\Http\Controllers\Api\SettingsController::class,'fet
 Route::post('settings',[\App\Http\Controllers\Api\SettingsController::class, 'updateSettings']);
 
 //Potatotype
+Route::get('potatotypes',[\App\Http\Controllers\Api\PotatotypeController::class, 'fetchPotatotypes']);
+Route::post('potatotypes',[\App\Http\Controllers\Api\PotatotypeController::class, 'saveNewPotatotype']);
