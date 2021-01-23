@@ -5,8 +5,9 @@ namespace Database\Seeders;
 
 
 use App\Models\Potatotype;
+use Illuminate\Database\Seeder;
 
-class PotatoTypeSeeder extends \Illuminate\Database\Seeder
+class PotatoTypeSeeder extends Seeder
 {
     public function run()
     {
@@ -23,8 +24,8 @@ class PotatoTypeSeeder extends \Illuminate\Database\Seeder
             'Saita Seeds',
         ];
         foreach ($keys as $key){
-            PotatoTypeSeeder::create([
-                'type_name' => $key,
+            PotatoType::create([
+                'type_name' => $key
             ]);
         }
     }
