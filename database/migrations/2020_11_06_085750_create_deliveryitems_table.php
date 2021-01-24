@@ -16,7 +16,7 @@ class CreateDeliveryitemsTable extends Migration
         Schema::create('deliveryitems', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('delivery_id');
-            $table->string('potatoe_type');
+            $table->string('potato_type');
             $table->integer('quantity');
             $table->timestamps();
 

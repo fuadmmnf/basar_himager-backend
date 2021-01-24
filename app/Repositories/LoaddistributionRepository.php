@@ -43,7 +43,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $newLoaddistribution->current_quantity = $distribution['quantity'];
                 $newLoaddistribution->save();
 
-                $receiveItem = Receiveitem::where('receive_id',$id)->where('potatoe_type',$distribution['potato_type'])->first();
+                $receiveItem = Receiveitem::where('receive_id',$id)->where('potato_type',$distribution['potato_type'])->first();
                 $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
                 if($receiveItem->loaded_quantity > $receiveItem->quantity)
                 {

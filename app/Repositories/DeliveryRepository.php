@@ -32,19 +32,19 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     {
         $receivesLeft = [];
         foreach ($receiveItems as $receiveItem) {
-            if (isset($receivesLeft[$receiveItem->potatoe_type])) {
-                $receivesLeft[$receiveItem->potatoe_type] += $receiveItem->quantity_left;
+            if (isset($receivesLeft[$receiveItem->potato_type])) {
+                $receivesLeft[$receiveItem->potato_type] += $receiveItem->quantity_left;
             } else {
-                $receivesLeft[$receiveItem->potatoe_type] = $receiveItem->quantity_left;
+                $receivesLeft[$receiveItem->potato_type] = $receiveItem->quantity_left;
             }
         }
 
         $deliveryQuantities = [];
         foreach ($deliveryItems as $deliveryItem) {
-            if (isset($deliveryQuantities[$deliveryItem['potatoe_type']])) {
-                $deliveryQuantities[$deliveryItem['potatoe_type']] += $deliveryItem['quantity'];
+            if (isset($deliveryQuantities[$deliveryItem['potato_type']])) {
+                $deliveryQuantities[$deliveryItem['potato_type']] += $deliveryItem['quantity'];
             } else {
-                $deliveryQuantities[$deliveryItem['potatoe_type']] = $deliveryItem['quantity'];
+                $deliveryQuantities[$deliveryItem['potato_type']] = $deliveryItem['quantity'];
             }
         }
 
@@ -81,13 +81,13 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             $newDeliveyItem = new Deliveryitem();
             $newDeliveyItem->delivery_id = $newDelivery->id;
             $newDeliveyItem->quantity = $deliveryitem['quantity'];
-            $newDeliveyItem->potatoe_type = $deliveryitem['potatoe_type'];
+            $newDeliveyItem->potato_type = $deliveryitem['potato_type'];
             $newDeliveyItem->save();
 
             $quantity = $newDeliveyItem->quantity;
             foreach ($receiveitems as $receiveitem) {
                 if ($receiveitem->quantity_left > 0 &&
-                    $receiveitem->potatoe_type == $newDeliveyItem->potatoe_type &&
+                    $receiveitem->potato_type == $newDeliveyItem->potato_type &&
                     $quantity > 0) {
                     $used = min($quantity, $receiveitem->quantity_left);
                     $receiveitem->quantity_left = $receiveitem->quantity_left - $used;

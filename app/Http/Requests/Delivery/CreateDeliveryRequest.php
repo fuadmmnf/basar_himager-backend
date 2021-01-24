@@ -30,7 +30,7 @@ class CreateDeliveryRequest extends FormRequest
             'deliveries' => 'required|array',
 //            items in deliveries
 //            'booking_id' => 'required | numeric',
-////            'potatoe_type' => 'required',
+////            'potato_type' => 'required',
 ////            'quantity_bags' => 'required| numeric',
 //            'deliveryitems' => 'required| array',
 //            'cost_per_bag' => 'required| numeric',

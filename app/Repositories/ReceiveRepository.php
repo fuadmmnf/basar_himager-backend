@@ -53,10 +53,10 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
         $receiveitems = [];
         foreach ($reciveRequest['receiveitems'] as $receiveitem) {
-            if (isset($receiveitems[$receiveitem['potatoe_type']])) {
-                $receiveitems[$receiveitem['potatoe_type']] += $receiveitem['quantity'];
+            if (isset($receiveitems[$receiveitem['potato_type']])) {
+                $receiveitems[$receiveitem['potato_type']] += $receiveitem['quantity'];
             } else {
-                $receiveitems[$receiveitem['potatoe_type']] = $receiveitem['quantity'];
+                $receiveitems[$receiveitem['potato_type']] = $receiveitem['quantity'];
             }
             $totalQuantity += $receiveitem['quantity'];
         }
@@ -69,12 +69,12 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
         $newReceive->save();
 
-        foreach ($receiveitems as $potatoe_type => $quantity) {
+        foreach ($receiveitems as $potato_type => $quantity) {
             $newReceiveItem = new Receiveitem();
             $newReceiveItem->receive_id = $newReceive->id;
             $newReceiveItem->quantity = $quantity;
             $newReceiveItem->quantity_left = $newReceiveItem->quantity;
-            $newReceiveItem->potatoe_type = $potatoe_type;
+            $newReceiveItem->potato_type = $potato_type;
             $newReceiveItem->save();
         }
 
