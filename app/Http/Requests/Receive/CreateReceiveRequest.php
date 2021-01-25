@@ -26,10 +26,12 @@ class CreateReceiveRequest extends FormRequest
     public function rules()
     {
         return [
-            'booking_id' => 'required',
             'receiving_time' => 'required',
-            'receiveitems' => 'required| array',
-            'transport' => 'required',
+            'receives' => 'required| array',
+//              items in receives
+//            'booking_id' => 'required',
+//            'receiveitems' => 'required| array',
+//            'transport' => 'required',
         ];
     }
 }

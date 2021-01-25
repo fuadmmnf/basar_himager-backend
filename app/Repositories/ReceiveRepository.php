@@ -5,9 +5,11 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 use App\Models\Receive;
+use App\Models\Receivegroup;
 use App\Models\Receiveitem;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ReceiveRepository implements ReceiveRepositoryInterface
 {
@@ -40,20 +42,21 @@ class ReceiveRepository implements ReceiveRepositoryInterface
     }
 
 
-    public function saveReceive(array $request)
+    private function createReceive(Receivegroup $receivegroup, array $reciveRequest)
     {
-        $booking = Booking::findOrFail($request['booking_id']);
+        $booking = Booking::findOrFail($reciveRequest['booking_id']);
         $newReceive = new Receive();
+        $newReceive->receivegroup_id = $receivegroup->id;
         $newReceive->booking_id = $booking->id;
 
         $totalQuantity = 0;
 
         $receiveitems = [];
-        foreach ($request['receiveitems'] as $receiveitem){
-            if(isset($receiveitems[$receiveitem['potatoe_type']])){
-                $receiveitems[$receiveitem['potatoe_type']] += $receiveitem['quantity'];
+        foreach ($reciveRequest['receiveitems'] as $receiveitem) {
+            if (isset($receiveitems[$receiveitem['potato_type']])) {
+                $receiveitems[$receiveitem['potato_type']] += $receiveitem['quantity'];
             } else {
-                $receiveitems[$receiveitem['potatoe_type']] = $receiveitem['quantity'];
+                $receiveitems[$receiveitem['potato_type']] = $receiveitem['quantity'];
             }
             $totalQuantity += $receiveitem['quantity'];
         }
@@ -61,27 +64,46 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         if ($booking->bags_in + $totalQuantity > $booking->quantity) {
             return null;
         }
-
-        $newReceive->receiving_time = Carbon::parse($request['receiving_time'])->setTimezone('Asia/Dhaka');
-        $newReceive->receiving_no = sprintf('%04d', Receive::whereYear('receiving_time', $newReceive->receiving_time)->count()) . $newReceive->receiving_time->year % 100;
-        $newReceive->transport = $request['transport'];
+        $newReceive->booking_currently_left = $booking->quantity - $booking->bags_in - $totalQuantity;
+        $newReceive->transport = $reciveRequest['transport'];
 
         $newReceive->save();
 
-        foreach ($receiveitems as $potatoe_type => $quantity) {
+        foreach ($receiveitems as $potato_type => $quantity) {
             $newReceiveItem = new Receiveitem();
             $newReceiveItem->receive_id = $newReceive->id;
             $newReceiveItem->quantity = $quantity;
             $newReceiveItem->quantity_left = $newReceiveItem->quantity;
-            $newReceiveItem->potatoe_type = $potatoe_type;
+            $newReceiveItem->potato_type = $potato_type;
             $newReceiveItem->save();
         }
 
 
         $booking->bags_in = $booking->bags_in + $totalQuantity;
         $booking->save();
-
         return $newReceive;
+    }
+
+    public function saveReceivegroup(array $request)
+    {
+        DB::beginTransaction();
+        try {
+            $newReceivegroup = new Receivegroup();
+            $newReceivegroup->receiving_time = Carbon::parse($request['receiving_time'])->setTimezone('Asia/Dhaka');
+            $newReceivegroup->receiving_no = sprintf('%04d', Receivegroup::whereYear('receiving_time', $newReceivegroup->receiving_time)->count()) . $newReceivegroup->receiving_time->year % 100;
+            $newReceivegroup->save();
+
+            foreach ($request['receives'] as $receiveRequest) {
+                $this->createReceive($newReceivegroup, $receiveRequest);
+            }
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+        DB::commit();
+
+        return $newReceivegroup;
     }
 
 }
