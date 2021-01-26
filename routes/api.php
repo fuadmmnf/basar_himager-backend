@@ -117,3 +117,7 @@ Route::get('clients/list/customized', [\App\Http\Controllers\Api\ClientControlle
 //settings
 Route::get('settings', [\App\Http\Controllers\Api\SettingsController::class,'fetch']);
 Route::post('settings',[\App\Http\Controllers\Api\SettingsController::class, 'updateSettings']);
+
+//Potatotype
+Route::get('potatotypes',[\App\Http\Controllers\Api\PotatotypeController::class, 'fetchPotatotypes']);
+Route::post('potatotypes',[\App\Http\Controllers\Api\PotatotypeController::class, 'saveNewPotatotype']);

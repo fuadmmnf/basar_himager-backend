@@ -92,9 +92,9 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
     public function getLoadDistrbutionByBooking($booking_id){
         $loads = Loaddistribution::where('booking_id',$booking_id)->get();
+        $inventoryHandler = new InventoryHandler();
         foreach($loads as $load){
-            $load->inventory = $this->fetchFullInventoryWithParentById($load->compartment_id);
-
+            $load->inventory = $inventoryHandler->fetchFullInventoryWithParentById($load->compartment_id);
         }
         return $loads;
     }

@@ -38,6 +38,7 @@ use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
+use App\Repositories\Interfaces\PotatotypeRepositoryInterface;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use App\Repositories\Interfaces\SettingsRepositoryInterface;
 use App\Repositories\Interfaces\UnloadingRepositoryInterface;
@@ -48,6 +49,7 @@ use App\Repositories\LoaddistributionRepository;
 use App\Repositories\MachinepartRepository;
 use App\Repositories\PocketRepository;
 use App\Repositories\PositionRepository;
+use App\Repositories\PotatotypeRepository;
 use App\Repositories\ReportRepository;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
@@ -97,6 +99,7 @@ class AppServiceProvider extends ServiceProvider
             UnloadingRepositoryInterface::class,
             ClientRepositoryInterface::class,
             SettingsRepositoryInterface::class,
+            PotatotypeRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -122,6 +125,7 @@ class AppServiceProvider extends ServiceProvider
             UnloadingRepository::class,
             ClientRepository::class,
             SettingsRepositopry::class,
+            PotatotypeRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
