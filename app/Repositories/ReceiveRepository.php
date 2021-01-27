@@ -21,24 +21,35 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         return $receive;
     }
 
-    public function getReceiveById($id)
+    public function getReceiveByGroupId($id)
     {
         // TODO: Implement getReceiveById() method.
-        $receive = Receive::where('id', $id)
+        $receive = Receive::where('receivegroup_id', $id)
             ->with('booking')
             ->with('booking.client')
-            ->with('receiveitems')->first();
+            ->with('receiveitems')
+            ->with('receivegroup')
+            ->get();
         return $receive;
     }
 
     public function getRecentReceives()
     {
-        $receives = Receive::orderByDesc('receiving_time')
+        $receives = Receive::orderByDesc('created_at')
             ->with('booking')
             ->with('booking.client')
             ->with('receiveitems')
+            ->with('receivegroup')
             ->paginate(20);
         return $receives;
+    }
+
+    public function getRecentReceiveGroups(){
+        $recive_groups = Receivegroup::orderByDesc('receiving_time')
+            ->with('receives.booking')
+            ->paginate(20);
+
+        return $recive_groups;
     }
 
 
