@@ -80,9 +80,9 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function getReceiveReceipt($id)
+    public function getReceivesReceipt($receivegroup_id)
     {
-        $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($id);
+        $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($receivegroup_id);
         $pdf = PDF::loadView('receive_receipt', [
             'receiptinfo' => $receiptinfo
         ]);
@@ -90,9 +90,9 @@ class ReportController extends Controller
         //return $pdf->download('bank_deposit_report');
     }
 
-    public function getDeliveryReceipt($id)
+    public function getDeliveriesReceipt($deliverygroup_id)
     {
-        $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($id);
+        $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($deliverygroup_id);
         $pdf = PDF::loadView('delivery_receipt',[
             'receiptinfo' => $receiptinfo
         ]);

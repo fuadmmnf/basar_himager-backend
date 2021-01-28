@@ -88,7 +88,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
         $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
         $newDelivery->due_charge = $deliveryRequest['due_charge'];
-        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + $newDelivery->due_charge;
+        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag);
 
         $newDelivery->save();
 
@@ -120,7 +120,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             throw new \Exception('total amount greater than bags received');
         }
         $newDelivery->bags_currently_remaining = $booking->bags_in - $booking->bags_out - $totalQuantity;
-        $newDelivery->total_charge = $newDelivery->total_charge + ($totalQuantity * $newDelivery->cost_per_bag);
+        $newDelivery->total_charge = $newDelivery->total_charge + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->due_charge));
         if ($newDelivery->total_charge <= $booking->booking_amount) {
             $newDelivery->charge_from_booking_amount = $newDelivery->total_charge;
             $booking->booking_amount = $booking->booking_amount - $newDelivery->total_charge;

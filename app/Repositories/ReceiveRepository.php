@@ -30,6 +30,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
             ->with('receiveitems')
             ->with('receivegroup')
             ->get();
+
         return $receive;
     }
 
