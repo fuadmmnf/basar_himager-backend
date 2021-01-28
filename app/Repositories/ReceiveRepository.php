@@ -95,10 +95,18 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         return $newReceive;
     }
 
+
+
     public function saveReceivegroup(array $request)
     {
         DB::beginTransaction();
         try {
+            $bookingnoArr = array_column($request['receives'], 'booking_no');
+            if(count($bookingnoArr) === count(array_unique($bookingnoArr))){
+                throw new \Exception('duplicate booking no. exists');
+            }
+
+
             $newReceivegroup = new Receivegroup();
             $newReceivegroup->receiving_time = Carbon::parse($request['receiving_time'])->setTimezone('Asia/Dhaka');
             $newReceivegroup->receiving_no = sprintf('%04d', Receivegroup::whereYear('receiving_time', $newReceivegroup->receiving_time)->count()) . $newReceivegroup->receiving_time->year % 100;

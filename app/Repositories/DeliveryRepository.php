@@ -142,14 +142,18 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     {
         DB::beginTransaction();
         try {
+            $bookingnoArr = array_column($request['deliveries'], 'booking_no');
+            if(count($bookingnoArr) === count(array_unique($bookingnoArr))){
+                throw new \Exception('duplicate booking no. exists');
+            }
+
             $newDeliverygroup = new Deliverygroup();
             $newDeliverygroup->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
             $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count()) . $newDeliverygroup->delivery_time->year % 100;
             $newDeliverygroup->save();
 
-            $totalGroupCharge = 0.0;
             foreach ($request['deliveries'] as $deliveryRequest) {
-                $delivery = $this->createDelivery($newDeliverygroup, $deliveryRequest);
+                $this->createDelivery($newDeliverygroup, $deliveryRequest);
             }
         } catch (\Exception $e) {
             DB::rollBack();
