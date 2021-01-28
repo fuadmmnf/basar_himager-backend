@@ -8,6 +8,7 @@ use App\Models\Inventory;
 use App\Models\Loaddistribution;
 use App\Models\Receive;
 use App\Models\Receiveitem;
+use App\Models\settings;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,10 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $newLoaddistribution->compartment_id = $compartment;
                 $newLoaddistribution->potato_type = $distribution['potato_type'];
                 $newLoaddistribution->quantity = $distribution['quantity'];
-               // $newLoaddistribution->bag_no = $distribution['bag_no'];
+                $setting = settings::where('key','current_bag_no')->first();
+                $newLoaddistribution->bag_no = (string)$setting->value." to ".(string)($setting->value+$distribution['quantity']);
+                $setting->value = $setting->value+$distribution['quantity'];
+                $setting->save();
                 $newLoaddistribution->current_quantity = $distribution['quantity'];
                 $newLoaddistribution->save();
 

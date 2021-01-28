@@ -17,5 +17,9 @@ class SettingsSeeder extends \Illuminate\Database\Seeder
                 'value' => 5,
             ]);
         }
+        settings::create([
+            'key' => 'current_bag_no',
+            'value' => 0,
+        ]);
     }
 }
