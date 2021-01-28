@@ -28,6 +28,16 @@ class DeliveryController extends ApiController
         return response()->json($deliveries);
     }
 
+    public function fetchDeliveriesByGroupId($deliverygroup_id){
+        $receive =$this->deliveryRepository->fetchDeliveriesByGroupId($deliverygroup_id);
+        return response()->json($receive, 200);
+    }
+
+    public function fetchRecentDeliverygroups(){
+        $deliverygroups = $this->deliveryRepository->getRecentDeliveryGroups();
+        return response()->json($deliverygroups,200);
+    }
+
     public function createDeliverygroup(CreateDeliveryRequest $request){
 
         $delivery = $this->deliveryRepository->saveDeliverygroup($request->validated());

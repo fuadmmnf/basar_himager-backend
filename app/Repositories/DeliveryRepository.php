@@ -18,7 +18,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
     public function getRecentDeliveries()
     {
-        $deliveries = Delivery::orderBy('delivery_time')
+        $deliveries = Delivery::orderBy('created_at')
             ->with('booking')
             ->with('booking.client')
             ->with('gatepasses')
@@ -28,6 +28,23 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $deliveries;
     }
 
+    public function getRecentDeliveryGroups(){
+        $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
+            ->paginate(20);
+        $deliveryGroups->load('deliveries', 'deliveries.booking');
+        return $deliveryGroups;
+    }
+
+    public function fetchDeliveriesByGroupId($deliverygroup_id)
+    {
+        $deliveries = Delivery::where('deliverygroup_id', $deliverygroup_id)
+            ->with('booking')
+            ->with('booking.client')
+            ->with('deliveryitems')
+            ->with('deliverygroup')
+            ->get();
+        return $deliveries;
+    }
     private function validateDeliveryQuantity($receiveItems, $deliveryItems)
     {
         $receivesLeft = [];
@@ -130,8 +147,9 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count()) . $newDeliverygroup->delivery_time->year % 100;
             $newDeliverygroup->save();
 
+            $totalGroupCharge = 0.0;
             foreach ($request['deliveries'] as $deliveryRequest) {
-                $this->createDelivery($newDeliverygroup, $deliveryRequest);
+                $delivery = $this->createDelivery($newDeliverygroup, $deliveryRequest);
             }
         } catch (\Exception $e) {
             DB::rollBack();
