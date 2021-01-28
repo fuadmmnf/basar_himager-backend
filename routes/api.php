@@ -58,6 +58,8 @@ Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'cr
 
 //deliveries
 Route::get('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliveries']);
+Route::get('deliverygroups',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliverygroups']);
+Route::get('deliverygroups/{deliverygroup_id}/deliveries',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveriesByGroupId']);
 Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliverygroup']);
 //Delivery Gatepasses
 Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliveryGatepass']);

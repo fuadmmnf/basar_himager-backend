@@ -18,7 +18,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
     public function getRecentDeliveries()
     {
-        $deliveries = Delivery::orderBy('delivery_time')
+        $deliveries = Delivery::orderBy('created_at')
             ->with('booking')
             ->with('booking.client')
             ->with('gatepasses')
@@ -28,6 +28,23 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $deliveries;
     }
 
+    public function getRecentDeliveryGroups(){
+        $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
+            ->paginate(20);
+        $deliveryGroups->load('deliveries', 'deliveries.booking');
+        return $deliveryGroups;
+    }
+
+    public function fetchDeliveriesByGroupId($deliverygroup_id)
+    {
+        $deliveries = Delivery::where('deliverygroup_id', $deliverygroup_id)
+            ->with('booking')
+            ->with('booking.client')
+            ->with('deliveryitems')
+            ->with('deliverygroup')
+            ->get();
+        return $deliveries;
+    }
     private function validateDeliveryQuantity($receiveItems, $deliveryItems)
     {
         $receivesLeft = [];
@@ -125,6 +142,11 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     {
         DB::beginTransaction();
         try {
+            $bookingnoArr = array_column($request['deliveries'], 'booking_no');
+            if(count($bookingnoArr) === count(array_unique($bookingnoArr))){
+                throw new \Exception('duplicate booking no. exists');
+            }
+
             $newDeliverygroup = new Deliverygroup();
             $newDeliverygroup->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
             $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count()) . $newDeliverygroup->delivery_time->year % 100;
