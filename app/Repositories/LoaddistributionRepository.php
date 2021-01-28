@@ -39,7 +39,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $newLoaddistribution->compartment_id = $compartment;
                 $newLoaddistribution->potato_type = $distribution['potato_type'];
                 $newLoaddistribution->quantity = $distribution['quantity'];
-                $newLoaddistribution->bag_no = $distribution['bag_no'];
+               // $newLoaddistribution->bag_no = $distribution['bag_no'];
                 $newLoaddistribution->current_quantity = $distribution['quantity'];
                 $newLoaddistribution->save();
 
@@ -74,9 +74,6 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
             $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
 
         }
-        $loaddistributions->receive_info = Receive::where('id',$receive_id)
-            ->select('receiving_no')
-            ->first();
         return $loaddistributions;
     }
 

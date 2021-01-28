@@ -104,7 +104,7 @@ Route::post('inventories', [\App\Http\Controllers\Api\InventoryController::class
 //====>load
 Route::post('loaddistributions', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createLoadDistribution']);
 Route::get('clients/{client_id}/loaddistributions/dates',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionDatesByClient']);
-Route::get('loaddistributions/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceive']);
+Route::get('loaddistributions/receive/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceive']);
 Route::get('loaddistributions/booking/{booking_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionByBooking']);
 
 //unloading
