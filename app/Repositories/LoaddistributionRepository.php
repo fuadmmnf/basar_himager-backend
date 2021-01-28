@@ -41,7 +41,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $newLoaddistribution->potato_type = $distribution['potato_type'];
                 $newLoaddistribution->quantity = $distribution['quantity'];
                 $setting = settings::where('key','current_bag_no')->first();
-                $newLoaddistribution->bag_no = (string)$setting->value." to ".(string)($setting->value+$distribution['quantity']);
+                $newLoaddistribution->bag_no = (string)($setting->value+1)." to ".(string)($setting->value+$distribution['quantity']);
                 $setting->value = $setting->value+$distribution['quantity'];
                 $setting->save();
                 $newLoaddistribution->current_quantity = $distribution['quantity'];
