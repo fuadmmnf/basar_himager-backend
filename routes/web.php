@@ -42,7 +42,7 @@ Route::get('/download/report/deliveries/receipt/{deliverygroup_id}', [\App\Http\
 Route::get('/download/report/booking/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getBookingReceipt']);
 Route::get('/download/report/loandisbursement/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoandisbursementReport']);
 Route::get('/download/report/loancollection/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoancollectionReceipt']);
-Route::get('/download/report/gatepass/receipt/{delivery_id}', [\App\Http\Controllers\ReportController::class, 'getGatePass']);
+Route::get('/download/report/gatepass/receipt/{deliverygroup_id}', [\App\Http\Controllers\ReportController::class, 'getGatePass']);
 Route::get('/download/report/accounting/start/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadAccountingReport']);
 Route::get('/download/report/receive/loaddistributions/{receive_id}',[\App\Http\Controllers\ReportController::class,'getLoaddistributionReport']);
 Route::get('/download/report/storepotato/{client_id}/{date}',[\App\Http\Controllers\ReportController::class,'downloadStorePotatoReceipt']);

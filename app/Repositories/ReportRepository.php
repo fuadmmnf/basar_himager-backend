@@ -128,10 +128,10 @@ class ReportRepository implements ReportRepositoryInterface
 //    }
 
 
-    public function fetchGatepass($delivey_id)
+    public function fetchGatepass($deliverygroup_id)
     {
         // TODO: Implement fetchGatepass() method.
-        $gatepass = Gatepass::where('delivery_id', $delivey_id)
+        $gatepass = Gatepass::where('deliverygroup_id', $deliverygroup_id)
             ->with('deliverygroup')
             ->with('deliverygroup.deliveries')
             ->with('deliverygroup.deliveries.booking')
