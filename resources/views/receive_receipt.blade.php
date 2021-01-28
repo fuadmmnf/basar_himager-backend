@@ -87,7 +87,7 @@
         <tr>
             <td>{{$receive->booking->booking_no}}</td>
             <td>{{$receive->booking->booking_currently_left}}</td>
-            <td>{{$receiptinfo->transport['type']}} ({{$receiptinfo->transport['number']}})</td>
+            <td>{{ucfirst($receiptinfo->transport['type'])}} ({{$receiptinfo->transport['number']}})</td>
             <td>
                 @foreach($receive->receiveitems as $item)
                     {{$item->potato_type}} ({{$item->quantity}}) <br />

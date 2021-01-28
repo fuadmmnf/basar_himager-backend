@@ -132,10 +132,24 @@ class ReportRepository implements ReportRepositoryInterface
     {
         // TODO: Implement fetchGatepass() method.
         $gatepass = Gatepass::where('delivery_id', $delivey_id)
-            ->with('delivery')
-            ->with('delivery.booking')
-            ->with('delivery.booking.client')
-            ->with('delivery.deliveryitems')->first();
+            ->with('deliverygroup')
+            ->with('deliverygroup.deliveries')
+            ->with('deliverygroup.deliveries.booking')
+            ->with('deliverygroup.deliveries.booking.client')
+            ->with('deliverygroup.deliveries.deliveryitems')
+            ->first();
+
+        $potatoArr = [];
+        foreach ($gatepass->deliverygroup->deliveries as $delivery){
+            foreach ($delivery->deliveryitems as $item){
+                if(isset($potatoArr[$item->potato_type])){
+                    $potatoArr[$item->potato_type] += $item->quantity;
+                } else {
+                    $potatoArr[$item->potato_type] = $item->quantity;
+                }
+            }
+        }
+        $gatepass->deliverygroup->potato_list = $potatoArr;
         return $gatepass;
     }
 
