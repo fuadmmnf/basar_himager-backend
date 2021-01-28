@@ -15,13 +15,13 @@ class CreateGatepassesTable extends Migration
     {
         Schema::create('gatepasses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('delivery_id');
+            $table->unsignedBigInteger('deliverygroup_id');
             $table->string('gatepass_no')->unique();
             $table->dateTime('gatepass_time');
             $table->json('transport');
             $table->timestamps();
 
-            $table->foreign('delivery_id')->references('id')->on('deliveries');
+            $table->foreign('deliverygroup_id')->references('id')->on('deliverygroups');
         });
     }
 

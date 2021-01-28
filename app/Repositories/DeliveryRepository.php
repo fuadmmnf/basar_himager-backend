@@ -174,9 +174,9 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
     public function saveGatepass(array $request)
     {
-        $delivery = Delivery::findOrFail($request['delivery_id']);
+        $deliverygroup = Deliverygroup::findOrFail($request['deliverygroup_id']);
         $newGatepass = new Gatepass();
-        $newGatepass->delivery_id = $delivery->id;
+        $newGatepass->deliverygroup_id = $deliverygroup->id;
         $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time'])->setTimezone('Asia/Dhaka');
         $newGatepass->gatepass_no = sprintf('%04d', Gatepass::whereYear('gatepass_time', $newGatepass->gatepass_time)->count()) . $newGatepass->gatepass_time->year % 100;
         $newGatepass->transport = $request['transport'];

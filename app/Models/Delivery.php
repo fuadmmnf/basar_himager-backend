@@ -24,10 +24,7 @@ class Delivery extends Model
         return $this->hasMany('App\Models\Deliveryitem');
     }
 
-    public function gatepasses()
-    {
-        return $this->hasMany('App\Models\Gatepass');
-    }
+
 
     public function unloading()
     {
