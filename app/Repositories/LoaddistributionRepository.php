@@ -33,6 +33,10 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
             $chamber = Inventory::where('id',$floor->parent_id)->first();
 
             foreach ($request['distributions'] as $distribution){
+                $setting = settings::where('key','current_bag_no')->first();
+                $setting->value = $setting->value+$distribution['quantity'];
+                $setting->save();
+
                 $newLoaddistribution=new Loaddistribution();
 
                 $newLoaddistribution->booking_id = $booking;
@@ -40,10 +44,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $newLoaddistribution->compartment_id = $compartment;
                 $newLoaddistribution->potato_type = $distribution['potato_type'];
                 $newLoaddistribution->quantity = $distribution['quantity'];
-                $setting = settings::where('key','current_bag_no')->first();
-                $newLoaddistribution->bag_no = (string)($setting->value+1)." to ".(string)($setting->value+$distribution['quantity']);
-                $setting->value = $setting->value+$distribution['quantity'];
-                $setting->save();
+                $newLoaddistribution->bag_no = ($setting->value+1)." to ".($setting->value+$distribution['quantity']);
                 $newLoaddistribution->current_quantity = $distribution['quantity'];
                 $newLoaddistribution->save();
 
