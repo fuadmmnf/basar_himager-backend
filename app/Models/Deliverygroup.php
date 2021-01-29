@@ -12,4 +12,9 @@ class Deliverygroup extends Model
     public function deliveries(){
         return $this->hasMany('App\Models\Delivery');
     }
+
+    public function gatepasses()
+    {
+        return $this->hasMany('App\Models\Gatepass');
+    }
 }

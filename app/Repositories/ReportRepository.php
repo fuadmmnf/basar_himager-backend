@@ -9,6 +9,7 @@ use App\Models\Dailyexpense;
 use App\Models\Bankdeposit;
 use App\Models\Booking;
 use App\Models\Delivery;
+use App\Models\Deliverygroup;
 use App\Models\Employeeloan;
 use App\Models\Gatepass;
 use App\Models\Employeesalary;
@@ -18,6 +19,7 @@ use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Models\Expensecategory;
 use App\Models\Receive;
+use App\Models\Receivegroup;
 use App\Models\Transaction;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use Carbon\Carbon;
@@ -84,25 +86,18 @@ class ReportRepository implements ReportRepositoryInterface
         return $booking;
     }
 
-    public function fetchReceiveReceiptInfo($id)
+    public function fetchReceiveReceiptInfo($receivegroup_id)
     {
-        $receives = Receive::where('id', $id)
-            ->with('booking')
-            ->with('booking.client')
-            ->with('receiveitems')->first();
-//        $receives = Receive::
-//            with('booking')
-//            ->with('booking.client')->get();
-        return $receives;
+        $receivegroup = Receivegroup::findOrFail($receivegroup_id);
+        $receivegroup->load('receives', 'receives.receiveitems', 'receives.booking', 'receives.booking.client');
+        return $receivegroup;
     }
 
-    public function fetchDeliveryReceiptInfo($id)
+    public function fetchDeliveryReceiptInfo($deliverygroup_id)
     {
-        $delivery = Delivery::where('id',$id)
-            ->with('booking')
-            ->with('booking.client')
-            ->with('deliveryitems')->first();
-        return $delivery;
+        $deliverygroup = Deliverygroup::findOrFail($deliverygroup_id);
+        $deliverygroup->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.booking.client');
+        return $deliverygroup;
     }
 
 
@@ -133,14 +128,28 @@ class ReportRepository implements ReportRepositoryInterface
 //    }
 
 
-    public function fetchGatepass($delivey_id)
+    public function fetchGatepass($deliverygroup_id)
     {
         // TODO: Implement fetchGatepass() method.
-        $gatepass = Gatepass::where('delivery_id', $delivey_id)
-            ->with('delivery')
-            ->with('delivery.booking')
-            ->with('delivery.booking.client')
-            ->with('delivery.deliveryitems')->first();
+        $gatepass = Gatepass::where('deliverygroup_id', $deliverygroup_id)
+            ->with('deliverygroup')
+            ->with('deliverygroup.deliveries')
+            ->with('deliverygroup.deliveries.booking')
+            ->with('deliverygroup.deliveries.booking.client')
+            ->with('deliverygroup.deliveries.deliveryitems')
+            ->first();
+
+        $potatoArr = [];
+        foreach ($gatepass->deliverygroup->deliveries as $delivery){
+            foreach ($delivery->deliveryitems as $item){
+                if(isset($potatoArr[$item->potato_type])){
+                    $potatoArr[$item->potato_type] += $item->quantity;
+                } else {
+                    $potatoArr[$item->potato_type] = $item->quantity;
+                }
+            }
+        }
+        $gatepass->deliverygroup->potato_list = $potatoArr;
         return $gatepass;
     }
 

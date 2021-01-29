@@ -64,29 +64,26 @@
     </div>
 
 </div>
-<span align="center" style="line-height: 1.2;">
-    <p><b>Gate Pass No:</b> {{$gatepassInfo->gatepass_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
-</span>
 
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Client Information</h3>
-                <div>
-                    <p><b>Name:</b> {{$gatepassInfo->delivery->booking->client->name}}</p>
-                    <p><b>Phone:</b> {{$gatepassInfo->delivery->booking->client->phone}}</p>
-                    <p><b>Father's Name:</b> {{$gatepassInfo->delivery->booking->client->father_name}}</p>
 
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-        </td>
-    </tr>
+{{--<table>--}}
+{{--    <tr>--}}
+{{--        <td style="width: 50%; text-align: left">--}}
+{{--            <div   >--}}
+{{--                <h3>Client Information</h3>--}}
+{{--                <div>--}}
+{{--                    <p><b>Name:</b> {{$gatepassInfo->delivery->booking->client->name}}</p>--}}
+{{--                    <p><b>Phone:</b> {{$gatepassInfo->delivery->booking->client->phone}}</p>--}}
+{{--                    <p><b>Father's Name:</b> {{$gatepassInfo->delivery->booking->client->father_name}}</p>--}}
 
-</table>
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </td>--}}
+{{--        <td class="td-right-align" style="text-align: right; width: 50%">--}}
+{{--        </td>--}}
+{{--    </tr>--}}
+
+{{--</table>--}}
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
     <span><b>Gate Pass Information</b></span>
@@ -121,18 +118,16 @@
         </tr>
     </thead>
     <tbody>
-    @if(count($gatepassInfo->delivery->deliveryitems))
-        @foreach($gatepassInfo->delivery->deliveryitems as $item)
+        @foreach($gatepassInfo->deliverygroup->potato_list as $potatoe_type=>$quantity)
             <tr>
-                <td>{{$item->potatoe_type}}</td>
-                <td>{{$item->quantity}}</td>
+                <td>{{$potatoe_type}}</td>
+                <td>{{$quantity}}</td>
             </tr>
         @endforeach
         <tr>
             <td><b>Total</b></td>
-            <td>{{$gatepassInfo->delivery->deliveryitems->sum('quantity')}}</td>
+            <td>{{array_sum($gatepassInfo->deliverygroup->potato_list)}}</td>
         </tr>
-    @endif
     </tbody>
 </table>
 

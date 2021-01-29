@@ -21,7 +21,6 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $deliveries = Delivery::orderBy('created_at')
             ->with('booking')
             ->with('booking.client')
-            ->with('gatepasses')
             ->with('deliveryitems')
             ->with('unloading')
             ->paginate(20);
@@ -31,7 +30,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     public function getRecentDeliveryGroups(){
         $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
             ->paginate(20);
-        $deliveryGroups->load('deliveries', 'deliveries.booking');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking');
         return $deliveryGroups;
     }
 
@@ -88,7 +87,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
         $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
         $newDelivery->due_charge = $deliveryRequest['due_charge'];
-        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + $newDelivery->due_charge;
+        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag);
 
         $newDelivery->save();
 
@@ -120,7 +119,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             throw new \Exception('total amount greater than bags received');
         }
         $newDelivery->bags_currently_remaining = $booking->bags_in - $booking->bags_out - $totalQuantity;
-        $newDelivery->total_charge = $newDelivery->total_charge + ($totalQuantity * $newDelivery->cost_per_bag);
+        $newDelivery->total_charge = $newDelivery->total_charge + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->due_charge));
         if ($newDelivery->total_charge <= $booking->booking_amount) {
             $newDelivery->charge_from_booking_amount = $newDelivery->total_charge;
             $booking->booking_amount = $booking->booking_amount - $newDelivery->total_charge;
@@ -174,9 +173,9 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
     public function saveGatepass(array $request)
     {
-        $delivery = Delivery::findOrFail($request['delivery_id']);
+        $deliverygroup = Deliverygroup::findOrFail($request['deliverygroup_id']);
         $newGatepass = new Gatepass();
-        $newGatepass->delivery_id = $delivery->id;
+        $newGatepass->deliverygroup_id = $deliverygroup->id;
         $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time'])->setTimezone('Asia/Dhaka');
         $newGatepass->gatepass_no = sprintf('%04d', Gatepass::whereYear('gatepass_time', $newGatepass->gatepass_time)->count()) . $newGatepass->gatepass_time->year % 100;
         $newGatepass->transport = $request['transport'];
