@@ -103,7 +103,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         DB::beginTransaction();
         try {
             $bookingnoArr = array_column($request['receives'], 'booking_no');
-            if(count($bookingnoArr) === count(array_unique($bookingnoArr))){
+            if(count($bookingnoArr) != -1 && count($bookingnoArr) !== count(array_unique($bookingnoArr))){
                 throw new \Exception('duplicate booking no. exists');
             }
 
