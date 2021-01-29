@@ -72,14 +72,17 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         return $newLoaddistribution;
     }
 
-    public function getLoadDistributionsByReceive($receive_id){
-        $loaddistributions = Loaddistribution::where('receive_id',$receive_id)->get();
-        $inventoryHandler = new InventoryHandler();
-        foreach ($loaddistributions as $loaddistribution){
-            $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+    public function getLoadDistributionsByReceive($receive_group_id){
 
+        $receives = Receive::where('receivegroup_id',$receive_group_id)->with('booking')->with('receivegroup')->get();
+        foreach ($receives as $receive ){
+            $receive->loaddistributions = Loaddistribution::where('receive_id',$receive.id)->get();
+            $inventoryHandler = new InventoryHandler();
+            foreach ($receive->loaddistributions as $loaddistribution){
+                $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+            }
         }
-        return $loaddistributions;
+        return $receives;
     }
 
     public function getLoadDistributionDatesByClient($client_id){
