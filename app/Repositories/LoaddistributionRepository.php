@@ -34,8 +34,6 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
             foreach ($request['distributions'] as $distribution){
                 $setting = settings::where('key','current_bag_no')->first();
-                $setting->value = $setting->value+$distribution['quantity'];
-                $setting->save();
 
                 $newLoaddistribution=new Loaddistribution();
 
@@ -45,6 +43,8 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $newLoaddistribution->potato_type = $distribution['potato_type'];
                 $newLoaddistribution->quantity = $distribution['quantity'];
                 $newLoaddistribution->bag_no = ($setting->value+1)." to ".($setting->value+$distribution['quantity']);
+                $setting->value = $setting->value+$distribution['quantity'];
+                $setting->save();
                 $newLoaddistribution->current_quantity = $distribution['quantity'];
                 $newLoaddistribution->save();
 
@@ -76,13 +76,25 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
         $receives = Receive::where('receivegroup_id',$receive_group_id)->with('booking')->with('receivegroup')->get();
         foreach ($receives as $receive ){
-            $receive->loaddistributions = Loaddistribution::where('receive_id',$receive.id)->get();
+            $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->get();
             $inventoryHandler = new InventoryHandler();
             foreach ($receive->loaddistributions as $loaddistribution){
                 $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
             }
         }
         return $receives;
+    }
+
+    public function getLoadDistributionsByReceiveID($receive_id){
+
+        $loaddistributions = Loaddistribution::where('receive_id',$receive_id)->get();
+
+            $inventoryHandler = new InventoryHandler();
+            foreach ($loaddistributions as $loaddistribution){
+                $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+            }
+
+        return $loaddistributions;
     }
 
     public function getLoadDistributionDatesByClient($client_id){
