@@ -181,6 +181,7 @@ class ReportRepository implements ReportRepositoryInterface
         // TODO: Implement downloadStorePotatoReceipt() method.
         $client = Client::where('id',$client_id)->with('bookings')
             ->with('bookings.receives')
+            ->with('bookings.receives.receivegroup')
             ->with('bookings.receives.receiveitems')
             ->first();
         $client->report_date = $temp_date;
