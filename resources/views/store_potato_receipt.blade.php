@@ -114,7 +114,7 @@
                                             <td>{{$booking->booking_no}}</td>
                                             <td>{{$booking->booking_time}}</td>
                                             <td>{{$booking->quantity}}</td>
-                                            <td>{{$receive->receivegroup->eceiving_no}}</td>
+                                            <td>{{$receive->receivegroup->receiving_no}}</td>
                                             <td>{{$receive->receivegroup->receiving_time}}</td>
                                             <td>{{$receiveitem->potatoe_type}}</td>
                                             <td>{{$receiveitem->quantity}}</td>
