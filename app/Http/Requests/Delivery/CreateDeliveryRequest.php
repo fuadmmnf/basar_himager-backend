@@ -36,7 +36,7 @@ class CreateDeliveryRequest extends FormRequest
 //            'cost_per_bag' => 'required| numeric',
 //            'quantity_bags_fanned' => 'required| numeric',
 //            'fancost_per_bag' => 'required| numeric',
-//            'due_charge' => 'required| numeric',
+//            'do_charge' => 'required| numeric',
         ];
     }
 }

@@ -100,7 +100,7 @@
             <td>
                 <span>Per Bag Cost: {{$delivery->cost_per_bag}}</span>
                 <span>Fan Cost: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</span>
-                <span>DO Charge: {{$delivery->due_charge}}</span>
+                <span>DO Charge: {{$delivery->do_charge}}</span>
             </td>
             <td>{{$delivery->total_charge}} ৳</td>
         </tr>

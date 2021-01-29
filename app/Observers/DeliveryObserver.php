@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Handlers\TransactionHandler;
 use App\Models\Delivery;
+use Carbon\Carbon;
 
 class DeliveryObserver
 {
@@ -17,7 +18,7 @@ class DeliveryObserver
     {
         if($delivery->total_charge > 0){
             $transactionHandler = new TransactionHandler();
-            $transactionHandler->createTransaction(0, $delivery->total_charge, $delivery->delivery_time,
+            $transactionHandler->createTransaction(0, $delivery->total_charge, Carbon::parse($delivery->deliverygroup->delivery_time)->setTimezone('Asia/Dhaka'),
                 $delivery, 'Booking Delivery'
             );
         }

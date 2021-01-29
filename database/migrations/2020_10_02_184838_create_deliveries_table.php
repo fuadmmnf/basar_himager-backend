@@ -21,7 +21,7 @@ class CreateDeliveriesTable extends Migration
             $table->double('cost_per_bag');
             $table->integer('quantity_bags_fanned')->default(0);
             $table->double('fancost_per_bag')->default(0);
-            $table->double('due_charge');
+            $table->double('do_charge');
             $table->double('total_charge');
             $table->double('charge_from_booking_amount');
             $table->timestamps();
