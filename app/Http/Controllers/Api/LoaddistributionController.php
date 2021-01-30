@@ -26,7 +26,7 @@ class LoaddistributionController extends ApiController
     }
 
     public function getloaddistributionByReceive($receive_id){
-        $load = $this->loaddistributionRepository->getLoadDistributionsByReceive($receive_id);
+        $load = $this->loaddistributionRepository->getLoadDistributionsByReceiveID($receive_id);
         return response()->json($load,200);
     }
 
