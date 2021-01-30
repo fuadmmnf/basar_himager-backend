@@ -41,6 +41,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             ->with('booking.client')
             ->with('deliveryitems')
             ->with('deliverygroup')
+            ->with('unloading')
             ->get();
         return $deliveries;
     }
