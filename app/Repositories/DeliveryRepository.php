@@ -89,6 +89,10 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         if (!$this->validateDeliveryQuantity($booking->receiveitems, $deliveryRequest['deliveryitems'])) {
             return null;
         }
+        $totalQuantity = 0;
+        foreach ($deliveryRequest['deliveryitems'] as $deliveryitem) {
+            $totalQuantity += $deliveryitem['quantity'];
+        }
 
         $newDelivery = new Delivery();
         $newDelivery->deliverygroup_id = $deliverygroup->id;
@@ -97,11 +101,27 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
         $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
         $newDelivery->do_charge = $deliveryRequest['do_charge'];
-        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag);
+        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge));
 
+        if ($booking->bags_out + $totalQuantity > $booking->bags_in) {
+            throw new \Exception('total amount greater than bags received');
+        }
+        $newDelivery->bags_currently_remaining = $booking->bags_in - $booking->bags_out - $totalQuantity;
+        if ($newDelivery->total_charge <= $booking->booking_amount) {
+            $newDelivery->charge_from_booking_amount = $newDelivery->total_charge;
+            $booking->booking_amount = $booking->booking_amount - $newDelivery->total_charge;
+            //$newDelivery->total_charge = 0;
+        } else {
+            $newDelivery->charge_from_booking_amount = $booking->booking_amount;
+            // $newDelivery->total_charge = $newDelivery->total_charge - $booking->booking_amount;
+            $booking->booking_amount = 0;
+        }
+
+        $booking->bags_out = $booking->bags_out + $totalQuantity;
+
+        $booking->save();
         $newDelivery->save();
 
-        $totalQuantity = 0;
         $receiveitems = $booking->receiveitems;
         foreach ($deliveryRequest['deliveryitems'] as $deliveryitem) {
             $newDeliveyItem = new Deliveryitem();
@@ -122,27 +142,8 @@ class DeliveryRepository implements DeliveryRepositoryInterface
                     $quantity -= $used;
                 }
             }
-            $totalQuantity += $newDeliveyItem->quantity;
         }
 
-        if ($booking->bags_out + $totalQuantity > $booking->bags_in) {
-            throw new \Exception('total amount greater than bags received');
-        }
-        $newDelivery->bags_currently_remaining = $booking->bags_in - $booking->bags_out - $totalQuantity;
-        $newDelivery->total_charge = $newDelivery->total_charge + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge));
-        if ($newDelivery->total_charge <= $booking->booking_amount) {
-            $newDelivery->charge_from_booking_amount = $newDelivery->total_charge;
-            $booking->booking_amount = $booking->booking_amount - $newDelivery->total_charge;
-            //$newDelivery->total_charge = 0;
-        } else {
-            $newDelivery->charge_from_booking_amount = $booking->booking_amount;
-            // $newDelivery->total_charge = $newDelivery->total_charge - $booking->booking_amount;
-            $booking->booking_amount = 0;
-        }
-        $newDelivery->save();
-
-        $booking->bags_out = $booking->bags_out + $totalQuantity;
-        $booking->save();
 
         return $newDelivery;
     }

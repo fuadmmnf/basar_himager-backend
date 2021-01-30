@@ -81,7 +81,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         }
 
         if ($booking->bags_in + $totalQuantity > $booking->quantity) {
-            return null;
+            throw new \Exception('receive cannot be greater than booking quantity');
         }
         $newReceive->booking_currently_left = $booking->quantity - $booking->bags_in - $totalQuantity;
         $newReceive->transport = $reciveRequest['transport'];

@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 
+use App\Models\Client;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Handlers\ClientHandler;
 use Carbon\Carbon;
@@ -38,6 +39,15 @@ class BookingRepository implements BookingRepositoryInterface
         $bookings = Booking::orderByDesc('booking_time')->with('client')->paginate(25);
         return $bookings;
     }
+
+    public function getBookingListByClient($client_id)
+    {
+        $bookinglist = Booking::where('client_id', $client_id)
+            ->orderByDesc('booking_time')
+            ->pluck('booking_no');
+        return $bookinglist;
+    }
+
 
     public function saveBooking(array $request)
     {

@@ -22,9 +22,6 @@ class BookingController extends ApiController
     }
 
 
-
-
-
     public function fetchAllBookingListByClient($client_id){
         $bookinglist = $this->bookingRepository->getBookingListByClient($client_id);
         return response()->json($bookinglist);
