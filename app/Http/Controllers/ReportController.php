@@ -37,10 +37,10 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function getLoaddistributionReport($receive_id){
+    public function getLoaddistributionReport($receive_group_id){
         $loaddistributionRepository = new LoaddistributionRepository();
         $pdf = PDF::loadView('loaddistribution', [
-            'loads' => $loaddistributionRepository->getLoadDistributionsByReceive($receive_id),
+            'receives' => $loaddistributionRepository->getLoadDistributionsByReceive($receive_group_id),
         ]);
         return $pdf->stream();
     }
@@ -80,9 +80,9 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function getReceiveReceipt($id)
+    public function getReceivesReceipt($receivegroup_id)
     {
-        $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($id);
+        $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($receivegroup_id);
         $pdf = PDF::loadView('receive_receipt', [
             'receiptinfo' => $receiptinfo
         ]);
@@ -90,9 +90,9 @@ class ReportController extends Controller
         //return $pdf->download('bank_deposit_report');
     }
 
-    public function getDeliveryReceipt($id)
+    public function getDeliveriesReceipt($deliverygroup_id)
     {
-        $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($id);
+        $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($deliverygroup_id);
         $pdf = PDF::loadView('delivery_receipt',[
             'receiptinfo' => $receiptinfo
         ]);
@@ -129,9 +129,9 @@ class ReportController extends Controller
         //return $pdf->download('bank_deposit_report');
     }
 
-    public function getGatePass($delivery_id)
+    public function getGatePass($deliverygroup_id)
     {
-        $gatePass = $this->reportRepository->fetchGatepass($delivery_id);
+        $gatePass = $this->reportRepository->fetchGatepass($deliverygroup_id);
         $pdf = PDF::loadView('gatepass_receipt', [
             'gatepassInfo' => $gatePass
         ]);

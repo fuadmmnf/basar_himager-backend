@@ -26,15 +26,17 @@ class CreateDeliveryRequest extends FormRequest
     public function rules()
     {
         return [
-            'booking_id' => 'required | numeric',
             'delivery_time' => 'required',
-//            'potatoe_type' => 'required',
-//            'quantity_bags' => 'required| numeric',
-            'deliveryitems' => 'required| array',
-            'cost_per_bag' => 'required| numeric',
-            'quantity_bags_fanned' => 'required| numeric',
-            'fancost_per_bag' => 'required| numeric',
-            'due_charge' => 'required| numeric',
+            'deliveries' => 'required|array',
+//            items in deliveries
+//            'booking_id' => 'required | numeric',
+////            'potato_type' => 'required',
+////            'quantity_bags' => 'required| numeric',
+//            'deliveryitems' => 'required| array',
+//            'cost_per_bag' => 'required| numeric',
+//            'quantity_bags_fanned' => 'required| numeric',
+//            'fancost_per_bag' => 'required| numeric',
+//            'do_charge' => 'required| numeric',
         ];
     }
 }

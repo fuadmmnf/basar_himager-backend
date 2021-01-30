@@ -52,12 +52,15 @@ Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'cr
 
 //receives
 Route::get('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceives']);
-Route::get('receives/{id}',[\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesById']);
-Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'createReceive']);
+Route::get('receivegroups', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceiveGroups']);
+Route::get('receives/{id}',[\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesByGroupId']);
+Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'createReceivegroup']);
 
 //deliveries
 Route::get('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliveries']);
-Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDelivery']);
+Route::get('deliverygroups',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliverygroups']);
+Route::get('deliverygroups/{deliverygroup_id}/deliveries',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveriesByGroupId']);
+Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliverygroup']);
 //Delivery Gatepasses
 Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliveryGatepass']);
 
@@ -70,7 +73,7 @@ Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementCont
 Route::post('loancollections', [\App\Http\Controllers\Api\LoancollectionController::class, 'createLoancollection']);
 
 //delivery
-Route::post('delivery', [\App\Http\Controllers\Api\DeliveryController::class, 'createDelivery']);
+Route::post('delivery', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliverygroup']);
 
 //dailyexpenses
 Route::post('dailyexpenses', [\App\Http\Controllers\Api\DailyexpensesController::class, 'createDailyexpenses']);
@@ -103,7 +106,7 @@ Route::post('inventories', [\App\Http\Controllers\Api\InventoryController::class
 //====>load
 Route::post('loaddistributions', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createLoadDistribution']);
 Route::get('clients/{client_id}/loaddistributions/dates',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionDatesByClient']);
-Route::get('loaddistributions/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceive']);
+Route::get('loaddistributions/receives/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceive']);
 Route::get('loaddistributions/booking/{booking_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionByBooking']);
 
 //unloading

@@ -33,7 +33,10 @@ class SettingsRepositopry implements Interfaces\SettingsRepositoryInterface
     }
 
     public function getSettings(){
-        $settings = settings::all();
-        return $settings;
+        $settingsArr = [];
+        foreach (settings::all() as $settings){
+            $settingsArr[$settings->key] = $settings->value;
+        }
+        return $settingsArr;
     }
 }

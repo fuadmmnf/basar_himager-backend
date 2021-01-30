@@ -8,6 +8,7 @@ use App\Models\Inventory;
 use App\Models\Loaddistribution;
 use App\Models\Receive;
 use App\Models\Receiveitem;
+use App\Models\settings;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,8 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
             $chamber = Inventory::where('id',$floor->parent_id)->first();
 
             foreach ($request['distributions'] as $distribution){
+                $setting = settings::where('key','current_bag_no')->first();
+
                 $newLoaddistribution=new Loaddistribution();
 
                 $newLoaddistribution->booking_id = $booking;
@@ -39,11 +42,13 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $newLoaddistribution->compartment_id = $compartment;
                 $newLoaddistribution->potato_type = $distribution['potato_type'];
                 $newLoaddistribution->quantity = $distribution['quantity'];
-                $newLoaddistribution->bag_no = $distribution['bag_no'];
+                $newLoaddistribution->bag_no = ($setting->value+1)." to ".($setting->value+$distribution['quantity']);
+                $setting->value = $setting->value+$distribution['quantity'];
+                $setting->save();
                 $newLoaddistribution->current_quantity = $distribution['quantity'];
                 $newLoaddistribution->save();
 
-                $receiveItem = Receiveitem::where('receive_id',$id)->where('potatoe_type',$distribution['potato_type'])->first();
+                $receiveItem = Receiveitem::where('receive_id',$id)->where('potato_type',$distribution['potato_type'])->first();
                 $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
                 if($receiveItem->loaded_quantity > $receiveItem->quantity)
                 {
@@ -67,16 +72,28 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         return $newLoaddistribution;
     }
 
-    public function getLoadDistributionsByReceive($receive_id){
-        $loaddistributions = Loaddistribution::where('receive_id',$receive_id)->get();
-        $inventoryHandler = new InventoryHandler();
-        foreach ($loaddistributions as $loaddistribution){
-            $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+    public function getLoadDistributionsByReceive($receive_group_id){
 
+        $receives = Receive::where('receivegroup_id',$receive_group_id)->with('booking')->with('receivegroup')->get();
+        foreach ($receives as $receive ){
+            $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->get();
+            $inventoryHandler = new InventoryHandler();
+            foreach ($receive->loaddistributions as $loaddistribution){
+                $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+            }
         }
-        $loaddistributions->receive_info = Receive::where('id',$receive_id)
-            ->select('receiving_no')
-            ->first();
+        return $receives;
+    }
+
+    public function getLoadDistributionsByReceiveID($receive_id){
+
+        $loaddistributions = Loaddistribution::where('receive_id',$receive_id)->get();
+
+            $inventoryHandler = new InventoryHandler();
+            foreach ($loaddistributions as $loaddistribution){
+                $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+            }
+
         return $loaddistributions;
     }
 

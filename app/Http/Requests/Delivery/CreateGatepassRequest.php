@@ -25,7 +25,7 @@ class CreateGatepassRequest extends FormRequest
     public function rules()
     {
         return [
-            'delivery_id' => 'required| numeric',
+            'deliverygroup_id' => 'required| numeric',
             'gatepass_time' => 'required',
             'transport' => 'required'
         ];

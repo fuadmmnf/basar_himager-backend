@@ -28,9 +28,19 @@ class DeliveryController extends ApiController
         return response()->json($deliveries);
     }
 
-    public function createDelivery(CreateDeliveryRequest $request){
+    public function fetchDeliveriesByGroupId($deliverygroup_id){
+        $receive =$this->deliveryRepository->fetchDeliveriesByGroupId($deliverygroup_id);
+        return response()->json($receive, 200);
+    }
 
-        $delivery = $this->deliveryRepository->saveDelivery($request->validated());
+    public function fetchRecentDeliverygroups(){
+        $deliverygroups = $this->deliveryRepository->getRecentDeliveryGroups();
+        return response()->json($deliverygroups,200);
+    }
+
+    public function createDeliverygroup(CreateDeliveryRequest $request){
+
+        $delivery = $this->deliveryRepository->saveDeliverygroup($request->validated());
         if(!$delivery){
             return response()->json('delivery limit exceeding bags left', 400);
         }
