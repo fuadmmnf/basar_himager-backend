@@ -20,32 +20,14 @@ class BookingController extends ApiController
         $this->middleware('auth:api');
         $this->bookingRepository = $bookingRepository;
     }
-    public function fetchPaginatedReceivesByBookingID($booking_id)
-    {
-        $receives = $this->bookingRepository->getPaginatedReceivesByBookingId($booking_id);
 
-        return response()->json($receives, 201);
-    }
 
-    public function fetchPaginatedDeliveriesByBookingID($booking_id)
-    {
-        $deliveries = $this->bookingRepository->getPaginatedDeliveriesByBookingId($booking_id);
 
-        return response()->json($deliveries, 201);
-    }
 
-    public function fetchPaginatedLoanDisbursementByBookingID($booking_id)
-    {
-        $disbursements = $this->bookingRepository->getPaginatedLoanDisbursementByBookingId($booking_id);
 
-        return response()->json($disbursements, 201);
-    }
-
-    public function fetchPaginatedLoanCollectionByBookingID($booking_id)
-    {
-        $collections = $this->bookingRepository->getPaginatedLoanCollectionByBookingId($booking_id);
-
-        return response()->json($collections, 201);
+    public function fetchAllBookingListByClient($client_id){
+        $bookinglist = $this->bookingRepository->getBookingListByClient($client_id);
+        return response()->json($bookinglist);
     }
 
     public function bookingListBySearchedQuery($query)

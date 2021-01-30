@@ -53,6 +53,13 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         return $recive_groups;
     }
 
+    public function getPaginatedReceivesByBookingId($booking_id)
+    {
+        $booking = Booking::findOrFail($booking_id);
+        $receives = $booking->receives()->paginate(15);
+
+        return $receives;
+    }
 
     private function createReceive(Receivegroup $receivegroup, array $reciveRequest)
     {

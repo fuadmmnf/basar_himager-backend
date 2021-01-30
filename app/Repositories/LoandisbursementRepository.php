@@ -17,6 +17,12 @@ class LoandisbursementRepository implements LoandisbursementRepositoryInterface
         return $loanDisbursements;
     }
 
+    public function getPaginatedLoanDisbursementByBookingId($booking_id)
+    {
+        $booking = Booking::findOrFail($booking_id);
+        $disbursements = $booking->loanDisbursements()->paginate(15);
+        return $disbursements;
+    }
 
     public function saveLoan(array $request)
     {

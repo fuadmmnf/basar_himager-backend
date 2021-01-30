@@ -36,6 +36,12 @@ class ReceiveController extends ApiController
         return response()->json($receive_groups,200);
     }
 
+    public function fetchPaginatedReceivesByBookingID($booking_id)
+    {
+        $receives = $this->receiveRepository->getPaginatedReceivesByBookingId($booking_id);
+
+        return response()->json($receives, 201);
+    }
     public function createReceivegroup(CreatereceiveRequest $request){
 
         $receive = $this->receiveRepository->saveReceivegroup($request->validated());

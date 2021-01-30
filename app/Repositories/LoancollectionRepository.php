@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Booking;
 use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Repositories\Interfaces\LoancollectionRepositoryInterface;
@@ -10,6 +11,14 @@ use Illuminate\Support\Str;
 
 class LoancollectionRepository implements LoancollectionRepositoryInterface
 {
+
+    public function getPaginatedLoanCollectionByBookingId($booking_id)
+    {
+        $booking = Booking::findOrFail($booking_id);
+        $collections = $booking->loanCollections()->paginate(15);
+        return $collections;
+    }
+
 
     public function saveLoancollection(array $request)
     {

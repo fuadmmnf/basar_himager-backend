@@ -12,35 +12,8 @@ use Carbon\Carbon;
 class BookingRepository implements BookingRepositoryInterface
 {
 
-    public function getPaginatedReceivesByBookingId($booking_id)
-    {
-        $booking = Booking::findOrFail($booking_id);
-        $receives = $booking->receives()->paginate(15);
 
-        return $receives;
-    }
 
-    public function getPaginatedDeliveriesByBookingId($booking_id)
-    {
-        $booking = Booking::findOrFail($booking_id);
-        $deliveries = $booking->deliveries()->paginate(15);
-
-        return $deliveries;
-    }
-
-    public function getPaginatedLoanDisbursementByBookingId($booking_id)
-    {
-        $booking = Booking::findOrFail($booking_id);
-        $disbursements = $booking->loanDisbursements()->paginate(15);
-        return $disbursements;
-    }
-
-    public function getPaginatedLoanCollectionByBookingId($booking_id)
-    {
-        $booking = Booking::findOrFail($booking_id);
-        $collections = $booking->loanCollections()->paginate(15);
-        return $collections;
-    }
 
     public function getBookingListBySearchedQuery($query)
     {

@@ -45,6 +45,15 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             ->get();
         return $deliveries;
     }
+
+    public function getPaginatedDeliveriesByBookingId($booking_id)
+    {
+        $booking = Booking::findOrFail($booking_id);
+        $deliveries = $booking->deliveries()->paginate(15);
+
+        return $deliveries;
+    }
+
     private function validateDeliveryQuantity($receiveItems, $deliveryItems)
     {
         $receivesLeft = [];
