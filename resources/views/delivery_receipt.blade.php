@@ -78,7 +78,7 @@
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
     <span><b>Receive Information</b></span>
 </div>
-<table>
+<table class="bordertable">
     <thead>
     <tr>
         <th>Booking No.</th>

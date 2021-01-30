@@ -72,7 +72,7 @@
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
     <span><b>Receive Information</b></span>
 </div>
-<table>
+<table class="bordertable">
     <thead>
     <tr>
         <th>Booking No.</th>
@@ -86,8 +86,8 @@
     @foreach($receiptinfo->receives as $receive)
         <tr>
             <td>{{$receive->booking->booking_no}}</td>
-            <td>{{$receive->booking->booking_currently_left}}</td>
-            <td>{{ucfirst($receiptinfo->transport['type'])}} ({{$receiptinfo->transport['number']}})</td>
+            <td>{{$receive->booking_currently_left}}</td>
+            <td>{{ucfirst($receive->transport['type'])}} ({{$receive->transport['number']}})</td>
             <td>
                 @foreach($receive->receiveitems as $item)
                     {{$item->potato_type}} ({{$item->quantity}}) <br />
