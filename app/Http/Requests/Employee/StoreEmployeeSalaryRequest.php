@@ -25,7 +25,7 @@ class StoreEmployeeSalaryRequest extends FormRequest
     {
         return [
             'employee_id' => 'required| numeric',
-//            'amount' => 'required| numeric',
+            'amount' => 'required| numeric',
             'loan_payment' => 'required| numeric',
             'bonus' => 'required| numeric',
             'remark' => 'required',

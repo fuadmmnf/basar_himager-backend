@@ -41,7 +41,7 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
 
         $newEmployeeSalary = new Employeesalary();
         $newEmployeeSalary->employee_id = $employee->id;
-        $newEmployeeSalary->amount = $salary - $request['loan_payment'];
+        $newEmployeeSalary->amount = $salary;
         $newEmployeeSalary->loan_payment = $request['loan_payment'];
         $newEmployeeSalary->bonus = $request['bonus'];
         $newEmployeeSalary->remark = $request['remark'];

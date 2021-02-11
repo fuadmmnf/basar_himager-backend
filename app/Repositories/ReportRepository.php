@@ -29,15 +29,15 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchAllSalaries($month)
     {
         // TODO: Implement fetchAllSalaries() method.
-        $salaries = Employeesalary::whereMonth('salary_month', Carbon::parse($month))
+        $salaries = Employeesalary::whereMonth('salary_month', Carbon::parse($month)->setTimezone('Asia/Dhaka'))
             ->with('employee')->get();
         foreach ($salaries as $salary)
         {
             $salary->loan_taken = Employeeloan::where('employee_id', $salary->employee->id)
-            ->whereMonth('payment_time', Carbon::parse($month))
+            ->whereMonth('payment_time', Carbon::parse($month)->setTimezone('Asia/Dhaka'))
             ->where('type', 0)->sum('amount');
             $salary->loan_returned = Employeeloan::where('employee_id', $salary->employee->id)
-                ->whereMonth('payment_time', Carbon::parse($month))
+                ->whereMonth('payment_time', Carbon::parse($month)->setTimezone('Asia/Dhaka'))
                 ->where('type', 1)->sum('amount');
         }
         return $salaries;
@@ -46,7 +46,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function getDeposits($month)
     {
         // TODO: Implement getDeposits() method.
-        $deposits = Bankdeposit::whereMonth('created_at', Carbon::parse($month))->with('bank')->get();
+        $deposits = Bankdeposit::whereMonth('created_at', Carbon::parse($month)->setTimezone('Asia/Dhaka'))->with('bank')->get();
         return $deposits;
     }
 
@@ -60,7 +60,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchDailyexpenses($month)
     {
         $expensecategories = Expensecategory::where('category', null)->orderBy('type')->get();
-        $expenses = Dailyexpense::whereMonth('date', Carbon::parse($month))->with('expensecategory')->get();
+        $expenses = Dailyexpense::whereMonth('date', Carbon::parse($month)->setTimezone('Asia/Dhaka'))->with('expensecategory')->get();
 
         foreach ($expensecategories as $expensecategory) {
             $cost = 0;
@@ -146,8 +146,8 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function fetchAccountingInformation($start_date, $end_date): array
     {
-        $transactions = Transaction::whereDate('time', '>=', Carbon::parse($start_date))
-            ->whereDate('time', '<=', Carbon::parse($end_date))
+        $transactions = Transaction::whereDate('time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
             ->get();
 
         $transactionsSum = [];
@@ -168,7 +168,7 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function downloadStorePotatoReceipt($client_id, $date)
     {
-        $temp_date = Carbon::parse($date);
+        $temp_date = Carbon::parse($date)->setTimezone('Asia/Dhaka');
         // TODO: Implement downloadStorePotatoReceipt() method.
         $client = Client::where('id',$client_id)->with('bookings')
             ->with('bookings.receives')
