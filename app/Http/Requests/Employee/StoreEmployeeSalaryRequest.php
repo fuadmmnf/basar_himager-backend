@@ -31,6 +31,7 @@ class StoreEmployeeSalaryRequest extends FormRequest
             'remark' => 'required',
             'salary_month' => 'required',
             'payment_time' => 'required',
+            'working_day' => 'required',
         ];
     }
 }
