@@ -21,6 +21,15 @@ class LoandisbursementController extends ApiController
         $this->loandisbursementRepository = $loandisbursementRepository;
     }
 
+
+    public function fetchPaginatedLoanDisbursementByBookingID($booking_id)
+    {
+        $disbursements = $this->loandisbursementRepository->getPaginatedLoanDisbursementByBookingId($booking_id);
+
+        return response()->json($disbursements, 201);
+    }
+
+
     public function createLoan(CreateLoandisbursementRequest $request){
 
         $loanDisbursement = $this->loandisbursementRepository->saveLoan($request->validated());

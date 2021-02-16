@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeliveryitemsTable extends Migration
+class CreateReceivegroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateDeliveryitemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('deliveryitems', function (Blueprint $table) {
+        Schema::create('receivegroups', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('delivery_id');
-            $table->string('potato_type');
-            $table->integer('quantity');
+            $table->string('receiving_no')->unique();
+            $table->dateTime('receiving_time');
             $table->timestamps();
-
-            $table->foreign('delivery_id')->references('id')->on('deliveries');
         });
     }
 
@@ -31,6 +28,6 @@ class CreateDeliveryitemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deliveryitems');
+        Schema::dropIfExists('receivegroups');
     }
 }

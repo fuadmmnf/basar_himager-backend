@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Delivery;
+namespace App\Http\Requests\Settings\Potatotype;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateGatepassRequest extends FormRequest
+class CreatePotatotypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,8 +14,8 @@ class CreateGatepassRequest extends FormRequest
     public function authorize()
     {
         $user = auth()->guard('api')->user();
-        return $user != null && $user->can('crud:store');
-    }
+
+        return $user != null && $user->can('crud:account');    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -25,9 +25,7 @@ class CreateGatepassRequest extends FormRequest
     public function rules()
     {
         return [
-            'deliverygroup_id' => 'required| numeric',
-            'gatepass_time' => 'required',
-            'transport' => 'required'
+            'type_name' => 'required',
         ];
     }
 }

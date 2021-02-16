@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         Artisan::call('passport:client --personal --name=coldstorageapp');
         $this->call(AuthorizationSeeder::class);
         $this->call(SettingsSeeder::class);
+        $this->call(PotatoTypeSeeder::class);
     }
 }

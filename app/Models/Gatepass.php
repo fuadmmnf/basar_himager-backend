@@ -12,7 +12,7 @@ class Gatepass extends Model
         'transport' => 'array'
     ];
 
-    public function delivery(){
-        return $this->belongsTo('App\Models\Delivery');
+    public function deliverygroup(){
+        return $this->belongsTo('App\Models\Deliverygroup');
     }
 }

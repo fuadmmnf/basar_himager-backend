@@ -15,17 +15,18 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('deliverygroup_id');
             $table->unsignedBigInteger('booking_id');
-            $table->string('delivery_no')->unique();
-            $table->dateTime('delivery_time');
+            $table->integer('bags_currently_remaining');
             $table->double('cost_per_bag');
             $table->integer('quantity_bags_fanned')->default(0);
             $table->double('fancost_per_bag')->default(0);
-            $table->double('due_charge');
+            $table->double('do_charge');
             $table->double('total_charge');
             $table->double('charge_from_booking_amount');
             $table->timestamps();
 
+            $table->foreign('deliverygroup_id')->references('id')->on('deliverygroups');
             $table->foreign('booking_id')->references('id')->on('bookings');
         });
     }

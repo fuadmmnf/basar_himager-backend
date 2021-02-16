@@ -37,7 +37,7 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                 }
             }
             foreach ($deliveryItems as $deliveryItem){
-                if($unloadingItems[$deliveryItem->potatoe_type] > $deliveryItem->quantity){
+                if($unloadingItems[$deliveryItem->potato_type] > $deliveryItem->quantity){
                     throw new \Exception('Unloading amount must be less then loading amount');
                 }
             }
@@ -88,7 +88,7 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                 $newUnloading->loaddistribution_id = $unloading['loaddistribution_id'];
                 $newUnloading->potato_type = $unloading['potato_type'];
                 $newUnloading->quantity = $unloading['quantity'];
-                $newUnloading->bag_no = $unloading['bag_no'];
+//                $newUnloading->bag_no = $unloading['bag_no'];
                 $newUnloading->save();
 
             }

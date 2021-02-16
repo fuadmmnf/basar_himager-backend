@@ -18,6 +18,7 @@ class CreateLoancollectionsTable extends Migration
             $table->unsignedBigInteger('loandisbursement_id');
             $table->string('loancollection_no')->unique();
             $table->double('surcharge');
+            $table->double('service_charge_rate');
             $table->double('payment_amount');
             $table->double('pending_loan_amount');
             $table->dateTime('payment_date');
