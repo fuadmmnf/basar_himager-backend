@@ -65,21 +65,21 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Potato Store Receipt</p>
+    <p style="font-size: 1.4rem; font-weight: bold">আলু সংরক্ষণের দলিল</p>
     <p><b>Date:</b>{{ date('F d, Y') }}</p>
 </span>
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Client Information</h3>
+                <h3>গ্রাহকের তথ্য</h3>
                 <br/>
                 <div>
-                    <p><b>Client No:</b> {{$client->client_no}}</p>
-                    <p><b>NID:</b> {{$client->nid}}</p>
-                    <p><b>Name:</b> {{$client->name}}</p>
-                    <p><b>Phone:</b> {{$client->phone}}</p>
-                    <p><b>Father's Name:</b> {{$client->father_name}}</p>
+                    <p><b>গ্রাহকের নং:</b> {{$client->client_no}}</p>
+                    <p><b>এন.আই.ডি(NID):</b> {{$client->nid}}</p>
+                    <p><b>নাম:</b> {{$client->name}}</p>
+                    <p><b>ফোন নম্বর:</b> {{$client->phone}}</p>
+                    <p><b>বাবার নাম:</b> {{$client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -91,15 +91,15 @@
 <table class="bordertable">
         <thead>
             <tr>
-                <th>Booking No</th>
-                <th>Booking Time</th>
-                <th>Booking Quantity</th>
-                <th>Receive No.</th>
-                <th>Date</th>
-                <th>Potato Type</th>
-                <th>Quantity</th>
-                <th>Bag No</th>
-                <th>Inventory</th>
+                <th>বুকিং নম্বর</th>
+                <th>বুকিং সময়</th>
+                <th>বুকিং পরিমাণ</th>
+                <th>রিসিভ নম্বর</th>
+                <th>তারিখ</th>
+                <th>আলুর ধরন</th>
+                <th>পরিমাণ</th>
+                <th>ব্যাগ নম্বর</th>
+                <th>ইনভেন্টরি</th>
             </tr>
             </thead>
         <tbody>
@@ -142,14 +142,14 @@
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>
