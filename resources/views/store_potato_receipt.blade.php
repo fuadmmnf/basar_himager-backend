@@ -76,7 +76,7 @@
                 <br/>
                 <div>
                     <p><b>গ্রাহকের নং:</b> {{$client->client_no}}</p>
-                    <p><b>এন.আই.ডি(NID):</b> {{$client->nid}}</p>
+                    <p><b>এন.আই.ডি:</b> {{$client->nid}}</p>
                     <p><b>নাম:</b> {{$client->name}}</p>
                     <p><b>ফোন নম্বর:</b> {{$client->phone}}</p>
                     <p><b>বাবার নাম:</b> {{$client->father_name}}</p>

@@ -65,26 +65,26 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Receipt No:</b> {{$receiptinfo->delivery_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y', strtotime($receiptinfo->delivery_time)) }}</p>
+    <p><b>রিসিপ্ট নং:</b> {{$receiptinfo->delivery_no}}</p>
+    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($receiptinfo->delivery_time)) }}</p>
 </span>
 
 
 <div style="text-align: center; padding-bottom: 10px">
-    <b>Delivery Information</b>
+    <b>ডেলিভারি তথ্য</b>
 </div>
 
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>Receive Information</b></span>
+    <span><b>সংগ্রহের তথ্য</b></span>
 </div>
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Booking No.</th>
-        <th>Potato Type</th>
-        <th>Charges</th>
-        <th>Total</th>
+        <th>বুকিং নম্বর</th>
+        <th>আলুর ধরন</th>
+        <th>চার্জ</th>
+        <th>মোট</th>
     </tr>
 
     </thead>
@@ -112,19 +112,19 @@
 {{--</table>--}}
 
 <div class="footer">
-    <table>
+    <table >
         <tr>
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>

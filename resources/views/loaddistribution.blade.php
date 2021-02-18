@@ -66,20 +66,20 @@
 </div>
 <span align="center" style="line-height: 1.2;">
     <p style="font-size: 1.4rem; font-weight: bold">Loading Distribution for Receive No: {{$receives[0]->receivegroup->receiving_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
 </span>
 
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Booking No</th>
-        <th>Date</th>
-        <th>Chamber</th>
-        <th>Floor</th>
-        <th>Compartment</th>
-        <th>Potato Type </th>
-        <th>Quantity</th>
+        <th>বুকিং নম্বর</th>
+        <th>তারিখ</th>
+        <th>চেম্বার</th>
+        <th>ফ্লোর</th>
+        <th>কম্পার্টমেন্ট</th>
+        <th>আলুর ধরন </th>
+        <th>পরিমাণ</th>
     </tr>
 
     </thead>
@@ -108,14 +108,14 @@
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>
