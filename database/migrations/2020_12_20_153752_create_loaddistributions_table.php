@@ -20,7 +20,6 @@ class CreateLoaddistributionsTable extends Migration
             $table->unsignedBigInteger('compartment_id');
             $table->string('potato_type');
             $table->integer('quantity');
-            $table->string('bag_no');
             $table->integer('current_quantity');
             $table->timestamps();
 

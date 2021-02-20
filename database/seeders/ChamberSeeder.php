@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Chamber;
+use App\Models\Inventory;
 use Illuminate\Database\Seeder;
 
 class ChamberSeeder extends Seeder
@@ -14,11 +15,26 @@ class ChamberSeeder extends Seeder
      */
     public function run()
     {
-        $chambers = ['chamber-1', 'chamber-2', 'chamber-3'];
-        foreach ($chambers as $chamber){
-            Chamber::create([
-                'name' => $chamber
+        for ($i=1; $i<=5; $i++) {
+            $chamber =  Inventory::create([
+                'category' => 'chamber',
+                'name' => $i,
+                'stage' => 'Stage-0'
             ]);
+            for ($j = 1; $j<=5; $j++) {
+                $floor = Inventory::create([
+                    'parent_id' => $chamber->id,
+                    'category' => 'floor',
+                    'name' => $j,
+                ]);
+                for ($k = 1; $k<=5; $k++) {
+                    $floor = Inventory::create([
+                        'parent_id' => $floor->id,
+                        'category' => 'compartment',
+                        'name' => $k,
+                    ]);
+                }
+            }
         }
     }
 }

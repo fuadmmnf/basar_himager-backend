@@ -20,7 +20,6 @@ class CreateUnloadingsTable extends Migration
             $table->unsignedBigInteger('loaddistribution_id');
             $table->string('potato_type');
             $table->integer('quantity');
-            $table->string('bag_no');
             $table->timestamps();
 
             $table->foreign('delivery_id')->references('id')->on('deliveries');
