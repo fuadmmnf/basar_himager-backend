@@ -88,8 +88,9 @@ class ReceiveRepository implements ReceiveRepositoryInterface
             throw new \Exception('receive cannot be greater than booking quantity');
         }
 
-        $newReceive->sr_no = date('Y') . '_' . $currentSR;
-        $newReceive->lot_no = $currentSR . '/' . $totalQuantity;
+//        $newReceive->sr_no = date('Y') . '_' . $currentSR;
+        $newReceive->sr_no = date('Y') . '_' . $currentSR->value;
+        $newReceive->lot_no = $currentSR->value . '/' . $totalQuantity;
         $newReceive->booking_currently_left = $booking->quantity - $booking->bags_in - $totalQuantity;
         $newReceive->transport = $reciveRequest['transport'];
 
