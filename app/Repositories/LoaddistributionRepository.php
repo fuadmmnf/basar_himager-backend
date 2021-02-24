@@ -22,88 +22,83 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
     {
         // TODO: Implement saveLoaddistrbution() method.
 
-//        DB::beginTransaction();
-//        try{
-
-//            $id = $request['receive_id'];
-//            $compartment = $request['compartment_id'];
-//            $booking = $request['booking_id'];
-//
-//            $inventories = Inventory::where('id', $compartment)->first();
-//            $floor = Inventory::where('id',$inventories->parent_id)->first();
-//            $chamber = Inventory::where('id',$floor->parent_id)->first();
+        DB::beginTransaction();
+        try{
 
             foreach ($request['loadings'] as $loading){
 
+                error_log("1");
                 $receiveItem = Receiveitem::where('id', $loading['receiveitem_id'])->first();
+                error_log("2");
 
                 foreach ($loading['distributions'] as $distribution) {
 
                     $newLoaddistribution = new Loaddistribution();
+                    error_log("3");
+
                     $newLoaddistribution->booking_id = $request['booking_id'];
+                    error_log("4");
+
                     $newLoaddistribution->receive_id = $request['receive_id'];
+                    error_log("5");
+
                     $newLoaddistribution->receiveitem_id = $loading['receiveitem_id'];
+                    error_log("6");
+
                     $newLoaddistribution->compartment_id = $distribution['compartment_id'];
+                    error_log("7");
+
                     $newLoaddistribution->potato_type = $receiveItem->potato_type;
+                    error_log("8");
+
                     $newLoaddistribution->quantity = $distribution['quantity'];
+                    error_log("9");
+
                     $newLoaddistribution->current_quantity = $distribution['quantity'];
+                    error_log("10");
+
 
                     $newLoaddistribution->save();
-
+                    error_log("1iixjb1");
                     $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
+                    error_log("11");
+
                     if($receiveItem->loaded_quantity > $receiveItem->quantity)
                     {
                         throw new \Exception('Loading amount limit exceed.');
                     }
                     $receiveItem->save();
 
-                    $inventory = Inventory::where('id', $distribution->compartment_id)->first();
+                    $inventory = Inventory::where('id', $distribution['compartment_id'])->first();
+                    error_log("12");
+
                     $floor = Inventory::where('id',$inventory->parent_id)->first();
+                    error_log("13");
+
                     $chamber = Inventory::where('id',$floor->parent_id)->first();
+                    error_log("14");
+
 
                     $inventory->current_quantity = $inventory->current_quantity + $distribution['quantity'];
+                    error_log("15");
+
                     $inventory->save();
                     $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
+                    error_log("16");
+
                     $floor->save();
                     $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
+                    error_log("17");
+
                     $chamber->save();
 
                 }
-//                $setting = settings::where('key','current_bag_no')->first();
-//
-//                $newLoaddistribution=new Loaddistribution();
-//
-//                $newLoaddistribution->booking_id = $booking;
-//                $newLoaddistribution->receive_id = $id;
-//                $newLoaddistribution->compartment_id = $compartment;
-//                $newLoaddistribution->potato_type = $distribution['potato_type'];
-//                $newLoaddistribution->quantity = $distribution['quantity'];
-//                $newLoaddistribution->bag_no = ($setting->value+1)." to ".($setting->value+$distribution['quantity']);
-//                $setting->value = $setting->value+$distribution['quantity'];
-//                $setting->save();
-//                $newLoaddistribution->current_quantity = $distribution['quantity'];
-//                $newLoaddistribution->save();
-//
-//                $receiveItem = Receiveitem::where('receive_id',$id)->where('potato_type',$distribution['potato_type'])->first();
-//                $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
-//                if($receiveItem->loaded_quantity > $receiveItem->quantity)
-//                {
-//                    throw new \Exception('Loading amount limit exceed.');
-//                }
-//                $receiveItem->save();
-//
-//                $inventories->current_quantity = $inventories->current_quantity + $distribution['quantity'];
-//                $inventories->save();
-//                $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
-//                $floor->save();
-//                $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
-//                $chamber->save();
             }
-//        }catch (\Exception $e){
-//            DB::rollback();
-//            throw new \Exception($e->getMessage());
-//        }
-//        DB::commit();
+        }catch (\Exception $e){
+            DB::rollback();
+            throw new \Exception($e->getMessage());
+        }
+        DB::commit();
 
         return $newLoaddistribution;
     }
