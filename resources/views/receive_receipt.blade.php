@@ -70,6 +70,26 @@
 </span>
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>গ্রাহকের তথ্য</b></span>
+</div>
+
+<table>
+    <tr>
+        <td style="width: 50%; text-align: left">
+            <div>
+                <div>
+                    <p><b>নাম:</b> {{$receiptinfo->receives[0]->booking->client->name}}</p>
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+            <p><b>ফোন নম্বর:</b> {{$receiptinfo->receives[0]->booking->client->phone}}</p>
+        </td>
+    </tr>
+
+</table>
+
+<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
     <span><b>গ্রহণের তথ্য</b></span>
 </div>
 <table class="bordertable">
