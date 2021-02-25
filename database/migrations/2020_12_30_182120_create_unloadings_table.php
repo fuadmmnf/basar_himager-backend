@@ -16,13 +16,14 @@ class CreateUnloadingsTable extends Migration
         Schema::create('unloadings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id');
-            $table->unsignedBigInteger('delivery_id');
+            $table->unsignedBigInteger('deliveryitem_id');
             $table->unsignedBigInteger('loaddistribution_id');
             $table->string('potato_type');
             $table->integer('quantity');
             $table->timestamps();
 
-            $table->foreign('delivery_id')->references('id')->on('deliveries');
+            $table->foreign('deliveryitem_id')->references('id')->on('deliveryitems');
+            $table->foreign('loaddistribution_id')->references('id')->on('loaddistributions');
         });
     }
 

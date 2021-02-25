@@ -27,41 +27,21 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
             foreach ($request['loadings'] as $loading){
 
-                error_log("1");
                 $receiveItem = Receiveitem::where('id', $loading['receiveitem_id'])->first();
-                error_log("2");
 
                 foreach ($loading['distributions'] as $distribution) {
 
                     $newLoaddistribution = new Loaddistribution();
-                    error_log("3");
 
                     $newLoaddistribution->booking_id = $request['booking_id'];
-                    error_log("4");
-
-                    $newLoaddistribution->receive_id = $request['receive_id'];
-                    error_log("5");
-
                     $newLoaddistribution->receiveitem_id = $loading['receiveitem_id'];
-                    error_log("6");
-
                     $newLoaddistribution->compartment_id = $distribution['compartment_id'];
-                    error_log("7");
-
                     $newLoaddistribution->potato_type = $receiveItem->potato_type;
-                    error_log("8");
-
                     $newLoaddistribution->quantity = $distribution['quantity'];
-                    error_log("9");
-
                     $newLoaddistribution->current_quantity = $distribution['quantity'];
-                    error_log("10");
-
 
                     $newLoaddistribution->save();
-                    error_log("1iixjb1");
                     $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
-                    error_log("11");
 
                     if($receiveItem->loaded_quantity > $receiveItem->quantity)
                     {
@@ -70,26 +50,14 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                     $receiveItem->save();
 
                     $inventory = Inventory::where('id', $distribution['compartment_id'])->first();
-                    error_log("12");
-
                     $floor = Inventory::where('id',$inventory->parent_id)->first();
-                    error_log("13");
-
                     $chamber = Inventory::where('id',$floor->parent_id)->first();
-                    error_log("14");
-
 
                     $inventory->current_quantity = $inventory->current_quantity + $distribution['quantity'];
-                    error_log("15");
-
                     $inventory->save();
                     $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
-                    error_log("16");
-
                     $floor->save();
                     $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
-                    error_log("17");
-
                     $chamber->save();
 
                 }
@@ -143,6 +111,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         $inventoryHandler = new InventoryHandler();
         foreach($loads as $load){
             $load->inventory = $inventoryHandler->fetchFullInventoryWithParentById($load->compartment_id);
+            $load->lot_no = $load->receive->lot_no;
         }
         return $loads;
     }
