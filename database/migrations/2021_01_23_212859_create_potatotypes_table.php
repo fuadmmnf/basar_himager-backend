@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeliveryitemsTable extends Migration
+class CreatePotatotypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateDeliveryitemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('deliveryitems', function (Blueprint $table) {
+        Schema::create('potatotypes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('delivery_id');
-            $table->string('potato_type');
-            $table->integer('quantity');
+            $table->string('type_name');
             $table->timestamps();
-
-            $table->foreign('delivery_id')->references('id')->on('deliveries');
         });
     }
 
@@ -31,6 +27,6 @@ class CreateDeliveryitemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deliveryitems');
+        Schema::dropIfExists('potatotypes')->unique();
     }
 }

@@ -14,7 +14,6 @@
         }
 
         th, td {
-            padding: 7px;
             font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
@@ -66,7 +65,7 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Loading Distribution for Receive No: {{$loads->receive_info->receiving_no}}</p>
+    <p style="font-size: 1.4rem; font-weight: bold">Loading Distribution for Receive No: {{$receives[0]->receivegroup->receiving_no}}</p>
     <p><b>Date:</b> {{ date('F d, Y') }}</p>
 </span>
 
@@ -74,6 +73,7 @@
 <table class="bordertable">
     <thead>
     <tr>
+        <th>Booking No</th>
         <th>Date</th>
         <th>Chamber</th>
         <th>Floor</th>
@@ -84,9 +84,11 @@
 
     </thead>
     <tbody>
-    @if(count($loads))
-        @foreach($loads as $load)
+    @if(count($receives))
+        @foreach($receives as $receive)
+            @foreach($receive->loaddistributions as $load)
             <tr>
+                <td>{{$receive->booking->booking_no}}</td>
                 <td>{{$load->created_at->format('F d, Y')}}</td>
                 <td>{{$load->inventory->parent_info->parent_info->name}}</td>
                 <td>{{$load->inventory->parent_info->name}}</td>
@@ -94,11 +96,8 @@
                 <td>{{$load->potato_type}}</td>
                 <td>{{$load->quantity}}</td>
             </tr>
+            @endforeach
         @endforeach
-        <tr>
-            <td colspan="5"> <b>SUBTOTAL:</b></td>
-            <td> <b>{{$loads->sum('quantity')}}</b></td>
-        </tr>
     @endif
     </tbody>
 </table>

@@ -28,6 +28,7 @@ class CreateLoancollectionRequest extends FormRequest
         return [
             'loandisbursement_id' => 'required | numeric',
             'surcharge' => 'required | numeric',
+            'service_charge_rate' => 'required | numeric',
             'payment_amount' => 'required | numeric',
             'pending_loan_amount' => 'required | numeric',
             'payment_date' => 'required',

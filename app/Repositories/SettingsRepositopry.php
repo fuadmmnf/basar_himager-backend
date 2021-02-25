@@ -13,6 +13,11 @@ class SettingsRepositopry implements Interfaces\SettingsRepositoryInterface
         if(!$setting){
             return 'NotAvailable';
         }
+        if($setting->key == 'service_charge_rate'){
+            if($request['value'] < 0 || $request['value'] > 100){
+                return 'Rate Must be between 0 to 100';
+            }
+        }
         $setting->value = $request['value'];
         $setting->save();
         return $setting;
@@ -28,7 +33,10 @@ class SettingsRepositopry implements Interfaces\SettingsRepositoryInterface
     }
 
     public function getSettings(){
-        $settings = settings::all();
-        return $settings;
+        $settingsArr = [];
+        foreach (settings::all() as $settings){
+            $settingsArr[$settings->key] = $settings->value;
+        }
+        return $settingsArr;
     }
 }

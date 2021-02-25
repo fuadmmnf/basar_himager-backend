@@ -14,7 +14,6 @@
         }
 
         th, td {
-            padding: 7px;
             font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
@@ -66,125 +65,42 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Recive No:</b> {{$receiptinfo->receiving_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>Receive No:</b> {{$receiptinfo->receiving_no}}</p>
+    <p><b>Date:</b> {{ date('F d, Y', strtotime($receiptinfo->receiving_time)) }}</p>
 </span>
 
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Client</h3>
-                <div>
-                    <p>Name: {{$receiptinfo->booking->client->name}}</p>
-                    <p>Phone: {{$receiptinfo->booking->client->phone}}</p>
-                    <p>Father's Name: {{$receiptinfo->booking->client->father_name}}</p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-        </td>
-    </tr>
-
-</table>
-<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>Booking Information</b></span>
-</div>
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <div>
-
-                    <p><b>Booking No:</b> {{$receiptinfo->booking->booking_no}}</p>
-                    <p><b>Booking Date:</b> {{ date('F d, Y', strtotime($receiptinfo->booking->booking_time)) }}</p>
-                    <p><b>Total Quantity:</b> {{$receiptinfo->booking->quantity}}</p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-                <p><b>Booking Type:</b>
-                    @if($receiptinfo->booking->type == 0)
-                        Normal
-                    @elseif($receiptinfo->booking->type == 1)
-                        Advance
-                    @endif
-                </p>
-
-                @if($receiptinfo->booking->advance_payment > 0)
-                    <p><b>Advance Payment:</b> {{$receiptinfo->booking->advance_payment}}</p>
-                @elseif($receiptinfo->booking->booking_amount > 0)
-                    <p><b>Booking Money:</b> {{$receiptinfo->booking->booking_amount}}</p>
-                @endif
-            </div>
-        </td>
-    </tr>
-
-</table>
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
     <span><b>Receive Information</b></span>
 </div>
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div>
-               <b>Receive No:</b> {{$receiptinfo->receiving_no}}
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-                <b>Date:</b> {{ date('F d, Y', strtotime($receiptinfo->receiving_time)) }}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div>
-                <b>Transport Type:</b> {{$receiptinfo->transport['type']}}
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-                <b>{{$receiptinfo->transport['type']}} Number:</b> {{$receiptinfo->transport['number']}}
-            </div>
-        </td>
-    </tr>
-</table>
-
-
 <table class="bordertable">
     <thead>
-        <tr>
-            <th>Potato Type</th>
-            <th>Quantity</th>
-        </tr>
+    <tr>
+        <th>Booking No.</th>
+        <th>Balance Booking</th>
+        <th>Transport</th>
+        <th>Potato Type</th>
+    </tr>
+
     </thead>
     <tbody>
-    @if(count($receiptinfo->receiveitems))
-        @foreach($receiptinfo->receiveitems as $item)
-    <tr>
-        <td>
-            {{$item->potatoe_type}}
-        </td>
-        <td>
-            {{$item->quantity}}
-        </td>
-    </tr>
-        @endforeach
-    <tr>
-        <td>
-            <b>Total</b>
-        </td>
-        <td>
-            <b>{{$receiptinfo->receiveitems->sum('quantity')}}</b>
-        </td>
-
-    </tr>
-    @endif
+    @foreach($receiptinfo->receives as $receive)
+        <tr>
+            <td>{{$receive->booking->booking_no}}</td>
+            <td>{{$receive->booking_currently_left}}</td>
+            <td>{{ucfirst($receive->transport['type'])}} ({{$receive->transport['number']}})</td>
+            <td>
+                @foreach($receive->receiveitems as $item)
+                    {{$item->potato_type}} ({{$item->quantity}}) <br />
+                @endforeach
+            </td>
+        </tr>
+    @endforeach
     </tbody>
-
 </table>
+
+
+
+
 
 
 <div class="footer">

@@ -13,8 +13,7 @@
             text-align: center;
         }
 
-        th, td {
-            padding: 7px;
+        th, td {;
             font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
@@ -67,7 +66,7 @@
 </div>
 <span align="center" style="line-height: 1.2;">
     <p style="font-size: 1.4rem; font-weight: bold">Potato Store Receipt</p>
-    <p><b>Date:</b>{{$client->report_date}}</p>
+    <p><b>Date:</b>{{ date('F d, Y') }}</p>
 </span>
 <table>
     <tr>
@@ -115,8 +114,8 @@
                                             <td>{{$booking->booking_no}}</td>
                                             <td>{{$booking->booking_time}}</td>
                                             <td>{{$booking->quantity}}</td>
-                                            <td>{{$receive->receiving_no}}</td>
-                                            <td>{{$receive->receiving_time}}</td>
+                                            <td>{{$receive->receivegroup->receiving_no}}</td>
+                                            <td>{{$receive->receivegroup->receiving_time}}</td>
                                             <td>{{$receiveitem->potatoe_type}}</td>
                                             <td>{{$receiveitem->quantity}}</td>
                                             <td>{{$load->bag_no}}</td>
