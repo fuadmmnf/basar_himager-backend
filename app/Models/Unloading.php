@@ -9,8 +9,8 @@ class Unloading extends Model
 {
     use HasFactory;
 
-    public function delivery ()
+    public function deliveryitem()
     {
-        return $this->belongsTo('App\Models\Delivery');
+        return $this->belongsTo('App\Models\Deliveryitem');
     }
 }

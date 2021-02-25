@@ -12,4 +12,9 @@ class Deliveryitem extends Model
     public function delivery(){
         return $this->belongsTo('App\Models\Delivery');
     }
+
+    public function unloading()
+    {
+        return $this->hasMany('App\Models\Unloading');
+    }
 }

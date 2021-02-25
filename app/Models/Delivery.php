@@ -23,11 +23,4 @@ class Delivery extends Model
     {
         return $this->hasMany('App\Models\Deliveryitem');
     }
-
-
-
-    public function unloading()
-    {
-        return $this->hasMany('App\Models\Unloading');
-    }
 }

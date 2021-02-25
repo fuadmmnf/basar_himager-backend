@@ -112,6 +112,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         $inventoryHandler = new InventoryHandler();
         foreach($loads as $load){
             $load->inventory = $inventoryHandler->fetchFullInventoryWithParentById($load->compartment_id);
+            $load->lot_no = $load->receive->lot_no;
         }
         return $loads;
     }
