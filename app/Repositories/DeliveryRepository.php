@@ -30,7 +30,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     public function getRecentDeliveryGroups(){
         $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
             ->paginate(20);
-        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client');
         return $deliveryGroups;
     }
 
