@@ -9,16 +9,18 @@ class Delivery extends Model
 {
     use HasFactory;
 
-    public function booking ()
+    public function booking()
     {
         return $this->belongsTo('App\Models\Booking');
     }
 
-    public function deliveryitems(){
-        return $this->hasMany('App\Models\Deliveryitem');
+    public function deliverygroup()
+    {
+        return $this->belongsTo('App\Models\Deliverygroup');
     }
 
-    public function gatepasses(){
-        return $this->hasMany('App\Models\Gatepass');
+    public function deliveryitems()
+    {
+        return $this->hasMany('App\Models\Deliveryitem');
     }
 }

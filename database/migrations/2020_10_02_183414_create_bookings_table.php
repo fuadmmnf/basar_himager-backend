@@ -23,6 +23,9 @@ class CreateBookingsTable extends Migration
             $table->double('discount')->default(0.0);
             $table->integer('quantity');
             $table->double('cost_per_bag');
+            //Money given at the time of normal booking
+            $table->integer('initial_booking_amount');
+            $table->integer('booking_amount');
             $table->integer('bags_in')->default(0);
             $table->integer('bags_out')->default(0);
             $table->timestamps();

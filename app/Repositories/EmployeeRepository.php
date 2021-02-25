@@ -18,7 +18,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     {
 //        $role = Role::where('name', $request['role'])->firstOrFail();
         $userTokenHandler = new UserTokenHandler();
-        $user = $userTokenHandler->createUser($request['nid'], $request['name'], $request['phone'], $request['name'] . '_' . $request['phone']);
+        $user = $userTokenHandler->createUser($request['nid'], $request['name'], $request['phone'], $request['nid'] );
         $newEmployee = new Employee();
         $newEmployee->user_id = $user->id;
         $newEmployee->name = $request['name'];

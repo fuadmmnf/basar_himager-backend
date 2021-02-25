@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 
@@ -60,7 +59,7 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br/> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Accounting Report (Transactions)</b> <br/>
+        <b style="font-size: 1.6rem;padding: 20px">একাউন্টিং রিপোর্ট (লেনদেন)</b> <br/>
 
     </div>
 
@@ -68,18 +67,18 @@
 <br>
 
 <div>
-    <p><b>Start Date:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
-    <p><b>End Date:</b> {{ date('F d, Y', strtotime($end_date)) }}</p>
+    <p><b>শুরুর তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
+    <p><b>শেষ তারিখ:</b> {{ date('F d, Y', strtotime($end_date)) }}</p>
 </div>
 
-<div style="font-size: 1.2rem"><b><u>Expenses</u></b></div>
+<div style="font-size: 1.2rem"><b><u>ব্যায়</u></b></div>
 <br/>
 <table class="bordertable">
     <thead>
     <tr>
-        <th width="15%">Si No.</th>
-        <th>Category</th>
-        <th>Amount</th>
+        <th width="15%">এস.আই নম্বর</th>
+        <th>ক্যাটাগরি</th>
+        <th>পরিমাণ</th>
     </tr>
     </thead>
     <tbody>
@@ -99,7 +98,7 @@
         @endforeach
     <tr>
         <td colspan="2"></td>
-        <td><b>Total:</b>  {{ $totalExpense  }} BDT</td>
+        <td><b>মোট:</b>  {{ $totalExpense  }} BDT</td>
     </tr>
     </tbody>
 </table>
@@ -107,14 +106,14 @@
 
 {{--<pagebreak/>--}}
 <br/> <br/>
-<div style="font-size: 1.2rem"><b><u>Incomes</u></b></div>
+<div style="font-size: 1.2rem"><b><u>আয়</u></b></div>
 <br/>
 <table class="bordertable">
     <thead>
         <tr>
-            <th width="15%">Si No.</th>
-            <th>Category</th>
-            <th>Amount</th>
+            <th width="15%">এস.আই নম্বর</th>
+            <th>ক্যাটাগরি</th>
+            <th>পরিমাণ</th>
         </tr>
     </thead>
     <tbody>
@@ -134,7 +133,7 @@
         @endforeach
         <tr>
             <td colspan="2"></td>
-            <td><b>Total:</b> {{ $totalIncome  }} BDT</td>
+            <td><b>মোট:</b> {{ $totalIncome  }} BDT</td>
         </tr>
     </tbody>
 </table>

@@ -1,10 +1,10 @@
 <html>
 <head>
-    <title>Delivery Receipt</title>
+    <title>Delivery Order</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 
@@ -53,128 +52,81 @@
     </style>
 </head>
 <body>
-<br />
+<br/>
 
 <div style="text-align: center">
-    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br />
-    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
+    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br/>
+    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br/> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Delivery Receipt</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">ডেলিভারি অর্ডার (DO)</b> <br/>
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Receipt No:</b> {{$receiptinfo->delivery_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>রিসিপ্ট নং:</b> {{$receiptinfo->delivery_no}}</p>
+    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($receiptinfo->delivery_time)) }}</p>
 </span>
 
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Client</h3>
-                <div>
-                    <p><b>Name:</b> {{$receiptinfo->booking->client->name}}</p>
-                    <p><b>Phone:</b> {{$receiptinfo->booking->client->phone}}</p>
-                    <p><b>Father's Name:</b> {{$receiptinfo->booking->client->father_name}}</p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-        </td>
-    </tr>
 
-</table>
-<div style="text-align: center">
-    <span><b>Booking Information</b></span>
+<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>গ্রাহকের তথ্য</b></span>
 </div>
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
-            <div   >
-
-                    <p><b>Booking No:</b> {{$receiptinfo->booking->booking_no}}</p>
-                    <p><b>Booking Date:</b> {{ date('F d, Y', strtotime($receiptinfo->booking->booking_time)) }}</p>
-                    <p><b>Booking Type:</b>
-                        @if($receiptinfo->booking->type == 0)
-                            Normal
-                        @elseif($receiptinfo->booking->type == 1)
-                            Advance
-                        @endif
-                    </p>
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <p><b>Total Quantity:</b> {{$receiptinfo->booking->quantity}}</p>
-                <p><b>Bags In:</b> {{$receiptinfo->booking->bags_in}}</p>
-                <p><b>Bags Out:</b> {{$receiptinfo->booking->bags_out}}</p>
-
+                <div>
+                    <p><b>নাম:</b> {{$receiptinfo->deliveries[0]->booking->client->name}}</p>
+                </div>
             </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+            <p><b>ফোন নম্বর:</b> {{$receiptinfo->deliveries[0]->booking->client->phone}}</p>
         </td>
     </tr>
 
 </table>
 
-<div style="text-align: center; padding-bottom: 10px">
-    <span><b>Delivery Information</b></span>
-</div>
 
+<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>সংগ্রহের তথ্য</b></span>
+</div>
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Description</th>
-        <th>Number of Bags</th>
-        <th>Cost per Bag</th>
-        <th>Total</th>
+        <th>বুকিং নম্বর</th>
+        <th>আলুর ধরন</th>
+        <th>চার্জ</th>
+        <th>মোট</th>
     </tr>
+
     </thead>
     <tbody>
-    @if(count($receiptinfo->deliveryitems))
-        @php
-            $totalCost = 0;
-        @endphp
-        @foreach($receiptinfo->deliveryitems as $deliveryitem)
-    <tr>
-        <td>Type: {{$deliveryitem->potatoe_type}}</td>
-        <td>{{$deliveryitem->quantity}}</td>
-        <td>{{$receiptinfo->cost_per_bag}}</td>
-        <td>{{$deliveryitem->quantity * $receiptinfo->cost_per_bag}}</td>
-    </tr>
-    @php
-        $totalCost += $deliveryitem->quantity * $receiptinfo->cost_per_bag;
-    @endphp
-        @endforeach
-    @endif
-    <tr>
-        <td>Fanned Bags</td>
-        <td>{{$receiptinfo->quantity_bags_fanned}}</td>
-        <td>{{$receiptinfo->fancost_per_bag}}</td>
-        <td>{{$receiptinfo->quantity_bags_fanned * $receiptinfo->fancost_per_bag}}</td>
-    </tr>
-    <tr>
-        <td>Due Charge</td>
-        <td></td>
-        <td></td>
-        <td>{{$receiptinfo->due_charge}}</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><b>Total</b></td>
-        <td>{{ $totalCost +($receiptinfo->quantity_bags_fanned * $receiptinfo->fancost_per_bag) +
-                    $receiptinfo->due_charge}}
-        </td>
-    </tr>
+    @foreach($receiptinfo->deliveries as $delivery)
+        <tr>
+            <td>{{$delivery->booking->booking_no}}</td>
+            <td>
+                @foreach($delivery->deliveryitems as $item)
+                    {{$item->potato_type}} ({{$item->quantity}}) <br />
+                @endforeach
+            </td>
+            <td>
+                <p>Total Bags: {{($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)/($delivery->cost_per_bag + $delivery->do_charge)}}</p>
+                <p>Per Bag Cost: {{$delivery->cost_per_bag}}</p>
+                <p>DO Charge: {{$delivery->do_charge}}</p>
+                <p>Fan Cost: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</p>
+            </td>
+            <td>{{$delivery->total_charge}} ৳</td>
+        </tr>
+    @endforeach
     </tbody>
-
-
-
 </table>
+
+
+{{--</table>--}}
 
 <div class="footer">
     <table >
@@ -182,14 +134,14 @@
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>

@@ -18,8 +18,16 @@ class Receive extends Model
         return $this->belongsTo('App\Models\Booking');
     }
 
+    public function receivegroup(){
+        return $this->belongsTo('App\Models\Receivegroup');
+    }
+
     public function receiveitems()
     {
         return $this->hasMany('App\Models\Receiveitem');
+    }
+
+    public function loaddistributions(){
+        return $this->hasMany('App\Models\Loaddistribution');
     }
 }

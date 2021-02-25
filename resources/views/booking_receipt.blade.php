@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,8 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            /*padding: 7px;*/
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 
@@ -60,25 +60,25 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Booking Receipt</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">বুকিং রশিদ</b> <br />
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Booking No:</b> {{$bookinginfo->booking_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>বুকিং নম্বর:</b> {{$bookinginfo->booking_no}}</p>
+    <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
 </span>
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Client Information</h3>
+                <h3>গ্রাহকের তথ্য</h3>
                 <div>
-                    <p><b>Name:</b> {{$bookinginfo->client->name}}</p>
-                    <p><b>Phone:</b> {{$bookinginfo->client->phone}}</p>
-                    <p><b>Father's Name</b>: {{$bookinginfo->client->father_name}}</p>
+                    <p><b>নাম:</b> {{$bookinginfo->client->name}}</p>
+                    <p><b>ফোন নম্বর:</b> {{$bookinginfo->client->phone}}</p>
+                    <p><b>বাবার নাম</b>: {{$bookinginfo->client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -88,32 +88,34 @@
 
 </table>
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>Booking Information</b></span>
+    <span><b>বুকিং তথ্য</b></span>
 </div>
 <table>
     <tr>
         <td style="width: 70%; text-align: left">
             <div   >
                 <div>
-
-                    <p><b>Booking Date:</b> {{ date('F d, Y', strtotime($bookinginfo->booking_time)) }}</p>
-                    <p><b>Booking Type:</b>
-                       @if($bookinginfo->type == 0)
-                           Normal
-                        @elseif($bookinginfo->type == 1)
-                            Advance
-                        @endif
-                    </p>
-                    <p><b>Total Quantity:</b> {{$bookinginfo->quantity}}</p>
+                    <p><b>বুকিং তারিখ:</b> {{ date('F d, Y', strtotime($bookinginfo->booking_time)) }}</p>
+                    <p><b>মোট পরিমাণ:</b> {{$bookinginfo->quantity}}</p>
                 </div>
             </div>
         </td>
         <td  class="td-right-align" style="width: 30%; text-align: left">
             <div>
-                <p><b>Bags In:</b> {{$bookinginfo->bags_in}}</p>
-                <p><b>Bags Out:</b> {{$bookinginfo->bags_out}}</p>
-                <p><b>Advance Payment:</b> {{$bookinginfo->advance_payment}}</p>
-                <p><b>Discount:</b> {{$bookinginfo->discount}} %</p>
+                <p><b>বুকিং ধরন:</b>
+                    @if($bookinginfo->type == 0)
+                        Normal
+                    @elseif($bookinginfo->type == 1)
+                        Advance
+                    @endif
+                </p>
+
+                @if($bookinginfo->advance_payment > 0)
+                    <p><b>অগ্রীম পরিশোধ:</b> {{$bookinginfo->advance_payment}}</p>
+                @elseif($bookinginfo->booking_amount > 0)
+                    <p><b>বুকিং মানি:</b> {{$bookinginfo->initial_booking_amount}}</p>
+                    <p><b>অবশিষ্ট:</b> {{$bookinginfo->booking_amount}}</p>
+                @endif
             </div>
         </td>
     </tr>
@@ -128,14 +130,14 @@
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>

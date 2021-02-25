@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 

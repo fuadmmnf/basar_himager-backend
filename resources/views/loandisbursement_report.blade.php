@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 
@@ -60,25 +59,25 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.3rem;padding: 20px">Loan Disbursement Report</b> <br />
+        <b style="font-size: 1.3rem;padding: 20px">লোন বিতরণের রিপোর্ট</b> <br />
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Disbursement No:</b> {{$loandisbursement->loandisbursement_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p><b>লোন বিতরণের নং:</b> {{$loandisbursement->loandisbursement_no}}</p>
+    <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
 </span>
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
             <div  >
-                <h3>Client Information</h3>
+                <h3>গ্রাহকের তথ্য</h3>
                 <div>
-                    <p><b>Name:</b> {{$loandisbursement->booking->client->name}}</p>
-                    <p><b>Phone:</b> {{$loandisbursement->booking->client->phone}}</p>
-                    <p><b>Father's Name:</b> {{$loandisbursement->booking->client->father_name}}</p>
+                    <p><b>নাম:</b> {{$loandisbursement->booking->client->name}}</p>
+                    <p><b>ফোন নম্বর:</b> {{$loandisbursement->booking->client->phone}}</p>
+                    <p><b>বাবার নাম:</b> {{$loandisbursement->booking->client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -93,32 +92,38 @@
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Booking Information</h3>
+                <h3>বুকিং তথ্য</h3>
                 <br>
                 <div>
-                    <p><b>Booking No:</b> {{$loandisbursement->booking->booking_no}}</p>
-                    <p><b>Booking Type:</b>
+                    <p><b>বুকিং নম্বর:</b> {{$loandisbursement->booking->booking_no}}</p>
+                    <p><b>বুকিং ধরন:</b>
                         @if($loandisbursement->booking->type == 0)
                             Normal
                         @elseif($loandisbursement->booking->type == 1)
                             Advance
                         @endif
                     </p>
-                    <p><b>Date:</b> {{ date('F d, Y', strtotime($loandisbursement->booking->booking_time)) }}</p>
-                    <p><b>Total Quantity:</b> {{$loandisbursement->booking->quantity}}</p>
-                    <p><b>Remaining Quantity:</b> {{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
+
+                    @if($loandisbursement->booking->advance_payment > 0)
+                        <p><b>অগ্রীম পরিশোধ:</b> {{$loandisbursement->booking->advance_payment}}</p>
+                    @elseif($loandisbursement->booking->booking_amount > 0)
+                        <p><b>বুকিং মানি:</b> {{$loandisbursement->booking->booking_amount}}</p>
+                    @endif
+                    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($loandisbursement->booking->booking_time)) }}</p>
+                    <p><b>মোট পরিমাণ:</b> {{$loandisbursement->booking->quantity}}</p>
+                    <p><b>অবশিষ্ট :</b> {{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <h3>Loan Information</h3>
+                <h3>লোন বিবরণ</h3>
                 <br>
                 <div>
-                    <p><b>Disbursement No:</b> {{$loandisbursement->loandisbursement_no}}</p>
-                    <p><b>Date:</b> {{ date('F d, Y', strtotime($loandisbursement->payment_date)) }}</p>
-                    <p><b>Loan Amount:</b> {{$loandisbursement->amount}}</p>
-                    <p><b>Have To Pay:</b> {{$loandisbursement->amount_left}}</p>
+                    <p><b>লোন বিতরণের নং:</b> {{$loandisbursement->loandisbursement_no}}</p>
+                    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($loandisbursement->payment_date)) }}</p>
+                    <p><b>লোনের পরিমান:</b> {{$loandisbursement->amount}}</p>
+                    <p><b>পরিশোধ করতে হবে:</b> {{$loandisbursement->amount_left}}</p>
                 </div>
             </div>
         </td>
@@ -127,16 +132,16 @@
 </table>
 
 <div style="text-align: center; color: darkblue">
-    <h3>Loan Collections </h3>
+    <h3>লোন সংগ্রহ </h3>
 </div>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Collection No</th>
-        <th>Date</th>
-        <th>Surcharge</th>
-        <th>Amount</th>
+        <th>সংগ্রহের নং</th>
+        <th>তারিখ</th>
+        <th>সারচার্জ</th>
+        <th>পরিমান</th>
     </tr>
 
     </thead>

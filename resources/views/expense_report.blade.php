@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 
@@ -60,21 +59,21 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Expense Report</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">খরচের রিপোর্ট</b> <br />
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Month:</b> {{ date('F, Y', strtotime($month)) }}</p>
+    <p><b>মাস:</b> {{ date('F, Y', strtotime($month)) }}</p>
 </span>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Si No.</th>
-        <th>Type</th>
-        <th>Amount</th>
+        <th>এস.আই নং.</th>
+        <th>ধরন</th>
+        <th>পরিমাণ</th>
     </tr>
 
     </thead>

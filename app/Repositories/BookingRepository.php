@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 
+use App\Models\Client;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Handlers\ClientHandler;
 use Carbon\Carbon;
@@ -12,35 +13,8 @@ use Carbon\Carbon;
 class BookingRepository implements BookingRepositoryInterface
 {
 
-    public function getPaginatedReceivesByBookingId($booking_id)
-    {
-        $booking = Booking::findOrFail($booking_id);
-        $receives = $booking->receives()->paginate(15);
 
-        return $receives;
-    }
 
-    public function getPaginatedDeliveriesByBookingId($booking_id)
-    {
-        $booking = Booking::findOrFail($booking_id);
-        $deliveries = $booking->deliveries()->paginate(15);
-
-        return $deliveries;
-    }
-
-    public function getPaginatedLoanDisbursementByBookingId($booking_id)
-    {
-        $booking = Booking::findOrFail($booking_id);
-        $disbursements = $booking->loanDisbursements()->paginate(15);
-        return $disbursements;
-    }
-
-    public function getPaginatedLoanCollectionByBookingId($booking_id)
-    {
-        $booking = Booking::findOrFail($booking_id);
-        $collections = $booking->loanCollections()->paginate(15);
-        return $collections;
-    }
 
     public function getBookingListBySearchedQuery($query)
     {
@@ -66,15 +40,21 @@ class BookingRepository implements BookingRepositoryInterface
         return $bookings;
     }
 
+    public function getBookingListByClient($client_id)
+    {
+        $bookinglist = Booking::where('client_id', $client_id)
+            ->orderByDesc('booking_time')
+            ->pluck('booking_no');
+        return $bookinglist;
+    }
+
+
     public function saveBooking(array $request)
     {
-        $clientHandler = new ClientHandler();
-
-        $client = $clientHandler->saveClient($request['nid'], $request['name'], $request['phone'], $request['father_name'], $request['address']);
         $newBooking = new Booking();
 
-        $newBooking->client_id = $client->id;
-        $newBooking->booking_time = Carbon::parse($request['booking_time']);
+        $newBooking->client_id = $request['client_id'];
+        $newBooking->booking_time = Carbon::parse($request['booking_time'])->setTimezone('Asia/Dhaka');
         $newBooking->type = $request['type'];
 
         $newBooking->booking_no = (($newBooking->type) ? 'A' : 'N')
@@ -83,6 +63,8 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];
         $newBooking->cost_per_bag = $request['cost_per_bag'];
+        $newBooking->initial_booking_amount = $request['booking_amount'];
+        $newBooking->booking_amount = $request['booking_amount'];
         $newBooking->discount = $request['discount'];
 
         $newBooking->save();

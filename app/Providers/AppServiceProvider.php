@@ -18,23 +18,38 @@ use App\Observers\LoancollectionObserver;
 use App\Observers\LoandisbursementObserver;
 use App\Repositories\BankRepository;
 use App\Repositories\BookingRepository;
+use App\Repositories\ChamberentryRepository;
 use App\Repositories\ChamberRepository;
+use App\Repositories\ClientRepository;
 use App\Repositories\DeliveryRepository;
 use App\Repositories\EmployeeLoanRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\EmployeeSalaryRepository;
 use App\Repositories\ExpensecategoryRepository;
+use App\Repositories\FloorRepository;
 use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
+use App\Repositories\Interfaces\ChamberentryRepositoryInterface;
 use App\Repositories\Interfaces\ChamberRepositoryInterface;
+use App\Repositories\Interfaces\ClientRepositoryInterface;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeLoanRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
+use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
+use App\Repositories\Interfaces\PotatotypeRepositoryInterface;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
+use App\Repositories\Interfaces\SettingsRepositoryInterface;
+use App\Repositories\Interfaces\UnloadingRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\InventoryRepository;
+use App\Repositories\LineRepository;
+use App\Repositories\LoaddistributionRepository;
 use App\Repositories\MachinepartRepository;
+use App\Repositories\PocketRepository;
+use App\Repositories\PositionRepository;
+use App\Repositories\PotatotypeRepository;
 use App\Repositories\ReportRepository;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
@@ -45,9 +60,12 @@ use App\Repositories\DailyexpensesRepository;
 use App\Repositories\LoancollectionRepository;
 use App\Repositories\LoandisbursementRepository;
 use App\Repositories\ReceiveRepository;
+use App\Repositories\SettingsRepositopry;
+use App\Repositories\UnloadingRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use function Symfony\Component\String\u;
+use \App\Repositories\Interfaces\InventoryRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -75,6 +93,13 @@ class AppServiceProvider extends ServiceProvider
             EmployeeLoanRepositoryInterface::class,
             MachinepartRepositoryInterface::class,
             ChamberRepositoryInterface::class,
+            ChamberentryRepositoryInterface::class,
+            InventoryRepositoryInterface::class,
+            LoaddistributionRepositoryInterface::class,
+            UnloadingRepositoryInterface::class,
+            ClientRepositoryInterface::class,
+            SettingsRepositoryInterface::class,
+            PotatotypeRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -94,6 +119,13 @@ class AppServiceProvider extends ServiceProvider
             EmployeeLoanRepository::class,
             MachinepartRepository::class,
             ChamberRepository::class,
+            ChamberentryRepository::class,
+            InventoryRepository::class,
+            LoaddistributionRepository::class,
+            UnloadingRepository::class,
+            ClientRepository::class,
+            SettingsRepositopry::class,
+            PotatotypeRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {

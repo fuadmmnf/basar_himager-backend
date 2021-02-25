@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\DeliveryRepository;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
+use App\Repositories\LoaddistributionRepository;
 use App\Repositories\ReceiveRepository;
 use Carbon\Carbon;
 use PDF;
@@ -32,6 +33,14 @@ class ReportController extends Controller
         $deliveryRepository = new DeliveryRepository();
         $pdf = PDF::loadView('gatepass_receipt', [
             'receive' => $deliveryRepository->getGatepassDetails($gatepass_no),
+        ]);
+        return $pdf->stream();
+    }
+
+    public function getLoaddistributionReport($receive_group_id){
+        $loaddistributionRepository = new LoaddistributionRepository();
+        $pdf = PDF::loadView('loaddistribution', [
+            'receives' => $loaddistributionRepository->getLoadDistributionsByReceive($receive_group_id),
         ]);
         return $pdf->stream();
     }
@@ -71,9 +80,9 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function getReceiveReceipt($id)
+    public function getReceivesReceipt($receivegroup_id)
     {
-        $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($id);
+        $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($receivegroup_id);
         $pdf = PDF::loadView('receive_receipt', [
             'receiptinfo' => $receiptinfo
         ]);
@@ -81,9 +90,9 @@ class ReportController extends Controller
         //return $pdf->download('bank_deposit_report');
     }
 
-    public function getDeliveryReceipt($id)
+    public function getDeliveriesReceipt($deliverygroup_id)
     {
-        $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($id);
+        $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($deliverygroup_id);
         $pdf = PDF::loadView('delivery_receipt',[
             'receiptinfo' => $receiptinfo
         ]);
@@ -120,11 +129,19 @@ class ReportController extends Controller
         //return $pdf->download('bank_deposit_report');
     }
 
-    public function getGatePass($delivery_id)
+    public function getGatePass($deliverygroup_id)
     {
-        $gatePass = $this->reportRepository->fetchGatepass($delivery_id);
+        $gatePass = $this->reportRepository->fetchGatepass($deliverygroup_id);
         $pdf = PDF::loadView('gatepass_receipt', [
             'gatepassInfo' => $gatePass
+        ]);
+        return $pdf->stream();
+    }
+
+    public function downloadStorePotatoReceipt($client_id,$date){
+        $client = $this->reportRepository->downloadStorePotatoReceipt($client_id,$date);
+        $pdf = PDF::loadView('store_potato_receipt',[
+            'client' => $client
         ]);
         return $pdf->stream();
     }

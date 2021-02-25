@@ -3,21 +3,27 @@
 
 namespace App\Repositories;
 
+use App\Handlers\InventoryHandler;
 use App\Models\Bank;
 use App\Models\Dailyexpense;
 use App\Models\Bankdeposit;
 use App\Models\Booking;
 use App\Models\Delivery;
+use App\Models\Deliverygroup;
 use App\Models\Employeeloan;
 use App\Models\Gatepass;
 use App\Models\Employeesalary;
+use App\Models\Inventory;
+use App\Models\Loaddistribution;
 use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Models\Expensecategory;
 use App\Models\Receive;
+use App\Models\Receivegroup;
 use App\Models\Transaction;
 use App\Repositories\Interfaces\ReportRepositoryInterface;
 use Carbon\Carbon;
+use App\Models\Client;
 
 
 class ReportRepository implements ReportRepositoryInterface
@@ -80,25 +86,18 @@ class ReportRepository implements ReportRepositoryInterface
         return $booking;
     }
 
-    public function fetchReceiveReceiptInfo($id)
+    public function fetchReceiveReceiptInfo($receivegroup_id)
     {
-        $receives = Receive::where('id', $id)
-            ->with('booking')
-            ->with('booking.client')
-            ->with('receiveitems')->first();
-//        $receives = Receive::
-//            with('booking')
-//            ->with('booking.client')->get();
-        return $receives;
+        $receivegroup = Receivegroup::findOrFail($receivegroup_id);
+        $receivegroup->load('receives', 'receives.receiveitems', 'receives.booking', 'receives.booking.client');
+        return $receivegroup;
     }
 
-    public function fetchDeliveryReceiptInfo($id)
+    public function fetchDeliveryReceiptInfo($deliverygroup_id)
     {
-        $delivery = Delivery::where('id',$id)
-            ->with('booking')
-            ->with('booking.client')
-            ->with('deliveryitems')->first();
-        return $delivery;
+        $deliverygroup = Deliverygroup::findOrFail($deliverygroup_id);
+        $deliverygroup->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.booking.client');
+        return $deliverygroup;
     }
 
 
@@ -129,14 +128,28 @@ class ReportRepository implements ReportRepositoryInterface
 //    }
 
 
-    public function fetchGatepass($delivey_id)
+    public function fetchGatepass($deliverygroup_id)
     {
         // TODO: Implement fetchGatepass() method.
-        $gatepass = Gatepass::where('delivery_id', $delivey_id)
-            ->with('delivery')
-            ->with('delivery.booking')
-            ->with('delivery.booking.client')
-            ->with('delivery.deliveryitems')->first();
+        $gatepass = Gatepass::where('deliverygroup_id', $deliverygroup_id)
+            ->with('deliverygroup')
+            ->with('deliverygroup.deliveries')
+            ->with('deliverygroup.deliveries.booking')
+            ->with('deliverygroup.deliveries.booking.client')
+            ->with('deliverygroup.deliveries.deliveryitems')
+            ->first();
+
+        $potatoArr = [];
+        foreach ($gatepass->deliverygroup->deliveries as $delivery){
+            foreach ($delivery->deliveryitems as $item){
+                if(isset($potatoArr[$item->potato_type])){
+                    $potatoArr[$item->potato_type] += $item->quantity;
+                } else {
+                    $potatoArr[$item->potato_type] = $item->quantity;
+                }
+            }
+        }
+        $gatepass->deliverygroup->potato_list = $potatoArr;
         return $gatepass;
     }
 
@@ -162,6 +175,33 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
 
+    public function downloadStorePotatoReceipt($client_id, $date)
+    {
+        $temp_date = Carbon::parse($date);
+        // TODO: Implement downloadStorePotatoReceipt() method.
+        $client = Client::where('id',$client_id)->with('bookings')
+            ->with('bookings.receives')
+            ->with('bookings.receives.receivegroup')
+            ->with('bookings.receives.receiveitems')
+            ->first();
+        $client->report_date = $temp_date;
+
+        foreach ($client->bookings as $booking){
+            foreach ($booking->receives as $receive){
+                $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->whereDate('created_at',$temp_date)->get();
+            }
+        }
+
+        $inventoryHandler = new InventoryHandler();
+        foreach ($client->bookings as $booking){
+            foreach ($booking->receives as $receive){
+                foreach ($receive->loaddistributions as $loads ){
+                    $loads->inventory = $inventoryHandler->fetchFullInventoryWithParentBYId($loads->compartment_id);
+                }
+            }
+        }
+        return $client;
+    }
 }
 
 

@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 
@@ -60,21 +59,21 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Bank Deposit Report</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">ব্যাংক ডিপজিট রিপোর্ট</b> <br />
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Month:</b> {{ date('F, Y', strtotime($month)) }}</p>
+    <p><b>মাস:</b> {{ date('F, Y', strtotime($month)) }}</p>
 </span>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Bank</th>
-        <th>Account No</th>
-        <th>Total</th>
+        <th>ব্যাংক</th>
+        <th>অ্যাকাউন্ট নম্বর</th>
+        <th>মোট</th>
     </tr>
 
     </thead>
@@ -89,7 +88,7 @@
         @endforeach
         <tr>
             <td></td>
-            <td> <b>TOTAL:</b></td>
+            <td> <b>মোট:</b></td>
             <td> <b>{{$banks->sum('total')}}</b></td>
         </tr>
     @endif
@@ -99,17 +98,17 @@
 <div class="page-break"></div>
 
 <div style="text-align: center; color: darkblue">
-    <h3>Bank Transactions<small>(Deposit)</small> </h3>
+    <h3>ব্যাংক লেনদেন<small>(জমা)</small> </h3>
 </div>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Bank</th>
-        <th>Account No</th>
-        <th>SI No</th>
-        <th>Branch </th>
-        <th>Amount</th>
+        <th>ব্যাংক</th>
+        <th>অ্যাকাউন্ট নম্বর</th>
+        <th>এস.আই নম্বর</th>
+        <th>ব্রাঞ্চ </th>
+        <th>পরিমাণ<small>(টাকা)</small></th>
     </tr>
 
     </thead>
@@ -130,7 +129,7 @@
             <td></td>
             <td></td>
             <td> </td>
-            <td> <b>TOTAL:</b></td>
+            <td> <b>মোট:</b></td>
             <td> <b>{{$deposits->sum('amount')}}</b></td>
         </tr>
     @endif
@@ -138,17 +137,17 @@
 </table>
 
 <div style="text-align: center; color: darkblue">
-    <h3>Bank Transactions<small>(Withdraw)</small> </h3>
+    <h3>ব্যাংক লেনদেন<small>(Withdraw)</small> </h3>
 </div>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Bank</th>
-        <th>Account No</th>
-        <th>SI No</th>
-        <th>Branch </th>
-        <th>Amount</th>
+        <th>ব্যাংক</th>
+        <th>অ্যাকাউন্ট নম্বর</th>
+        <th>এস.আই নম্বর</th>
+        <th>ব্রাঞ্চ </th>
+        <th>পরিমাণ<small>(টাকা)</small></th>
     </tr>
 
     </thead>
@@ -169,7 +168,7 @@
             <td></td>
             <td></td>
             <td> </td>
-            <td> <b>TOTAL:</b></td>
+            <td> <b>মোট:</b></td>
             <td> <b>{{$deposits->sum('amount')}}</b></td>
         </tr>
     @endif

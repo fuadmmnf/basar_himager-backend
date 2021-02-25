@@ -5,10 +5,12 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 use App\Models\Delivery;
+use App\Models\Deliverygroup;
 use App\Models\Deliveryitem;
 use App\Models\Gatepass;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryRepository implements DeliveryRepositoryInterface
 {
@@ -16,12 +18,39 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
     public function getRecentDeliveries()
     {
-        $deliveries = Delivery::orderBy('delivery_time')
+        $deliveries = Delivery::orderBy('created_at')
             ->with('booking')
             ->with('booking.client')
-            ->with('gatepasses')
             ->with('deliveryitems')
+            ->with('unloading')
             ->paginate(20);
+        return $deliveries;
+    }
+
+    public function getRecentDeliveryGroups(){
+        $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
+            ->paginate(20);
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client');
+        return $deliveryGroups;
+    }
+
+    public function fetchDeliveriesByGroupId($deliverygroup_id)
+    {
+        $deliveries = Delivery::where('deliverygroup_id', $deliverygroup_id)
+            ->with('booking')
+            ->with('booking.client')
+            ->with('deliveryitems')
+            ->with('deliveryitems.unloading')
+            ->with('deliverygroup')
+            ->get();
+        return $deliveries;
+    }
+
+    public function getPaginatedDeliveriesByBookingId($booking_id)
+    {
+        $booking = Booking::findOrFail($booking_id);
+        $deliveries = $booking->deliveries()->paginate(15);
+
         return $deliveries;
     }
 
@@ -29,19 +58,19 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     {
         $receivesLeft = [];
         foreach ($receiveItems as $receiveItem) {
-            if (isset($receivesLeft[$receiveItem->potatoe_type])) {
-                $receivesLeft[$receiveItem->potatoe_type] += $receiveItem->quantity_left;
+            if (isset($receivesLeft[$receiveItem->potato_type])) {
+                $receivesLeft[$receiveItem->potato_type] += $receiveItem->quantity_left;
             } else {
-                $receivesLeft[$receiveItem->potatoe_type] = $receiveItem->quantity_left;
+                $receivesLeft[$receiveItem->potato_type] = $receiveItem->quantity_left;
             }
         }
 
         $deliveryQuantities = [];
         foreach ($deliveryItems as $deliveryItem) {
-            if (isset($deliveryQuantities[$deliveryItem['potatoe_type']])) {
-                $deliveryQuantities[$deliveryItem['potatoe_type']] += $deliveryItem['quantity'];
+            if (isset($deliveryQuantities[$deliveryItem['potato_type']])) {
+                $deliveryQuantities[$deliveryItem['potato_type']] += $deliveryItem['quantity'];
             } else {
-                $deliveryQuantities[$deliveryItem['potatoe_type']] = $deliveryItem['quantity'];
+                $deliveryQuantities[$deliveryItem['potato_type']] = $deliveryItem['quantity'];
             }
         }
 
@@ -54,40 +83,57 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return true;
     }
 
-    public function saveDelivery(array $request)
+    private function createDelivery(Deliverygroup $deliverygroup, array $deliveryRequest)
     {
-        $booking = Booking::findOrFail($request['booking_id']);
-
-        if (!$this->validateDeliveryQuantity($booking->receiveitems, $request['deliveryitems'])) {
+        $booking = Booking::findOrFail($deliveryRequest['booking_id']);
+        if (!$this->validateDeliveryQuantity($booking->receiveitems, $deliveryRequest['deliveryitems'])) {
             return null;
+        }
+        $totalQuantity = 0;
+        foreach ($deliveryRequest['deliveryitems'] as $deliveryitem) {
+            $totalQuantity += $deliveryitem['quantity'];
         }
 
         $newDelivery = new Delivery();
+        $newDelivery->deliverygroup_id = $deliverygroup->id;
         $newDelivery->booking_id = $booking->id;
-        $newDelivery->delivery_time = Carbon::parse($request['delivery_time']);
-        $newDelivery->delivery_no = sprintf('%04d', Delivery::whereYear('delivery_time', $newDelivery->delivery_time)->count()) . $newDelivery->delivery_time->year % 100;
-        $newDelivery->cost_per_bag = $request['cost_per_bag'];
-        $newDelivery->quantity_bags_fanned = $request['quantity_bags_fanned'];
-        $newDelivery->fancost_per_bag = $request['fancost_per_bag'];
-        $newDelivery->due_charge = $request['due_charge'];
-        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + $newDelivery->due_charge;
+        $newDelivery->cost_per_bag = $deliveryRequest['cost_per_bag'];
+        $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
+        $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
+        $newDelivery->do_charge = $deliveryRequest['do_charge'];
+        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge));
 
+        if ($booking->bags_out + $totalQuantity > $booking->bags_in) {
+            throw new \Exception('total amount greater than bags received');
+        }
+        $newDelivery->bags_currently_remaining = $booking->bags_in - $booking->bags_out - $totalQuantity;
+        if ($newDelivery->total_charge <= $booking->booking_amount) {
+            $newDelivery->charge_from_booking_amount = $newDelivery->total_charge;
+            $booking->booking_amount = $booking->booking_amount - $newDelivery->total_charge;
+            //$newDelivery->total_charge = 0;
+        } else {
+            $newDelivery->charge_from_booking_amount = $booking->booking_amount;
+            // $newDelivery->total_charge = $newDelivery->total_charge - $booking->booking_amount;
+            $booking->booking_amount = 0;
+        }
+
+        $booking->bags_out = $booking->bags_out + $totalQuantity;
+
+        $booking->save();
         $newDelivery->save();
 
-        $totalQuantity = 0;
         $receiveitems = $booking->receiveitems;
-        foreach ($request['deliveryitems'] as $deliveryitem) {
+        foreach ($deliveryRequest['deliveryitems'] as $deliveryitem) {
             $newDeliveyItem = new Deliveryitem();
             $newDeliveyItem->delivery_id = $newDelivery->id;
             $newDeliveyItem->quantity = $deliveryitem['quantity'];
-            $newDeliveyItem->potatoe_type = $deliveryitem['potatoe_type'];
+            $newDeliveyItem->potato_type = $deliveryitem['potato_type'];
             $newDeliveyItem->save();
-            $totalQuantity += $newDeliveyItem->quantity;
 
             $quantity = $newDeliveyItem->quantity;
             foreach ($receiveitems as $receiveitem) {
                 if ($receiveitem->quantity_left > 0 &&
-                    $receiveitem->potatoe_type == $newDeliveyItem->potatoe_type &&
+                    $receiveitem->potato_type == $newDeliveyItem->potato_type &&
                     $quantity > 0) {
                     $used = min($quantity, $receiveitem->quantity_left);
                     $receiveitem->quantity_left = $receiveitem->quantity_left - $used;
@@ -96,16 +142,36 @@ class DeliveryRepository implements DeliveryRepositoryInterface
                     $quantity -= $used;
                 }
             }
-
         }
 
-        $newDelivery->total_charge = $newDelivery->total_charge + ($totalQuantity * $newDelivery->cost_per_bag);
-        $newDelivery->save();
-
-        $booking->bags_out = $booking->bags_out + $totalQuantity;
-        $booking->save();
 
         return $newDelivery;
+    }
+
+    public function saveDeliverygroup(array $request)
+    {
+        DB::beginTransaction();
+        try {
+            $bookingnoArr = array_column($request['deliveries'], 'booking_no');
+            if(count($bookingnoArr) != 1 && count($bookingnoArr) != count(array_unique($bookingnoArr))){
+                throw new \Exception('duplicate booking no. exists');
+            }
+
+            $newDeliverygroup = new Deliverygroup();
+            $newDeliverygroup->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
+            $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count()) . $newDeliverygroup->delivery_time->year % 100;
+            $newDeliverygroup->save();
+
+            foreach ($request['deliveries'] as $deliveryRequest) {
+                $this->createDelivery($newDeliverygroup, $deliveryRequest);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+
+        DB::commit();
+        return $newDeliverygroup;
     }
 
 
@@ -118,10 +184,10 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
     public function saveGatepass(array $request)
     {
-        $delivery = Delivery::findOrFail($request['delivery_id']);
+        $deliverygroup = Deliverygroup::findOrFail($request['deliverygroup_id']);
         $newGatepass = new Gatepass();
-        $newGatepass->delivery_id = $delivery->id;
-        $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time']);
+        $newGatepass->deliverygroup_id = $deliverygroup->id;
+        $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time'])->setTimezone('Asia/Dhaka');
         $newGatepass->gatepass_no = sprintf('%04d', Gatepass::whereYear('gatepass_time', $newGatepass->gatepass_time)->count()) . $newGatepass->gatepass_time->year % 100;
         $newGatepass->transport = $request['transport'];
         $newGatepass->save();

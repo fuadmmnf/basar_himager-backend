@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 
@@ -60,27 +59,27 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Salary Report</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">বেতনের রিপোর্ট</b> <br />
 
     </div>
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Month:</b> {{ date('F, Y', strtotime($month)) }}</p>
+    <p><b>মাস:</b> {{ date('F, Y', strtotime($month)) }}</p>
 </span>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Designation</th>
-        <th>Basic Salary</th>
-        <th>Special Salary</th>
-        <th>Bonus</th>
-        <th>Advance Taken</th>
-        <th>Advance Returned</th>
-        <th>Total Payment</th>
-        <th>Payment Date</th>
+        <th>নাম</th>
+        <th>উপাধি</th>
+        <th>মূল বেতন</th>
+        <th>বিশেষ বেতন</th>
+        <th>বোনাস</th>
+        <th>অগ্রীম গ্রহন</th>
+        <th>অগ্রীম ফেরত</th>
+        <th>সর্বমোট পরিশোধ</th>
+        <th>পরিশোধের তারিখ</th>
     </tr>
 
     </thead>
@@ -117,7 +116,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td> <b>TOTAL<small>(Pay)</small>:</b></td>
+            <td> <b>মোট<small>(পরিশোধ)</small>:</b></td>
             <td><b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('loan_payment')}} </b></td>
             <td></td>
         </tr>

@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
         }
 
         table {
@@ -14,8 +14,7 @@
         }
 
         th, td {
-            padding: 7px;
-            font-family: 'kalpurush', sans-serif;
+            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
 
@@ -60,80 +59,75 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">Gate Pass</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">গেট পাস</b> <br />
 
     </div>
 
 </div>
-<span align="center" style="line-height: 1.2;">
-    <p><b>Gate Pass No:</b> {{$gatepassInfo->gatepass_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
-</span>
 
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>Client Information</h3>
-                <div>
-                    <p><b>Name:</b> {{$gatepassInfo->delivery->booking->client->name}}</p>
-                    <p><b>Phone:</b> {{$gatepassInfo->delivery->booking->client->phone}}</p>
-                    <p><b>Father's Name:</b> {{$gatepassInfo->delivery->booking->client->father_name}}</p>
 
-                </div>
-            </div>
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-        </td>
-    </tr>
+{{--<table>--}}
+{{--    <tr>--}}
+{{--        <td style="width: 50%; text-align: left">--}}
+{{--            <div   >--}}
+{{--                <h3>Client Information</h3>--}}
+{{--                <div>--}}
+{{--                    <p><b>Name:</b> {{$gatepassInfo->delivery->booking->client->name}}</p>--}}
+{{--                    <p><b>Phone:</b> {{$gatepassInfo->delivery->booking->client->phone}}</p>--}}
+{{--                    <p><b>Father's Name:</b> {{$gatepassInfo->delivery->booking->client->father_name}}</p>--}}
 
-</table>
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </td>--}}
+{{--        <td class="td-right-align" style="text-align: right; width: 50%">--}}
+{{--        </td>--}}
+{{--    </tr>--}}
+
+{{--</table>--}}
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>Gate Pass Information</b></span>
+    <span><b>গেট পাসের তথ্য</b></span>
 </div>
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
                 <div>
-                    <p><b>Gate Pass No:</b> {{$gatepassInfo->gatepass_no}}</p>
-                    <p><b>Time:</b> {{ date('F d, Y', strtotime($gatepassInfo->gatepass_time)) }}</p>
+                    <p><b>গেট পাস নং:</b> {{$gatepassInfo->gatepass_no}}</p>
+                    <p><b>সময়:</b> {{ date('F d, Y', strtotime($gatepassInfo->gatepass_time)) }}</p>
                 </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <p><b>Transport Type:</b> {{$gatepassInfo->transport['type']}}</p>
-                <p><b>Transport Number:</b> {{$gatepassInfo->transport['number']}}</p>
+                <p><b>পরিবহনের ধরন:</b> {{$gatepassInfo->transport['type']}}</p>
+                <p><b>পরিবহনের নম্বর:</b> {{$gatepassInfo->transport['number']}}</p>
             </div>
         </td>
     </tr>
 </table>
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>Delivery Information</b></span>
+    <span><b>ডেলিভারি তথ্য</b></span>
 </div>
 
 <table class="bordertable">
     <thead>
         <tr>
-            <th>Potato Type</th>
-            <th>Quantity(Bags)</th>
+            <th>আলুর ধরন</th>
+            <th>পরিমাণ(ব্যাগ)</th>
         </tr>
     </thead>
     <tbody>
-    @if(count($gatepassInfo->delivery->deliveryitems))
-        @foreach($gatepassInfo->delivery->deliveryitems as $item)
+        @foreach($gatepassInfo->deliverygroup->potato_list as $potatoe_type=>$quantity)
             <tr>
-                <td>{{$item->potatoe_type}}</td>
-                <td>{{$item->quantity}}</td>
+                <td>{{$potatoe_type}}</td>
+                <td>{{$quantity}}</td>
             </tr>
         @endforeach
         <tr>
             <td><b>Total</b></td>
-            <td>{{$gatepassInfo->delivery->deliveryitems->sum('quantity')}}</td>
+            <td>{{array_sum($gatepassInfo->deliverygroup->potato_list)}}</td>
         </tr>
-    @endif
     </tbody>
 </table>
 
@@ -143,14 +137,14 @@
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>
