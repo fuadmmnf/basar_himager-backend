@@ -16,7 +16,7 @@ class CreateLoaddistributionsTable extends Migration
         Schema::create('loaddistributions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id');
-//            $table->unsignedBigInteger('receive_id');
+            $table->unsignedBigInteger('receive_id');
             $table->unsignedBigInteger('compartment_id');
             $table->unsignedBigInteger('receiveitem_id');
             $table->string('potato_type');

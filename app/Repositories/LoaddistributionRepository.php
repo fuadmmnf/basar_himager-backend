@@ -35,6 +35,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
                     $newLoaddistribution->booking_id = $request['booking_id'];
                     $newLoaddistribution->receiveitem_id = $loading['receiveitem_id'];
+                    $newLoaddistribution->receive_id = $request['receive_id'];
                     $newLoaddistribution->compartment_id = $distribution['compartment_id'];
                     $newLoaddistribution->potato_type = $receiveItem->potato_type;
                     $newLoaddistribution->quantity = $distribution['quantity'];
