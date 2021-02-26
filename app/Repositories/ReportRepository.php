@@ -141,7 +141,6 @@ class ReportRepository implements ReportRepositoryInterface
             ->with('deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution')
             ->with('deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution.receive')
             ->first();
-
         $potatoArr = [];
         foreach ($gatepass->deliverygroup->deliveries as $delivery){
             foreach ($delivery->deliveryitems as $item){

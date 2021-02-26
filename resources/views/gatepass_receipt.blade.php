@@ -76,6 +76,7 @@
         <td style="width: 50%; text-align: left">
                 <div>
                     <p><b>গেট পাস নং:</b> {{$gatepassInfo->gatepass_no}}</p>
+                    <p><b>দেলিভারী নং:</b> {{$gatepassInfo->deliverygroup->delivery_no}}</p>
                     <p><b>সময়:</b> {{ date('F d, Y', strtotime($gatepassInfo->gatepass_time)) }}</p>
                 </div>
         </td>
@@ -87,6 +88,28 @@
         </td>
     </tr>
 </table>
+
+@if(count($gatepassInfo->deliverygroup->deliveries))
+<div style="margin-top: 10px; text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>গ্রাহকের তথ্য</b></span>
+</div>
+
+<table>
+    <tr>
+        <td style="width: 50%; text-align: left">
+            <div>
+                <div>
+                    <p><b>নাম:</b> {{$gatepassInfo->deliverygroup->deliveries[0]->booking->client->name}}</p>
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+            <p><b>ফোন নম্বর:</b> {{$gatepassInfo->deliverygroup->deliveries[0]->booking->client->phone}}</p>
+        </td>
+    </tr>
+
+</table>
+@endif
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
     <span><b>ডেলিভারি তথ্য</b></span>
