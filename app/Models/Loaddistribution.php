@@ -20,4 +20,8 @@ class Loaddistribution extends Model
     public function receiveitems(){
         return $this->hasMany('App\Models\Receiveitem');
     }
+
+    public function unloadings(){
+        return $this->hasMany('App\Models\Unloading');
+    }
 }

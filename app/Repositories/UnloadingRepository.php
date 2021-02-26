@@ -76,7 +76,6 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                     $newUnloading->loaddistribution_id = $loaddistribution->id;
                     $newUnloading->potato_type = $unloading['potato_type'];
                     $newUnloading->quantity = $unloading['quantity'];
-//                $newUnloading->bag_no = $unloading['bag_no'];
                     $newUnloading->save();
                 }
             }

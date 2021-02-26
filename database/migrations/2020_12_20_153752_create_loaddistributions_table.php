@@ -24,9 +24,10 @@ class CreateLoaddistributionsTable extends Migration
             $table->integer('current_quantity');
             $table->timestamps();
 
-            $table->foreign('receiveitem_id')->references('id')->on('receiveitems');
+
             $table->foreign('booking_id')->references('id')->on('bookings');
             $table->foreign('compartment_id')->references('id')->on('inventories');
+            $table->foreign('receiveitem_id')->references('id')->on('receiveitems');
         });
     }
 
