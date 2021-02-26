@@ -96,6 +96,7 @@
     <thead>
         <tr>
             <th>আলুর ধরন</th>
+            <th>SR তালিকা</th>
             <th>পরিমাণ(ব্যাগ)</th>
         </tr>
     </thead>
@@ -103,6 +104,7 @@
         @foreach($gatepassInfo->deliverygroup->potato_list as $potatoe_type=>$quantity)
             <tr>
                 <td>{{$potatoe_type}}</td>
+                <td>{{ implode(", ", $gatepassInfo->deliverygroup->lot_list[$potatoe_type]) }}</td>
                 <td>{{$quantity}}</td>
             </tr>
         @endforeach
