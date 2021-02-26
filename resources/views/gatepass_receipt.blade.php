@@ -96,7 +96,7 @@
     <thead>
         <tr>
             <th>আলুর ধরন</th>
-            <th>SR তালিকা</th>
+            <th>লট তালিকা</th>
             <th>পরিমাণ(ব্যাগ)</th>
         </tr>
     </thead>
@@ -109,7 +109,7 @@
             </tr>
         @endforeach
         <tr>
-            <td><b>Total</b></td>
+            <td colspan="2"><b>Total</b></td>
             <td>{{array_sum($gatepassInfo->deliverygroup->potato_list)}}</td>
         </tr>
     </tbody>
