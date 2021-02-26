@@ -165,6 +165,7 @@ class ReportRepository implements ReportRepositoryInterface
                     } else {
                         $lotArr[$item->potato_type] = [$lot];
                     }
+
                 }
             }
 
