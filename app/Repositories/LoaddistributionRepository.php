@@ -27,36 +27,42 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
             foreach ($request['loadings'] as $loading){
 
+
                 $receiveItem = Receiveitem::where('id', $loading['receiveitem_id'])->first();
+ 
 
                 foreach ($loading['distributions'] as $distribution) {
 
                     $newLoaddistribution = new Loaddistribution();
-
                     $newLoaddistribution->booking_id = $request['booking_id'];
-                    $newLoaddistribution->receiveitem_id = $loading['receiveitem_id'];
                     $newLoaddistribution->receive_id = $request['receive_id'];
+                    $newLoaddistribution->receiveitem_id = $loading['receiveitem_id'];
                     $newLoaddistribution->compartment_id = $distribution['compartment_id'];
                     $newLoaddistribution->potato_type = $receiveItem->potato_type;
                     $newLoaddistribution->quantity = $distribution['quantity'];
                     $newLoaddistribution->current_quantity = $distribution['quantity'];
-
                     $newLoaddistribution->save();
                     $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
 
-                    if($receiveItem->loaded_quantity > $receiveItem->quantity)
-                    {
-                        throw new \Exception('Loading amount limit exceed.');
-                    }
-                    $receiveItem->save();
-
-                    $inventory = Inventory::where('id', $distribution['compartment_id'])->first();
                     $floor = Inventory::where('id',$inventory->parent_id)->first();
                     $chamber = Inventory::where('id',$floor->parent_id)->first();
 
                     $inventory->current_quantity = $inventory->current_quantity + $distribution['quantity'];
                     $inventory->save();
                     $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
+                    $floor->save();
+                    $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
+
+                    $floor = Inventory::where('id',$inventory->parent_id)->first();
+
+                    $chamber = Inventory::where('id',$floor->parent_id)->first();
+
+
+                    $inventory->current_quantity = $inventory->current_quantity + $distribution['quantity'];
+
+                    $inventory->save();
+                    $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
+
                     $floor->save();
                     $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
                     $chamber->save();
