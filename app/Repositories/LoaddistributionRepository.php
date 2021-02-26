@@ -74,7 +74,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
     public function getLoadDistributionsByReceive($receive_group_id){
 
-        $receives = Receive::where('receivegroup_id',$receive_group_id)->with('booking')->with('receivegroup')->get();
+        $receives = Receive::where('receivegroup_id',$receive_group_id)->with('booking')->with('booking.client')->with('receivegroup')->get();
         foreach ($receives as $receive ){
             $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->get();
             $inventoryHandler = new InventoryHandler();

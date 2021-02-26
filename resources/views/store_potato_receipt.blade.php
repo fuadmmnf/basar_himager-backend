@@ -66,7 +66,7 @@
 </div>
 <span align="center" style="line-height: 1.2;">
     <p style="font-size: 1.4rem; font-weight: bold">আলু সংরক্ষণের দলিল</p>
-    <p><b>Date:</b>{{ date('F d, Y') }}</p>
+    <p><b>তারিখ:</b>{{ date('F d, Y') }}</p>
 </span>
 <table>
     <tr>
