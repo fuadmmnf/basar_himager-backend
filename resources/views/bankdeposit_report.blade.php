@@ -137,7 +137,7 @@
 </table>
 
 <div style="text-align: center; color: darkblue">
-    <h3>ব্যাংক লেনদেন<small>(Withdraw)</small> </h3>
+    <h3>ব্যাংক লেনদেন<small>(উত্তোলন)</small> </h3>
 </div>
 
 <table class="bordertable">

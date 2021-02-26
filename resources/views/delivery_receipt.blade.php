@@ -114,10 +114,10 @@
                 @endforeach
             </td>
             <td>
-                <p>Total Bags: {{($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)/($delivery->cost_per_bag + $delivery->do_charge)}}</p>
-                <p>Per Bag Cost: {{$delivery->cost_per_bag}}</p>
-                <p>DO Charge: {{$delivery->do_charge}}</p>
-                <p>Fan Cost: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</p>
+                <p>মোট ব্যাগ: {{($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)/($delivery->cost_per_bag + $delivery->do_charge)}}</p>
+                <p>বস্তা প্রতি খরচ: {{$delivery->cost_per_bag}}</p>
+                <p>ডি.ও চার্জ: {{$delivery->do_charge}}</p>
+                <p>ফ্যান খরচ: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</p>
             </td>
             <td>{{$delivery->total_charge}} ৳</td>
         </tr>

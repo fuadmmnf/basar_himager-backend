@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Handlers\InventoryHandler;
 use App\Models\Chamber;
 use App\Models\Chamberentry;
+use App\Models\Delivery;
 use App\Models\Deliveryitem;
 use App\Models\Inventory;
 use App\Models\Loaddistribution;
@@ -25,21 +26,23 @@ class UnloadingRepository implements UnloadingRepositoryInterface
         DB::beginTransaction();
         try {
             $booking_id = $request['booking_id'];
-            $delivery_id = $request['delivery_id'];
+            $delivery= Delivery::find($request['delivery_id']);
 //            $deliveryItems = Deliveryitem::where('delivery_id', $delivery_id)->get();
 
 
             foreach ($request['unloadings'] as $unloading) {
+                $deliveryitem = Deliveryitem::find($unloading['deliveryitem_id']);
+
                 $totalUnloadingQuantity = 0;
                 foreach ($unloading['loadings'] as $loading) {
                     $totalUnloadingQuantity += $loading['quantity'];
                 }
-                if ($totalUnloadingQuantity != $unloading['quantity']) {
+                if ($totalUnloadingQuantity != $deliveryitem->quantity) {
                     throw new \Exception('Loading amount limit exceed.');
                 }
 
                 foreach ($unloading['loadings'] as $loading) {
-                    $loaddistribution = Loaddistribution::where('id', $loading['id'])->first();
+                    $loaddistribution = Loaddistribution::where('id', $loading['loaddistribution_id'])->first();
 
 
                     $compartment_id = $loaddistribution->compartment_id;
@@ -74,11 +77,14 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                     $newUnloading->booking_id = $booking_id;
                     $newUnloading->deliveryitem_id = $unloading['deliveryitem_id'];
                     $newUnloading->loaddistribution_id = $loaddistribution->id;
-                    $newUnloading->potato_type = $unloading['potato_type'];
-                    $newUnloading->quantity = $unloading['quantity'];
+                    $newUnloading->potato_type = $deliveryitem->potato_type;
+                    $newUnloading->quantity = $deliveryitem->quantity;
+//                $newUnloading->bag_no = $unloading['bag_no'];
                     $newUnloading->save();
                 }
             }
+            $delivery->status = 1;
+            $delivery->save();
         } catch (\Exception $e) {
             DB::rollback();
             throw new \Exception($e->getMessage());

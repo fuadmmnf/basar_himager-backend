@@ -66,24 +66,6 @@
 </div>
 
 
-{{--<table>--}}
-{{--    <tr>--}}
-{{--        <td style="width: 50%; text-align: left">--}}
-{{--            <div   >--}}
-{{--                <h3>Client Information</h3>--}}
-{{--                <div>--}}
-{{--                    <p><b>Name:</b> {{$gatepassInfo->delivery->booking->client->name}}</p>--}}
-{{--                    <p><b>Phone:</b> {{$gatepassInfo->delivery->booking->client->phone}}</p>--}}
-{{--                    <p><b>Father's Name:</b> {{$gatepassInfo->delivery->booking->client->father_name}}</p>--}}
-
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </td>--}}
-{{--        <td class="td-right-align" style="text-align: right; width: 50%">--}}
-{{--        </td>--}}
-{{--    </tr>--}}
-
-{{--</table>--}}
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
     <span><b>গেট পাসের তথ্য</b></span>
