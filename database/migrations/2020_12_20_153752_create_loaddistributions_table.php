@@ -18,14 +18,15 @@ class CreateLoaddistributionsTable extends Migration
             $table->unsignedBigInteger('booking_id');
             $table->unsignedBigInteger('receive_id');
             $table->unsignedBigInteger('compartment_id');
+            $table->unsignedBigInteger('receiveitem_id');
             $table->string('potato_type');
             $table->integer('quantity');
             $table->integer('current_quantity');
             $table->timestamps();
 
             $table->foreign('booking_id')->references('id')->on('bookings');
-            $table->foreign('receive_id')->references('id')->on('receives');
             $table->foreign('compartment_id')->references('id')->on('inventories');
+            $table->foreign('receiveitem_id')->references('id')->on('receiveitems');
         });
     }
 

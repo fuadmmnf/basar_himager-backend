@@ -137,6 +137,9 @@ class ReportRepository implements ReportRepositoryInterface
             ->with('deliverygroup.deliveries.booking')
             ->with('deliverygroup.deliveries.booking.client')
             ->with('deliverygroup.deliveries.deliveryitems')
+            ->with('deliverygroup.deliveries.deliveryitems.unloadings')
+            ->with('deliverygroup.deliveries.deliveryitems.unloadings.loadistribution')
+            ->with('deliverygroup.deliveries.deliveryitems.unloadings.loadistribution.receive')
             ->first();
 
         $potatoArr = [];
@@ -149,7 +152,26 @@ class ReportRepository implements ReportRepositoryInterface
                 }
             }
         }
+
+        $lotArr = [];
+        foreach ($gatepass->deliverygroup->deliveries as $delivery){
+            foreach ($delivery->deliveryitems as $item) {
+                foreach ($item->unloadings as $unloading) {
+                    $lot = $unloading->loaddistribution->receive->lot_no;
+                    if(isset($lotArr[$item->potato_type])){
+                        if(!in_array($lot, $lotArr[$item->potato_type])){
+                            array_push($lotArr[$item->potato_type], $lot);
+                        }
+                    } else {
+                        $lotArr[$item->potato_type] = [$lot];
+                    }
+                }
+            }
+
+        }
+
         $gatepass->deliverygroup->potato_list = $potatoArr;
+        $gatepass->deliverygroup->lot_list = $lotArr;
         return $gatepass;
     }
 

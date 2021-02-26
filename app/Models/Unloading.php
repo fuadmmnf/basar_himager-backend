@@ -13,4 +13,8 @@ class Unloading extends Model
     {
         return $this->belongsTo('App\Models\Deliveryitem');
     }
+
+    public function loaddistribution(){
+        return $this->belongsTo('App\Models\Loaddistribution');
+    }
 }

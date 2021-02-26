@@ -61,6 +61,12 @@ class InventoryRepository implements Interfaces\InventoryRepositoryInterface
         return $inventories;
     }
 
+    public function getAllInventory()
+    {
+        $inventories = Inventory::all();
+        return $inventories;
+    }
+
     public function fetchInventoryByParentId($parent_id)
     {
         // TODO: Implement fetchInventoryByParentId() method.

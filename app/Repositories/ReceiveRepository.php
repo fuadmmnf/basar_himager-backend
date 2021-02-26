@@ -49,6 +49,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
     public function getRecentReceiveGroups(){
         $recive_groups = Receivegroup::orderByDesc('receiving_time')
             ->with('receives.booking')
+            ->with('receives.booking.client')
             ->paginate(20);
 
         return $recive_groups;

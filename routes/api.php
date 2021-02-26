@@ -103,6 +103,7 @@ Route::post('chamberentries', [\App\Http\Controllers\Api\ChamberentryController:
 
 //====>Inventory
 Route::get('inventories/{inventory_type}', [\App\Http\Controllers\Api\InventoryController::class, 'fetchInventory']);
+Route::get('inventories', [\App\Http\Controllers\Api\InventoryController::class, 'fetchAllInventory']);
 Route::get('inventories/{parent_id}/parents', [\App\Http\Controllers\Api\InventoryController::class, 'getInventoryWithParentId']);
 Route::post('inventories', [\App\Http\Controllers\Api\InventoryController::class, 'createInventory']);
 //====>load
