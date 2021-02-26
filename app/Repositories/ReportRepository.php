@@ -137,6 +137,7 @@ class ReportRepository implements ReportRepositoryInterface
             ->with('deliverygroup.deliveries.booking')
             ->with('deliverygroup.deliveries.booking.client')
             ->with('deliverygroup.deliveries.deliveryitems')
+            ->with('deliverygroup.deliveries.deliveryitems.unloadings')
             ->first();
 
         $potatoArr = [];
