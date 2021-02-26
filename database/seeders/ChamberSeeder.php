@@ -28,7 +28,7 @@ class ChamberSeeder extends Seeder
                     'name' => $j,
                 ]);
                 for ($k = 1; $k<=5; $k++) {
-                    $floor = Inventory::create([
+                    $compartment = Inventory::create([
                         'parent_id' => $floor->id,
                         'category' => 'compartment',
                         'name' => $k,

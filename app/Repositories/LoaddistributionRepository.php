@@ -29,9 +29,10 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
 
                 $receiveItem = Receiveitem::where('id', $loading['receiveitem_id'])->first();
- 
+
 
                 foreach ($loading['distributions'] as $distribution) {
+                    $inventory = Inventory::findOrFail($distribution['compartment_id']);
 
                     $newLoaddistribution = new Loaddistribution();
                     $newLoaddistribution->booking_id = $request['booking_id'];
@@ -44,7 +45,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                     $newLoaddistribution->save();
                     $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
 
-                    $floor = Inventory::where('id',$inventory->parent_id)->first();
+                    $floor = Inventory::where('id', $inventory->parent_id)->first();
                     $chamber = Inventory::where('id',$floor->parent_id)->first();
 
                     $inventory->current_quantity = $inventory->current_quantity + $distribution['quantity'];
