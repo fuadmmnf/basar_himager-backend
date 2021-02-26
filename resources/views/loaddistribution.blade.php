@@ -65,7 +65,7 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Loading Distribution for Receive No: {{$receives[0]->receivegroup->receiving_no}}</p>
+    <p style="font-size: 1.4rem; font-weight: bold">আলু গ্রহণ নম্বর: {{$receives[0]->receivegroup->receiving_no}}</p>
     <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
 </span>
 
@@ -89,7 +89,7 @@
 
 </table>
 
-<br><br>
+<br>
 
 <table class="bordertable">
     <thead>
