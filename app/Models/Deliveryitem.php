@@ -13,7 +13,7 @@ class Deliveryitem extends Model
         return $this->belongsTo('App\Models\Delivery');
     }
 
-    public function unloading()
+    public function unloadings()
     {
         return $this->hasMany('App\Models\Unloading');
     }

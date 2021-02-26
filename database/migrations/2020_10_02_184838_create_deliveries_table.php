@@ -24,6 +24,7 @@ class CreateDeliveriesTable extends Migration
             $table->double('do_charge');
             $table->double('total_charge');
             $table->double('charge_from_booking_amount');
+            $table->integer('status')->default(0); // 0=>DO created, 1=> unloaded
             $table->timestamps();
 
             $table->foreign('deliverygroup_id')->references('id')->on('deliverygroups');
