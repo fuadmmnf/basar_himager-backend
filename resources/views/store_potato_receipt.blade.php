@@ -66,7 +66,7 @@
 </div>
 <span align="center" style="line-height: 1.2;">
     <p style="font-size: 1.4rem; font-weight: bold">আলু সংরক্ষণের দলিল</p>
-    <p><b>তারিখ:</b>{{ date('F d, Y') }}</p>
+    <p><b>তারিখ: </b>{{ date('F d, Y') }}</p>
 </span>
 <table>
     <tr>
@@ -92,47 +92,35 @@
         <thead>
             <tr>
                 <th>বুকিং নম্বর</th>
-                <th>বুকিং সময়</th>
                 <th>বুকিং পরিমাণ</th>
                 <th>রিসিভ নম্বর</th>
-                <th>তারিখ</th>
                 <th>আলুর ধরন</th>
-                <th>পরিমাণ</th>
-                <th>ব্যাগ নম্বর</th>
-                <th>ইনভেন্টরি</th>
+                <th width="30%">ইনভেন্টরি</th>
             </tr>
             </thead>
         <tbody>
-            @if(count($client->bookings))
                 @foreach($client->bookings as $booking)
                     @foreach($booking->receives as $receive)
-                        @if(count($receive->loaddistributions))
                         @foreach($receive->receiveitems as $receiveitem)
                                 @foreach($receive->loaddistributions as $load)
-                                    @if($receiveitem->potatoe_type == $load->potato_type)
+                                    @if($receiveitem->potato_type == $load->potato_type)
                                         <tr>
                                             <td>{{$booking->booking_no}}</td>
-                                            <td>{{$booking->booking_time}}</td>
                                             <td>{{$booking->quantity}}</td>
-                                            <td>{{$receive->receivegroup->receiving_no}}</td>
-                                            <td>{{$receive->receivegroup->receiving_time}}</td>
-                                            <td>{{$receiveitem->potatoe_type}}</td>
-                                            <td>{{$receiveitem->quantity}}</td>
-                                            <td>{{$load->bag_no}}</td>
+                                            <td>{{$receive->receivegroup->receiving_no}} (লট: {{$receive->lot_no}})</td>
+                                            <td>{{$receiveitem->potato_type}} ({{$receiveitem->quantity}})</td>
                                             <td>
-                                                <b>Ch: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>
-                                                <b>FL: </b>{{$load->inventory->parent_info->name}}<br/>
-                                                <b>Co: </b>{{$load->inventory->name}}<br/>
-                                                ({{$load->quantity}})
+                                                <b>Chamber: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>
+                                                <b>Floor: </b>{{$load->inventory->parent_info->name}}<br/>
+                                                <b>Compartment: </b>{{$load->inventory->name}}<br/>
+                                                (পরিমাণ: {{$load->quantity}})
                                             </td>
                                         </tr>
                                     @endif
                                 @endforeach
                         @endforeach
-                        @endif
                     @endforeach
                 @endforeach
-            @endif
             </tbody>
 </table>
 
