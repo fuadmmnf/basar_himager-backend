@@ -29,6 +29,9 @@ class UnloadingRepository implements UnloadingRepositoryInterface
             $delivery= Delivery::find($request['delivery_id']);
 //            $deliveryItems = Deliveryitem::where('delivery_id', $delivery_id)->get();
 
+            if(count($delivery->deliveryitems) != count($request['unloadings'])){
+                throw new \Exception('Unloading must be done for all items');
+            }
 
             foreach ($request['unloadings'] as $unloading) {
                 $deliveryitem = Deliveryitem::find($unloading['deliveryitem_id']);

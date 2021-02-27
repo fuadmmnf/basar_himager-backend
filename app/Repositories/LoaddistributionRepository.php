@@ -24,19 +24,32 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
         DB::beginTransaction();
         try{
+            $receive = Receive::findOrFail($request['receive_id']);
+
+            if(count($receive->receiveitems) != count($request['loadings'])){
+                throw new \Exception('loading must be done for all items');
+            }
 
             foreach ($request['loadings'] as $loading){
 
 
                 $receiveItem = Receiveitem::where('id', $loading['receiveitem_id'])->first();
 
+                $totalReceiveitemLoaded = 0;
+                foreach ($loading['distributions'] as $distribution) {
+                    $totalReceiveitemLoaded += $distribution['quantity'];
+                }
+                if($totalReceiveitemLoaded != $receiveItem->quantity){
+                    throw new \Exception('loading must be done for all bags');
+                }
+
 
                 foreach ($loading['distributions'] as $distribution) {
-                    $inventory = Inventory::findOrFail($distribution['compartment_id']);
+                    $compartment = Inventory::findOrFail($distribution['compartment_id']);
 
                     $newLoaddistribution = new Loaddistribution();
                     $newLoaddistribution->booking_id = $request['booking_id'];
-                    $newLoaddistribution->receive_id = $request['receive_id'];
+                    $newLoaddistribution->receive_id = $receive->id;
                     $newLoaddistribution->receiveitem_id = $loading['receiveitem_id'];
                     $newLoaddistribution->compartment_id = $distribution['compartment_id'];
                     $newLoaddistribution->potato_type = $receiveItem->potato_type;
@@ -45,30 +58,19 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                     $newLoaddistribution->save();
                     $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
 
-                    $floor = Inventory::where('id', $inventory->parent_id)->first();
+                    $floor = Inventory::where('id', $compartment->parent_id)->first();
                     $chamber = Inventory::where('id',$floor->parent_id)->first();
 
-                    $inventory->current_quantity = $inventory->current_quantity + $distribution['quantity'];
-                    $inventory->save();
+                    $compartment->current_quantity = $compartment->current_quantity + $distribution['quantity'];
+                    $compartment->save();
                     $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
-                    $floor->save();
-                    $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
-
-                    $floor = Inventory::where('id',$inventory->parent_id)->first();
-
-                    $chamber = Inventory::where('id',$floor->parent_id)->first();
-
-
-                    $inventory->current_quantity = $inventory->current_quantity + $distribution['quantity'];
-
-                    $inventory->save();
-                    $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
-
                     $floor->save();
                     $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
                     $chamber->save();
 
                 }
+                $receive->status = 1;
+                $receive->save();
             }
         }catch (\Exception $e){
             DB::rollback();
