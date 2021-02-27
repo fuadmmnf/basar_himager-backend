@@ -65,21 +65,42 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Loading Distribution for Receive No: {{$receives[0]->receivegroup->receiving_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y') }}</p>
+    <p style="font-size: 1.4rem; font-weight: bold">আলু গ্রহণ নম্বর: {{$receives[0]->receivegroup->receiving_no}}</p>
+    <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
 </span>
 
+<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>গ্রাহকের তথ্য</b></span>
+</div>
+
+<table>
+    <tr>
+        <td style="width: 50%; text-align: left">
+            <div>
+                <div>
+                    <p><b>নাম:</b> {{$receives[0]->booking->client->name}}</p>
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+            <p><b>ফোন নম্বর:</b> {{$receives[0]->booking->client->phone}}</p>
+        </td>
+    </tr>
+
+</table>
+
+<br>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Booking No</th>
-        <th>Date</th>
-        <th>Chamber</th>
-        <th>Floor</th>
-        <th>Compartment</th>
-        <th>Potato Type </th>
-        <th>Quantity</th>
+        <th>বুকিং নম্বর</th>
+        <th>তারিখ</th>
+        <th>চেম্বার</th>
+        <th>ফ্লোর</th>
+        <th>কম্পার্টমেন্ট</th>
+        <th>আলুর ধরন </th>
+        <th>পরিমাণ</th>
     </tr>
 
     </thead>
@@ -108,14 +129,14 @@
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>

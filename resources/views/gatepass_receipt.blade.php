@@ -66,66 +66,73 @@
 </div>
 
 
-{{--<table>--}}
-{{--    <tr>--}}
-{{--        <td style="width: 50%; text-align: left">--}}
-{{--            <div   >--}}
-{{--                <h3>Client Information</h3>--}}
-{{--                <div>--}}
-{{--                    <p><b>Name:</b> {{$gatepassInfo->delivery->booking->client->name}}</p>--}}
-{{--                    <p><b>Phone:</b> {{$gatepassInfo->delivery->booking->client->phone}}</p>--}}
-{{--                    <p><b>Father's Name:</b> {{$gatepassInfo->delivery->booking->client->father_name}}</p>--}}
-
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </td>--}}
-{{--        <td class="td-right-align" style="text-align: right; width: 50%">--}}
-{{--        </td>--}}
-{{--    </tr>--}}
-
-{{--</table>--}}
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>Gate Pass Information</b></span>
+    <span><b>গেট পাসের তথ্য</b></span>
 </div>
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
                 <div>
-                    <p><b>Gate Pass No:</b> {{$gatepassInfo->gatepass_no}}</p>
-                    <p><b>Time:</b> {{ date('F d, Y', strtotime($gatepassInfo->gatepass_time)) }}</p>
+                    <p><b>গেট পাস নং:</b> {{$gatepassInfo->gatepass_no}}</p>
+                    <p><b>দেলিভারী নং:</b> {{$gatepassInfo->deliverygroup->delivery_no}}</p>
+                    <p><b>সময়:</b> {{ date('F d, Y', strtotime($gatepassInfo->gatepass_time)) }}</p>
                 </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
             <div>
-                <p><b>Transport Type:</b> {{$gatepassInfo->transport['type']}}</p>
-                <p><b>Transport Number:</b> {{$gatepassInfo->transport['number']}}</p>
+                <p><b>পরিবহনের ধরন:</b> {{$gatepassInfo->transport['type']}}</p>
+                <p><b>পরিবহনের নম্বর:</b> {{$gatepassInfo->transport['number']}}</p>
             </div>
         </td>
     </tr>
 </table>
 
+@if(count($gatepassInfo->deliverygroup->deliveries))
+<div style="margin-top: 10px; text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>গ্রাহকের তথ্য</b></span>
+</div>
+
+<table>
+    <tr>
+        <td style="width: 50%; text-align: left">
+            <div>
+                <div>
+                    <p><b>নাম:</b> {{$gatepassInfo->deliverygroup->deliveries[0]->booking->client->name}}</p>
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+            <p><b>ফোন নম্বর:</b> {{$gatepassInfo->deliverygroup->deliveries[0]->booking->client->phone}}</p>
+        </td>
+    </tr>
+
+</table>
+@endif
+
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>Delivery Information</b></span>
+    <span><b>ডেলিভারি তথ্য</b></span>
 </div>
 
 <table class="bordertable">
     <thead>
         <tr>
-            <th>Potato Type</th>
-            <th>Quantity(Bags)</th>
+            <th>আলুর ধরন</th>
+            <th>লট তালিকা</th>
+            <th>পরিমাণ(ব্যাগ)</th>
         </tr>
     </thead>
     <tbody>
         @foreach($gatepassInfo->deliverygroup->potato_list as $potatoe_type=>$quantity)
             <tr>
                 <td>{{$potatoe_type}}</td>
+                <td>{{ implode(", ", $gatepassInfo->deliverygroup->lot_list[$potatoe_type]) }}</td>
                 <td>{{$quantity}}</td>
             </tr>
         @endforeach
         <tr>
-            <td><b>Total</b></td>
+            <td colspan="2"><b>Total</b></td>
             <td>{{array_sum($gatepassInfo->deliverygroup->potato_list)}}</td>
         </tr>
     </tbody>
@@ -137,14 +144,14 @@
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>

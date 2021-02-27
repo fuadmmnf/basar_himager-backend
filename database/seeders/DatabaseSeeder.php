@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AuthorizationSeeder::class);
         $this->call(SettingsSeeder::class);
         $this->call(PotatoTypeSeeder::class);
+        $this->call(ChamberSeeder::class);
     }
 }

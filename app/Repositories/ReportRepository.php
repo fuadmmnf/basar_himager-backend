@@ -137,8 +137,10 @@ class ReportRepository implements ReportRepositoryInterface
             ->with('deliverygroup.deliveries.booking')
             ->with('deliverygroup.deliveries.booking.client')
             ->with('deliverygroup.deliveries.deliveryitems')
+            ->with('deliverygroup.deliveries.deliveryitems.unloadings')
+            ->with('deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution')
+            ->with('deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution.receive')
             ->first();
-
         $potatoArr = [];
         foreach ($gatepass->deliverygroup->deliveries as $delivery){
             foreach ($delivery->deliveryitems as $item){
@@ -149,7 +151,27 @@ class ReportRepository implements ReportRepositoryInterface
                 }
             }
         }
+
+        $lotArr = [];
+        foreach ($gatepass->deliverygroup->deliveries as $delivery){
+            foreach ($delivery->deliveryitems as $item) {
+                foreach ($item->unloadings as $unloading) {
+                    $lot = $unloading->loaddistribution->receive->lot_no;
+                    if(isset($lotArr[$item->potato_type])){
+                        if(!in_array($lot, $lotArr[$item->potato_type])){
+                            array_push($lotArr[$item->potato_type], $lot);
+                        }
+                    } else {
+                        $lotArr[$item->potato_type] = [$lot];
+                    }
+
+                }
+            }
+
+        }
+
         $gatepass->deliverygroup->potato_list = $potatoArr;
+        $gatepass->deliverygroup->lot_list = $lotArr;
         return $gatepass;
     }
 
@@ -177,13 +199,15 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function downloadStorePotatoReceipt($client_id, $date)
     {
-        $temp_date = Carbon::parse($date);
+        $temp_date = Carbon::parse($date)->setTimezone('Asia/Dhaka');
         // TODO: Implement downloadStorePotatoReceipt() method.
-        $client = Client::where('id',$client_id)->with('bookings')
+        $client = Client::where('id', $client_id)
+            ->with('bookings')
             ->with('bookings.receives')
             ->with('bookings.receives.receivegroup')
             ->with('bookings.receives.receiveitems')
             ->first();
+
         $client->report_date = $temp_date;
 
         foreach ($client->bookings as $booking){
