@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Chamber;
+use App\Models\Inventory;
 use Illuminate\Database\Seeder;
 
 class ChamberSeeder extends Seeder
@@ -14,11 +15,74 @@ class ChamberSeeder extends Seeder
      */
     public function run()
     {
-        $chambers = ['chamber-1', 'chamber-2', 'chamber-3'];
-        foreach ($chambers as $chamber){
-            Chamber::create([
-                'name' => $chamber
+        for ($i=1; $i<=1; $i++) {
+            $chamber =  Inventory::create([
+                'category' => 'chamber',
+                'name' => $i,
+                'stage' => 'Stage-0'
             ]);
+            for ($j = 1; $j<=5; $j++) {
+                $floor = Inventory::create([
+                    'parent_id' => $chamber->id,
+                    'category' => 'floor',
+                    'name' => $j,
+                ]);
+                for ($k = 1; $k<=102; $k++) {
+                    $compartment = Inventory::create([
+                        'parent_id' => $floor->id,
+                        'category' => 'compartment',
+                        'name' => $k,
+                    ]);
+                }
+            }
+        }
+
+
+
+        for ($i=2; $i<=2; $i++) {
+            $chamber =  Inventory::create([
+                'category' => 'chamber',
+                'name' => $i,
+                'stage' => 'Stage-0'
+            ]);
+            for ($j = 1; $j<=5; $j++) {
+                $floor = Inventory::create([
+                    'parent_id' => $chamber->id,
+                    'category' => 'floor',
+                    'name' => $j,
+                ]);
+                for ($k = 1; $k<=136; $k++) {
+                    $compartment = Inventory::create([
+                        'parent_id' => $floor->id,
+                        'category' => 'compartment',
+                        'name' => $k,
+                    ]);
+                }
+            }
+        }
+
+
+        for ($i=3; $i<=3; $i++) {
+            $chamber =  Inventory::create([
+                'category' => 'chamber',
+                'name' => $i,
+                'stage' => 'Stage-0'
+            ]);
+            for ($j = 1; $j<=5; $j++) {
+                $floor = Inventory::create([
+                    'parent_id' => $chamber->id,
+                    'category' => 'floor',
+                    'name' => $j,
+                ]);
+                for ($k = 1; $k<= ($j>2? 128: 112); $k++) {
+                    $compartment = Inventory::create([
+                        'parent_id' => $floor->id,
+                        'category' => 'compartment',
+                        'name' => $k,
+                    ]);
+                }
+            }
         }
     }
+
 }

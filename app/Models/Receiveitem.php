@@ -12,4 +12,8 @@ class Receiveitem extends Model
     public function receive(){
         return $this->belongsTo('App\Models\Receive');
     }
+
+    public function loaddistributions(){
+        return $this->belongsTo('App\Models\Loaddistribution');
+    }
 }

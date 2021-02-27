@@ -9,7 +9,19 @@ class Loaddistribution extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'potato_type' => 'array'
+    ];
+
     public function receive(){
         return $this->belongsTo('App\Models\Receive');
+    }
+
+    public function receiveitems(){
+        return $this->hasMany('App\Models\Receiveitem');
+    }
+
+    public function unloadings(){
+        return $this->hasMany('App\Models\Unloading');
     }
 }

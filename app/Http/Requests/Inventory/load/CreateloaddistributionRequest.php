@@ -29,8 +29,7 @@ class CreateloaddistributionRequest extends \Illuminate\Foundation\Http\FormRequ
         return [
             'booking_id' => 'required',
             'receive_id' => 'required',
-            'compartment_id' => 'required',
-            'distributions' => 'required | array',
+            'loadings' => 'required | array',
         ];
     }
 

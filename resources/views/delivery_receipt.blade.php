@@ -65,26 +65,42 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p><b>Receipt No:</b> {{$receiptinfo->delivery_no}}</p>
-    <p><b>Date:</b> {{ date('F d, Y', strtotime($receiptinfo->delivery_time)) }}</p>
+    <p><b>রিসিপ্ট নং:</b> {{$receiptinfo->delivery_no}}</p>
+    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($receiptinfo->delivery_time)) }}</p>
 </span>
 
 
-<div style="text-align: center; padding-bottom: 10px">
-    <b>Delivery Information</b>
+<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>গ্রাহকের তথ্য</b></span>
 </div>
+
+<table>
+    <tr>
+        <td style="width: 50%; text-align: left">
+            <div>
+                <div>
+                    <p><b>নাম:</b> {{$receiptinfo->deliveries[0]->booking->client->name}}</p>
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+            <p><b>ফোন নম্বর:</b> {{$receiptinfo->deliveries[0]->booking->client->phone}}</p>
+        </td>
+    </tr>
+
+</table>
 
 
 <div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>Receive Information</b></span>
+    <span><b>সংগ্রহের তথ্য</b></span>
 </div>
 <table class="bordertable">
     <thead>
     <tr>
-        <th>Booking No.</th>
-        <th>Potato Type</th>
-        <th>Charges</th>
-        <th>Total</th>
+        <th>বুকিং নম্বর</th>
+        <th>আলুর ধরন</th>
+        <th>চার্জ</th>
+        <th>মোট</th>
     </tr>
 
     </thead>
@@ -98,9 +114,10 @@
                 @endforeach
             </td>
             <td>
-                <span>Per Bag Cost: {{$delivery->cost_per_bag}}</span>
-                <span>Fan Cost: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</span>
-                <span>DO Charge: {{$delivery->do_charge}}</span>
+                <p>মোট ব্যাগ: {{($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)/($delivery->cost_per_bag + $delivery->do_charge)}}</p>
+                <p>বস্তা প্রতি খরচ: {{$delivery->cost_per_bag}}</p>
+                <p>ডি.ও চার্জ: {{$delivery->do_charge}}</p>
+                <p>ফ্যান খরচ: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</p>
             </td>
             <td>{{$delivery->total_charge}} ৳</td>
         </tr>
@@ -112,19 +129,19 @@
 {{--</table>--}}
 
 <div class="footer">
-    <table>
+    <table >
         <tr>
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>

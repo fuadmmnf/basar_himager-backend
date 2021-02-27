@@ -65,21 +65,21 @@
 
 </div>
 <span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">Potato Store Receipt</p>
-    <p><b>Date:</b>{{ date('F d, Y') }}</p>
+    <p style="font-size: 1.4rem; font-weight: bold">আলু সংরক্ষণের দলিল</p>
+    <p><b>তারিখ: </b>{{ date('F d, Y') }}</p>
 </span>
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
             <div   >
-                <h3>Client Information</h3>
+                <h3>গ্রাহকের তথ্য</h3>
                 <br/>
                 <div>
-                    <p><b>Client No:</b> {{$client->client_no}}</p>
-                    <p><b>NID:</b> {{$client->nid}}</p>
-                    <p><b>Name:</b> {{$client->name}}</p>
-                    <p><b>Phone:</b> {{$client->phone}}</p>
-                    <p><b>Father's Name:</b> {{$client->father_name}}</p>
+                    <p><b>গ্রাহকের নং:</b> {{$client->client_no}}</p>
+                    <p><b>এন.আই.ডি:</b> {{$client->nid}}</p>
+                    <p><b>নাম:</b> {{$client->name}}</p>
+                    <p><b>ফোন নম্বর:</b> {{$client->phone}}</p>
+                    <p><b>বাবার নাম:</b> {{$client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -91,48 +91,36 @@
 <table class="bordertable">
         <thead>
             <tr>
-                <th>Booking No</th>
-                <th>Booking Time</th>
-                <th>Booking Quantity</th>
-                <th>Receive No.</th>
-                <th>Date</th>
-                <th>Potato Type</th>
-                <th>Quantity</th>
-                <th>Bag No</th>
-                <th>Inventory</th>
+                <th>বুকিং নম্বর</th>
+                <th>বুকিং পরিমাণ</th>
+                <th>রিসিভ নম্বর</th>
+                <th>আলুর ধরন</th>
+                <th width="30%">ইনভেন্টরি</th>
             </tr>
             </thead>
         <tbody>
-            @if(count($client->bookings))
                 @foreach($client->bookings as $booking)
                     @foreach($booking->receives as $receive)
-                        @if(count($receive->loaddistributions))
                         @foreach($receive->receiveitems as $receiveitem)
                                 @foreach($receive->loaddistributions as $load)
-                                    @if($receiveitem->potatoe_type == $load->potato_type)
+                                    @if($receiveitem->potato_type == $load->potato_type)
                                         <tr>
                                             <td>{{$booking->booking_no}}</td>
-                                            <td>{{$booking->booking_time}}</td>
                                             <td>{{$booking->quantity}}</td>
-                                            <td>{{$receive->receivegroup->receiving_no}}</td>
-                                            <td>{{$receive->receivegroup->receiving_time}}</td>
-                                            <td>{{$receiveitem->potatoe_type}}</td>
-                                            <td>{{$receiveitem->quantity}}</td>
-                                            <td>{{$load->bag_no}}</td>
+                                            <td>{{$receive->receivegroup->receiving_no}} (লট: {{$receive->lot_no}})</td>
+                                            <td>{{$receiveitem->potato_type}} ({{$receiveitem->quantity}})</td>
                                             <td>
-                                                <b>Ch: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>
-                                                <b>FL: </b>{{$load->inventory->parent_info->name}}<br/>
-                                                <b>Co: </b>{{$load->inventory->name}}<br/>
-                                                ({{$load->quantity}})
+                                                <b>Chamber: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>
+                                                <b>Floor: </b>{{$load->inventory->parent_info->name}}<br/>
+                                                <b>Compartment: </b>{{$load->inventory->name}}<br/>
+                                                (পরিমাণ: {{$load->quantity}})
                                             </td>
                                         </tr>
                                     @endif
                                 @endforeach
                         @endforeach
-                        @endif
                     @endforeach
                 @endforeach
-            @endif
             </tbody>
 </table>
 
@@ -142,14 +130,14 @@
             <td width="50%">
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Recepient</b>
+                    <b>গ্রাহক</b>
                 </div>
 
             </td>
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>Authority</b>
+                    <b>কর্তিপক্ষ</b>
                 </div>
 
             </td>

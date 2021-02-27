@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Handlers\InventoryHandler;
 use App\Models\Chamber;
 use App\Models\Chamberentry;
+use App\Models\Delivery;
 use App\Models\Deliveryitem;
 use App\Models\Inventory;
 use App\Models\Loaddistribution;
@@ -23,76 +24,71 @@ class UnloadingRepository implements UnloadingRepositoryInterface
     {
         // TODO: Implement createUnloadingEntry() method.
         DB::beginTransaction();
-        try{
+        try {
             $booking_id = $request['booking_id'];
-            $delivery_id = $request['delivery_id'];
-            $deliveryItems = Deliveryitem::where('delivery_id', $delivery_id)->get();
+            $delivery= Delivery::find($request['delivery_id']);
+//            $deliveryItems = Deliveryitem::where('delivery_id', $delivery_id)->get();
 
-            $unloadingItems = [];
-            foreach ($request['unloadings'] as $unloading){
-                if(isset($unloadingItems[$unloading['potato_type']])){
-                    $unloadingItems[$unloading['potato_type']] += $unloading['quantity'];
-                } else {
-                    $unloadingItems[$unloading['potato_type']] = $unloading['quantity'];
-                }
-            }
-            foreach ($deliveryItems as $deliveryItem){
-                if($unloadingItems[$deliveryItem->potato_type] > $deliveryItem->quantity){
-                    throw new \Exception('Unloading amount must be less then loading amount');
-                }
+            if(count($delivery->deliveryitems) != count($request['unloadings'])){
+                throw new \Exception('Unloading must be done for all items');
             }
 
+            foreach ($request['unloadings'] as $unloading) {
+                $deliveryitem = Deliveryitem::find($unloading['deliveryitem_id']);
 
-            foreach ($request['unloadings'] as $unloading){
+                $totalUnloadingQuantity = 0;
+                foreach ($unloading['loadings'] as $loading) {
+                    $totalUnloadingQuantity += $loading['quantity'];
+                }
+                if ($totalUnloadingQuantity != $deliveryitem->quantity) {
+                    throw new \Exception('Loading amount limit exceed.');
+                }
 
-                $loaddistribution = Loaddistribution::where('id', $unloading['loaddistribution_id'])->first();
-
-                if($this->checkVisibility($loaddistribution->current_quantity , $unloading['quantity'])){
-                    $loaddistribution->current_quantity = $loaddistribution->current_quantity - $unloading['quantity'];
-                }else throw new \Exception('Loading amount limit exceed.');
-
-                $compartment_id = $loaddistribution->compartment_id;
-                $loaddistribution->save();
+                foreach ($unloading['loadings'] as $loading) {
+                    $loaddistribution = Loaddistribution::where('id', $loading['loaddistribution_id'])->first();
 
 
-                $inventories = Inventory::where('id', $compartment_id)->first();
-                $floor = Inventory::where('id',$inventories->parent_id)->first();
-                $chamber = Inventory::where('id',$floor->parent_id)->first();
+                    $compartment_id = $loaddistribution->compartment_id;
+                    $loaddistribution->current_quantity -= $loading['quantity'];
+                    $loaddistribution->save();
 
-                if($this->checkVisibility($inventories->current_quantity , $unloading['quantity'])){
-                    $inventories->current_quantity = $inventories->current_quantity - $unloading['quantity'];
-                    $inventories->save();
-                }else throw new \Exception('Loading amount limit exceed.');
 
-                if($this->checkVisibility($floor->current_quantity , $unloading['quantity'])){
-                    $floor->current_quantity = $floor->current_quantity - $unloading['quantity'];
+                    $compartment = Inventory::where('id', $compartment_id)->first();
+                    $floor = Inventory::where('id', $compartment->parent_id)->first();
+                    $chamber = Inventory::where('id', $floor->parent_id)->first();
+
+                    if ($compartment->current_quantity < $loading['quantity']) {
+                        throw new \Exception('compartment limit exceeded');
+                    }
+
+                    $compartment->current_quantity = $compartment->current_quantity - $loading['quantity'];
+                    $compartment->save();
+
+                    $floor->current_quantity = $floor->current_quantity - $loading['quantity'];
                     $floor->save();
-                }else throw new \Exception('Loading amount limit exceed.');
 
-                if($this->checkVisibility($chamber->current_quantity , $unloading['quantity'])){
-
-                    $chamber->current_quantity = $chamber->current_quantity - $unloading['quantity'];
+                    $chamber->current_quantity = $chamber->current_quantity - $loading['quantity'];
                     $chamber->save();
-                    if($chamber->current_quantity == 0)
-                    {
+
+                    if ($chamber->current_quantity == 0) {
                         //$chamberStage->stage = 'Stage-0';
                         $inventoryHandler = new InventoryHandler();
-                        $inventoryHandler->saveChamberStageChange($chamber->id,'Stage-0',Carbon::now()->setTimezone('Asia/Dhaka'));
+                        $inventoryHandler->saveChamberStageChange($chamber->id, 'Stage-0', Carbon::now()->setTimezone('Asia/Dhaka'));
                     }
-                 }else throw new \Exception('Loading amount limit exceed.');
 
-                $newUnloading =new Unloading();
-
-                $newUnloading->booking_id = $booking_id;
-                $newUnloading->delivery_id = $delivery_id;
-                $newUnloading->loaddistribution_id = $unloading['loaddistribution_id'];
-                $newUnloading->potato_type = $unloading['potato_type'];
-                $newUnloading->quantity = $unloading['quantity'];
+                    $newUnloading = new Unloading();
+                    $newUnloading->booking_id = $booking_id;
+                    $newUnloading->deliveryitem_id = $unloading['deliveryitem_id'];
+                    $newUnloading->loaddistribution_id = $loaddistribution->id;
+                    $newUnloading->potato_type = $deliveryitem->potato_type;
+                    $newUnloading->quantity = $deliveryitem->quantity;
 //                $newUnloading->bag_no = $unloading['bag_no'];
-                $newUnloading->save();
-
+                    $newUnloading->save();
+                }
             }
-        }catch (\Exception $e){
+            $delivery->status = 1;
+            $delivery->save();
+        } catch (\Exception $e) {
             DB::rollback();
             throw new \Exception($e->getMessage());
         }
@@ -101,10 +97,4 @@ class UnloadingRepository implements UnloadingRepositoryInterface
         return $newUnloading;
     }
 
-    private function checkVisibility($a,$b){
-        if($a-$b <0){
-            return false;
-        }
-        else return true;
-    }
 }

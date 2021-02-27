@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Receive;
 use App\Models\Receivegroup;
 use App\Models\Receiveitem;
+use App\Models\settings;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -48,6 +49,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
     public function getRecentReceiveGroups(){
         $recive_groups = Receivegroup::orderByDesc('receiving_time')
             ->with('receives.booking')
+            ->with('receives.booking.client')
             ->paginate(20);
 
         return $recive_groups;
@@ -64,6 +66,9 @@ class ReceiveRepository implements ReceiveRepositoryInterface
     private function createReceive(Receivegroup $receivegroup, array $reciveRequest)
     {
         $booking = Booking::findOrFail($reciveRequest['booking_id']);
+        $currentSR = settings::where('key', 'current_sr_no')->first();
+        $currentSR->value += 1;
+
         $newReceive = new Receive();
         $newReceive->receivegroup_id = $receivegroup->id;
         $newReceive->booking_id = $booking->id;
@@ -83,10 +88,15 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         if ($booking->bags_in + $totalQuantity > $booking->quantity) {
             throw new \Exception('receive cannot be greater than booking quantity');
         }
+
+//        $newReceive->sr_no = date('Y') . '_' . $currentSR;
+        $newReceive->sr_no = date('Y') . '_' . $currentSR->value;
+        $newReceive->lot_no = $currentSR->value . '/' . $totalQuantity;
         $newReceive->booking_currently_left = $booking->quantity - $booking->bags_in - $totalQuantity;
         $newReceive->transport = $reciveRequest['transport'];
 
         $newReceive->save();
+        $currentSR->save();
 
         foreach ($receiveitems as $potato_type => $quantity) {
             $newReceiveItem = new Receiveitem();

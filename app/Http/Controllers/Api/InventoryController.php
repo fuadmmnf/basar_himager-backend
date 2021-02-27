@@ -33,6 +33,12 @@ class InventoryController extends ApiController
         $inventory = $this->inventoryRepository->getInventory($inventory_type);
         return response()->json($inventory, 200);
     }
+    public function fetchAllInventory()
+    {
+
+        $inventory = $this->inventoryRepository->getAllInventory();
+        return response()->json($inventory, 200);
+    }
 
     public function getInventoryWithParentId($parent_id){
         $inventory = $this->inventoryRepository->fetchInventoryByParentId($parent_id);

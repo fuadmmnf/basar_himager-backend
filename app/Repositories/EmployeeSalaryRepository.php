@@ -25,7 +25,7 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
     public function storeEmployeeSalary(array $request)
     {
         $employee = Employee::findOrFail($request['employee_id']);
-        $salary = $employee->basic_salary + $employee->special_salary;
+        $salary = (int)(($employee->basic_salary + $employee->special_salary) * $request['working_day']) / 30;
         if ($salary + $request['bonus'] < $request['loan_payment']) {
             return null;
         }

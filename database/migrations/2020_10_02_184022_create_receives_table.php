@@ -17,8 +17,11 @@ class CreateReceivesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('receivegroup_id');
             $table->unsignedBigInteger('booking_id');
+            $table->string('sr_no')->unique();
+            $table->string('lot_no');
             $table->integer('booking_currently_left');
             $table->json('transport');
+            $table->integer('status')->default(0); // 0=> received, 1=>loaded
             $table->timestamps();
 
             $table->foreign('receivegroup_id')->references('id')->on('receivegroups');
