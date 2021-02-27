@@ -128,7 +128,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
             $newReceivegroup = new Receivegroup();
             $newReceivegroup->receiving_time = Carbon::parse($request['receiving_time'])->setTimezone('Asia/Dhaka');
-            $newReceivegroup->receiving_no = sprintf('%04d', Receivegroup::whereYear('receiving_time', $newReceivegroup->receiving_time)->count()) . $newReceivegroup->receiving_time->year % 100;
+            $newReceivegroup->receiving_no = sprintf('%04d', Receivegroup::whereYear('receiving_time', $newReceivegroup->receiving_time)->count() + 1) . $newReceivegroup->receiving_time->year % 100;
             $newReceivegroup->save();
 
             foreach ($request['receives'] as $receiveRequest) {

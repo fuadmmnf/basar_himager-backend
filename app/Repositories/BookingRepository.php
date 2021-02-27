@@ -58,7 +58,7 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking->type = $request['type'];
 
         $newBooking->booking_no = (($newBooking->type) ? 'A' : 'N')
-            . sprintf('%04d', Booking::whereYear('booking_time', $newBooking->booking_time)->count())
+            . sprintf('%04d', Booking::whereYear('booking_time', $newBooking->booking_time)->count() + 2101)
             . $newBooking->booking_time->year % 100;
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];

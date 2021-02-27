@@ -160,7 +160,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
             $newDeliverygroup = new Deliverygroup();
             $newDeliverygroup->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
-            $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count()) . $newDeliverygroup->delivery_time->year % 100;
+            $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count() + 1) . $newDeliverygroup->delivery_time->year % 100;
             $newDeliverygroup->save();
 
             foreach ($request['deliveries'] as $deliveryRequest) {
