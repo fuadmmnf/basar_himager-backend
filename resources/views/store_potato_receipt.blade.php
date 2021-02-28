@@ -94,6 +94,7 @@
                 <th>বুকিং নম্বর</th>
                 <th>বুকিং পরিমাণ</th>
                 <th>রিসিভ নম্বর</th>
+                <th>লট নং</th>
                 <th>আলুর ধরন</th>
                 <th width="30%">ইনভেন্টরি</th>
             </tr>
@@ -107,7 +108,8 @@
                                         <tr>
                                             <td>{{$booking->booking_no}}</td>
                                             <td>{{$booking->quantity}}</td>
-                                            <td>{{$receive->receivegroup->receiving_no}} (লট: {{$receive->lot_no}})</td>
+                                            <td>{{$receive->receivegroup->receiving_no}}</td>
+                                            <td>{{$receive->lot_no}}</td>
                                             <td>{{$receiveitem->potato_type}} ({{$receiveitem->quantity}})</td>
                                             <td>
                                                 <b>Chamber: </b>{{$load->inventory->parent_info->parent_info->name}}<br/>

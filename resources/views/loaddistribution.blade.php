@@ -101,6 +101,7 @@
         <th>কম্পার্টমেন্ট</th>
         <th>আলুর ধরন </th>
         <th>পরিমাণ</th>
+        <th>লট নং</th>
     </tr>
 
     </thead>
@@ -116,6 +117,7 @@
                 <td>{{$load->inventory->name}}</td>
                 <td>{{$load->potato_type}}</td>
                 <td>{{$load->quantity}}</td>
+                <td>{{$receive->lot_no}}</td>
             </tr>
             @endforeach
         @endforeach
