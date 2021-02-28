@@ -97,6 +97,7 @@
     <tr>
         <th>বুকিং নং</th>
         <th>বুকিং পরিমাণ</th>
+        <th>লট নং</th>
         <th>পরিবহন</th>
         <th>আলুর ধরন</th>
     </tr>
@@ -107,6 +108,7 @@
         <tr>
             <td>{{$receive->booking->booking_no}}</td>
             <td>{{$receive->booking_currently_left}}</td>
+            <td>{{$receive->lot_no}}</td>
             <td>{{ucfirst($receive->transport['type'])}} ({{$receive->transport['number']}})</td>
             <td>
                 @foreach($receive->receiveitems as $item)
