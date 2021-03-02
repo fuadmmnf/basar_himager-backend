@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Requests\Client\CreateClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
 use App\Repositories\Interfaces\ClientRepositoryInterface;
 
 class ClientController extends \App\Http\Controllers\ApiController
@@ -17,6 +18,10 @@ class ClientController extends \App\Http\Controllers\ApiController
 
     public function createClient(CreateClientRequest $request){
         $client = $this->clientRepository->storeClient($request->validated());
+        return response()->json($client, 201);
+    }
+    public function updateClient(UpdateClientRequest $request, $client_id){
+        $client = $this->clientRepository->updateClient($request->validated(), $client_id);
         return response()->json($client, 201);
     }
 
