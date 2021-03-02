@@ -20,6 +20,22 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
         return $client;
     }
 
+    public function updateClient(array $request, $client_id)
+    {
+        // TODO: Implement storeClient() method.
+       $client = Client::find($client_id);
+
+       $client->nid = $request['nid'];
+       $client->name = $request['name'];
+       $client->phone = $request['phone'];
+       $client->father_name = $request['father_name'];
+       $client->mother_name = $request['mother_name'];
+       $client->address = $request['address'];
+       $client->save();
+
+       return $client;
+    }
+
     public function fetchClient()
     {
         // TODO: Implement fetchClient() method.

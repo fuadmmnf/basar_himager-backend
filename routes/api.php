@@ -114,11 +114,14 @@ Route::get('bookings/{booking_id}/loaddistributions',[\App\Http\Controllers\Api\
 
 //unloading
 Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,'saveUnloading']);
+
 //client
-Route::post('clients', [\App\Http\Controllers\Api\ClientController::class, 'createClient']);
 Route::get('clients', [\App\Http\Controllers\Api\ClientController::class, 'getClients']);
 Route::get('clients/list', [\App\Http\Controllers\Api\ClientController::class,'getClientList']);
 Route::get('clients/list/customized', [\App\Http\Controllers\Api\ClientController::class,'getClientsWithFewerAttributes']);
+Route::post('clients', [\App\Http\Controllers\Api\ClientController::class, 'createClient']);
+Route::put('clients/{client_id}', [\App\Http\Controllers\Api\ClientController::class, 'updateClient']);
+
 
 //settings
 Route::get('settings', [\App\Http\Controllers\Api\SettingsController::class,'fetch']);
