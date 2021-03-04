@@ -14,8 +14,6 @@ class BookingRepository implements BookingRepositoryInterface
 {
 
 
-
-
     public function getBookingListBySearchedQuery($query)
     {
         $bookings = Booking::select('bookings.*')
@@ -48,6 +46,16 @@ class BookingRepository implements BookingRepositoryInterface
         return $bookinglist;
     }
 
+    private function getBookingCountForSession(Carbon $bookingTime)
+    {
+        $year_low = $bookingTime->month > 4 ? $bookingTime->year : $bookingTime->year - 1;
+        return Booking::whereBetween('booking_time',
+            [
+                Carbon::create($year_low, 4, 1, 0)->setTimezone('Asia/Dhaka'),
+                Carbon::create($year_low + 1, 3, 31, 23, 59)->setTimezone('Asia/Dhaka')
+            ]
+        )->count();
+    }
 
     public function saveBooking(array $request)
     {
@@ -58,7 +66,7 @@ class BookingRepository implements BookingRepositoryInterface
         $newBooking->type = $request['type'];
 
         $newBooking->booking_no = (($newBooking->type) ? 'A' : 'N')
-            . sprintf('%04d', Booking::whereYear('booking_time', $newBooking->booking_time)->count() + ($newBooking->type? 1: 2101))
+            . sprintf('%04d', $this->getBookingCountForSession($newBooking->booking_time) + ($newBooking->type ? 1 : 2101))
             . '_' . $newBooking->booking_time->year % 100;
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];
