@@ -16,6 +16,7 @@ interface ReportRepositoryInterface
     public function fetchLoanCollectionInfo($id);
     public function fetchGatepass($delivey_id);
     public function fetchAccountingInformation($start_date, $end_date): array;
+    public function fetchReceivesInformation($start_date, $end_date);
     public function downloadStorePotatoReceipt($client_id,$date);
 
 }

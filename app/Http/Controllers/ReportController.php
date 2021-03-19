@@ -168,4 +168,21 @@ class ReportController extends Controller
         ]);
         return $pdf->stream();
     }
+
+    public function downloadReceiveReportInRange($start_date, $end_date)
+    {
+        try {
+            $receivegroups = $this->reportRepository->fetchReceivesInformation($start_date, $end_date);
+        } catch (\Exception $e) {
+            dd("Please Provide Appropriate Date");
+        }
+
+
+        $pdf = PDF::loadView('receive_report', [
+           'receivegroups' => $receivegroups,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+        ]);
+        return $pdf->stream();
+    }
 }

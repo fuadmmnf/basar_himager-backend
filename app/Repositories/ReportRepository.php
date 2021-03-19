@@ -175,6 +175,18 @@ class ReportRepository implements ReportRepositoryInterface
         return $gatepass;
     }
 
+    public function fetchReceivesInformation($start_date, $end_date)
+    {
+        $receivegroups = Receivegroup::whereDate('receiving_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('receiving_time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
+            ->with('receives')
+            ->with('receives.booking')
+            ->with('receives.booking.client')
+            ->with('receives.receiveitems')
+            ->get();
+        return $receivegroups;
+    }
+
     public function fetchAccountingInformation($start_date, $end_date): array
     {
         $transactions = Transaction::whereDate('time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
