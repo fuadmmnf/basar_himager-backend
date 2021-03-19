@@ -168,4 +168,31 @@ class ReportController extends Controller
         ]);
         return $pdf->stream();
     }
+
+    public function downloadReceiveReportInRange($start_date, $end_date)
+    {
+        try {
+            $receivegroups = $this->reportRepository->fetchReceivesInformation($start_date, $end_date);
+        } catch (\Exception $e) {
+            dd("Please Provide Appropriate Date");
+        }
+        $total = 0;
+        foreach ($receivegroups as $receivegroup)
+        {
+            foreach ($receivegroup->receives as $receive)
+            {
+                foreach ($receive->receiveitems as $item)
+                {
+                    $total += $item->quantity;
+                }
+            }
+        }
+        $pdf = PDF::loadView('receive_report', [
+           'receivegroups' => $receivegroups,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'total' => $total
+        ]);
+        return $pdf->stream();
+    }
 }
