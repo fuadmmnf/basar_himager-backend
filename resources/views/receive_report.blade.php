@@ -69,6 +69,9 @@
     <p><b>শুরুর তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
     <p><b>শেষ তারিখ:</b> {{ date('F d, Y', strtotime($end_date)) }}</p>
 </div>
+<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+    <span><b>মোট পরিমাণ: <b>{{$total}}</b> বস্তা</b></span>
+</div>
 <table class="bordertable">
     <thead>
     <tr>
