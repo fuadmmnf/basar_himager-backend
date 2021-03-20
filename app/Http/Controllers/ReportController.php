@@ -15,6 +15,7 @@ class ReportController extends Controller
 
     public function __construct(ReportRepositoryInterface $reportRepository)
     {
+        ini_set('max_execution_time', '300');
         ini_set("pcre.backtrack_limit", "5000000");
         $this->reportRepository = $reportRepository;
     }
