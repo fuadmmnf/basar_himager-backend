@@ -27,10 +27,9 @@ class BookingController extends ApiController
         return response()->json($bookinglist);
     }
 
-    public function bookingListBySearchedQuery($query)
+    public function fetchBookingsBySearchedQuery($query)
     {
         $bookings = $this->bookingRepository->getBookingListBySearchedQuery($query);
-
         return response()->json($bookings, 201);
     }
      public function fetchBookingDetail($booking_no){

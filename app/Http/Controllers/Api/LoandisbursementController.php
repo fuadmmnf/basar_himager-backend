@@ -26,7 +26,7 @@ class LoandisbursementController extends ApiController
     {
         $disbursements = $this->loandisbursementRepository->getPaginatedLoanDisbursementByBookingId($booking_id);
 
-        return response()->json($disbursements, 201);
+        return response()->json($disbursements, 200);
     }
 
 

@@ -50,7 +50,9 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     public function getPaginatedDeliveriesByBookingId($booking_id)
     {
         $booking = Booking::findOrFail($booking_id);
-        $deliveries = $booking->deliveries()->paginate(15);
+        $deliveries =Delivery::where('booking_id', $booking->id)
+        ->with('deliverygroup')
+        ->paginate(15);
 
         return $deliveries;
     }
