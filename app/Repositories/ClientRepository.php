@@ -52,4 +52,10 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
         $clients = Client::select('id', 'client_no','nid','name','phone')->get();
         return $clients;
     }
+
+    public function fetchSingleClient($client_id)
+    {
+        $client = Client::findOrFail($client_id);
+        return $client;
+    }
 }

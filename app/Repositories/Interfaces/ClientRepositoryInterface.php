@@ -11,4 +11,5 @@ interface ClientRepositoryInterface
     public function fetchClient();
     public function fetchClientList();
     public function fetchClientListWithFewerAttributes();
+    public function fetchSingleClient($client_id);
 }
