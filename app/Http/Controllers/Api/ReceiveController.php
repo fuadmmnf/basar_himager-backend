@@ -40,7 +40,7 @@ class ReceiveController extends ApiController
     {
         $receives = $this->receiveRepository->getPaginatedReceivesByBookingId($booking_id);
 
-        return response()->json($receives, 201);
+        return response()->json($receives, 200);
     }
     public function createReceivegroup(CreatereceiveRequest $request){
 

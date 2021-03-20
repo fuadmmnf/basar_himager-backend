@@ -42,7 +42,7 @@ class DeliveryController extends ApiController
     {
         $deliveries = $this->deliveryRepository->getPaginatedDeliveriesByBookingId($booking_id);
 
-        return response()->json($deliveries, 201);
+        return response()->json($deliveries, 200);
     }
 
     public function createDeliverygroup(CreateDeliveryRequest $request){
