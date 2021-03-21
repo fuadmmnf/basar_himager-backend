@@ -46,6 +46,14 @@ class BookingRepository implements BookingRepositoryInterface
         return $bookinglist;
     }
 
+    public function getAllBookingListByClientId($client_id)
+    {
+        $bookings = Booking::where('client_id', $client_id)
+            ->orderByDesc('booking_time')
+            ->paginate(15);
+        return $bookings;
+    }
+
     private function getBookingNumberForSession($bookingType, Carbon $bookingTime)
     {
         $year_low = $bookingTime->month > 3 ? $bookingTime->year : $bookingTime->year - 1;

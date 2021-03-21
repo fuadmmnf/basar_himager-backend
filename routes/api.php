@@ -41,10 +41,11 @@ Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank'
 Route::post('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'storeBankDeposit']);
 
 //bookings
-Route::get('bookings/search?query={query}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingsBySearchedQuery']);
+Route::get('bookings/search/query={query}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingsBySearchedQuery']);
 Route::get('bookings/{booking_no}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingDetail']);
 Route::get('bookings', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookings']);
 Route::get('clients/{client_id}/bookings/all', [\App\Http\Controllers\Api\BookingController::class, 'fetchAllBookingListByClient']);
+Route::get('clients/{client_id}/bookings', [\App\Http\Controllers\Api\BookingController::class, 'fetchAllBookingsByClientId']);
 Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'createBooking']);
 
 //receives
@@ -118,6 +119,7 @@ Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,
 //client
 Route::get('clients', [\App\Http\Controllers\Api\ClientController::class, 'getClients']);
 Route::get('clients/list', [\App\Http\Controllers\Api\ClientController::class,'getClientList']);
+Route::get('clients/{client_id}', [\App\Http\Controllers\Api\ClientController::class,'getSingleClient']);
 Route::get('clients/list/customized', [\App\Http\Controllers\Api\ClientController::class,'getClientsWithFewerAttributes']);
 Route::post('clients', [\App\Http\Controllers\Api\ClientController::class, 'createClient']);
 Route::put('clients/{client_id}', [\App\Http\Controllers\Api\ClientController::class, 'updateClient']);
