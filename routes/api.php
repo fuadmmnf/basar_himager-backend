@@ -118,6 +118,7 @@ Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,
 
 //client
 Route::get('clients', [\App\Http\Controllers\Api\ClientController::class, 'getClients']);
+Route::get('clients/search/query={query}', [\App\Http\Controllers\Api\ClientController::class, 'getClientsBySearchQuery']);
 Route::get('clients/list', [\App\Http\Controllers\Api\ClientController::class,'getClientList']);
 Route::get('clients/{client_id}', [\App\Http\Controllers\Api\ClientController::class,'getSingleClient']);
 Route::get('clients/list/customized', [\App\Http\Controllers\Api\ClientController::class,'getClientsWithFewerAttributes']);

@@ -30,6 +30,11 @@ class ClientController extends \App\Http\Controllers\ApiController
         return response()->json($clients,200);
     }
 
+    public function getClientsBySearchQuery($query){
+        $clients = $this->clientRepository->fetchClientBySearchQuery($query);
+        return response()->json($clients,200);
+    }
+
     public function getClientsWithFewerAttributes(){
         $clients = $this->clientRepository->fetchClientListWithFewerAttributes();
         return response()->json($clients,200);
