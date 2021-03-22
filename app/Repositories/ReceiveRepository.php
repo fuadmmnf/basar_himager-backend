@@ -43,12 +43,10 @@ class ReceiveRepository implements ReceiveRepositoryInterface
             ->orWhere('receives.sr_no', 'LIKE', '%' . $query . '%')
             ->join('bookings', 'bookings.id', '=', 'receives.booking_id')
             ->orWhere('bookings.booking_no', 'LIKE', '%' . $query . '%')
-            ->join('clients', 'clients.id', '=', 'bookings.client_id')
-            ->orWhere('clients.phone', 'LIKE', '%' . $query . '%')
-            ->orWhere('clients.name', 'LIKE', '%' . $query . '%')
             ->with('receives.booking')
             ->with('receives.booking.client')
             ->paginate(15);
+
         return $receivegroups;
     }
 
