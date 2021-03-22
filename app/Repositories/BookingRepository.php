@@ -20,6 +20,7 @@ class BookingRepository implements BookingRepositoryInterface
             ->where('bookings.booking_no', 'LIKE', '%' . $query . '%')
             ->join('clients', 'clients.id', '=', 'bookings.client_id')
             ->orWhere('clients.phone', 'LIKE', '%' . $query . '%')
+            ->orWhere('clients.name', 'LIKE', '%' . $query . '%')
             ->with('client')
             ->paginate(15);
         return $bookings;

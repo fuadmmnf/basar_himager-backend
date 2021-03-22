@@ -25,6 +25,11 @@ class ReceiveController extends ApiController
         $receives = $this->receiveRepository->getRecentReceives();
         return response()->json($receives);
     }
+    public function fetchReceivesBySearchedQuery($query)
+    {
+        $receives = $this->receiveRepository->getReceivesBySearchedQuery($query);
+        return response()->json($receives,200);
+    }
 
     public function fetchReceivesByGroupId($id){
         $receive =$this->receiveRepository->getReceiveByGroupId($id);
