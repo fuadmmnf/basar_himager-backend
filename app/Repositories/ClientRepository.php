@@ -43,6 +43,16 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
         return $clients;
     }
 
+    public function fetchClientBySearchQuery($query)
+    {
+        $clients = Client::select('clients.*')
+            ->where('clients.name', 'LIKE', '%' . $query . '%')
+            ->orWhere('clients.phone', 'LIKE', '%' . $query . '%')
+            ->orWhere('clients.nid', 'LIKE', '%' . $query . '%')
+            ->paginate(15);
+        return $clients;
+    }
+
     public function fetchClientList(){
         $clients = Client::all();
         return $clients;

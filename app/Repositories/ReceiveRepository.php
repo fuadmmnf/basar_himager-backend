@@ -35,6 +35,23 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         return $receive;
     }
 
+    public function getReceivesBySearchedQuery($query)
+    {
+        $receivegroups = Receivegroup::select('receivegroups.*')
+            ->where('receivegroups.receiving_no', 'LIKE', '%' . $query . '%')
+            ->join('receives', 'receives.receivegroup_id', '=', 'receivegroups.id')
+            ->orWhere('receives.sr_no', 'LIKE', '%' . $query . '%')
+            ->join('bookings', 'bookings.id', '=', 'receives.booking_id')
+            ->orWhere('bookings.booking_no', 'LIKE', '%' . $query . '%')
+            ->join('clients', 'clients.id', '=', 'bookings.client_id')
+            ->orWhere('clients.phone', 'LIKE', '%' . $query . '%')
+            ->orWhere('clients.name', 'LIKE', '%' . $query . '%')
+            ->with('receives.booking')
+            ->with('receives.booking.client')
+            ->paginate(15);
+        return $receivegroups;
+    }
+
     public function getRecentReceives()
     {
         $receives = Receive::orderByDesc('created_at')

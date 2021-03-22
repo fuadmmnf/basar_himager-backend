@@ -11,4 +11,6 @@ interface ReceiveRepositoryInterface
     public function getPaginatedReceivesByBookingId($booking_id);
     public function saveReceivegroup(array $request);
     public function getReceiveByGroupId($id);
+    public function getReceivesBySearchedQuery($query);
+
 }
