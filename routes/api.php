@@ -44,6 +44,7 @@ Route::post('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 
 Route::get('bookings/search/query={query}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingsBySearchedQuery']);
 Route::get('bookings/{booking_no}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingDetail']);
 Route::get('bookings', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookings']);
+Route::get('dashboard/bookings/all', [\App\Http\Controllers\Api\BookingController::class, 'fetchAllBookings']);
 Route::get('clients/{client_id}/bookings/all', [\App\Http\Controllers\Api\BookingController::class, 'fetchAllBookingListByClient']);
 Route::get('clients/{client_id}/bookings', [\App\Http\Controllers\Api\BookingController::class, 'fetchAllBookingsByClientId']);
 Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'createBooking']);

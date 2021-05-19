@@ -39,6 +39,52 @@ class BookingRepository implements BookingRepositoryInterface
         return $bookings;
     }
 
+      public function getAllBookings()
+        {
+            $bookings = Booking::whereBetween('booking_time',
+                [
+                    Carbon::create(date('Y') -1 , 4, 1, 0)->setTimezone('Asia/Dhaka'),
+                    Carbon::create(date('Y'), 3, 31, 23, 59)->setTimezone('Asia/Dhaka')
+                ]
+            )->get();
+
+            $total_receives = $bookings->sum('bags_in');
+            $total_deliveries = $bookings->sum('bags_out');
+            $normal_receives = 0;
+            $advance_receives = 0;
+            $normal_deliveries = 0;
+            $advance_deliveries = 0;
+
+            foreach ($bookings as $booking) {
+                if($booking->type) {
+                    $advance_receives += $booking->bags_in;
+                    $advance_deliveries += $booking->bags_out;
+                }
+                else {
+                    $normal_receives += $booking->bags_in;
+                    $normal_deliveries += $booking->bags_out;
+                }
+            }
+
+            $bookings->total_receives = $total_receives;
+            $bookings->normal_receives = $normal_receives;
+            $bookings->advance_receives = $advance_receives;
+
+            $bookings->total_deliveries = $total_deliveries;
+            $bookings->normal_deliveries = $normal_deliveries;
+            $bookings->advance_deliveries = $advance_deliveries;
+
+            return [
+                'total_receives' => $total_receives,
+                'normal_receives' => $normal_receives,
+                'advance_receives' => $advance_receives,
+                'total_deliveries' => $total_deliveries,
+                'normal_deliveries' => $normal_deliveries,
+                'advance_deliveries' => $advance_deliveries,
+                ];
+        }
+
+
     public function getBookingListByClient($client_id)
     {
         $bookinglist = Booking::where('client_id', $client_id)

@@ -46,6 +46,10 @@ class BookingController extends ApiController
         $bookings = $this->bookingRepository->getPaginatedRecentBookings();
         return response()->json($bookings);
     }
+     public function fetchAllBookings(){
+            $bookings = $this->bookingRepository->getAllBookings();
+            return response()->json($bookings);
+        }
 
 
     public function createBooking(CreateBookingRequest $request){
