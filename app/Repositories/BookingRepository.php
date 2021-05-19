@@ -17,9 +17,9 @@ class BookingRepository implements BookingRepositoryInterface
     public function getBookingListBySearchedQuery($query)
     {
         $bookings = Booking::select('bookings.*')
-            ->where('bookings.booking_no', 'LIKE', '%' . $query . '%')
+            ->where('bookings.booking_no', 'LIKE', $query . '%')
             ->join('clients', 'clients.id', '=', 'bookings.client_id')
-            ->orWhere('clients.phone', 'LIKE', '%' . $query . '%')
+            ->orWhere('clients.phone', 'LIKE', $query . '%')
             ->orWhere('clients.name', 'LIKE', '%' . $query . '%')
             ->with('client')
             ->paginate(15);
