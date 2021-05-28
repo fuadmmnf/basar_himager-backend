@@ -14,13 +14,21 @@ use Illuminate\Support\Facades\DB;
 
 class ReceiveRepository implements ReceiveRepositoryInterface
 {
-
-    public function getReceiveDetails($receive_no)
+    public function getReceiveDetails($sr_no)
     {
-        $receive = Receive::where('receiving_no', $receive_no)->firstOrFail();
-        $receive->load('booking', 'booking.client');
+        $receive = Receive::where('sr_no', $sr_no)->firstOrFail();
+        $receive->load('booking', 'booking.client', 'loaddistributions');
         return $receive;
     }
+
+
+
+//    public function getReceivegroupDetails($receive_no)
+//    {
+//        $receive = Receive::where('receiving_no', $receive_no)->firstOrFail();
+//        $receive->load('booking', 'booking.client', 'loaddistributions');
+//        return $receive;
+//    }
 
     public function getReceiveByGroupId($id)
     {

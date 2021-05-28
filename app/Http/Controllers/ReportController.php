@@ -20,15 +20,15 @@ class ReportController extends Controller
         $this->reportRepository = $reportRepository;
     }
 
-
-    public function downloadLoadingReport($receive_no)
-    {
-        $receiveRepository = new ReceiveRepository();
-        $pdf = PDF::loadView('loading_receipt', [
-            'receive' => $receiveRepository->getReceiveDetails($receive_no),
-        ]);
-        return $pdf->stream();
-    }
+//
+//    public function downloadLoadingReport($receive_no)
+//    {
+//        $receiveRepository = new ReceiveRepository();
+//        $pdf = PDF::loadView('loading_receipt', [
+//            'receive' => $receiveRepository->getReceiveDetails($receive_no),
+//        ]);
+//        return $pdf->stream();
+//    }
 
     public function downloadGatepass($gatepass_no)
     {

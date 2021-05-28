@@ -9,6 +9,7 @@ class CreatePalotRequest extends FormRequest
     public function rules()
     {
         return [
+            'receive_id' => 'required |numeric',
             'loaddistributions' => 'required | array',
             'palot_status' => 'required|in:load,first,second,third,fourth"'
         ];

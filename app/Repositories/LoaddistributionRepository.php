@@ -84,8 +84,9 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
     {
         DB::beginTransaction();
         try {
+            $receive = Receive::findOrFail($request['receive_id']);
             foreach ($request['loaddistributions'] as $loaddistribution) {
-                $previousLoaddistribution = Loaddistribution::findOrFail($loaddistribution['loaddistribution_id']);
+                $previousLoaddistribution = Loaddistribution::where('id', $loaddistribution['loaddistribution_id'])->where('receive_id', $receive->id)->firstOrFail();
                 $previousCompartment = Inventory::findOrFail($previousLoaddistribution['compartment_id']);
                 $previousFloor = Inventory::where('id', $previousCompartment->parent_id)->first();
                 $previousChamber = Inventory::where('id', $previousFloor->parent_id)->first();
@@ -111,9 +112,9 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                         $compartment = Inventory::findOrFail($distribution['compartment_id']);
 
                         $newLoaddistribution = new Loaddistribution();
-                        $newLoaddistribution->booking_id = $previousLoaddistribution['booking_id'];
-                        $newLoaddistribution->receive_id = $previousLoaddistribution->id;
-                        $newLoaddistribution->receiveitem_id = $previousLoaddistribution['receiveitem_id'];
+                        $newLoaddistribution->booking_id = $previousLoaddistribution->booking_id;
+                        $newLoaddistribution->receive_id = $previousLoaddistribution->receive_id;
+                        $newLoaddistribution->receiveitem_id = $previousLoaddistribution->receiveitem_id;
                         $newLoaddistribution->compartment_id = $distribution['compartment_id'];
                         $newLoaddistribution->palot_status = $request['palot_status'];
                         $newLoaddistribution->potato_type = $previousLoaddistribution->potato_type;
@@ -139,6 +140,8 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
 
             }
+            $receive->palot_status = $request['palot_status'];
+            $receive->save();
         } catch (\Exception $e) {
             DB::rollback();
             throw new \Exception($e->getMessage());

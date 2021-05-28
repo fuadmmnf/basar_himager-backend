@@ -22,6 +22,7 @@ class CreateReceivesTable extends Migration
             $table->integer('booking_currently_left');
             $table->json('transport');
             $table->integer('status')->default(0); // 0=> received, 1=>loaded
+            $table->enum('palot_status', ['load', 'first', 'second', 'third', 'fourth'])->default('load');
             $table->timestamps();
 
             $table->foreign('receivegroup_id')->references('id')->on('receivegroups');
