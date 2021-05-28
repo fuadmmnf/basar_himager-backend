@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Requests\Inventory\unloading;
+namespace App\Http\Requests\Inventory\Unloading;
 
 
 class CreateUnloadingRequest extends \Illuminate\Foundation\Http\FormRequest
