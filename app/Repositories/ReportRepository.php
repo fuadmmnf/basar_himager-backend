@@ -86,6 +86,14 @@ class ReportRepository implements ReportRepositoryInterface
         return $booking;
     }
 
+    public function fetchBookingDetailsInfo($id)
+    {
+        $booking = Booking::where('id',$id)
+            ->with('client', 'receives', 'deliveries', 'loanDisbursements', 'loanDisbursements.loancollections')
+            ->first();
+        return $booking;
+    }
+
     public function fetchReceiveReceiptInfo($receivegroup_id)
     {
         $receivegroup = Receivegroup::findOrFail($receivegroup_id);

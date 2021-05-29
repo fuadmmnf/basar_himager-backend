@@ -40,6 +40,7 @@ Route::get('/download/report/expenses/month/{month}',[\App\Http\Controllers\Repo
 Route::get('/download/report/receives/receipt/{receivegroup_id}', [\App\Http\Controllers\ReportController::class, 'getReceivesReceipt']);
 Route::get('/download/report/deliveries/receipt/{deliverygroup_id}', [\App\Http\Controllers\ReportController::class, 'getDeliveriesReceipt']);
 Route::get('/download/report/booking/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getBookingReceipt']);
+Route::get('/download/report/booking/details/{id}', [\App\Http\Controllers\ReportController::class, 'getBookingDetailsReport']);
 Route::get('/download/report/loandisbursement/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoandisbursementReport']);
 Route::get('/download/report/loancollection/receipt/{id}', [\App\Http\Controllers\ReportController::class, 'getLoancollectionReceipt']);
 Route::get('/download/report/gatepass/receipt/{deliverygroup_id}', [\App\Http\Controllers\ReportController::class, 'getGatePass']);

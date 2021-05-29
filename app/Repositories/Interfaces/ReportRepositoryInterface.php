@@ -12,6 +12,7 @@ interface ReportRepositoryInterface
     public function fetchReceiveReceiptInfo($receivegroup_id);
     public function fetchDeliveryReceiptInfo($deliverygroup_id);
     public function fetchBookingReceiptInfo($id);
+    public function fetchBookingDetailsInfo($id);
     public function fetchLoanDisbursementInfo($id);
     public function fetchLoanCollectionInfo($id);
     public function fetchGatepass($delivey_id);

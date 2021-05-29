@@ -47,7 +47,7 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
     {
         $clients = Client::select('clients.*')
             ->where('clients.name', 'LIKE', '%' . $query . '%')
-            ->orWhere('clients.phone', 'LIKE', '%' . $query . '%')
+            ->orWhere('clients.phone', 'LIKE', $query . '%')
             ->orWhere('clients.nid', 'LIKE', '%' . $query . '%')
             ->paginate(15);
         return $clients;
