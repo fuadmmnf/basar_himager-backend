@@ -193,12 +193,11 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
         return $loaddistributionDates;
     }
 
-    public function getLoadDistrbutionByBooking($booking_id)
+    public function getLoadPositionsByBooking($booking_id)
     {
-        $loads = Loaddistribution::where('booking_id', $booking_id)->get();
-        $inventoryHandler = new InventoryHandler();
+        $loads = Loaddistribution::where('booking_id', $booking_id)->where('current_quantity', '>', 0)->get();
         foreach ($loads as $load) {
-            $load->inventory = $inventoryHandler->fetchFullInventoryWithParentById($load->compartment_id);
+            $load->inventory = $load->inventory_tree;
             $load->lot_no = $load->receive->lot_no;
         }
         return $loads;

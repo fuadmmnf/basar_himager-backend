@@ -112,7 +112,7 @@ Route::post('inventories', [\App\Http\Controllers\Api\InventoryController::class
 //====>load
 Route::get('clients/{client_id}/loaddistributions/dates',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionDatesByClient']);
 Route::get('loaddistributions/receives/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceive']);
-Route::get('bookings/{booking_id}/loaddistributions',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionByBooking']);
+Route::get('bookings/{booking_id}/positions',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchPositionsByBooking']);
 Route::post('loaddistributions', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createLoadDistribution']);
 Route::post('palots', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createPalot']);
 

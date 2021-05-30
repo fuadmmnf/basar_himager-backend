@@ -34,8 +34,8 @@ class LoaddistributionController extends ApiController
 
 
 
-    public function fetchLoaddistributionByBooking($booking_id){
-        $load = $this->loaddistributionRepository->getLoadDistrbutionByBooking($booking_id);
+    public function fetchPositionsByBooking($booking_id){
+        $load = $this->loaddistributionRepository->getLoadPositionsByBooking($booking_id);
         return response()->json($load,200);
     }
 
