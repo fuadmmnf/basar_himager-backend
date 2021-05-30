@@ -12,7 +12,7 @@ class InventoryHandler
 {
     public function fetchFullInventoryWithParentBYId($id){
         $inventory = Inventory::where('id',$id)->first();
-        $this->getFullInventoryDecisionWithParent($inventory);
+        $inventory = $this->getFullInventoryDecisionWithParent($inventory);
         return $inventory;
     }
 

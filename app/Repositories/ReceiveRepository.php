@@ -18,6 +18,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
     {
         $receive = Receive::where('sr_no', $sr_no)->firstOrFail();
         $receive->load('booking', 'booking.client', 'loaddistributions');
+
         return $receive;
     }
 

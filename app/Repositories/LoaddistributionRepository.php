@@ -51,6 +51,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                     $newLoaddistribution->receive_id = $receive->id;
                     $newLoaddistribution->receiveitem_id = $loading['receiveitem_id'];
                     $newLoaddistribution->compartment_id = $distribution['compartment_id'];
+                    $newLoaddistribution->palot_status = 'load';
                     $newLoaddistribution->potato_type = $receiveItem->potato_type;
                     $newLoaddistribution->quantity = $distribution['quantity'];
                     $newLoaddistribution->current_quantity = $distribution['quantity'];
@@ -69,6 +70,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
 
                 }
                 $receive->status = 1;
+                $receive->palot_status = 'load';
                 $receive->save();
             }
         } catch (\Exception $e) {
@@ -91,49 +93,50 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $previousFloor = Inventory::where('id', $previousCompartment->parent_id)->first();
                 $previousChamber = Inventory::where('id', $previousFloor->parent_id)->first();
 
-                foreach ($loaddistribution['loadings'] as $loading) {
 
-                    $totalItemPalotted = 0;
-                    foreach ($loading['distributions'] as $distribution) {
-                        $totalItemPalotted += $distribution['quantity'];
-                    }
-                    if ($totalItemPalotted != $previousLoaddistribution->quantity) {
-                        throw new \Exception('loading must be done for all bags');
-                    }
-                    $previousCompartment->current_quantity = $previousCompartment->current_quantity - $totalItemPalotted;
-                    $previousCompartment->save();
-                    $previousFloor->current_quantity = $previousFloor->current_quantity - $totalItemPalotted;
-                    $previousFloor->save();
-                    $previousChamber->current_quantity = $previousChamber->current_quantity - $totalItemPalotted;
-                    $previousChamber->save();
-
-
-                    foreach ($loading['distributions'] as $distribution) {
-                        $compartment = Inventory::findOrFail($distribution['compartment_id']);
-
-                        $newLoaddistribution = new Loaddistribution();
-                        $newLoaddistribution->booking_id = $previousLoaddistribution->booking_id;
-                        $newLoaddistribution->receive_id = $previousLoaddistribution->receive_id;
-                        $newLoaddistribution->receiveitem_id = $previousLoaddistribution->receiveitem_id;
-                        $newLoaddistribution->compartment_id = $distribution['compartment_id'];
-                        $newLoaddistribution->palot_status = $request['palot_status'];
-                        $newLoaddistribution->potato_type = $previousLoaddistribution->potato_type;
-                        $newLoaddistribution->quantity = $distribution['quantity'];
-                        $newLoaddistribution->current_quantity = $distribution['quantity'];
-                        $newLoaddistribution->save();
+                $totalItemPalotted = 0;
+                foreach ($loaddistribution['distributions'] as $distribution) {
+                    $totalItemPalotted += $distribution['quantity'];
+                }
+                if ($totalItemPalotted != $previousLoaddistribution->quantity) {
+                    throw new \Exception('loading must be done for all bags');
+                }
+                $previousCompartment->current_quantity = $previousCompartment->current_quantity - $totalItemPalotted;
+                $previousCompartment->save();
+                $previousFloor->current_quantity = $previousFloor->current_quantity - $totalItemPalotted;
+                $previousFloor->save();
+                $previousChamber->current_quantity = $previousChamber->current_quantity - $totalItemPalotted;
+                $previousChamber->save();
 
 
-                        $floor = Inventory::where('id', $compartment->parent_id)->first();
-                        $chamber = Inventory::where('id', $floor->parent_id)->first();
+                foreach ($loaddistribution['distributions'] as $distribution) {
 
-                        $compartment->current_quantity = $compartment->current_quantity + $distribution['quantity'];
-                        $compartment->save();
-                        $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
-                        $floor->save();
-                        $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
-                        $chamber->save();
 
-                    }
+                    $compartment = Inventory::findOrFail($distribution['compartment_id']);
+
+                    $newLoaddistribution = new Loaddistribution();
+                    $newLoaddistribution->booking_id = $previousLoaddistribution->booking_id;
+                    $newLoaddistribution->receive_id = $previousLoaddistribution->receive_id;
+                    $newLoaddistribution->receiveitem_id = $previousLoaddistribution->receiveitem_id;
+                    $newLoaddistribution->compartment_id = $distribution['compartment_id'];
+                    $newLoaddistribution->palot_status = $request['palot_status'];
+                    $newLoaddistribution->potato_type = $previousLoaddistribution->potato_type;
+                    $newLoaddistribution->quantity = $distribution['quantity'];
+                    $newLoaddistribution->current_quantity = $distribution['quantity'];
+                    $newLoaddistribution->save();
+
+
+                    $floor = Inventory::where('id', $compartment->parent_id)->first();
+                    $chamber = Inventory::where('id', $floor->parent_id)->first();
+
+                    $compartment->current_quantity = $compartment->current_quantity + $distribution['quantity'];
+                    $compartment->save();
+                    $floor->current_quantity = $floor->current_quantity + $distribution['quantity'];
+                    $floor->save();
+                    $chamber->current_quantity = $chamber->current_quantity + $distribution['quantity'];
+                    $chamber->save();
+
+
                 }
                 $previousLoaddistribution->current_quantity = 0;
                 $previousLoaddistribution->save();
