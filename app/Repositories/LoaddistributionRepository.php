@@ -99,7 +99,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                     $totalItemPalotted += $distribution['quantity'];
                 }
                 if ($totalItemPalotted != $previousLoaddistribution->quantity) {
-                    throw new \Exception('loading must be done for all bags');
+                    throw new \Exception('loading must be done for all available bags only');
                 }
                 $previousCompartment->current_quantity = $previousCompartment->current_quantity - $totalItemPalotted;
                 $previousCompartment->save();
