@@ -53,7 +53,8 @@ Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'cr
 Route::get('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceives']);
 Route::get('receives/search/query={query}', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesBySearchedQuery']);
 Route::get('receivegroups', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceiveGroups']);
-Route::get('receives/{id}',[\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesByGroupId']);
+Route::get('receivegroups/{receivegroup_id}',[\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesByGroupId']);
+Route::get('receives/{sr_no}',[\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceiveDetails']);
 Route::get('bookings/{booking_id}/receives', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchPaginatedReceivesByBookingID']);
 
 Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'createReceivegroup']);
@@ -110,10 +111,11 @@ Route::get('inventories', [\App\Http\Controllers\Api\InventoryController::class,
 Route::get('inventories/{parent_id}/parents', [\App\Http\Controllers\Api\InventoryController::class, 'getInventoryWithParentId']);
 Route::post('inventories', [\App\Http\Controllers\Api\InventoryController::class, 'createInventory']);
 //====>load
-Route::post('loaddistributions', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createLoadDistribution']);
 Route::get('clients/{client_id}/loaddistributions/dates',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionDatesByClient']);
 Route::get('loaddistributions/receives/{receive_id}',[\App\Http\Controllers\Api\LoaddistributionController::class,'getloaddistributionByReceive']);
-Route::get('bookings/{booking_id}/loaddistributions',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchLoaddistributionByBooking']);
+Route::get('bookings/{booking_id}/positions',[\App\Http\Controllers\Api\LoaddistributionController::class,'fetchPositionsByBooking']);
+Route::post('loaddistributions', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createLoadDistribution']);
+Route::post('palots', [\App\Http\Controllers\Api\LoaddistributionController::class, 'createPalot']);
 
 //unloading
 Route::post('unloadings', [\App\Http\Controllers\Api\UnloadingController::class,'saveUnloading']);

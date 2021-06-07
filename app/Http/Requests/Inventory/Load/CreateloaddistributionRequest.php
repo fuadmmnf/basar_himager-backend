@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Requests\Inventory\load;
+namespace App\Http\Requests\Inventory\Load;
 
 
 class CreateloaddistributionRequest extends \Illuminate\Foundation\Http\FormRequest

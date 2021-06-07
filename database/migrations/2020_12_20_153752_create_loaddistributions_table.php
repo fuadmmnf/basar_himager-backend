@@ -19,6 +19,7 @@ class CreateLoaddistributionsTable extends Migration
             $table->unsignedBigInteger('receive_id');
             $table->unsignedBigInteger('compartment_id');
             $table->unsignedBigInteger('receiveitem_id');
+            $table->enum('palot_status', ['load', 'first', 'second', 'third', 'fourth'])->nullable();
             $table->string('potato_type');
             $table->integer('quantity');
             $table->integer('current_quantity');

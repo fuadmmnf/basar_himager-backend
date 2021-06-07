@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
-use App\Http\Requests\Inventory\unloading\CreateUnloadingRequest;
+use App\Http\Requests\Inventory\Unloading\CreateUnloadingRequest;
 use App\Repositories\Interfaces\UnloadingRepositoryInterface;
 
 class UnloadingController extends ApiController{
