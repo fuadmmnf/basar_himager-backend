@@ -101,19 +101,18 @@ class BookingRepository implements BookingRepositoryInterface
         return $bookings;
     }
 
-    private function getBookingNumberForSession($bookingType, Carbon $bookingTime)
+    private function getBookingNumberForSession($booking)
     {
-        $year_low = $bookingTime->month > 3 ? $bookingTime->year : $bookingTime->year - 1;
-        $bookingSessionCount = Booking::where('type', $bookingType)
+        $bookingSessionCount = Booking::where('type', $booking->type)
             ->whereBetween('booking_time',
                 [
-                    Carbon::create($year_low, 4, 1, 0)->setTimezone('Asia/Dhaka'),
-                    Carbon::create($year_low + 1, 3, 31, 23, 59)->setTimezone('Asia/Dhaka')
+                    Carbon::create($booking->booking_year - 1, 4, 1, 0)->setTimezone('Asia/Dhaka'),
+                    Carbon::create($booking->booking_year, 3, 31, 23, 59)->setTimezone('Asia/Dhaka')
                 ]
             )->count();
-        return (($bookingType) ? 'A' : 'N')
-            . sprintf('%04d', $bookingSessionCount + ($bookingType ? 1 : 2101))
-            . '_' . ($year_low + 1) % 100;
+        return (($booking->type) ? 'A' : 'N')
+            . sprintf('%04d', $bookingSessionCount + ($booking->type ? 1 : 2101))
+            . '_' . ($booking->booking_year ) % 100;
 
     }
 
@@ -123,9 +122,10 @@ class BookingRepository implements BookingRepositoryInterface
 
         $newBooking->client_id = $request['client_id'];
         $newBooking->booking_time = Carbon::parse($request['booking_time'])->setTimezone('Asia/Dhaka');
+        $newBooking->booking_year = $newBooking->booking_time->month > 3 ? ($newBooking->booking_time->year+1) : $newBooking->booking_time->year;
         $newBooking->type = $request['type'];
 
-        $newBooking->booking_no = $this->getBookingNumberForSession($newBooking->type, $newBooking->booking_time);
+        $newBooking->booking_no = $this->getBookingNumberForSession($newBooking);
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];
         $newBooking->cost_per_bag = $request['cost_per_bag'];
