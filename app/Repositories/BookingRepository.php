@@ -14,13 +14,16 @@ class BookingRepository implements BookingRepositoryInterface
 {
 
 
-    public function getBookingListBySearchedQuery($query)
+    public function getBookingListBySearchedQuery($year, $query)
     {
         $bookings = Booking::select('bookings.*')
-            ->where('bookings.booking_no', 'LIKE', $query . '%')
-            ->join('clients', 'clients.id', '=', 'bookings.client_id')
-            ->orWhere('clients.phone', 'LIKE', $query . '%')
-            ->orWhere('clients.name', 'LIKE', '%' . $query . '%')
+            ->where('bookings.booking_year', $year)
+            ->where(function ($query) {
+                $query->where('bookings.booking_no', 'LIKE', $query . '%')
+                    ->join('clients', 'clients.id', '=', 'bookings.client_id')
+                    ->orWhere('clients.phone', 'LIKE', $query . '%')
+                    ->orWhere('clients.name', 'LIKE', '%' . $query . '%');
+            })
             ->with('client')
             ->paginate(15);
         return $bookings;
@@ -33,20 +36,15 @@ class BookingRepository implements BookingRepositoryInterface
         return $booking;
     }
 
-    public function getPaginatedRecentBookings()
+    public function getPaginatedBookings($year)
     {
-        $bookings = Booking::orderByDesc('booking_time')->with('client')->paginate(25);
+        $bookings = Booking::where('booking_year', $year)->orderByDesc('booking_time')->with('client')->paginate(25);
         return $bookings;
     }
 
-      public function getAllBookings()
+      public function getAllBookingStats($year)
         {
-            $bookings = Booking::whereBetween('booking_time',
-                [
-                    Carbon::create(date('Y') -1 , 4, 1, 0)->setTimezone('Asia/Dhaka'),
-                    Carbon::create(date('Y'), 3, 31, 23, 59)->setTimezone('Asia/Dhaka')
-                ]
-            )->get();
+            $bookings = Booking::where('booking_year', $year)->get();
 
             $total_receives = $bookings->sum('bags_in');
             $total_deliveries = $bookings->sum('bags_out');

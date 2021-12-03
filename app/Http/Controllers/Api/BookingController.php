@@ -32,9 +32,9 @@ class BookingController extends ApiController
         return response()->json($bookings);
     }
 
-    public function fetchBookingsBySearchedQuery($query)
+    public function fetchBookingsBySearchedQuery(Request $request)
     {
-        $bookings = $this->bookingRepository->getBookingListBySearchedQuery($query);
+        $bookings = $this->bookingRepository->getBookingListBySearchedQuery($request->query('selected_year'), $request->query('query'));
         return response()->json($bookings, 200);
     }
      public function fetchBookingDetail($booking_no){
@@ -42,12 +42,12 @@ class BookingController extends ApiController
         return response()->json($booking);
     }
 
-    public function fetchBookings(){
-        $bookings = $this->bookingRepository->getPaginatedRecentBookings();
+    public function fetchBookings(Request $request){
+        $bookings = $this->bookingRepository->getPaginatedBookings($request->query('selected_year'));
         return response()->json($bookings);
     }
-     public function fetchAllBookings(){
-            $bookings = $this->bookingRepository->getAllBookings();
+     public function fetchAllBookings(Request $request){
+            $bookings = $this->bookingRepository->getAllBookingStats($request->query('selected_year'));
             return response()->json($bookings);
         }
 
