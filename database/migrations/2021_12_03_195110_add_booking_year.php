@@ -9,7 +9,7 @@ class AddBookingYear extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->year('booking_year')->after('booking_time');
+            $table->year('booking_year')->useCurrent()->after('booking_time');
         });
         Artisan::call('db:seed', array('--class' => 'BookingYearScriptSeeder'));
     }
