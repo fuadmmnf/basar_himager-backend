@@ -10,6 +10,7 @@ class Receive extends Model
     use HasFactory;
 
     protected $casts = [
+        'farmer_info' => 'array',
         'transport' => 'array'
     ];
 

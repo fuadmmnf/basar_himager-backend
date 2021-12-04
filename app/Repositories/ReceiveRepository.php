@@ -119,6 +119,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         $newReceive->lot_no = $currentSR->value . '/' . $totalQuantity;
         $newReceive->booking_currently_left = $booking->quantity - $booking->bags_in - $totalQuantity;
         $newReceive->transport = $reciveRequest['transport'];
+        $newReceive->farmer_info = $reciveRequest['farmer_info'];
 
         $newReceive->save();
         $currentSR->save();
