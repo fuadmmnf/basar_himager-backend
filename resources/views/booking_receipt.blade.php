@@ -104,7 +104,7 @@
         </tr>
         <tr>
             <td>বুকিং তারিখ</td>
-            <td>{{ date('F d, Y', strtotime($bookinginfo->booking_time)) }}</td>
+            <td>{{ bangla(date('F d, Y', strtotime($bookinginfo->booking_time))) }}</td>
         </tr>
         <tr>
             <td>বুকিং ধরণ</td>

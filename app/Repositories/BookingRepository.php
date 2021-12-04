@@ -36,9 +36,13 @@ class BookingRepository implements BookingRepositoryInterface
         return $booking;
     }
 
-    public function getPaginatedBookings($year)
+    public function getPaginatedBookings($year, $booking_type)
     {
-        $bookings = Booking::where('booking_year', $year)->orderByDesc('booking_time')->with('client')->paginate(25);
+        $bookings = Booking::where('booking_year', $year);
+        if($booking_type != '2') {
+            $bookings = $bookings->where('type', $booking_type);
+        }
+        $bookings = $bookings->with('client')->paginate(25);
         return $bookings;
     }
 

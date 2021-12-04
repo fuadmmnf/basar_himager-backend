@@ -43,7 +43,7 @@ class BookingController extends ApiController
     }
 
     public function fetchBookings(Request $request){
-        $bookings = $this->bookingRepository->getPaginatedBookings($request->query('selected_year'));
+        $bookings = $this->bookingRepository->getPaginatedBookings($request->query('selected_year'), $request->query('booking_type'));
         return response()->json($bookings);
     }
      public function fetchAllBookings(Request $request){
