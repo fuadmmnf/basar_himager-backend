@@ -59,31 +59,35 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">আলু সংরক্ষণ</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">আলু সংরক্ষন রশিদ</b> <br />
 
     </div>
-
 </div>
-<span align="center" style="line-height: 1.2;">
-    <p style="font-size: 1.4rem; font-weight: bold">আলু গ্রহণ নম্বর: {{$receives[0]->receivegroup->receiving_no}}</p>
-    <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
-</span>
 
-<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>গ্রাহকের তথ্য</b></span>
-</div>
+
+
 
 <table>
     <tr>
         <td style="width: 50%; text-align: left">
-            <div>
-                <div>
-                    <p><b>নাম:</b> {{$receives[0]->booking->client->name}}</p>
-                </div>
-            </div>
+            <span style="text-decoration: underline; font-size: 1.4rem">বুকিং তথ্য</span> <br/> <br/>
+            <span>বুকিং নম্বরঃ {{$receives[0]->booking->booking_no}}</span> <br/>
+            <span>নামঃ {{$receives[0]->booking->client->name}}</span> <br/>
+            <span>ফোন নম্বরঃ {{$receives[0]->booking->client->phone}}</span> <br/>
+            <span>গ্রামঃ {{$receives[0]->booking->client->address['village']}}</span>
+            {{--            <div>--}}
+            {{--                <div>--}}
+            {{--                    <p><b>নাম:</b> {{$receiptinfo->receives[0]->booking->client->name}}</p>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
-            <p><b>ফোন নম্বর:</b> {{$receives[0]->booking->client->phone}}</p>
+            <span style="text-decoration: underline; font-size: 1.4rem">গ্রাহকের তথ্য</span> <br/> <br/>
+            <span style="font-size: 1.2rem; font-weight: bolder;">আলু গ্রহণ নম্বরঃ {{$receives[0]->receivegroup->receiving_no}}</span> <br/>
+            <span>তারিখঃ {{ bangla(date('F d, Y', strtotime($receives[0]->receivegroup->receiving_time))) }}</span> <br/>
+            <span>নামঃ {{$receives[0]->farmer_info['name']}}</span> <br/>
+            <span>গ্রামঃ  {{$receives[0]->farmer_info['village']}}</span>
+            {{--            <p><b>ফোন নম্বর:</b> {{$receiptinfo->receives[0]->booking->client->phone}}</p>--}}
         </td>
     </tr>
 
