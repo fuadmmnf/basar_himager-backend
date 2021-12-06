@@ -20,7 +20,7 @@ class DailyexpensesRepository implements DailyexpensesRepositoryInterface
         $newDailyexpenses->voucher_no = $request['voucher_no'];
         $newDailyexpenses->date = Carbon::parse($request['date'])->setTimezone('Asia/Dhaka');
         $newDailyexpenses->amount = $request['amount'];
-
+        $newDailyexpenses->remarks = isset($request['remarks'])? $request['remarks'] : '';
         $newDailyexpenses->save();
 
         return $newDailyexpenses;
