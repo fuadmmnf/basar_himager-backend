@@ -131,6 +131,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             $newDeliveyItem->delivery_id = $newDelivery->id;
             $newDeliveyItem->quantity = $deliveryitem['quantity'];
             $newDeliveyItem->potato_type = $deliveryitem['potato_type'];
+            $newDeliveyItem->srlot_no = $deliveryitem['srlot_no'];
             $newDeliveyItem->save();
 
             $quantity = $newDeliveyItem->quantity;
