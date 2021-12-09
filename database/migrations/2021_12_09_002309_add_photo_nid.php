@@ -10,7 +10,7 @@ class AddPhotoNid extends Migration
     {
         Schema::table('employees', function (Blueprint $table) {
             $table->string('photo')->after('loan')->nullable();
-            $table->string('nid_photo')->nullable();
+            $table->string('nid_photo')->after('photo')->nullable();
         });
     }
 
