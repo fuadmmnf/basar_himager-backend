@@ -101,10 +101,11 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newDelivery->deliverygroup_id = $deliverygroup->id;
         $newDelivery->booking_id = $booking->id;
         $newDelivery->cost_per_bag = $deliveryRequest['cost_per_bag'];
-        $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
-        $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
+//        $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
+//        $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
         $newDelivery->do_charge = $deliveryRequest['do_charge'];
-        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge));
+//        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge));
+        $newDelivery->total_charge = $totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge);
 
         if ($booking->bags_out + $totalQuantity > $booking->bags_in) {
             throw new \Exception('total amount greater than bags received');
