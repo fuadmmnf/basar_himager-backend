@@ -10,6 +10,7 @@ class AddYearToClients extends Migration
     {
         Schema::table('clients', function (Blueprint $table) {
             $table->year('year')->default('2021');
+            $table->dropUnique(['nid']);
         });
     }
 
