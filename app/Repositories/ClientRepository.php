@@ -15,8 +15,7 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
         // TODO: Implement storeClient() method.
         $clientHandler = new ClientHandler();
         $client = $clientHandler
-            ->saveClient($request['nid'], $request['name'],
-                $request['phone'], $request['father_name'], $request['mother_name'],$request['address']);
+            ->saveClient($request);
         return $client;
     }
 
@@ -36,30 +35,33 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
        return $client;
     }
 
-    public function fetchClient()
+    public function fetchClient($year)
     {
         // TODO: Implement fetchClient() method.
-        $clients = Client::paginate(15);
+        $clients = Client::where('year', $year)->paginate(15);
         return $clients;
     }
 
-    public function fetchClientBySearchQuery($query)
+    public function fetchClientBySearchQuery($year, $query)
     {
         $clients = Client::select('clients.*')
-            ->where('clients.name', 'LIKE', '%' . $query . '%')
-            ->orWhere('clients.phone', 'LIKE', $query . '%')
-            ->orWhere('clients.nid', 'LIKE', '%' . $query . '%')
+            ->where('clients.year', $year)
+            ->where(function ($q) use ($query) {
+                $q->where('clients.name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('clients.phone', 'LIKE', $query . '%')
+                    ->orWhere('clients.nid', 'LIKE', '%' . $query . '%');
+            })
             ->paginate(15);
         return $clients;
     }
 
-    public function fetchClientList(){
-        $clients = Client::all();
+    public function fetchClientList($year){
+        $clients = Client::where('year', $year)->get();
         return $clients;
     }
 
-    public function fetchClientListWithFewerAttributes(){
-        $clients = Client::select('id', 'client_no','nid','name','phone')->get();
+    public function fetchClientListWithFewerAttributes($year){
+        $clients = Client::select('id', 'client_no','nid','name','phone')->where('year', $year)->get();
         return $clients;
     }
 

@@ -31,6 +31,7 @@ class CreateClientRequest extends FormRequest
             'father_name' => 'required',
             'mother_name' => 'required',
             'address' => 'required',
+            'year' => 'required'
         ];
     }
 }

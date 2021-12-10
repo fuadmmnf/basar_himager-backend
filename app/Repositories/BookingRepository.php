@@ -18,8 +18,8 @@ class BookingRepository implements BookingRepositoryInterface
     {
         $bookings = Booking::select('bookings.*')
             ->where('bookings.booking_year', $year)
-            ->where(function ($query) {
-                $query->where('bookings.booking_no', 'LIKE', $query . '%')
+            ->where(function ($q) use ($query) {
+                $q->where('bookings.booking_no', 'LIKE', $query . '%')
                     ->join('clients', 'clients.id', '=', 'bookings.client_id')
                     ->orWhere('clients.phone', 'LIKE', $query . '%')
                     ->orWhere('clients.name', 'LIKE', '%' . $query . '%');

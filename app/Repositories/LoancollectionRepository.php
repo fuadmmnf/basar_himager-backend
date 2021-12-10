@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Booking;
+use App\Models\Deliverygroup;
 use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Repositories\Interfaces\LoancollectionRepositoryInterface;
@@ -28,8 +29,14 @@ class LoancollectionRepository implements LoancollectionRepositoryInterface
             return null;
         }
 
+        $deliveryGroup = new Deliverygroup();
+        $deliveryGroup->delivery_time = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');;
+        $deliveryGroup->delivery_no =  sprintf('%04d', Deliverygroup::whereYear('delivery_time', $deliveryGroup->delivery_time)->count() + 1) . $deliveryGroup->delivery_time->year % 100;
+        $deliveryGroup->save();
+
         $newLoancollection = new Loancollection();
         $newLoancollection->loandisbursement_id = $loandisbursement->id;
+        $newLoancollection->deliverygroup_id = $deliveryGroup->id;
         $newLoancollection->loancollection_no = Str::random(8);
         $newLoancollection->surcharge = $request['surcharge'];
         $newLoancollection->service_charge_rate = $request['service_charge_rate'];
