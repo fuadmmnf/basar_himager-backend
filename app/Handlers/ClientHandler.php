@@ -24,7 +24,7 @@ class ClientHandler
         $newClient->address = $info['address'];;
         $newClient->year = $info['year'];;
 
-        $newClient->client_no = sprintf('%04d', Client::whereYear('year', $newClient->year)->count() + 1) . $newClient->year % 100;
+        $newClient->client_no = sprintf('%04d', Client::whereYear('year', $newClient->year)->count() + 1) . (int)$newClient->year % 100;
         $newClient->save();
 
         return $newClient;
