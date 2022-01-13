@@ -23,6 +23,7 @@ class ClientHandler
         $newClient->phone = $info['phone'];
         $newClient->father_name = $info['father_name'];
         $newClient->mother_name = $info['mother_name'];
+
         $newClient->address = $info['address'];
         $newClient->year = Carbon::parse($info['year'])->year;
         $newClient->client_no = sprintf('%04d', Client::whereYear('year', $newClient->year)->count() + 1) . $newClient->year % 100;
@@ -43,6 +44,7 @@ class ClientHandler
             Image::make($info['nid_photo'])->save($location);
             $newClient->nid_photo = $filename;
         }
+
         $newClient->save();
 
         return $newClient;

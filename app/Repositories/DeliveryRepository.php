@@ -8,10 +8,13 @@ use App\Models\Delivery;
 use App\Models\Deliverygroup;
 use App\Models\Deliveryitem;
 use App\Models\Gatepass;
+use App\Models\Loancollection;
+use App\Models\Loandisbursement;
 use App\Models\Unloading;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DeliveryRepository implements DeliveryRepositoryInterface
 {
@@ -153,6 +156,33 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $newDelivery;
     }
 
+    public function saveLoancollection(Deliverygroup $deliverygroup,array $request)
+    {
+        $loandisbursement = Loandisbursement::findOrFail($request['loandisbursement_id']);
+
+        error_log($loandisbursement);
+        if($loandisbursement->amount_left < $request['payment_amount']){
+            return null;
+        }
+        error_log($deliverygroup);
+
+        $newLoancollection = new Loancollection();
+        $newLoancollection->loandisbursement_id = $loandisbursement->id;
+        $newLoancollection->deliverygroup_id = $deliverygroup->id;
+        $newLoancollection->loancollection_no = Str::random(8);
+        $newLoancollection->surcharge = $request['surcharge'];
+        $newLoancollection->service_charge_rate = $request['service_charge_rate'];
+        $newLoancollection->payment_amount = $request['payment_amount'];
+        $newLoancollection->pending_loan_amount = $request['pending_loan_amount'];
+        $newLoancollection->payment_date = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');
+        $newLoancollection->save();
+
+        $loandisbursement->amount_left = $loandisbursement->amount_left - $newLoancollection->payment_amount;
+        $loandisbursement->save();
+
+        return $newLoancollection;
+    }
+
     public function saveDeliverygroup(array $request)
     {
         DB::beginTransaction();
@@ -169,7 +199,12 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
             foreach ($request['deliveries'] as $deliveryRequest) {
                 $this->createDelivery($newDeliverygroup, $deliveryRequest);
+                foreach ($deliveryRequest['loancollections'] as $loancollection) {
+                    $this->saveLoancollection($newDeliverygroup, $loancollection);
+                    error_log($loancollection['payment_amount']);
+                }
             }
+
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
