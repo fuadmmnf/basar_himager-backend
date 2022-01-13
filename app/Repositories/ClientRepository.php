@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Handlers\ClientHandler;
 use App\Models\Client;
 use Intervention\Image\Facades\Image;
+use PhpParser\Node\Scalar\MagicConst\File;
 
 class ClientRepository implements Interfaces\ClientRepositoryInterface
 {
@@ -31,21 +32,26 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
        $client->father_name = $request['father_name'];
        $client->mother_name = $request['mother_name'];
        $client->address = $request['address'];
-        if ($request['photo']) {
-            // $image = time(). '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ':')))[1])[0];
-            $filename = random_string(5) . time() . '.' . explode(';', explode('/', $request['photo'])[1])[0];
-            $location = public_path('/images/clients/' . $filename);
 
-            Image::make($request['photo'])->save($location);
-            $client->photo = $filename;
+        if ($request['photo']) {
+            if($request['photo']  != $client->photo) {
+                $filename = random_string(5) . time() . '.' . explode(';', explode('/', $request['photo'])[1])[0];
+                $location = public_path('/images/clients/' . $filename);
+
+                Image::make($request['photo'])->save($location);
+                $client->photo = $filename;
+            }
+
         }
         if ($request['nid_photo']) {
-            // $image = time(). '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ':')))[1])[0];
-            $filename = random_string(5) . time() . '_nid.' . explode(';', explode('/', $request['nid_photo'])[1])[0];
-            $location = public_path('/images/clients/' . $filename);
+            if($request['nid_photo']  != $client->nid_photo) {
+                $filename = random_string(5) . time() . '_nid.' . explode(';', explode('/', $request['nid_photo'])[1])[0];
+                $location = public_path('/images/clients/' . $filename);
 
-            Image::make($request['nid_photo'])->save($location);
-            $client->nid_photo = $filename;
+                Image::make($request['nid_photo'])->save($location);
+                $client->nid_photo = $filename;
+            }
+
         }
 
        $client->save();
