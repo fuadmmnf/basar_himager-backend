@@ -110,7 +110,11 @@
                         <td></td>
                         <td>{{$delivery->do_charge}}</td>
                         <td>{{$delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}</td>
-                        <td></td>
+                        <td>
+                            @php
+                                foreach ($delivery)
+                            @endphp
+                        </td>
                         <td></td>
                         <td>{{$delivery->total_charge + $delivery->do_charge}}</td>
                         <td>

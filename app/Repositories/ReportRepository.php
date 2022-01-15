@@ -251,7 +251,7 @@ class ReportRepository implements ReportRepositoryInterface
             ->whereDate('delivery_time', '<=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
             ->get();
 
-        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking');
+        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'loancollection');
 
         return $statements;
     }
