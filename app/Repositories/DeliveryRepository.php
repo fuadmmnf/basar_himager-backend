@@ -201,7 +201,6 @@ class DeliveryRepository implements DeliveryRepositoryInterface
                 $this->createDelivery($newDeliverygroup, $deliveryRequest);
                 foreach ($deliveryRequest['loancollections'] as $loancollection) {
                     $this->saveLoancollection($newDeliverygroup, $loancollection);
-                    error_log($loancollection['payment_amount']);
                 }
             }
 
