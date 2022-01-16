@@ -69,8 +69,6 @@
 <div>
     <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
 </div>
-
-<div> {{$statements}}</div>
 <table class="bordertable">
     <thead>
     <tr>
@@ -96,39 +94,45 @@
             @foreach($statements as $statement)
                 @foreach($statement->deliveries as $delivery)
                     @foreach($delivery->deliveryitems as $deliveryitem)
-                    <tr>
-                        <td>{{$delivery->booking->booking_no}}</td>
-                        <td>
-                            @php
-                               $sr_lot = explode("/", $deliveryitem->srlot_no);
-                            @endphp
-                            {{$sr_lot[0]}}</td>
-                        <td>{{$sr_lot[1]}}</td>
-                        <td>{{$deliveryitem->quantity}}</td>
-                        <td>{{$statement->delivery_no}}</td>
-                        <td>{{$delivery->total_charge}}</td>
-                        <td></td>
-                        <td>{{$delivery->do_charge}}</td>
-                        <td>{{$delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}</td>
-                        <td>
-                            @php
-                                foreach ($delivery)
-                            @endphp
-                        </td>
-                        <td></td>
-                        <td>{{$delivery->total_charge + $delivery->do_charge}}</td>
-                        <td>
-                            @if($delivery->booking->type === 1)
-                                {{$deliveryitem->quantity}}
-                            @endif
-                        </td>
-                        <td>
-                            @if($delivery->booking->type === 0)
-                                {{$deliveryitem->quantity}}
-                            @endif
-                        </td>
-                        <td>{{$deliveryitem->quantity}}</td>
-                    </tr>
+                        <tr>
+                            <td>{{$delivery->booking->booking_no}}</td>
+                            <td>
+                                @php
+                                   $sr_lot = explode("/", $deliveryitem->srlot_no);
+                                @endphp
+                                {{$sr_lot[0]}}</td>
+                            <td>{{$sr_lot[1]}}</td>
+                            <td>{{$deliveryitem->quantity}}</td>
+                            <td>{{$statement->delivery_no}}</td>
+                            <td>{{$delivery->total_charge}}</td>
+                            <td></td>
+                            <td>{{$delivery->do_charge}}</td>
+                            <td>{{$delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}</td>
+                            <td>
+                                @php
+                                    $total_loan = 0;
+                                    $surcharge = 0;
+                                    foreach ($statement->loancollection as $loan){
+                                        $total_loan += $loan->payment_amount;
+                                        $surcharge += $loan->surcharge;
+                                    }
+                                @endphp
+                                {{$total_loan}}
+                            </td>
+                            <td>{{$surcharge}}</td>
+                            <td>{{$delivery->total_charge + $delivery->do_charge + $delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}</td>
+                            <td>
+                                @if($delivery->booking->type === 1)
+                                    {{$deliveryitem->quantity}}
+                                @endif
+                            </td>
+                            <td>
+                                @if($delivery->booking->type === 0)
+                                    {{$deliveryitem->quantity}}
+                                @endif
+                            </td>
+                            <td>{{$deliveryitem->quantity}}</td>
+                        </tr>
                     @endforeach
                 @endforeach
             @endforeach
