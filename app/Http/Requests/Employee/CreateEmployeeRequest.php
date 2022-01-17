@@ -30,6 +30,8 @@ class CreateEmployeeRequest extends FormRequest
             'nid' => 'required',
             'name' => 'required',
             'phone' => 'required| unique:users',
+            'photo' => 'sometimes',
+            'nid_photo' => 'sometimes',
             'designation' => 'required',
             'father_name' => 'required',
             'mother_name' => 'required',

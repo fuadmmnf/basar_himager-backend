@@ -41,7 +41,7 @@ Route::post('banks', [\App\Http\Controllers\Api\BankController::class, 'addBank'
 Route::post('banks/deposits', [\App\Http\Controllers\Api\BankController::class, 'storeBankDeposit']);
 
 //bookings
-Route::get('bookings/search/query={query}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingsBySearchedQuery']);
+Route::get('bookings/search', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingsBySearchedQuery']);
 Route::get('bookings/{booking_no}', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookingDetail']);
 Route::get('bookings', [\App\Http\Controllers\Api\BookingController::class, 'fetchBookings']);
 Route::get('dashboard/bookings/all', [\App\Http\Controllers\Api\BookingController::class, 'fetchAllBookings']);
@@ -65,6 +65,7 @@ Route::get('deliverygroups',[\App\Http\Controllers\Api\DeliveryController::class
 Route::get('deliverygroups/{deliverygroup_id}/deliveries',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveriesByGroupId']);
 Route::get('bookings/{booking_id}/deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchPaginatedDeliveriesByBookingID']);
 Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliverygroup']);
+Route::put('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'uploadDeliverygroup']);
 //Delivery Gatepasses
 Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliveryGatepass']);
 

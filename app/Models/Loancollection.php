@@ -13,4 +13,9 @@ class Loancollection extends Model
     {
         return $this->belongsTo('App\Models\Loandisbursement');
     }
+
+    public function deliverygroup()
+    {
+        return $this->belongsTo('App\Models\Deliverygroup');
+    }
 }

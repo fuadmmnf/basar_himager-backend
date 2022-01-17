@@ -8,10 +8,13 @@ use App\Models\Delivery;
 use App\Models\Deliverygroup;
 use App\Models\Deliveryitem;
 use App\Models\Gatepass;
+use App\Models\Loancollection;
+use App\Models\Loandisbursement;
 use App\Models\Unloading;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DeliveryRepository implements DeliveryRepositoryInterface
 {
@@ -31,7 +34,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     public function getRecentDeliveryGroups(){
         $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
             ->paginate(20);
-        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems');
         return $deliveryGroups;
     }
 
@@ -101,10 +104,11 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newDelivery->deliverygroup_id = $deliverygroup->id;
         $newDelivery->booking_id = $booking->id;
         $newDelivery->cost_per_bag = $deliveryRequest['cost_per_bag'];
-        $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
-        $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
+//        $newDelivery->quantity_bags_fanned = $deliveryRequest['quantity_bags_fanned'];
+//        $newDelivery->fancost_per_bag = $deliveryRequest['fancost_per_bag'];
         $newDelivery->do_charge = $deliveryRequest['do_charge'];
-        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge));
+//        $newDelivery->total_charge = ($newDelivery->quantity_bags_fanned * $newDelivery->fancost_per_bag) + ($totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge));
+        $newDelivery->total_charge = $totalQuantity * ($newDelivery->cost_per_bag + $newDelivery->do_charge);
 
         if ($booking->bags_out + $totalQuantity > $booking->bags_in) {
             throw new \Exception('total amount greater than bags received');
@@ -131,6 +135,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             $newDeliveyItem->delivery_id = $newDelivery->id;
             $newDeliveyItem->quantity = $deliveryitem['quantity'];
             $newDeliveyItem->potato_type = $deliveryitem['potato_type'];
+            $newDeliveyItem->srlot_no = $deliveryitem['srlot_no'];
             $newDeliveyItem->save();
 
             $quantity = $newDeliveyItem->quantity;
@@ -151,6 +156,33 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $newDelivery;
     }
 
+    public function saveLoancollection(Deliverygroup $deliverygroup,array $request)
+    {
+        $loandisbursement = Loandisbursement::findOrFail($request['loandisbursement_id']);
+
+        error_log($loandisbursement);
+        if($loandisbursement->amount_left < $request['payment_amount']){
+            return null;
+        }
+        error_log($deliverygroup);
+
+        $newLoancollection = new Loancollection();
+        $newLoancollection->loandisbursement_id = $loandisbursement->id;
+        $newLoancollection->deliverygroup_id = $deliverygroup->id;
+        $newLoancollection->loancollection_no = Str::random(8);
+        $newLoancollection->surcharge = $request['surcharge'];
+        $newLoancollection->service_charge_rate = $request['service_charge_rate'];
+        $newLoancollection->payment_amount = $request['payment_amount'];
+        $newLoancollection->pending_loan_amount = $request['pending_loan_amount'];
+        $newLoancollection->payment_date = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');
+        $newLoancollection->save();
+
+        $loandisbursement->amount_left = $loandisbursement->amount_left - $newLoancollection->payment_amount;
+        $loandisbursement->save();
+
+        return $newLoancollection;
+    }
+
     public function saveDeliverygroup(array $request)
     {
         DB::beginTransaction();
@@ -167,7 +199,11 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
             foreach ($request['deliveries'] as $deliveryRequest) {
                 $this->createDelivery($newDeliverygroup, $deliveryRequest);
+                foreach ($deliveryRequest['loancollections'] as $loancollection) {
+                    $this->saveLoancollection($newDeliverygroup, $loancollection);
+                }
             }
+
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
@@ -175,6 +211,29 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
         DB::commit();
         return $newDeliverygroup;
+    }
+
+    public function updateDeliverygroup(array $request){
+        DB::beginTransaction();
+        try {
+            foreach ($request['deliveries'] as $deliveryRequest) {
+               $delivery = Delivery::find($deliveryRequest["delivery_id"]);
+
+               $delivery->fancost_per_bag = $deliveryRequest["fancost_per_bag"];
+               $delivery->quantity_bags_fanned = $deliveryRequest["fan_quantity"];
+               $delivery->fancharge_added = 1;
+
+               $delivery->save();
+            }
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+
+        DB::commit();
+        return $request['deliveries'];
+
     }
 
 

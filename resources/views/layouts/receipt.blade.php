@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Receive Wise potato store report</title>
+    <title>@yield('title')</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -14,6 +14,7 @@
         }
 
         th, td {
+            /*padding: 7px;*/
             font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
             font-size: 15px;
         }
@@ -43,7 +44,7 @@
         }
 
         @page {
-            header: page-header;
+            /*header: page-header;*/
             footer: page-footer;
             background: url({{ public_path('images/bhl_bg2.png') }});
             background-repeat: no-repeat;
@@ -59,75 +60,14 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">আলু সংরক্ষন রশিদ</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">@yield('receipt-title')</b> <br />
 
     </div>
-</div>
 
 
+@yield('content')
 
 
-<table>
-    <tr>
-        <td style="width: 50%; text-align: left">
-            <span style="text-decoration: underline; font-size: 1.4rem">বুকিং তথ্য</span> <br/> <br/>
-            <span>বুকিং নম্বরঃ {{$receives[0]->booking->booking_no}}</span> <br/>
-            <span>নামঃ {{$receives[0]->booking->client->name}}</span> <br/>
-            <span>ফোন নম্বরঃ {{$receives[0]->booking->client->phone}}</span> <br/>
-            <span>গ্রামঃ {{$receives[0]->booking->client->address['village']}}</span>
-            {{--            <div>--}}
-            {{--                <div>--}}
-            {{--                    <p><b>নাম:</b> {{$receiptinfo->receives[0]->booking->client->name}}</p>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
-        </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <span style="text-decoration: underline; font-size: 1.4rem">গ্রাহকের তথ্য</span> <br/> <br/>
-            <span style="font-size: 1.2rem; font-weight: bolder;">আলু গ্রহণ নম্বরঃ {{$receives[0]->receivegroup->receiving_no}}</span> <br/>
-            <span>তারিখঃ {{ bangla(date('F d, Y', strtotime($receives[0]->receivegroup->receiving_time))) }}</span> <br/>
-            <span>নামঃ {{$receives[0]->farmer_info['name']}}</span> <br/>
-            <span>গ্রামঃ  {{$receives[0]->farmer_info['village']}}</span>
-            {{--            <p><b>ফোন নম্বর:</b> {{$receiptinfo->receives[0]->booking->client->phone}}</p>--}}
-        </td>
-    </tr>
-
-</table>
-
-<br>
-
-<table class="bordertable">
-    <thead>
-    <tr>
-        <th>বুকিং নম্বর</th>
-        <th>তারিখ</th>
-        <th>চেম্বার</th>
-        <th>ফ্লোর</th>
-        <th>কম্পার্টমেন্ট</th>
-        <th>আলুর ধরন </th>
-        <th>পরিমাণ</th>
-        <th>SR/লট নং</th>
-    </tr>
-
-    </thead>
-    <tbody>
-    @if(count($receives))
-        @foreach($receives as $receive)
-            @foreach($receive->loaddistributions as $load)
-            <tr>
-                <td>{{$receive->booking->booking_no}}</td>
-                <td>{{$load->created_at->format('F d, Y')}}</td>
-                <td>{{$load->inventory->parent_info->parent_info->name}}</td>
-                <td>{{$load->inventory->parent_info->name}}</td>
-                <td>{{$load->inventory->name}}</td>
-                <td>{{$load->potato_type}}</td>
-                <td>{{$load->quantity}}</td>
-                <td>{{$receive->lot_no}}</td>
-            </tr>
-            @endforeach
-        @endforeach
-    @endif
-    </tbody>
-</table>
 
 <div class="footer">
     <table >
@@ -142,7 +82,7 @@
             <td>
                 <div>
                     <hr style="width: 60%"/>
-                    <b>কর্তিপক্ষ</b>
+                    <b>কর্তৃপক্ষ</b>
                 </div>
 
             </td>

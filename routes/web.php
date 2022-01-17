@@ -20,9 +20,20 @@ Route::get('/', function () {
 
 
 Route::get('/clear', function () {
-    \Illuminate\Support\Facades\Artisan::call('route:clear');
-    \Illuminate\Support\Facades\Artisan::call('config:cache');
+    Artisan::call('route:clear');
+    Artisan::call('config:cache');
     return 'cache cleared';
+});
+
+
+Route::get('/migratebyadmin', function () {
+        // Artisan::call('route:cache');
+    try {
+        Artisan::call('migrate', array('--force' => true));
+        return 'Migration done';
+    } catch (Exception $exception){
+        return 'error';
+    }
 });
 
 
@@ -48,3 +59,4 @@ Route::get('/download/report/accounting/start/{start_date}/end/{end_date}', [\Ap
 Route::get('/download/report/receives/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadReceiveReportInRange']);
 Route::get('/download/report/receivegroup/loaddistributions/{receive_group_id}',[\App\Http\Controllers\ReportController::class,'getLoaddistributionReport']);
 Route::get('/download/report/storepotato/{client_id}/{date}',[\App\Http\Controllers\ReportController::class,'downloadStorePotatoReceipt']);
+Route::get('/download/report/dailystatement/start/{start_date}',[\App\Http\Controllers\ReportController::class,'downloadDailyStatementReport']);

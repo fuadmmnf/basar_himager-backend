@@ -1,78 +1,16 @@
-<html>
-<head>
-    <title>Booking Receipt</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <style>
-        body {
-            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
-        }
+@extends('layouts.receipt')
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            text-align: center;
-        }
+@section('title')
+    Booking Receipt
+@endsection
 
-        th, td {
-            /*padding: 7px;*/
-            font-family: 'Kalpurush', 'AdorshoLipi', sans-serif;
-            font-size: 15px;
-        }
-
-        .bordertable td, th {
-            border: 1px solid black;
-        }
-
-        .present {
-            color: #218838;
-        }
-
-        .absent {
-            color: #F03A17;
-        }
-
-        .storeWaterMark {
-            text-align: center;
-            font-size: 30px;
-            color: #b8cee3;
-            opacity: 0.1 !important;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 20px;
-        }
-
-        @page {
-            header: page-header;
-            footer: page-footer;
-            background: url({{ public_path('images/bhl_bg2.png') }});
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
-    </style>
-</head>
-<body>
-<br />
-
-<div style="text-align: center">
-    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br />
-    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
-
-    <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">বুকিং রশিদ</b> <br />
-
-    </div>
-
-</div>
-<span align="center" style="line-height: 1.2;">
-    <p><b>বুকিং নম্বর:</b> {{$bookinginfo->booking_no}}</p>
-    <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
-</span>
-
+@section('receipt-title')
+    বুকিং রশিদ
+@endsection
+@section('content')
 <table>
     <tr>
-        <td style="width: 50%; text-align: left">
+        <td rowspan="3" style="width: 35%; text-align: left">
             <div   >
                 <h3>গ্রাহকের তথ্য</h3>
                 <div>
@@ -82,110 +20,69 @@
                 </div>
             </div>
         </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
+        <td style="width: 30%; border: 3px solid black;  border-radius: 8px;">
+            <div style="">
+{{--                <b style="font-size: 1.6rem;"></b> <br />--}}
+
+            </div>
+        </td>
+        <td rowspan="3" class="td-right-align" style="width: 35%; text-align: right;">
+            <span align="center" style="line-height: 1.2;">
+                <p><b>বুকিং নম্বর:</b> {{$bookinginfo->booking_no}}</p>
+                <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
+            </span>
         </td>
     </tr>
-
-</table>
-<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
-    <span><b>বুকিং তথ্য</b></span>
-</div>
-<table>
     <tr>
-        <td style="width: 70%; text-align: left">
-            <div   >
-                <div>
-                    <p><b>বুকিং তারিখ:</b> {{ date('F d, Y', strtotime($bookinginfo->booking_time)) }}</p>
-                    <p><b>মোট পরিমাণ:</b> {{$bookinginfo->quantity}}</p>
-                </div>
-            </div>
-        </td>
-        <td  class="td-right-align" style="width: 30%; text-align: left">
-            <div>
-                <p><b>বুকিং ধরন:</b>
-                    @if($bookinginfo->type == 0)
-                        Normal
-                    @elseif($bookinginfo->type == 1)
-                        Advance
-                    @endif
-                </p>
-
-                @if($bookinginfo->advance_payment > 0)
-                    <p><b>অগ্রীম পরিশোধ:</b> {{$bookinginfo->advance_payment}}</p>
-                @elseif($bookinginfo->booking_amount > 0)
-                    <p><b>বুকিং মানি:</b> {{$bookinginfo->initial_booking_amount}}</p>
-                    <p><b>অবশিষ্ট:</b> {{$bookinginfo->booking_amount}}</p>
-                @endif
-            </div>
-        </td>
+        <td/><td/><td/>
     </tr>
-
+    <tr>
+        <td/><td/><td/>
+    </tr>
 </table>
 
-
-
-<div class="footer">
-    <table >
+<br/>
+    <table class="bordertable" style="width: 70%;margin-left: auto;margin-right: auto;">
         <tr>
-            <td width="50%">
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>গ্রাহক</b>
-                </div>
-
-            </td>
+            <th colspan="2"><b>বুকিং তথ্য</b></th>
+        </tr>
+        <tr>
+            <td>বুকিং তারিখ</td>
+            <td>{{ bangla(date('F d, Y', strtotime($bookinginfo->booking_time))) }}</td>
+        </tr>
+        <tr>
+            <td>বুকিং ধরণ</td>
             <td>
-                <div>
-                    <hr style="width: 60%"/>
-                    <b>কর্তিপক্ষ</b>
-                </div>
-
+                @if($bookinginfo->type == 0)
+                    নরমাল
+                @elseif($bookinginfo->type == 1)
+                    অগ্রিম
+                @endif
             </td>
         </tr>
-    </table>
-
-
-</div>
-
-<htmlpageheader name="page-header">
-    <table>
         <tr>
-            <td align="left" width="50%" style="padding: 0">
-                <small style="font-size: 12px; color: #525659;">download time: <span
-                        style="font-family: Calibri; font-size: 12px;">{{ date('F d, Y, h:i A') }}</span></small>
-            </td>
-            <td align="right" style="color: #525659;">
-                <small>
-                    | page: {PAGENO}/{nbpg}
-                </small>
-            </td>
+            <td>বুকিং পরিমান</td>
+            <td>{{$bookinginfo->quantity}} বস্তা</td>
         </tr>
-    </table>
-</htmlpageheader>
-
-
-<htmlpagefooter name="page-footer">
-
-    <table>
         <tr>
-            <td width="50%" align="left" style="padding: 0">
-                <div class="storeWaterMark" style="opacity: 0.1;">
-                    <p>Basar Himager Limited</p>
-                    {{--        @if($store->slogan)--}}
-                    {{--            <br/>** {{ $store->slogan }} **--}}
-                    {{--        @endif--}}
-                </div>
+            <td>অগ্রিম পরিশোধ</td>
+            <td>
+                @if($bookinginfo->advance_payment > 0)
+                  {{$bookinginfo->advance_payment}} টাকা
+                @else
+                    0 টাকা
+                @endif
 
-            </td>
-            <td align="right">
-               <span style="font-family: Calibri; font-size: 11px; color: #3f51b5;">Generated by:
-                    https://basarhimager.com</span> <br/>
-                <small style="font-family: Calibri; font-size: 11px; color: #3f51b5;">Powered by:
-                    https://innovabd.tech (01515297658)</small>
+{{--                    @if($bookinginfo->advance_payment > 0)--}}
+{{--                        <p><b>অগ্রীম পরিশোধ:</b> {{$bookinginfo->advance_payment}}</p>--}}
+{{--                    @elseif($bookinginfo->booking_amount > 0)--}}
+{{--                        <p><b>বুকিং মানি:</b> {{$bookinginfo->initial_booking_amount}}</p>--}}
+{{--                        <p><b>অবশিষ্ট:</b> {{$bookinginfo->booking_amount}}</p>--}}
+{{--                    @endif--}}
             </td>
         </tr>
+
     </table>
 
-</htmlpagefooter>
-</body>
-</html>
+@endsection
+

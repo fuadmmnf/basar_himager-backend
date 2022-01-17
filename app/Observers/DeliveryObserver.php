@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Handlers\TransactionHandler;
 use App\Models\Delivery;
+use App\Models\Transaction;
 use Carbon\Carbon;
 
 class DeliveryObserver
@@ -25,10 +26,6 @@ class DeliveryObserver
                 $delivery, 'Delivery Charge'
             );
 
-            $transactionHandler->createTransaction(0, $fancost, Carbon::parse($delivery->deliverygroup->delivery_time)->setTimezone('Asia/Dhaka'),
-                $delivery, 'Delivery Fan Charge'
-            );
-
             $transactionHandler->createTransaction(0, $quantity * $delivery->do_charge, Carbon::parse($delivery->deliverygroup->delivery_time)->setTimezone('Asia/Dhaka'),
                 $delivery, 'Delivery DO Charge'
             );
@@ -44,7 +41,10 @@ class DeliveryObserver
      */
     public function updated(Delivery $delivery)
     {
-        //
+        $transactionHandler = new TransactionHandler();
+        $transactionHandler->createTransaction(0, $delivery->quantity_bags_fanned * $delivery->fancost_per_bag, Carbon::parse($delivery->deliverygroup->delivery_time)->setTimezone('Asia/Dhaka'),
+            $delivery, 'Delivery Fan Charge'
+        );
     }
 
     /**
