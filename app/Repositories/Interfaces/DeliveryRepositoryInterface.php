@@ -11,5 +11,6 @@ interface DeliveryRepositoryInterface
     public function fetchDeliveriesByGroupId($deliverygroup_id);
     public function getPaginatedDeliveriesByBookingId($booking_id);
     public function saveDeliverygroup(array $request);
+    public function updateDeliverygroup(array $request);
     public function saveGatepass(array $request);
 }

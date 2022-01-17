@@ -65,6 +65,7 @@ Route::get('deliverygroups',[\App\Http\Controllers\Api\DeliveryController::class
 Route::get('deliverygroups/{deliverygroup_id}/deliveries',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveriesByGroupId']);
 Route::get('bookings/{booking_id}/deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchPaginatedDeliveriesByBookingID']);
 Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliverygroup']);
+Route::put('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'uploadDeliverygroup']);
 //Delivery Gatepasses
 Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliveryGatepass']);
 

@@ -31,6 +31,8 @@ class UpdateClientRequest extends FormRequest
             'father_name' => 'required',
             'mother_name' => 'required',
             'address' => 'required',
+            'photo' => 'sometimes',
+            'nid_photo' => 'sometimes',
         ];
     }
 }
