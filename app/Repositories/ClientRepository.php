@@ -70,4 +70,12 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
         $client = Client::findOrFail($client_id);
         return $client;
     }
+
+    public function fetchSingleClientWithLoanDetail($client_id)
+    {
+        $client = Client::where('id',$client_id)->firstOrFail();
+        $client->load('bookings','bookings.loanDisbursements');
+        return $client;
+        // TODO: Implement fetchSingleClientWithLoanDetail() method.
+    }
 }

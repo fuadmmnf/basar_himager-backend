@@ -49,4 +49,9 @@ class ClientController extends \App\Http\Controllers\ApiController
         $clients = $this->clientRepository->fetchClientList($request->query('selected_year'));
         return response()->json($clients,200);
     }
+
+    public function getSingleClientWithLoanDetail($client_id){
+        $client = $this->clientRepository->fetchSingleClientWithLoanDetail($client_id);
+        return response()->json($client,200);
+    }
 }

@@ -125,6 +125,7 @@ Route::get('clients', [\App\Http\Controllers\Api\ClientController::class, 'getCl
 Route::get('clients/search/query={query}', [\App\Http\Controllers\Api\ClientController::class, 'getClientsBySearchQuery']);
 Route::get('clients/list', [\App\Http\Controllers\Api\ClientController::class,'getClientList']);
 Route::get('clients/{client_id}', [\App\Http\Controllers\Api\ClientController::class,'getSingleClient']);
+Route::get('clients/loan/details/{client_id}', [\App\Http\Controllers\Api\ClientController::class, 'getSingleClientWithLoanDetail']);
 Route::get('clients/list/customized', [\App\Http\Controllers\Api\ClientController::class,'getClientsWithFewerAttributes']);
 Route::post('clients', [\App\Http\Controllers\Api\ClientController::class, 'createClient']);
 Route::put('clients/{client_id}', [\App\Http\Controllers\Api\ClientController::class, 'updateClient']);
