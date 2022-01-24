@@ -255,6 +255,16 @@ class ReportRepository implements ReportRepositoryInterface
 
         return $statements;
     }
+
+    public function fetchDeliveryTyped($start_date, $end_date) {
+        $statements = Deliverygroup::whereDate('delivery_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('delivery_time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
+            ->get();
+
+        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.deliveryitems.unloadings.loaddistribution');
+
+        return $statements;
+    }
 }
 
 

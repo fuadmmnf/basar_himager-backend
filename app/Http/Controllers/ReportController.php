@@ -222,4 +222,20 @@ class ReportController extends Controller
         ], [], ['format' => 'A5-L']);
         return $pdf->stream();
     }
+
+    public function downloadDeliveriesTyped($type, $start_date, $end_date) {
+        try {
+            $statements = $this->reportRepository->fetchDeliveryTyped($start_date, $end_date);
+        } catch (\Exception $e) {
+            dd("Please Provide Appropriate Date");
+        }
+
+
+        $pdf = PDF::loadView('deliveries_typed', [
+            'statements' => $statements,
+            'start_date' => $start_date,
+            'type' => $type
+        ]);
+        return $pdf->stream();
+    }
 }

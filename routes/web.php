@@ -49,3 +49,4 @@ Route::get('/download/report/receives/{start_date}/end/{end_date}', [\App\Http\C
 Route::get('/download/report/receivegroup/loaddistributions/{receive_group_id}',[\App\Http\Controllers\ReportController::class,'getLoaddistributionReport']);
 Route::get('/download/report/storepotato/{client_id}/{date}',[\App\Http\Controllers\ReportController::class,'downloadStorePotatoReceipt']);
 Route::get('/download/report/dailystatement/start/{start_date}',[\App\Http\Controllers\ReportController::class,'downloadDailyStatementReport']);
+Route::get('/download/report/deliveries/type/{type}/start/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadDeliveriesTyped']);

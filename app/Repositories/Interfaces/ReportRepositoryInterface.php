@@ -20,5 +20,6 @@ interface ReportRepositoryInterface
     public function fetchReceivesInformation($start_date, $end_date);
     public function downloadStorePotatoReceipt($client_id,$date);
     public function fetchDailyStatements($start_date);
+    public function fetchDeliveryTyped($start_date, $end_date);
 
 }
