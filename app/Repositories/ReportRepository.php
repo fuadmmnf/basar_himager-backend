@@ -246,6 +246,14 @@ class ReportRepository implements ReportRepositoryInterface
         }
         return $client;
     }
+
+    public function fetchLoanDisbursementInfoByClientId($client_id)
+    {
+        $clientInfoForLoandisbursments = Client::where('id',$client_id)->first();
+        $clientInfoForLoandisbursments->load('bookings', 'bookings.loanDisbursements');
+        return $clientInfoForLoandisbursments;
+        // TODO: Implement fetchLoanDisbursementInfoByClientId() method.
+    }
 }
 
 

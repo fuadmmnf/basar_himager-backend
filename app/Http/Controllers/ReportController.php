@@ -129,6 +129,14 @@ class ReportController extends Controller
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
+    public function getLoandisbursmentReportByClientId($client_id)
+    {
+        $clientInfoForLoandisbursments = $this->reportRepository->fetchLoanDisbursementInfoByClientId($client_id);
+        $pdf = PDF::loadView('loandisbursments_report_by_client',[
+            'clientInfo' => $clientInfoForLoandisbursments
+        ]);
+        return $pdf->stream();
+    }
 
     public function getLoancollectionReceipt($id)
     {
