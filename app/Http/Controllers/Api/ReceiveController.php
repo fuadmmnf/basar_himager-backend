@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\Receive\CreateReceiveRequest;
 use App\Repositories\Interfaces\ReceiveRepositoryInterface;
+use Illuminate\Http\Request;
 
 
 class ReceiveController extends ApiController
@@ -31,9 +32,9 @@ class ReceiveController extends ApiController
         return response()->json($receive);
     }
 
-    public function fetchReceivesBySearchedQuery($query)
+    public function fetchReceivesBySearchedQuery(Request $request)
     {
-        $receives = $this->receiveRepository->getReceivesBySearchedQuery($query);
+        $receives = $this->receiveRepository->getReceivesBySearchedQuery($request->query('selected_year'), $request->query('query'));
         return response()->json($receives,200);
     }
 
@@ -42,8 +43,8 @@ class ReceiveController extends ApiController
         return response()->json($receive, 200);
     }
 
-    public function fetchRecentReceiveGroups(){
-        $receive_groups = $this->receiveRepository->getRecentReceiveGroups();
+    public function fetchRecentReceiveGroups(Request $request){
+        $receive_groups = $this->receiveRepository->getRecentReceiveGroups($request->query('selected_year'));
         return response()->json($receive_groups,200);
     }
 

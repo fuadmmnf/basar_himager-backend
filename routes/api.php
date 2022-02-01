@@ -51,7 +51,7 @@ Route::post('bookings', [\App\Http\Controllers\Api\BookingController::class, 'cr
 
 //receives
 Route::get('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceives']);
-Route::get('receives/search/query={query}', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesBySearchedQuery']);
+Route::get('receives/search', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesBySearchedQuery']);
 Route::get('receivegroups', [\App\Http\Controllers\Api\ReceiveController::class, 'fetchRecentReceiveGroups']);
 Route::get('receivegroups/{receivegroup_id}',[\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceivesByGroupId']);
 Route::get('receives/{sr_no}',[\App\Http\Controllers\Api\ReceiveController::class, 'fetchReceiveDetails']);

@@ -69,10 +69,6 @@
 <div>
     <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
 </div>
-
-<div>
-    {{$statements}}
-</div>
 <table class="bordertable">
     <thead>
     <tr>
@@ -95,7 +91,13 @@
                             <td>{{$delivery->booking->booking_no}}</td>
                             <td>{{$deliveryitem->srlot_no}}</td>
                             <td>{{$statement->delivery_no}}</td>
-                            <td></td>
+                            <td>
+                                @if( count($deliveryitem->unloadings))
+                                    Compartment: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->name}} <br/>
+                                    Floor: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->name}} <br/>
+                                    Chamber: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->parent_info->name}}
+                                @endif
+                            </td>
                             <td>{{$delivery->total_charge + $delivery->do_charge + $delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}</td>
                         </tr>
                     @endif

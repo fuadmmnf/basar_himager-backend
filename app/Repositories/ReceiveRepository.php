@@ -44,14 +44,17 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         return $receive;
     }
 
-    public function getReceivesBySearchedQuery($query)
+    public function getReceivesBySearchedQuery($year, $query)
     {
         $receivegroups = Receivegroup::select('receivegroups.*')
-            ->where('receivegroups.receiving_no', 'LIKE', $query . '%')
+            ->where('receiving_year', $year)
             ->join('receives', 'receives.receivegroup_id', '=', 'receivegroups.id')
-            ->orWhere('receives.sr_no', 'LIKE', '%' . $query . '%')
             ->join('bookings', 'bookings.id', '=', 'receives.booking_id')
-            ->orWhere('bookings.booking_no', 'LIKE', $query . '%')
+            ->where(function ($q) use ($query) {
+                $q->where('receivegroups.receiving_no', 'LIKE', $query . '%')
+                    ->orWhere('receives.sr_no', 'LIKE', '%' . $query . '%')
+                    ->orWhere('bookings.booking_no', 'LIKE', $query . '%');
+            })
             ->with('receives.booking')
             ->with('receives.booking.client')
             ->paginate(15);
@@ -70,8 +73,9 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         return $receives;
     }
 
-    public function getRecentReceiveGroups(){
+    public function getRecentReceiveGroups($year){
         $recive_groups = Receivegroup::orderByDesc('receiving_time')
+            ->where('receiving_year', $year)
             ->with('receives.booking')
             ->with('receives.booking.client')
             ->paginate(20);
