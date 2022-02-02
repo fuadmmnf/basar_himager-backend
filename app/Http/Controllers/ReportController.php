@@ -231,11 +231,19 @@ class ReportController extends Controller
         }
 
 
-        $pdf = PDF::loadView('deliveries_typed', [
-            'statements' => $statements,
-            'start_date' => $start_date,
-            'type' => $type
-        ]);
+        if($type == 2) {
+            $pdf = PDF::loadView('deliveries', [
+                'statements' => $statements,
+                'start_date' => $start_date,
+            ]);
+        }
+        else {
+            $pdf = PDF::loadView('deliveries_typed', [
+                'statements' => $statements,
+                'start_date' => $start_date,
+                'type' => $type
+            ]);
+        }
         return $pdf->stream();
     }
 }
