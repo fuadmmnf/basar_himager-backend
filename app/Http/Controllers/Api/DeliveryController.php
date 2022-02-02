@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\Delivery\CreateDeliveryRequest;
 use App\Http\Requests\Delivery\CreateGatepassRequest;
+use App\Http\Requests\Delivery\UpdateDeliveryRequest;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -52,6 +53,14 @@ class DeliveryController extends ApiController
             return response()->json('delivery limit exceeding bags left', 400);
         }
         return response()->json($delivery, 201);
+    }
+
+    public function uploadDeliverygroup(UpdateDeliveryRequest $request){
+        $delivery = $this->deliveryRepository->updateDeliverygroup($request->validated());
+        if(!$delivery){
+            return response()->json('delivery limit exceeding bags left', 400);
+        }
+        return response()->noContent();
     }
 
 

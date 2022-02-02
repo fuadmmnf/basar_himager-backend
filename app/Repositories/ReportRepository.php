@@ -247,12 +247,45 @@ class ReportRepository implements ReportRepositoryInterface
         return $client;
     }
 
+
     public function fetchLoanDisbursementInfoByClientId($client_id)
     {
         $clientInfoForLoandisbursments = Client::where('id',$client_id)->first();
         $clientInfoForLoandisbursments->load('bookings', 'bookings.loanDisbursements');
         return $clientInfoForLoandisbursments;
         // TODO: Implement fetchLoanDisbursementInfoByClientId() method.
+    }
+    public function fetchDailyStatements($start_date) {
+        $statements = Deliverygroup::whereDate('delivery_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('delivery_time', '<=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->get();
+
+        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'loancollection');
+
+        return $statements;
+    }
+
+    public function fetchDeliveryTyped($start_date, $end_date) {
+        $statements = Deliverygroup::whereDate('delivery_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('delivery_time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
+            ->get();
+
+        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.deliveryitems.unloadings.loaddistribution');
+
+        return $statements;
+    }
+
+    public function fetchLoadDistributions($start_date, $end_date)
+    {
+        $loads = Loaddistribution::whereDate('created_at', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('created_at', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))->get();
+        $loads->load('receive');
+        $inventoryHandler = new InventoryHandler();
+        foreach ($loads as $loaddistribution) {
+            $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
+        }
+
+        return $loads;
     }
 }
 

@@ -34,7 +34,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     public function getRecentDeliveryGroups(){
         $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
             ->paginate(20);
-        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems');
         return $deliveryGroups;
     }
 
@@ -211,6 +211,29 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
         DB::commit();
         return $newDeliverygroup;
+    }
+
+    public function updateDeliverygroup(array $request){
+        DB::beginTransaction();
+        try {
+            foreach ($request['deliveries'] as $deliveryRequest) {
+               $delivery = Delivery::find($deliveryRequest["delivery_id"]);
+
+               $delivery->fancost_per_bag = $deliveryRequest["fancost_per_bag"];
+               $delivery->quantity_bags_fanned = $deliveryRequest["fan_quantity"];
+               $delivery->fancharge_added = 1;
+
+               $delivery->save();
+            }
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+
+        DB::commit();
+        return $request['deliveries'];
+
     }
 
 

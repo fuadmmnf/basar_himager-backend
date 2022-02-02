@@ -48,4 +48,7 @@ Route::get('/download/report/accounting/start/{start_date}/end/{end_date}', [\Ap
 Route::get('/download/report/receives/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadReceiveReportInRange']);
 Route::get('/download/report/receivegroup/loaddistributions/{receive_group_id}',[\App\Http\Controllers\ReportController::class,'getLoaddistributionReport']);
 Route::get('/download/report/storepotato/{client_id}/{date}',[\App\Http\Controllers\ReportController::class,'downloadStorePotatoReceipt']);
-Route::get('download/report/loandisbursement/{client_id}',[\App\Http\Controllers\ReportController::class,'getLoandisbursmentReportByClientId']);
+Route::get('/download/report/loandisbursement/{client_id}',[\App\Http\Controllers\ReportController::class,'getLoandisbursmentReportByClientId']);
+Route::get('/download/report/dailystatement/start/{start_date}',[\App\Http\Controllers\ReportController::class,'downloadDailyStatementReport']);
+Route::get('/download/report/deliveries/type/{type}/start/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadDeliveriesTyped']);
+Route::get('/download/report/loaddistribution/{start_date}/end/{end_date}',[\App\Http\Controllers\ReportController::class,'downloadStorePotatoReportByDate']);

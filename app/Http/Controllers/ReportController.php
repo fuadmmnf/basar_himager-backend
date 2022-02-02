@@ -214,4 +214,44 @@ class ReportController extends Controller
         ]);
         return $pdf->stream();
     }
+
+    public function downloadDailyStatementReport($start_date) {
+        try {
+            $statements = $this->reportRepository->fetchDailyStatements($start_date);
+        } catch (\Exception $e) {
+            dd("Please Provide Appropriate Date");
+        }
+
+
+        $pdf = PDF::loadView('dailystatements', [
+            'statements' => $statements,
+            'start_date' => $start_date,
+
+        ], [], ['format' => 'A5-L']);
+        return $pdf->stream();
+    }
+
+    public function downloadDeliveriesTyped($type, $start_date, $end_date) {
+        try {
+            $statements = $this->reportRepository->fetchDeliveryTyped($start_date, $end_date);
+        } catch (\Exception $e) {
+            dd("Please Provide Appropriate Date");
+        }
+
+
+        $pdf = PDF::loadView('deliveries_typed', [
+            'statements' => $statements,
+            'start_date' => $start_date,
+            'type' => $type
+        ]);
+        return $pdf->stream();
+    }
+
+    public function downloadStorePotatoReportByDate($start_date,$end_date){
+        $loaddistributions = $this->reportRepository->fetchLoadDistributions($start_date,$end_date);
+        $pdf = PDF::loadView('loaddistribution_by_range',[
+            'loaddistributions' => $loaddistributions
+        ]);
+        return $pdf->stream();
+    }
 }
