@@ -31,8 +31,9 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $deliveries;
     }
 
-    public function getRecentDeliveryGroups(){
+    public function getRecentDeliveryGroups($year){
         $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
+            ->where('delivery_year', $year)
             ->paginate(20);
         $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems');
         return $deliveryGroups;
@@ -194,6 +195,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
             $newDeliverygroup = new Deliverygroup();
             $newDeliverygroup->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
+            $newDeliverygroup->delivery_year = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka')->year;
             $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count() + 1) . $newDeliverygroup->delivery_time->year % 100;
             $newDeliverygroup->save();
 

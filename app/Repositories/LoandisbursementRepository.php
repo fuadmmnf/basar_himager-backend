@@ -10,9 +10,10 @@ use Illuminate\Support\Str;
 
 class LoandisbursementRepository implements LoandisbursementRepositoryInterface
 {
-    public function fetchPaginatedLoanDisbursements()
+    public function fetchPaginatedLoanDisbursements($year)
     {
-        $loanDisbursements = Loandisbursement::orderByDesc('updated_at')->paginate(20);
+        $loanDisbursements = Loandisbursement::orderByDesc('updated_at')
+            ->where('payment_year', $year)->paginate(20);
         $loanDisbursements->load('booking', 'booking.client', 'loancollections');
         return $loanDisbursements;
     }
@@ -34,6 +35,7 @@ class LoandisbursementRepository implements LoandisbursementRepositoryInterface
         $newLoandisbursement->amount = $request['amount'];
         $newLoandisbursement->amount_left = $newLoandisbursement->amount;
         $newLoandisbursement->payment_date = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');
+        $newLoandisbursement->payment_year = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka')->year;
         $newLoandisbursement->save();
 
         return $newLoandisbursement;

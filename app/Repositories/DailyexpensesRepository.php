@@ -19,6 +19,7 @@ class DailyexpensesRepository implements DailyexpensesRepositoryInterface
         $newDailyexpenses->type = $request['type'];
         $newDailyexpenses->voucher_no = $request['voucher_no'];
         $newDailyexpenses->date = Carbon::parse($request['date'])->setTimezone('Asia/Dhaka');
+        $newDailyexpenses->year = Carbon::parse($request['date'])->setTimezone('Asia/Dhaka')->year;
         $newDailyexpenses->amount = $request['amount'];
         $newDailyexpenses->remarks = isset($request['remarks'])? $request['remarks'] : '';
         $newDailyexpenses->save();
@@ -27,9 +28,11 @@ class DailyexpensesRepository implements DailyexpensesRepositoryInterface
 
     }
 
-    public function getDailyExpenses()
+    public function getDailyExpenses($year)
     {
-        $dailyexpenses = Dailyexpense::orderByDesc('updated_at')->with('expensecategory')->paginate(20);
+        $dailyexpenses = Dailyexpense::orderByDesc('updated_at')
+            ->where('year', $year)
+            ->with('expensecategory')->paginate(20);
         return $dailyexpenses;
         // TODO: Implement getDailyExpenses() method.
     }
