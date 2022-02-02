@@ -26,8 +26,8 @@ class DailyexpensesController extends ApiController
         return response()->json($Dailyexpenses, 201);
     }
 
-    public function fetchDailyexpenses(){
-        $Dailyexpenses = $this->dailyexpensesRepository->getDailyExpenses();
+    public function fetchDailyexpenses(Request $request){
+        $Dailyexpenses = $this->dailyexpensesRepository->getDailyExpenses($request->query('selected_year'));
         return response()->json($Dailyexpenses,200);
     }
 }

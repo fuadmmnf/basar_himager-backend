@@ -34,8 +34,8 @@ class DeliveryController extends ApiController
         return response()->json($receive, 200);
     }
 
-    public function fetchRecentDeliverygroups(){
-        $deliverygroups = $this->deliveryRepository->getRecentDeliveryGroups();
+    public function fetchRecentDeliverygroups(Request $request){
+        $deliverygroups = $this->deliveryRepository->getRecentDeliveryGroups($request->query('selected_year'));
         return response()->json($deliverygroups,200);
     }
 
