@@ -129,6 +129,14 @@ class ReportController extends Controller
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
+    public function getLoandisbursmentReportByClientId($client_id)
+    {
+        $clientInfoForLoandisbursments = $this->reportRepository->fetchLoanDisbursementInfoByClientId($client_id);
+        $pdf = PDF::loadView('loandisbursments_report_by_client',[
+            'clientInfo' => $clientInfoForLoandisbursments
+        ]);
+        return $pdf->stream();
+    }
 
     public function getLoancollectionReceipt($id)
     {
@@ -220,6 +228,38 @@ class ReportController extends Controller
             'start_date' => $start_date,
 
         ], [], ['format' => 'A5-L']);
+        return $pdf->stream();
+    }
+
+    public function downloadDeliveriesTyped($type, $start_date, $end_date) {
+        try {
+            $statements = $this->reportRepository->fetchDeliveryTyped($start_date, $end_date);
+        } catch (\Exception $e) {
+            dd("Please Provide Appropriate Date");
+        }
+
+
+        if($type == 2) {
+            $pdf = PDF::loadView('deliveries', [
+                'statements' => $statements,
+                'start_date' => $start_date,
+            ]);
+        }
+        else {
+            $pdf = PDF::loadView('deliveries_typed', [
+                'statements' => $statements,
+                'start_date' => $start_date,
+                'type' => $type
+            ]);
+        }
+        return $pdf->stream();
+    }
+
+    public function downloadStorePotatoReportByDate($start_date,$end_date){
+        $loaddistributions = $this->reportRepository->fetchLoadDistributions($start_date,$end_date);
+        $pdf = PDF::loadView('loaddistribution_by_range',[
+            'loaddistributions' => $loaddistributions
+        ]);
         return $pdf->stream();
     }
 }
