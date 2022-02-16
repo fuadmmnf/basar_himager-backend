@@ -98,12 +98,12 @@
 <table class="bordertable">
     <thead>
     <tr>
-        <th>বুকিং নম্বর</th>
-        <th>তারিখ</th>
+        <th width="15%">বুকিং নম্বর</th>
+        <th width="20%">তারিখ</th>
         <th>চেম্বার</th>
         <th>ফ্লোর</th>
         <th>কম্পার্টমেন্ট</th>
-        <th>আলুর ধরন </th>
+        <th width="15%">আলুর ধরন </th>
         <th>পরিমাণ</th>
         <th>বর্তমান পরিমাণ</th>
         <th>SR/লট নং</th>
@@ -114,7 +114,7 @@
     @if(count($loaddistributions))
             @foreach($loaddistributions as $load)
                 <tr>
-                    <td>{{$load->booking_id}}</td>
+                    <td>{{$load->receive->booking->booking_no}}</td>
                     <td>{{$load->created_at->format('F d, Y')}}</td>
                     <td>{{$load->inventory->parent_info->parent_info->name}}</td>
                     <td>{{$load->inventory->parent_info->name}}</td>

@@ -279,7 +279,7 @@ class ReportRepository implements ReportRepositoryInterface
     {
         $loads = Loaddistribution::whereDate('created_at', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
             ->whereDate('created_at', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))->get();
-        $loads->load('receive');
+        $loads->load('receive','receive.booking');
         $inventoryHandler = new InventoryHandler();
         foreach ($loads as $loaddistribution) {
             $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
