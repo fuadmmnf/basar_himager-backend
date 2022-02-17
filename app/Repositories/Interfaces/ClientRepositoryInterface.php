@@ -13,4 +13,5 @@ interface ClientRepositoryInterface
     public function fetchClientList($year);
     public function fetchClientListWithFewerAttributes($year);
     public function fetchSingleClient($client_id);
+    public function fetchSingleClientWithLoanDetail($client_id);
 }

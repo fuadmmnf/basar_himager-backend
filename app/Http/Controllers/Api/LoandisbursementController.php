@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\Loan\CreateLoandisbursementRequest;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
+use Illuminate\Http\Request;
 
 
 class LoandisbursementController extends ApiController
@@ -36,8 +37,8 @@ class LoandisbursementController extends ApiController
         return response()->json($loanDisbursement, 201);
     }
 
-    public function fetchLoandisbursements(){
-        $loanDisbursements = $this->loandisbursementRepository->fetchPaginatedLoanDisbursements();
+    public function fetchLoandisbursements(Request $request){
+        $loanDisbursements = $this->loandisbursementRepository->fetchPaginatedLoanDisbursements($request->query('selected_year'));
         return response()->json($loanDisbursements, 200);
     }
 }
