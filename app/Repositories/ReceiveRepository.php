@@ -73,6 +73,11 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         return $receives;
     }
 
+    public function getReceiveStats($year) {
+        $total_receives = Receive::where('receiving_year', $year)->count();
+        return $total_receives;
+    }
+
     public function getRecentReceiveGroups($year){
         $recive_groups = Receivegroup::orderByDesc('receiving_time')
             ->where('receiving_year', $year)
@@ -101,6 +106,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         $newReceive = new Receive();
         $newReceive->receivegroup_id = $receivegroup->id;
         $newReceive->booking_id = $booking->id;
+        $newReceive->receiving_year = $receivegroup->receiving_year;
 
         $totalQuantity = 0;
 
@@ -119,8 +125,10 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         }
 
 //        $newReceive->sr_no = date('Y') . '_' . $currentSR;
-        $newReceive->sr_no = date('Y') . '_' . $currentSR->value;
-        $newReceive->lot_no = $currentSR->value . '/' . $totalQuantity;
+        $receive_count = Receive::where('receiving_year', $receivegroup->receiving_year)->count();
+
+        $newReceive->sr_no = date('Y') . '_' . ($receive_count+1);
+        $newReceive->lot_no = ($receive_count+1) . '/' . $totalQuantity;
         $newReceive->booking_currently_left = $booking->quantity - $booking->bags_in - $totalQuantity;
         $newReceive->transport = $reciveRequest['transport'];
         $newReceive->farmer_info = $reciveRequest['farmer_info'];
