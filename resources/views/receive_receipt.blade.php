@@ -37,8 +37,8 @@
             <span style="text-decoration: underline; font-size: 1.4rem">গ্রহণের তথ্য</span> <br/> <br/>
             <span>রিসিভ নম্বরঃ {{$receiptinfo->receiving_no}}</span> <br/>
             <span>তারিখঃ {{ bangla(date('F d, Y', strtotime($receiptinfo->receiving_time))) }}</span> <br/>
-            <span>নামঃ {{$receiptinfo->receives[0]->farmer_info['name']}}</span> <br/>
-            <span>গ্রামঃ  {{$receiptinfo->receives[0]->farmer_info['village']}}</span>
+            <span>গ্রাহকের নামঃ {{$receiptinfo->receives[0]->farmer_info['name']}}</span> <br/>
+            <span>গ্রাহকের গ্রামঃ  {{$receiptinfo->receives[0]->farmer_info['village']}}</span>
 {{--            <p><b>ফোন নম্বর:</b> {{$receiptinfo->receives[0]->booking->client->phone}}</p>--}}
         </td>
     </tr>

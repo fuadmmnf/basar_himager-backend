@@ -27,6 +27,11 @@ class ReceiveController extends ApiController
         return response()->json($receives);
     }
 
+    public function fetchReceiveStats(Request $request) {
+        $total_receives = $this->receiveRepository->getReceiveStats($request->query('selected_year'));
+        return response()->json($total_receives);
+    }
+
     public function fetchReceiveDetails($sr_no){
         $receive = $this->receiveRepository->getReceiveDetails($sr_no);
         return response()->json($receive);
