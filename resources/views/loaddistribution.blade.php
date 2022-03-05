@@ -85,8 +85,8 @@
             <span style="text-decoration: underline; font-size: 1.4rem">গ্রাহকের তথ্য</span> <br/> <br/>
             <span style="font-size: 1.2rem; font-weight: bolder;">আলু গ্রহণ নম্বরঃ {{$receives[0]->receivegroup->receiving_no}}</span> <br/>
             <span>তারিখঃ {{ bangla(date('F d, Y', strtotime($receives[0]->receivegroup->receiving_time))) }}</span> <br/>
-            <span>নামঃ {{$receives[0]->farmer_info['name']}}</span> <br/>
-            <span>গ্রামঃ  {{$receives[0]->farmer_info['village']}}</span>
+            <span>গ্রাহকের নামঃ {{$receives[0]->farmer_info['name']}}</span> <br/>
+            <span>গ্রাহকের গ্রামঃ  {{$receives[0]->farmer_info['village']}}</span>
             {{--            <p><b>ফোন নম্বর:</b> {{$receiptinfo->receives[0]->booking->client->phone}}</p>--}}
         </td>
     </tr>
