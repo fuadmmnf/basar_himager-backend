@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingsSeeder::class);
         $this->call(PotatoTypeSeeder::class);
         $this->call(ChamberSeeder::class);
+//        $this->call(ClientIDScriptSeeder::class);
     }
 }

@@ -41,6 +41,7 @@
         .footer {
             position: fixed;
             bottom: 20px;
+            margin-top: 50px;
         }
 
         @page {
