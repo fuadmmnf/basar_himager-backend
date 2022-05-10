@@ -53,6 +53,7 @@
     <tr>
         <th>বুকিং নম্বর</th>
         <th>আলুর ধরন</th>
+        <th>এস আর/লট সংখ্যা</th>
         <th>চার্জ</th>
         <th>মোট</th>
     </tr>
@@ -65,6 +66,11 @@
             <td>
                 @foreach($delivery->deliveryitems as $item)
                     {{$item->potato_type}} ({{$item->quantity}}) <br />
+                @endforeach
+            </td>
+            <td>
+                @foreach($delivery->deliveryitems as $item)
+                    {{$item->srlot_no}} <br />
                 @endforeach
             </td>
             <td>

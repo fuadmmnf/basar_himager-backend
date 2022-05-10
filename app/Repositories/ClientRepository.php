@@ -68,12 +68,13 @@ class ClientRepository implements Interfaces\ClientRepositoryInterface
 
     public function fetchClientBySearchQuery($year, $query)
     {
+        error_log($query);
         $clients = Client::select('clients.*')
             ->where('clients.year', $year)
             ->where(function ($q) use ($query) {
                 $q->where('clients.name', 'LIKE', '%' . $query . '%')
                     ->orWhere('clients.phone', 'LIKE', $query . '%')
-                    ->orWhere('clients.nid', 'LIKE', '%' . $query . '%');
+                    ->orWhere('clients.nid', 'LIKE', $query . '%');
             })
             ->paginate(15);
         return $clients;
