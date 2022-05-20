@@ -70,9 +70,6 @@
     <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
 </div>
 
-<div>
-    {{$statements}}
-</div>
 <table class="bordertable">
     <thead>
     <tr>
@@ -81,6 +78,8 @@
         <th width="20%">এস আর/লট সংখ্যা</th>
         <th>ডি ও নং</th>
         <th>শেষ অবস্থান</th>
+        <th>লোন</th>
+        <th>লোনের সার র্চাজ</th>
         <th width="15%">মোট টাকা</th>
     </tr>
     </thead>
@@ -100,6 +99,12 @@
                                 Floor: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->name}} <br/>
                                 Chamber: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->parent_info->name}}
                             @endif
+                        </td>
+                        <td>
+                            {{$delivery->deliverygroup->loancollection->sum('payment_amount')}}
+                        </td>
+                        <td>
+                            {{$delivery->deliverygroup->loancollection->sum('surcharge')}}
                         </td>
                         <td>{{$delivery->total_charge + $delivery->do_charge + $delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}</td>
                     </tr>
