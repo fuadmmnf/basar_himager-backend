@@ -269,6 +269,12 @@ class ReportRepository implements ReportRepositoryInterface
         return $clientInfoForLoandisbursments;
         // TODO: Implement fetchLoanDisbursementInfoByClientId() method.
     }
+
+    public function fetchDateWiseLoanDisbursementInfoByClientId($client_id, $start_date, $end_date) {
+        $clientInfoForLoandisbursments = Client::where('id',$client_id)->first();
+        $clientInfoForLoandisbursments->load('bookings', 'bookings.loanDisbursements');
+        return $clientInfoForLoandisbursments;
+    }
     public function fetchDailyStatements($start_date) {
         $statements = Deliverygroup::whereDate('delivery_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
             ->whereDate('delivery_time', '<=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
