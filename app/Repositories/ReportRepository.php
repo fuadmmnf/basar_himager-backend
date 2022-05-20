@@ -202,7 +202,12 @@ class ReportRepository implements ReportRepositoryInterface
             ->get();
 
         $transactionsSum = [];
+        $loanCollectionIds = [];
+        $totalSurCharge = 0;
         foreach ($transactions as $transaction){
+            if($transaction->model_name === "App\Models\Loancollection") {
+                array_push($loanCollectionIds, $transaction->model_id);
+            }
             if (isset($transactionsSum[$transaction->remark])){
                 $transactionsSum[$transaction->remark]['amount'] += $transaction->amount;
             } else {
@@ -213,6 +218,15 @@ class ReportRepository implements ReportRepositoryInterface
             }
         }
 
+        $loanCollections = Loancollection::whereIn('id', $loanCollectionIds)->get();
+        foreach ($loanCollections as $lc) {
+            $totalSurCharge += $lc->surcharge;
+        }
+        $transactionsSum['Booking Loan Collection Surcharge'] = [
+            'type' => 0,
+            'amount' => $totalSurCharge
+        ];
+        $transactionsSum['Booking Loan Collection']['amount'] -= $totalSurCharge;
         return $transactionsSum;
     }
 
@@ -270,7 +284,7 @@ class ReportRepository implements ReportRepositoryInterface
             ->whereDate('delivery_time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
             ->get();
 
-        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.deliveryitems.unloadings.loaddistribution');
+        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.deliveryitems.unloadings.loaddistribution', 'deliveries.deliverygroup.loancollection');
 
         return $statements;
     }
