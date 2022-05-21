@@ -66,7 +66,8 @@
 </div>
 <span align="center" style="line-height: 1.2;">
 {{--    <p><b>লোন বিতরণের নং:</b> {{$loandisbursement->loandisbursement_no}}</p>--}}
-    <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
+    <p><b>শুরুর তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
+    <p><b>শেষ তারিখ:</b> {{ date('F d, Y', strtotime($end_date)) }}</p>
 </span>
 
 <table>
@@ -75,9 +76,9 @@
             <div  >
                 <h3>গ্রাহকের তথ্য</h3>
                 <div>
-                    <p><b>নাম:</b> {{$clientInfo->name}}</p>
-                    <p><b>ফোন নম্বর:</b> {{$clientInfo->phone}}</p>
-                    <p><b>বাবার নাম:</b> {{$clientInfo->father_name}}</p>
+                    <p><b>নাম:</b> {{$client->name}}</p>
+                    <p><b>ফোন নম্বর:</b> {{$client->phone}}</p>
+                    <p><b>বাবার নাম:</b> {{$client->father_name}}</p>
                 </div>
             </div>
         </td>
@@ -104,17 +105,15 @@
 
     </thead>
     <tbody>
-    @if(count($clientInfo->bookings))
-        @foreach($clientInfo->bookings as $booking)
-            @foreach($booking->loanDisbursements as $loan)
-                <tr>
-                    <td>{{$booking->booking_no}}</td>
-                    <td>{{$loan->loandisbursement_no}}</td>
-                    <td>{{$loan->payment_date}}</td>
-                    <td>{{$loan->amount}}</td>
-                    <td>{{$loan->amount_left}}</td>
-                </tr>
-            @endforeach
+    @if(count($infos))
+        @foreach($infos as $info)
+            <tr>
+                <td>{{$info->booking_no}}</td>
+                <td>{{$info->loandisbursement_no}}</td>
+                <td>{{ date('F d, Y', strtotime($info->payment_date)) }}</td>
+                <td>{{$info->amount}}</td>
+                <td>{{$info->amount_left}}</td>
+            </tr>
         @endforeach
     @endif
     </tbody>

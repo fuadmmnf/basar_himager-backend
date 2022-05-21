@@ -271,9 +271,22 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     public function fetchDateWiseLoanDisbursementInfoByClientId($client_id, $start_date, $end_date) {
-        $clientInfoForLoandisbursments = Client::where('id',$client_id)->first();
-        $clientInfoForLoandisbursments->load('bookings', 'bookings.loanDisbursements');
-        return $clientInfoForLoandisbursments;
+
+        $client = Client::where('id',$client_id)->first();
+        $client->load('bookings','bookings.loanDisbursements');
+        $infos = [];
+        $start = Carbon::parse($start_date)->setTimezone('Asia/Dhaka');
+        $end = Carbon::parse($end_date)->setTimezone('Asia/Dhaka');
+        foreach ($client->bookings as $booking) {
+            foreach ($booking->loanDisbursements as $ld) {
+                $payment_date = Carbon::parse($ld->payment_date)->setTimezone('Asia/Dhaka');
+                $ld->booking_no = $booking->booking_no;
+                if($payment_date >= $start && $payment_date <= $end) {
+                    array_push($infos, $ld);
+                }
+            }
+        }
+        return ['client' => $client, 'infos' => $infos];
     }
     public function fetchDailyStatements($start_date) {
         $statements = Deliverygroup::whereDate('delivery_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
