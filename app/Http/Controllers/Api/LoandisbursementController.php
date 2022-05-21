@@ -41,5 +41,9 @@ class LoandisbursementController extends ApiController
         $loanDisbursements = $this->loandisbursementRepository->fetchPaginatedLoanDisbursements($request->query('selected_year'));
         return response()->json($loanDisbursements, 200);
     }
+
+    public function fetchLoanBySearchQuery(Request $request){
+        return response();
+    }
 }
 
