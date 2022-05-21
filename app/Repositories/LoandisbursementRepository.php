@@ -43,16 +43,18 @@ class LoandisbursementRepository implements LoandisbursementRepositoryInterface
 
     public function fetchLoanByQuery($year, $query)
     {
-//        $loans = Loandisbursement::select('loandisbursements.*')
-//            ->where('loandisbursements.booking.booking_year', $year)
-//            ->join('clients', 'clients.id', '=', 'bookings.client_id')
-//            ->where(function ($q) use ($query) {
-//                $q->where('bookings.booking_no', 'LIKE', $query . '%')
-//                    ->orWhere('clients.phone', 'LIKE', $query . '%')
-//                    ->orWhere('clients.name', 'LIKE', '%' . $query . '%');
-//            })
-//            ->with('client')
-//            ->paginate(15);
+        $loans = Loandisbursement::select('loandisbursements.*')
+            ->where('loandisbursements.payment_year', $year)
+            ->join('bookings', 'bookings.id', '=', 'loandisbursements.booking_id')
+            ->join('clients', 'clients.id', '=', 'bookings.client_id')
+            ->where(function ($q) use ($query) {
+                $q->where('bookings.booking_no', 'LIKE', $query . '%')
+                    ->orWhere('loandisbursements.loandisbursement_no', 'LIKE', $query . '%')
+                    ->orWhere('clients.phone', 'LIKE', $query . '%')
+                    ->orWhere('clients.name', 'LIKE', '%' . $query . '%');
+            })
+            ->with('booking','booking.client','loancollections')
+            ->paginate(15);
         return $loans;
         // TODO: Implement fetchLoanByQuery() method.
     }

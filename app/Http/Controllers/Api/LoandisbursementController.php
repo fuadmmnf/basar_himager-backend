@@ -43,7 +43,8 @@ class LoandisbursementController extends ApiController
     }
 
     public function fetchLoanBySearchQuery(Request $request){
-        return response();
+        $loans = $this->loandisbursementRepository->fetchLoanByQuery($request->query('selected_year'), $request->query('query'));
+        return response()->json($loans, 200);
     }
 }
 
