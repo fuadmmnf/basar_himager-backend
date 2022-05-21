@@ -275,11 +275,11 @@ class ReportRepository implements ReportRepositoryInterface
         $client = Client::where('id',$client_id)->first();
         $client->load('bookings','bookings.loanDisbursements');
         $infos = [];
-        $start = Carbon::parse($start_date)->setTimezone('Asia/Dhaka');
-        $end = Carbon::parse($end_date)->setTimezone('Asia/Dhaka');
+        $start = Carbon::parse($start_date)->setTimezone('Asia/Dhaka')->format('d-m-Y');
+        $end = Carbon::parse($end_date)->setTimezone('Asia/Dhaka')->format('d-m-Y');
         foreach ($client->bookings as $booking) {
             foreach ($booking->loanDisbursements as $ld) {
-                $payment_date = Carbon::parse($ld->payment_date)->setTimezone('Asia/Dhaka');
+                $payment_date = Carbon::parse($ld->payment_date)->setTimezone('Asia/Dhaka')->format('d-m-Y');
                 $ld->booking_no = $booking->booking_no;
                 if($payment_date >= $start && $payment_date <= $end) {
                     array_push($infos, $ld);
