@@ -69,6 +69,9 @@
 <div>
     <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
 </div>
+<div>
+    {{$statements}}
+</div>
 <table class="bordertable">
     <thead>
     <tr>

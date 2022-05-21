@@ -138,6 +138,10 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
+    public function getDateWiseLoandisbursmentReportByClientId($client_id, $start_date, $end_date) {
+        $loandisbursements = $this->reportRepository->fetchDateWiseLoanDisbursementInfoByClientId($client_id, $start_date, $end_date);
+    }
+
     public function getLoancollectionReceipt($id)
     {
         $loancollection = $this->reportRepository->fetchLoanCollectionInfo($id);
