@@ -47,7 +47,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
     public function getReceivesBySearchedQuery($year, $query)
     {
         $receivegroups = Receivegroup::select('receivegroups.*')
-            ->where('receiving_year', $year)
+            ->where('receivegroups.receiving_year', $year)
             ->join('receives', 'receives.receivegroup_id', '=', 'receivegroups.id')
             ->join('bookings', 'bookings.id', '=', 'receives.booking_id')
             ->where(function ($q) use ($query) {

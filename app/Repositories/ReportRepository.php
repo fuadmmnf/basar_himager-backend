@@ -202,7 +202,12 @@ class ReportRepository implements ReportRepositoryInterface
             ->get();
 
         $transactionsSum = [];
+        $loanCollectionIds = [];
+        $totalSurCharge = 0;
         foreach ($transactions as $transaction){
+            if($transaction->model_name === "App\Models\Loancollection") {
+                array_push($loanCollectionIds, $transaction->model_id);
+            }
             if (isset($transactionsSum[$transaction->remark])){
                 $transactionsSum[$transaction->remark]['amount'] += $transaction->amount;
             } else {
@@ -213,6 +218,15 @@ class ReportRepository implements ReportRepositoryInterface
             }
         }
 
+        $loanCollections = Loancollection::whereIn('id', $loanCollectionIds)->get();
+        foreach ($loanCollections as $lc) {
+            $totalSurCharge += $lc->surcharge;
+        }
+        $transactionsSum['Booking Loan Collection Surcharge'] = [
+            'type' => 0,
+            'amount' => $totalSurCharge
+        ];
+        $transactionsSum['Booking Loan Collection']['amount'] -= $totalSurCharge;
         return $transactionsSum;
     }
 
@@ -255,6 +269,25 @@ class ReportRepository implements ReportRepositoryInterface
         return $clientInfoForLoandisbursments;
         // TODO: Implement fetchLoanDisbursementInfoByClientId() method.
     }
+
+    public function fetchDateWiseLoanDisbursementInfoByClientId($client_id, $start_date, $end_date) {
+
+        $client = Client::where('id',$client_id)->first();
+        $client->load('bookings','bookings.loanDisbursements');
+        $infos = [];
+        $start = Carbon::parse($start_date)->setTimezone('Asia/Dhaka')->format('d-m-Y');
+        $end = Carbon::parse($end_date)->setTimezone('Asia/Dhaka')->format('d-m-Y');
+        foreach ($client->bookings as $booking) {
+            foreach ($booking->loanDisbursements as $ld) {
+                $payment_date = Carbon::parse($ld->payment_date)->setTimezone('Asia/Dhaka')->format('d-m-Y');
+                $ld->booking_no = $booking->booking_no;
+                if($payment_date >= $start && $payment_date <= $end) {
+                    array_push($infos, $ld);
+                }
+            }
+        }
+        return ['client' => $client, 'infos' => $infos];
+    }
     public function fetchDailyStatements($start_date) {
         $statements = Deliverygroup::whereDate('delivery_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
             ->whereDate('delivery_time', '<=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
@@ -270,7 +303,7 @@ class ReportRepository implements ReportRepositoryInterface
             ->whereDate('delivery_time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
             ->get();
 
-        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.deliveryitems.unloadings.loaddistribution');
+        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.deliveryitems.unloadings.loaddistribution', 'deliveries.deliverygroup.loancollection');
 
         return $statements;
     }

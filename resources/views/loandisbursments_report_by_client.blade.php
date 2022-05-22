@@ -95,7 +95,7 @@
 <table class="bordertable">
     <thead>
     <tr>
-        <th>ুকিং নম্বর</th>
+        <th>বুকিং নম্বর</th>
         <th>লোন নং</th>
         <th>তারিখ</th>
         <th>পরিমাণ</th>
