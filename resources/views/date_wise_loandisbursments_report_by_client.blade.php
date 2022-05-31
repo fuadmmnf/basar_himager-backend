@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Delivery List Report</title>
+    <title>Client Based Loan Disbursement Report</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -52,72 +52,72 @@
     </style>
 </head>
 <body>
-<br/>
+<br />
 
 <div style="text-align: center">
-    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br/>
-    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br/> <br/>
+    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br />
+    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.5rem;padding: 20px">আলু ডেলিভারী প্রতিবেদন</b> <br/>
+        <b style="font-size: 1.3rem;padding: 20px">লোন বিতরণের রিপোর্ট</b> <br />
 
     </div>
 
 </div>
-<br>
+<span align="center" style="line-height: 1.2;">
+{{--    <p><b>লোন বিতরণের নং:</b> {{$loandisbursement->loandisbursement_no}}</p>--}}
+    <p><b>শুরুর তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
+    <p><b>শেষ তারিখ:</b> {{ date('F d, Y', strtotime($end_date)) }}</p>
+</span>
 
-<div>
-    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
+<table>
+    <tr>
+        <td style="width: 50%; text-align: left">
+            <div  >
+                <h3>গ্রাহকের তথ্য</h3>
+                <div>
+                    <p><b>নাম:</b> {{$client->name}}</p>
+                    <p><b>ফোন নম্বর:</b> {{$client->phone}}</p>
+                    <p><b>বাবার নাম:</b> {{$client->father_name}}</p>
+                </div>
+            </div>
+        </td>
+        <td class="td-right-align" style="text-align: right; width: 50%">
+        </td>
+    </tr>
+
+</table>
+
+
+<div style="text-align: center; color: darkblue">
+    <h3>সমস্ত লোন</h3>
 </div>
 
 <table class="bordertable">
     <thead>
     <tr>
-        <th width="20%">তারিখ</th>
-        <th width="15%">বুকিং নং</th>
-        <th width="20%">এস আর/লট সংখ্যা</th>
-        <th>ডি ও নং</th>
-        <th>শেষ অবস্থান</th>
-        <th>লোন</th>
-        <th>লোনের সার র্চাজ</th>
-        <th width="15%">মোট টাকা</th>
+        <th>বুকিং নম্বর</th>
+        <th>লোন নং</th>
+        <th>তারিখ</th>
+        <th>পরিমাণ</th>
+        <th>বাকি পরিমাণ</th>
     </tr>
+
     </thead>
     <tbody>
-    @if(count($statements))
-        @foreach($statements as $statement)
-            @foreach($statement->deliveries as $delivery)
-                @foreach($delivery->deliveryitems as $deliveryitem)
-                    <tr>
-                        <td>{{ date('F d, Y', strtotime($statement->delivery_time))}}</td>
-                        <td>{{$delivery->booking->booking_no}}</td>
-                        <td>{{$deliveryitem->srlot_no}}</td>
-                        <td>{{$statement->delivery_no}}</td>
-                        <td>
-                            @if( count($deliveryitem->unloadings))
-                                Compartment: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->name}} <br/>
-                                Floor: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->name}} <br/>
-                                Chamber: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->parent_info->name}}
-                            @endif
-                        </td>
-                        <td>
-                            {{$delivery->deliverygroup->loancollection->sum('payment_amount')}}
-                        </td>
-                        <td>
-                            {{$delivery->deliverygroup->loancollection->sum('surcharge')}}
-                        </td>
-                        <td>{{$delivery->total_charge + $delivery->do_charge + $delivery->quantity_bags_fanned * $delivery->fancost_per_bag + $delivery->deliverygroup->loancollection->sum('payment_amount') + $delivery->deliverygroup->loancollection->sum('surcharge')}}</td>
-                    </tr>
-                @endforeach
-            @endforeach
+    @if(count($infos))
+        @foreach($infos as $info)
+            <tr>
+                <td>{{$info->booking_no}}</td>
+                <td>{{$info->loandisbursement_no}}</td>
+                <td>{{ date('F d, Y', strtotime($info->payment_date)) }}</td>
+                <td>{{$info->amount}}</td>
+                <td>{{$info->amount_left}}</td>
+            </tr>
         @endforeach
     @endif
     </tbody>
 </table>
-
-
-{{--<pagebreak/>--}}
-
 
 <htmlpageheader name="page-header">
     <table>
