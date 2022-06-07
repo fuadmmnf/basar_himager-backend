@@ -36,6 +36,17 @@ Route::get('/migratebyadmin', function () {
     }
 });
 
+Route::get('/seedbyadmin', function () {
+        // Artisan::call('route:cache');
+    try {
+        Artisan::call('db:seed', array('--force' => true));
+        return 'Seed done';
+    } catch (Exception $exception){
+        return 'error';
+    }
+});
+
+
 
 Route::get('/report', function(){
     $pdf = PDF::loadView('template', []);
