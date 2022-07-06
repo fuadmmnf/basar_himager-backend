@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-//        Artisan::call('migrate:fresh');
-//        Artisan::call('passport:client --personal --name=coldstorageapp');
-//        $this->call(AuthorizationSeeder::class);
-//        $this->call(SettingsSeeder::class);
-//        $this->call(PotatoTypeSeeder::class);
-//        $this->call(ChamberSeeder::class);
+        Artisan::call('migrate:fresh');
+        Artisan::call('passport:client --personal --name=coldstorageapp');
+        $this->call(AuthorizationSeeder::class);
+        $this->call(SettingsSeeder::class);
+        $this->call(PotatoTypeSeeder::class);
+        $this->call(ChamberSeeder::class);
         $this->call(ClientIDScriptSeeder::class);
     }
 }

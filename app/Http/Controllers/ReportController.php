@@ -182,7 +182,7 @@ class ReportController extends Controller
         try {
             $transactions = $this->reportRepository->fetchAccountingInformation($start_date, $end_date);
         } catch (\Exception $e) {
-            dd("Please Provide Appropriate Date");
+            dd($e->getMessage());
         }
 
 

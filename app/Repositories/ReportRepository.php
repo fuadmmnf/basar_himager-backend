@@ -200,7 +200,6 @@ class ReportRepository implements ReportRepositoryInterface
         $transactions = Transaction::whereDate('time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
             ->whereDate('time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
             ->get();
-
         $transactionsSum = [];
         $loanCollectionIds = [];
         $totalSurCharge = 0;
@@ -226,7 +225,15 @@ class ReportRepository implements ReportRepositoryInterface
             'type' => 0,
             'amount' => $totalSurCharge
         ];
-        $transactionsSum['Booking Loan Collection']['amount'] -= $totalSurCharge;
+
+        if(isset($transactionsSum['Booking Loan Collection'])){
+            $transactionsSum['Booking Loan Collection']['amount'] -= $totalSurCharge;
+        } else {
+            $transactionsSum['Booking Loan Collection'] = [
+                'type' => 0,
+                'amount' => 0
+            ];
+        }
         return $transactionsSum;
     }
 
