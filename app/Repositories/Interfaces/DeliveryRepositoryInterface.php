@@ -7,6 +7,7 @@ namespace App\Repositories\Interfaces;
 interface DeliveryRepositoryInterface
 {
     public function getRecentDeliveries();
+    public function getDeliveryStats($year);
     public function getRecentDeliveryGroups($year);
     public function fetchDeliveriesByGroupId($deliverygroup_id);
     public function getPaginatedDeliveriesByBookingId($booking_id);

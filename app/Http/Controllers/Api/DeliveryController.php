@@ -46,6 +46,11 @@ class DeliveryController extends ApiController
         return response()->json($deliveries, 200);
     }
 
+    public function fetchDeliveryStats(Request $request) {
+        $total_do = $this->deliveryRepository->getDeliveryStats($request->query('selected_year'));
+        return response()->json($total_do);
+    }
+
     public function createDeliverygroup(CreateDeliveryRequest $request){
 
         $delivery = $this->deliveryRepository->saveDeliverygroup($request->validated());

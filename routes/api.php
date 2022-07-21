@@ -64,6 +64,7 @@ Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'cr
 Route::get('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliveries']);
 Route::get('deliverygroups',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliverygroups']);
 Route::get('deliverygroups/{deliverygroup_id}/deliveries',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveriesByGroupId']);
+Route::get('deliveries/year/stats',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveryStats']);
 Route::get('bookings/{booking_id}/deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchPaginatedDeliveriesByBookingID']);
 Route::post('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'createDeliverygroup']);
 Route::put('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'uploadDeliverygroup']);

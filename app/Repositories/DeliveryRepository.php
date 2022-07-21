@@ -30,6 +30,10 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             ->paginate(20);
         return $deliveries;
     }
+    public function getDeliveryStats($year) {
+        $total_do = Deliverygroup::where('delivery_year', $year)->count();
+        return $total_do;
+    }
 
     public function getRecentDeliveryGroups($year){
         $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
