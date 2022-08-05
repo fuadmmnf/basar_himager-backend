@@ -38,7 +38,9 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     public function getRecentDeliveryGroups($year){
         $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
             ->where('delivery_year', $year)
+            ->where('type', 0)
             ->paginate(20);
+
         $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems');
         return $deliveryGroups;
     }
