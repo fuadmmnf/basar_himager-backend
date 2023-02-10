@@ -29,6 +29,12 @@ class DeliveryController extends ApiController
         return response()->json($deliveries);
     }
 
+    public function fetchDeliveriesBySearchedQuery(Request $request)
+    {
+        $deliveries = $this->deliveryRepository->getDeliveriesBySearchedQuery($request->query('selected_year'), $request->query('query'));
+        return response()->json($deliveries,200);
+    }
+
     public function fetchDeliveriesByGroupId($deliverygroup_id){
         $receive =$this->deliveryRepository->fetchDeliveriesByGroupId($deliverygroup_id);
         return response()->json($receive, 200);

@@ -62,6 +62,7 @@ Route::post('receives', [\App\Http\Controllers\Api\ReceiveController::class, 'cr
 
 //deliveries
 Route::get('deliveries', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliveries']);
+Route::get('deliveries/search', [\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveriesBySearchedQuery']);
 Route::get('deliverygroups',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchRecentDeliverygroups']);
 Route::get('deliverygroups/{deliverygroup_id}/deliveries',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveriesByGroupId']);
 Route::get('deliveries/year/stats',[\App\Http\Controllers\Api\DeliveryController::class, 'fetchDeliveryStats']);
