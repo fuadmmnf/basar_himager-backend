@@ -113,7 +113,7 @@ class ReportRepository implements ReportRepositoryInterface
     {
         // TODO: Implement fetchLoanDisbursementInfo() method.
         $loanDisbursements = Loandisbursement::where('id',$id)->first();
-        $loanDisbursements->load('booking', 'booking.client', 'loancollections');
+        $loanDisbursements->load('booking', 'booking.client', 'loancollections', 'loancollections.deliverygroup');
         return $loanDisbursements;
     }
 
@@ -121,7 +121,7 @@ class ReportRepository implements ReportRepositoryInterface
     {
         // TODO: Implement fetchLoanCollectionInfo() method.
         $loanCollection = Loancollection::where('id',$id)->first();
-        $loanCollection->load('loandisbursement', 'loandisbursement.booking.client');
+        $loanCollection->load('loandisbursement', 'loandisbursement.booking.client', 'deliverygroup');
         return $loanCollection;
     }
 //    public function fetchReceiveReceiptInfo($id)

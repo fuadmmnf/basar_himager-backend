@@ -62,7 +62,7 @@
                 <h3>লোন পরিশোধের তথ্য</h3>
                 <br>
                 <div>
-                    <p><b>সংগ্রহের নং:</b>{{$loancollection->loancollection_no}} </p>
+                    <p><b>ডি ও নং:</b> {{$loancollection->deliverygroup->delivery_no}} </p>
                     <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($loancollection->payment_date)) }}</p>
                     <p><b>সারচার্জ:</b> {{$loancollection->surcharge}}</p>
                     <p><b>পরিশোধ:</b> {{$loancollection->payment_amount}}</p>
