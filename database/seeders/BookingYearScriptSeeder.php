@@ -11,6 +11,7 @@ class BookingYearScriptSeeder extends Seeder
 {
     public function run()
     {
+
         Booking::orderBy('created_at')->chunk(1000, function($bookings)
         {
             foreach ($bookings as $booking)
