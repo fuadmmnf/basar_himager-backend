@@ -26,6 +26,7 @@ use App\Repositories\EmployeeLoanRepository;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\EmployeeSalaryRepository;
 use App\Repositories\ExpensecategoryRepository;
+use App\Repositories\FanchargeRepository;
 use App\Repositories\FloorRepository;
 use App\Repositories\Interfaces\BankRepositoryInterface;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
@@ -36,6 +37,7 @@ use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeLoanRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\EmployeeSalaryRepositoryInterface;
+use App\Repositories\Interfaces\FanchargeRepositoryInterface;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
 use App\Repositories\Interfaces\MachinepartRepositoryInterface;
 use App\Repositories\Interfaces\PotatotypeRepositoryInterface;
@@ -100,6 +102,7 @@ class AppServiceProvider extends ServiceProvider
             ClientRepositoryInterface::class,
             SettingsRepositoryInterface::class,
             PotatotypeRepositoryInterface::class,
+            FanchargeRepositoryInterface::class,
         ];
 
         $implementations = [
@@ -126,6 +129,7 @@ class AppServiceProvider extends ServiceProvider
             ClientRepository::class,
             SettingsRepositopry::class,
             PotatotypeRepository::class,
+            FanchargeRepository::class,
         ];
 
         for ($i = 0; $i < count($interfaces); $i++) {
