@@ -14,4 +14,5 @@ interface DeliveryRepositoryInterface
     public function saveDeliverygroup(array $request);
     public function updateDeliverygroup(array $request);
     public function saveGatepass(array $request);
+    public function getDeliveriesBySearchedQuery($year, $query);
 }

@@ -106,7 +106,7 @@
                         <td>
                             {{$delivery->deliverygroup->loancollection->sum('surcharge')}}
                         </td>
-                        <td>{{$delivery->total_charge + $delivery->do_charge + $delivery->quantity_bags_fanned * $delivery->fancost_per_bag + $delivery->deliverygroup->loancollection->sum('payment_amount') + $delivery->deliverygroup->loancollection->sum('surcharge')}}</td>
+                        <td>{{$delivery->total_charge  + $delivery->quantity_bags_fanned * $delivery->fancost_per_bag + $delivery->deliverygroup->loancollection->sum('payment_amount') + $delivery->deliverygroup->loancollection->sum('surcharge')}}</td>
                     </tr>
                 @endforeach
             @endforeach

@@ -140,6 +140,7 @@
     <tr>
         <th>সংগ্রহের নং</th>
         <th>তারিখ</th>
+        <th>দিন</th>
         <th>সারচার্জ</th>
         <th>পরিমান</th>
     </tr>
@@ -150,12 +151,14 @@
         @foreach($loandisbursement->loancollections as $collection)
             <tr>
                 <td>{{$collection->loancollection_no}}</td>
-                <td>{{$collection->payment_date}}</td>
+                <td>{{ date('F d, Y', strtotime($collection->payment_date)) }}</td>
+                <td>{{ round((strtotime($collection->payment_date) - strtotime($loandisbursement->payment_date)) / 86400) }}</td>
                 <td>{{$collection->surcharge}}</td>
                 <td>{{$collection->payment_amount}}</td>
             </tr>
         @endforeach
         <tr>
+            <td></td>
             <td></td>
             <td> <b>SUBTOTAL:</b></td>
             <td> <b>{{$loandisbursement->loancollections->sum('surcharge')}}</b></td>
