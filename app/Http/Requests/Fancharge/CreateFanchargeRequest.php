@@ -25,6 +25,7 @@ class CreateFanchargeRequest extends FormRequest
     public function rules()
     {
         return [
+            'fancharge_time' => 'required',
             'fanneditems' => 'required|array',
         ];
     }

@@ -7,6 +7,7 @@ use App\Models\Dailyexpense;
 use App\Models\Delivery;
 use App\Models\Employeeloan;
 use App\Models\Employeesalary;
+use App\Models\Fancharge;
 use App\Models\Loancollection;
 use App\Models\Loandisbursement;
 use App\Observers\BookingObserver;
@@ -14,6 +15,7 @@ use App\Observers\DailyexpenseObserver;
 use App\Observers\DeliveryObserver;
 use App\Observers\EmployeeloanObserver;
 use App\Observers\EmployeesalaryObserver;
+use App\Observers\FanchargeObserver;
 use App\Observers\LoancollectionObserver;
 use App\Observers\LoandisbursementObserver;
 use App\Repositories\BankRepository;
@@ -151,5 +153,6 @@ class AppServiceProvider extends ServiceProvider
         Employeesalary::observe(EmployeesalaryObserver::class);
         Loandisbursement::observe(LoandisbursementObserver::class);
         Loancollection::observe(LoancollectionObserver::class);
+        Fancharge::observe(FanchargeObserver::class);
     }
 }

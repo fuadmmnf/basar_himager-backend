@@ -9,6 +9,7 @@ use App\Http\Requests\Fancharge\CreateFanchargeRequest;
 use App\Http\Requests\Settings\Potatotype\CreatePotatotypeRequest;
 use App\Repositories\Interfaces\FanchargeRepositoryInterface;
 use App\Repositories\Interfaces\PotatotypeRepositoryInterface;
+use Illuminate\Http\Request;
 
 class FanchargeController extends ApiController
 {
@@ -21,6 +22,11 @@ class FanchargeController extends ApiController
 
     public function fetchFancharges(){
         $fancharges = $this->fanchargeRepository->getFancharges();
+        return response()->json($fancharges, 200);
+    }
+
+    public function fetchFanchargesBySearchedQuery(Request $request){
+        $fancharges = $this->fanchargeRepository->getFanchargesBySearchQuery($request->query('query'));
         return response()->json($fancharges, 200);
     }
 

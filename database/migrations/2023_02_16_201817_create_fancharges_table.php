@@ -16,6 +16,7 @@ class CreateFanchargesTable extends Migration
         Schema::create('fancharges', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id');
+            $table->dateTimeTz('date');
             $table->string('srlot_no');
             $table->integer('quantity_bags_fanned');
             $table->integer('total_amount');

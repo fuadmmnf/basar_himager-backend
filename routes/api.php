@@ -146,4 +146,5 @@ Route::post('potatotypes',[\App\Http\Controllers\Api\PotatotypeController::class
 
 //Fancharge
 Route::get('fancharges',[\App\Http\Controllers\Api\FanchargeController::class, 'fetchFancharges']);
+Route::get('fancharges/search',[\App\Http\Controllers\Api\FanchargeController::class, 'fetchFanchargesBySearchedQuery']);
 Route::post('fancharges',[\App\Http\Controllers\Api\FanchargeController::class, 'storeFancharge']);
