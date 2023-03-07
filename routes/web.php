@@ -75,3 +75,4 @@ Route::get('/download/report/loandisbursement/{client_id}/start/{start_date}/end
 Route::get('/download/report/dailystatement/start/{start_date}',[\App\Http\Controllers\ReportController::class,'downloadDailyStatementReport']);
 Route::get('/download/report/deliveries/type/{type}/start/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadDeliveriesTyped']);
 Route::get('/download/report/loaddistribution/{start_date}/end/{end_date}',[\App\Http\Controllers\ReportController::class,'downloadStorePotatoReportByDate']);
+Route::get('/download/report/fancharge/{start_date}/end/{end_date}', [\App\Http\Controllers\ReportController::class, 'downloadFanchargeReportInRange']);

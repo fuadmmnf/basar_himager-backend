@@ -11,6 +11,7 @@ use App\Models\Booking;
 use App\Models\Delivery;
 use App\Models\Deliverygroup;
 use App\Models\Employeeloan;
+use App\Models\Fancharge;
 use App\Models\Gatepass;
 use App\Models\Employeesalary;
 use App\Models\Inventory;
@@ -113,7 +114,7 @@ class ReportRepository implements ReportRepositoryInterface
     {
         // TODO: Implement fetchLoanDisbursementInfo() method.
         $loanDisbursements = Loandisbursement::where('id',$id)->first();
-        $loanDisbursements->load('booking', 'booking.client', 'loancollections');
+        $loanDisbursements->load('booking', 'booking.client', 'loancollections', 'loancollections.deliverygroup');
         return $loanDisbursements;
     }
 
@@ -121,7 +122,7 @@ class ReportRepository implements ReportRepositoryInterface
     {
         // TODO: Implement fetchLoanCollectionInfo() method.
         $loanCollection = Loancollection::where('id',$id)->first();
-        $loanCollection->load('loandisbursement', 'loandisbursement.booking.client');
+        $loanCollection->load('loandisbursement', 'loandisbursement.booking.client', 'deliverygroup');
         return $loanCollection;
     }
 //    public function fetchReceiveReceiptInfo($id)
@@ -193,6 +194,14 @@ class ReportRepository implements ReportRepositoryInterface
             ->with('receives.receiveitems')
             ->get();
         return $receivegroups;
+    }
+
+    public function fetchFanchargeInformation($start_date, $end_date){
+        $fancharges = Fancharge::whereDate('date', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('date', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
+            ->with('booking')
+            ->get();
+        return $fancharges;
     }
 
     public function fetchAccountingInformation($start_date, $end_date): array

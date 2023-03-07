@@ -138,7 +138,7 @@
 <table class="bordertable">
     <thead>
     <tr>
-        <th>সংগ্রহের নং</th>
+        <th>ডি ও নং</th>
         <th>তারিখ</th>
         <th>দিন</th>
         <th>সারচার্জ</th>
@@ -150,7 +150,7 @@
     @if(count($loandisbursement->loancollections))
         @foreach($loandisbursement->loancollections as $collection)
             <tr>
-                <td>{{$collection->loancollection_no}}</td>
+                <td>{{$collection->deliverygroup->delivery_no}}</td>
                 <td>{{ date('F d, Y', strtotime($collection->payment_date)) }}</td>
                 <td>{{ round((strtotime($collection->payment_date) - strtotime($loandisbursement->payment_date)) / 86400) }}</td>
                 <td>{{$collection->surcharge}}</td>

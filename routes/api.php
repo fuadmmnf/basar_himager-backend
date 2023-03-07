@@ -143,3 +143,8 @@ Route::post('settings',[\App\Http\Controllers\Api\SettingsController::class, 'up
 //Potatotype
 Route::get('potatotypes',[\App\Http\Controllers\Api\PotatotypeController::class, 'fetchPotatotypes']);
 Route::post('potatotypes',[\App\Http\Controllers\Api\PotatotypeController::class, 'saveNewPotatotype']);
+
+//Fancharge
+Route::get('fancharges',[\App\Http\Controllers\Api\FanchargeController::class, 'fetchFancharges']);
+Route::get('fancharges/search',[\App\Http\Controllers\Api\FanchargeController::class, 'fetchFanchargesBySearchedQuery']);
+Route::post('fancharges',[\App\Http\Controllers\Api\FanchargeController::class, 'storeFancharge']);
