@@ -72,43 +72,71 @@
 <table class="bordertable">
     <thead>
     <tr>
-        <th> বুকিং নং</th>
+        <th>বুকিং নং</th>
+        <th>ডি ও নং</th>
         <th>এস আর নং</th>
         <th>লট সংখ্যা</th>
         <th>বস্তার সংখ্যা</th>
-        <th>ডি ও নং</th>
+        <th>সাধারণ বস্তা</th>
         <th>সাধারণ ভাড়া</th>
+        <th>অগ্রিম বস্তা</th>
         <th>খালি বস্তার দাম</th>
         <th>ডি ও চার্জ</th>
         <th>ফ্যান ভাড়া</th>
+        <th>টাকা</th>
         <th>লোন</th>
         <th>লোনের সার চার্জ</th>
         <th>মোট টাকা</th>
-        <th>অগ্রিম বস্তা</th>
-        <th>সাধারণ বস্তা</th>
-        <th>মোট বস্তা</th>
+
     </tr>
     </thead>
     <tbody>
-        @if(count($statements))
-            @foreach($statements as $statement)
-                @foreach($statement->deliveries as $delivery)
-                    @foreach($delivery->deliveryitems as $deliveryitem)
-                        <tr>
-                            <td>{{$delivery->booking->booking_no}}</td>
-                            <td>
-                                @php
-                                   $sr_lot = explode("/", $deliveryitem->srlot_no);
-                                @endphp
-                                {{$sr_lot[0]}}</td>
-                            <td>{{$sr_lot[1]}}</td>
-                            <td>{{$deliveryitem->quantity}}</td>
-                            <td>{{$statement->delivery_no}}</td>
-                            <td>{{$delivery->total_charge}}</td>
-                            <td></td>
-                            <td>{{$delivery->do_charge}}</td>
-                            <td>{{$delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}</td>
-                            <td>
+    @if(count($statements))
+        @foreach($statements as $statement)
+            @foreach($statement->deliveries as $delivery)
+                @foreach($delivery->deliveryitems as $deliveryitem)
+                    <tr>
+                        @if($loop->index == 0)
+                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->booking->booking_no}}</td>
+                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$statement->delivery_no}}</td>
+                        @endif
+                        <td>
+                            @php
+                                $sr_lot = explode("/", $deliveryitem->srlot_no);
+                            @endphp
+                            {{$sr_lot[0]}}</td>
+                        <td>{{$sr_lot[1]}}</td>
+                        <td>{{$deliveryitem->quantity}}</td>
+                        <td>
+                            @if($delivery->booking->type === 0)
+                                {{$deliveryitem->quantity}}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>@if($delivery->booking->booking_no[0] == 'N')
+                                {{($delivery->cost_per_bag * $deliveryitem->quantity)}}
+                            @else
+                                -
+                            @endif</td>
+                        <td>
+                            @if($delivery->booking->type === 1)
+                                {{$deliveryitem->quantity}}
+                            @else
+                                -
+                            @endif
+                        </td>
+
+                        <td></td>
+                        <td>{{$delivery->do_charge * $deliveryitem->quantity}}</td>
+                        <td>
+                            {{$delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}
+                        </td>
+                        <td>{{(($delivery->cost_per_bag * $deliveryitem->quantity))+ ($delivery->do_charge * $deliveryitem->quantity) + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)}}</td>
+
+                        @if($loop->index == 0)
+
+                            <td rowspan="{{count($delivery->deliveryitems)}}">
                                 @php
                                     $total_loan = 0;
                                     $surcharge = 0;
@@ -119,24 +147,17 @@
                                 @endphp
                                 {{$total_loan}}
                             </td>
-                            <td>{{$surcharge}}</td>
-                            <td>{{$delivery->total_charge + $delivery->do_charge + $delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}</td>
-                            <td>
-                                @if($delivery->booking->type === 1)
-                                    {{$deliveryitem->quantity}}
-                                @endif
-                            </td>
-                            <td>
-                                @if($delivery->booking->type === 0)
-                                    {{$deliveryitem->quantity}}
-                                @endif
-                            </td>
-                            <td>{{$deliveryitem->quantity}}</td>
-                        </tr>
-                    @endforeach
+                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$surcharge}}</td>
+
+                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge  + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag) + $total_loan + $surcharge}}</td>
+
+                        @endif
+
+                    </tr>
                 @endforeach
             @endforeach
-        @endif
+        @endforeach
+    @endif
     </tbody>
 </table>
 
