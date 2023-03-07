@@ -93,69 +93,92 @@
     <tbody>
     @if(count($statements))
         @foreach($statements as $statement)
-            @foreach($statement->deliveries as $delivery)
-                @foreach($delivery->deliveryitems as $deliveryitem)
-                    <tr>
-                        @if($loop->index == 0)
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->booking->booking_no}}</td>
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$statement->delivery_no}}</td>
-                        @endif
-                        <td>
-                            @php
-                                $sr_lot = explode("/", $deliveryitem->srlot_no);
-                            @endphp
-                            {{$sr_lot[0]}}</td>
-                        <td>{{$sr_lot[1]}}</td>
-                        <td>{{$deliveryitem->quantity}}</td>
-                        <td>
-                            @if($delivery->booking->type === 0)
-                                {{$deliveryitem->quantity}}
-                            @else
-                                -
+            @if(count($statement->deliveries) == 0)
+                <tr>
+                    <td>{{$delivery->booking->booking_no}}</td>
+                    <td>{{$statement->delivery_no}}</td>
+                    <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+                    <td>
+                        @php
+                            $total_loan = 0;
+                            $surcharge = 0;
+                            foreach ($statement->loancollection as $loan){
+                                $total_loan += $loan->payment_amount;
+                                $surcharge += $loan->surcharge;
+                            }
+                        @endphp
+                        {{$total_loan}}
+                    </td>
+                    <td>{{$surcharge}}</td>
+                    <td>{{ $total_loan + $surcharge}}</td>
+                </tr>
+            @else
+                @foreach($statement->deliveries as $delivery)
+                    @foreach($delivery->deliveryitems as $deliveryitem)
+                        <tr>
+                            @if($loop->index == 0)
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->booking->booking_no}}</td>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$statement->delivery_no}}</td>
                             @endif
-                        </td>
-                        <td>@if($delivery->booking->booking_no[0] == 'N')
-                                {{($delivery->cost_per_bag * $deliveryitem->quantity)}}
-                            @else
-                                -
-                            @endif</td>
-                        <td>
-                            @if($delivery->booking->type === 1)
-                                {{$deliveryitem->quantity}}
-                            @else
-                                -
-                            @endif
-                        </td>
-
-                        <td></td>
-                        <td>{{$delivery->do_charge * $deliveryitem->quantity}}</td>
-                        <td>
-                            {{$delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}
-                        </td>
-                        <td>{{(($delivery->cost_per_bag * $deliveryitem->quantity))+ ($delivery->do_charge * $deliveryitem->quantity) + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)}}</td>
-
-                        @if($loop->index == 0)
-
-                            <td rowspan="{{count($delivery->deliveryitems)}}">
+                            <td>
                                 @php
-                                    $total_loan = 0;
-                                    $surcharge = 0;
-                                    foreach ($statement->loancollection as $loan){
-                                        $total_loan += $loan->payment_amount;
-                                        $surcharge += $loan->surcharge;
-                                    }
+                                    $sr_lot = explode("/", $deliveryitem->srlot_no);
                                 @endphp
-                                {{$total_loan}}
+                                {{$sr_lot[0]}}</td>
+                            <td>{{$sr_lot[1]}}</td>
+                            <td>{{$deliveryitem->quantity}}</td>
+                            <td>
+                                @if($delivery->booking->type === 0)
+                                    {{$deliveryitem->quantity}}
+                                @else
+                                    -
+                                @endif
                             </td>
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$surcharge}}</td>
+                            <td>@if($delivery->booking->booking_no[0] == 'N')
+                                    {{($delivery->cost_per_bag * $deliveryitem->quantity)}}
+                                @else
+                                    -
+                                @endif</td>
+                            <td>
+                                @if($delivery->booking->type === 1)
+                                    {{$deliveryitem->quantity}}
+                                @else
+                                    -
+                                @endif
+                            </td>
 
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge  + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag) + $total_loan + $surcharge}}</td>
+                            <td></td>
+                            <td>{{$delivery->do_charge * $deliveryitem->quantity}}</td>
+                            <td>
+                                {{$delivery->quantity_bags_fanned * $delivery->fancost_per_bag}}
+                            </td>
+                            <td>{{(($delivery->cost_per_bag * $deliveryitem->quantity))+ ($delivery->do_charge * $deliveryitem->quantity) + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)}}</td>
 
-                        @endif
+                            @if($loop->index == 0)
 
-                    </tr>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">
+                                    @php
+                                        $total_loan = 0;
+                                        $surcharge = 0;
+                                        foreach ($statement->loancollection as $loan){
+                                            $total_loan += $loan->payment_amount;
+                                            $surcharge += $loan->surcharge;
+                                        }
+                                    @endphp
+                                    {{$total_loan}}
+                                </td>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$surcharge}}</td>
+
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge  + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag) + $total_loan + $surcharge}}</td>
+
+                            @endif
+
+                        </tr>
+                    @endforeach
                 @endforeach
-            @endforeach
+
+            @endif
+
         @endforeach
     @endif
     </tbody>
