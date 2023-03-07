@@ -59,7 +59,11 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br/> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.5rem;padding: 20px">আলু ডেলিভারী প্রতিবেদন (@if($type) অগ্রীম @else সাধারণ @endif ) </b> <br/>
+        <b style="font-size: 1.5rem;padding: 20px">আলু ডেলিভারী প্রতিবেদন (@if($type)
+                অগ্রীম
+            @else
+                সাধারণ
+            @endif ) </b> <br/>
 
     </div>
 
@@ -72,14 +76,15 @@
 <table class="bordertable">
     <thead>
     <tr>
-        <th width="20%">তারিখ</th>
-        <th width="15%">বুকিং নং</th>
-        <th width="20%">এস আর/লট সংখ্যা</th>
+        <th>তারিখ</th>
+        <th>বুকিং নং</th>
         <th>ডি ও নং</th>
+        <th>এস আর/লট সংখ্যা</th>
         <th>শেষ অবস্থান</th>
+        <th>টাকা</th>
         <th>লোন</th>
         <th>লোনের সার র্চাজ</th>
-        <th width="15%">মোট টাকা</th>
+        <th>মোট টাকা</th>
     </tr>
     </thead>
     <tbody>
@@ -89,24 +94,34 @@
                 @foreach($delivery->deliveryitems as $deliveryitem)
                     @if($delivery->booking->type == $type)
                         <tr>
-                            <td>{{ date('F d, Y', strtotime($statement->delivery_time))}}</td>
-                            <td>{{$delivery->booking->booking_no}}</td>
+                            @if($loop->index == 0)
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{ date('F d, Y', strtotime($statement->delivery_time))}}</td>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->booking->booking_no}}</td>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$statement->delivery_no}}</td>
+                            @endif
                             <td>{{$deliveryitem->srlot_no}}</td>
-                            <td>{{$statement->delivery_no}}</td>
                             <td>
                                 @if( count($deliveryitem->unloadings))
-                                    Compartment: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->name}} <br/>
-                                    Floor: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->name}} <br/>
+                                    Compartment: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->name}}
+                                    <br/>
+                                    Floor: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->name}}
+                                    <br/>
                                     Chamber: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->parent_info->name}}
                                 @endif
                             </td>
-                            <td>
-                                {{$delivery->deliverygroup->loancollection->sum('payment_amount')}}
-                            </td>
-                            <td>
-                                {{$delivery->deliverygroup->loancollection->sum('surcharge')}}
-                            </td>
-                            <td>{{$delivery->total_charge + $delivery->quantity_bags_fanned * $delivery->fancost_per_bag + $delivery->deliverygroup->loancollection->sum('payment_amount') + $delivery->deliverygroup->loancollection->sum('surcharge')}}</td>
+                            <td>{{($delivery->cost_per_bag * $deliveryitem->quantity) + ($delivery->do_charge*$deliveryitem->quantity)}}</td>
+
+                            @if($loop->index == 0)
+                                <td rowspan="{{count($delivery->deliveryitems)}}">
+                                    {{$delivery->deliverygroup->loancollection->sum('payment_amount')}}
+                                </td>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">
+                                    {{$delivery->deliverygroup->loancollection->sum('surcharge')}}
+                                </td>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge + $delivery->deliverygroup->loancollection->sum('payment_amount') + $delivery->deliverygroup->loancollection->sum('surcharge')}}</td>
+                            @endif
+
+
                         </tr>
                     @endif
                 @endforeach

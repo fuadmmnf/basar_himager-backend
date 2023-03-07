@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Delivery List Report</title>
+    <title>Fan Charge Report</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
@@ -59,76 +59,52 @@
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br/> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.5rem;padding: 20px">আলু ডেলিভারী প্রতিবেদন</b> <br/>
+        <b style="font-size: 1.6rem;padding: 20px">ফ্যান চার্জ রিপোর্ট</b> <br/>
 
     </div>
-
 </div>
 <br>
 
 <div>
-    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
+    <p><b>শুরুর তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
+    <p><b>শেষ তারিখ:</b> {{ date('F d, Y', strtotime($end_date)) }}</p>
 </div>
-
 <table class="bordertable">
     <thead>
     <tr>
-        <th>তারিখ</th>
-        <th>বুকিং নং</th>
-        <th>ডি ও নং</th>
-        <th>এস আর/লট সংখ্যা</th>
-        <th>শেষ অবস্থান</th>
-        <th>টাকা</th>
-        <th>লোন</th>
-        <th>লোনের সার র্চাজ</th>
+        <th>ক্রমিক</th>
+        <th>বুকিং নম্বর</th>
+        <th>এস আর/লট</th>
+        <th>পরিমান</th>
         <th>মোট টাকা</th>
+        <th width="15%">সর্বমোট টাকা</th>
     </tr>
     </thead>
-    <tbody>
-    @if(count($statements))
-        @foreach($statements as $statement)
-            @foreach($statement->deliveries as $delivery)
-                @foreach($delivery->deliveryitems as $deliveryitem)
-                    <tr>
-                        @if($loop->index == 0)
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{ date('F d, Y', strtotime($statement->delivery_time))}}</td>
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->booking->booking_no}}</td>
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$statement->delivery_no}}</td>
-                        @endif
-                        <td>{{$deliveryitem->srlot_no}}</td>
-                        <td>
-                            @if( count($deliveryitem->unloadings))
-                                Compartment: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->name}}
-                                <br/>
-                                Floor: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->name}}
-                                <br/>
-                                Chamber: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->parent_info->parent_info->name}}
-                            @endif
-                        </td>
-                        <td>{{($delivery->cost_per_bag * $deliveryitem->quantity) + ($delivery->do_charge*$deliveryitem->quantity)}}</td>
+    @if(count($fancharges))
+        @foreach($fancharges as $fancharge)
 
-                        @if($loop->index == 0)
-                            <td rowspan="{{count($delivery->deliveryitems)}}">
-                                {{$delivery->deliverygroup->loancollection->sum('payment_amount')}}
-                            </td>
-                            <td rowspan="{{count($delivery->deliveryitems)}}">
-                                {{$delivery->deliverygroup->loancollection->sum('surcharge')}}
-                            </td>
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge + $delivery->deliverygroup->loancollection->sum('payment_amount') + $delivery->deliverygroup->loancollection->sum('surcharge')}}</td>
-                        @endif
+            <tbody>
+            <tr>
+                <td>{{ $loop->index }}</td>
+                <td>
+                    {{$fancharge->booking->booking_no}}
+                </td>
+                <td>{{$fancharge->srlot_no}}</td>
+                <td>{{$fancharge->quantity_bags_fanned}}</td>
+                <td>
+                    {{$fancharge->total_amount}}
+                </td>
+                @if($loop->index === 0)
+                    <td rowspan="{{count($fancharges)}}">
+                        {{$fancharges->sum('total_amount')}}
+                    </td>
+                @endif
 
-
-                    </tr>
-                @endforeach
-            @endforeach
+            </tr>
+            </tbody>
         @endforeach
     @endif
-    </tbody>
 </table>
-
-
-{{--<pagebreak/>--}}
-
 
 <htmlpageheader name="page-header">
     <table>

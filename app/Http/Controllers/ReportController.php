@@ -226,6 +226,27 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
+    public function downloadFanchargeReportInRange($start_date, $end_date){
+
+        try {
+            $fancharges = $this->reportRepository->fetchFanchargeInformation($start_date, $end_date);
+        } catch (\Exception $e) {
+            dd("Please Provide Appropriate Date");
+        }
+        $total = 0;
+        foreach ($fancharges as $fancharge){
+            $total += $fancharge->total_amount;
+        }
+
+        $pdf = PDF::loadView('fancharge_report', [
+            'fancharges' => $fancharges,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'total' => $total
+        ]);
+        return $pdf->stream();
+    }
+
     public function downloadDailyStatementReport($start_date) {
         try {
             $statements = $this->reportRepository->fetchDailyStatements($start_date);

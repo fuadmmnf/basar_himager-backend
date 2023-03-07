@@ -20,6 +20,7 @@ interface ReportRepositoryInterface
     public function fetchGatepass($delivey_id);
     public function fetchAccountingInformation($start_date, $end_date): array;
     public function fetchReceivesInformation($start_date, $end_date);
+    public function fetchFanchargeInformation($start_date, $end_date);
     public function downloadStorePotatoReceipt($client_id,$date);
     public function fetchDailyStatements($start_date);
     public function fetchDeliveryTyped($start_date, $end_date);

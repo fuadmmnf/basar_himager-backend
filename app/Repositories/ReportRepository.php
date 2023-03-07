@@ -11,6 +11,7 @@ use App\Models\Booking;
 use App\Models\Delivery;
 use App\Models\Deliverygroup;
 use App\Models\Employeeloan;
+use App\Models\Fancharge;
 use App\Models\Gatepass;
 use App\Models\Employeesalary;
 use App\Models\Inventory;
@@ -193,6 +194,14 @@ class ReportRepository implements ReportRepositoryInterface
             ->with('receives.receiveitems')
             ->get();
         return $receivegroups;
+    }
+
+    public function fetchFanchargeInformation($start_date, $end_date){
+        $fancharges = Fancharge::whereDate('date', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('date', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
+            ->with('booking')
+            ->get();
+        return $fancharges;
     }
 
     public function fetchAccountingInformation($start_date, $end_date): array
