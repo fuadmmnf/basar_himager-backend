@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\Loandisbursement;
 use App\Repositories\Interfaces\LoandisbursementRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class LoandisbursementRepository implements LoandisbursementRepositoryInterface
@@ -23,6 +24,16 @@ class LoandisbursementRepository implements LoandisbursementRepositoryInterface
         $booking = Booking::findOrFail($booking_id);
         $disbursements = $booking->loanDisbursements()->paginate(15);
         return $disbursements;
+    }
+
+    public function fetchPaginatedClientsWithLoan($year){
+        $loanDisbursements = Loandisbursement::select('loandisbursements.*')->orderByDesc('updated_at')
+            ->where('payment_year', $year)->where('amount_left', '>', 0)
+            ->join('bookings', 'bookings.id', '=', 'loandisbursements.booking_id')
+            ->join('clients', 'clients.id', '=', 'bookings.client_id')
+            ->select('clients.*', DB::raw('SUM(amount) as amount' ), DB::raw('SUM(amount_left) as amount_left' )) ->groupBy('clients.id')
+            ->paginate(20);
+        return $loanDisbursements;
     }
 
     public function saveLoan(array $request)

@@ -31,6 +31,11 @@ class LoandisbursementController extends ApiController
     }
 
 
+    public function fetchClientsWithLoans(Request $request){
+        $clientLoans = $this->loandisbursementRepository->fetchPaginatedClientsWithLoan($request->query('selected_year'));
+        return response()->json($clientLoans, 200);
+    }
+
     public function createLoan(CreateLoandisbursementRequest $request){
 
         $loanDisbursement = $this->loandisbursementRepository->saveLoan($request->validated());
