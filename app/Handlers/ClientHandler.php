@@ -25,8 +25,8 @@ class ClientHandler
         $newClient->mother_name = $info['mother_name'];
 
         $newClient->address = $info['address'];
-        $newClient->year = Carbon::parse($info['year'])->setTimezone('Asia/Dhaka')->year;
-        $newClient->client_no = sprintf('%04d', Client::whereYear('year', $newClient->year)->count() + 1) . $newClient->year % 100;
+        $newClient->year = Carbon::parse($info['year'])->year;
+        $newClient->client_no = sprintf('%04d', Client::whereYear('year', $newClient->year)->count() + 1) . '_' .  $newClient->year % 100;
 
         if ($info['photo']) {
             // $image = time(). '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ':')))[1])[0];

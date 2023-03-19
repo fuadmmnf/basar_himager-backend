@@ -77,6 +77,7 @@ Route::post('gatepasses', [\App\Http\Controllers\Api\DeliveryController::class, 
 Route::get('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'fetchLoandisbursements']);
 Route::get('loandisbursements/search', [\App\Http\Controllers\Api\LoandisbursementController::class, 'fetchLoanBySearchQuery']);
 Route::get('bookings/{booking_id}/loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'fetchPaginatedLoanDisbursementByBookingID']);
+Route::get('loandisbursements/clients', [\App\Http\Controllers\Api\LoandisbursementController::class, 'fetchClientsWithLoans']);
 Route::post('loandisbursements', [\App\Http\Controllers\Api\LoandisbursementController::class, 'createLoan']);
 
 //loancollections
