@@ -190,6 +190,14 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $newLoancollection;
     }
 
+    private function createDeliverygroup($time){
+        $newDeliverygroup = new Deliverygroup();
+        $newDeliverygroup->delivery_time = Carbon::parse($time)->setTimezone('Asia/Dhaka');
+        $newDeliverygroup->delivery_year = Carbon::parse($time)->setTimezone('Asia/Dhaka')->year;
+        $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count() + 1) . $newDeliverygroup->delivery_time->year % 100;
+        $newDeliverygroup->save();
+        return $newDeliverygroup;
+    }
     public function saveDeliverygroup(array $request)
     {
         DB::beginTransaction();
@@ -199,16 +207,19 @@ class DeliveryRepository implements DeliveryRepositoryInterface
                 throw new \Exception('duplicate booking no. exists');
             }
 
-            $newDeliverygroup = new Deliverygroup();
-            $newDeliverygroup->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
-            $newDeliverygroup->delivery_year = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka')->year;
-            $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count() + 1) . $newDeliverygroup->delivery_time->year % 100;
-            $newDeliverygroup->save();
+            $newDeliverygroup = $this->createDeliverygroup($request['delivery_time']);
+
 
             foreach ($request['deliveries'] as $deliveryRequest) {
                 $this->createDelivery($newDeliverygroup, $deliveryRequest);
-                foreach ($deliveryRequest['loancollections'] as $loancollection) {
-                    $this->saveLoancollection($newDeliverygroup, $loancollection);
+                for ($i=0; $i<count($deliveryRequest['loancollections']); $i++) { // only first collection will go under same DO
+                    if($i == 0){
+                        $this->saveLoancollection($newDeliverygroup, $deliveryRequest['loancollections'][$i]);
+                    } else{
+                        $additionalDeliverygroup = $this->createDeliverygroup($request['delivery_time']);
+                        $this->saveLoancollection($additionalDeliverygroup, $deliveryRequest['loancollections'][$i]);
+                    }
+
                 }
             }
 
