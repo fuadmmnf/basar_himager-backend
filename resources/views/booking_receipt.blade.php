@@ -20,7 +20,8 @@
                 </div>
             </div>
         </td>
-        <td style="width: 30%; border: 3px solid black;  border-radius: 8px;">
+{{--        <td style="width: 30%; border: 3px solid black;  border-radius: 8px;">--}}
+        <td>
             <div style="">
 {{--                <b style="font-size: 1.6rem;"></b> <br />--}}
 

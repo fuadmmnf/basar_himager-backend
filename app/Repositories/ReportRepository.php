@@ -31,16 +31,19 @@ class ReportRepository implements ReportRepositoryInterface
 {
     public function fetchAllSalaries($month)
     {
-        // TODO: Implement fetchAllSalaries() method.
-        $salaries = Employeesalary::whereMonth('salary_month', Carbon::parse($month)->setTimezone('Asia/Dhaka'))
+        $carbonTIme = Carbon::parse($month)->setTimezone('Asia/Dhaka');
+        $salaries = Employeesalary::whereYear('salary_month', $carbonTIme->year)->whereMonth('salary_month', $carbonTIme->month)
             ->with('employee')->get();
         foreach ($salaries as $salary)
         {
             $salary->loan_taken = Employeeloan::where('employee_id', $salary->employee->id)
-            ->whereMonth('payment_time', Carbon::parse($month)->setTimezone('Asia/Dhaka'))
+            ->whereYear('payment_time', $carbonTIme->year)
+            ->whereMonth('payment_time', $carbonTIme->month)
             ->where('type', 0)->sum('amount');
+
             $salary->loan_returned = Employeeloan::where('employee_id', $salary->employee->id)
-                ->whereMonth('payment_time', Carbon::parse($month)->setTimezone('Asia/Dhaka'))
+                ->whereYear('payment_time', $carbonTIme->year)
+                ->whereMonth('payment_time', $carbonTIme->month)
                 ->where('type', 1)->sum('amount');
         }
         return $salaries;
@@ -48,22 +51,22 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function getDeposits($month)
     {
-        // TODO: Implement getDeposits() method.
-        $deposits = Bankdeposit::whereMonth('created_at', Carbon::parse($month)->setTimezone('Asia/Dhaka'))->with('bank')->get();
+        $carbonTIme = Carbon::parse($month)->setTimezone('Asia/Dhaka');
+        $deposits = Bankdeposit::whereYear('created_at', $carbonTIme->year)->whereMonth('created_at', $carbonTIme->month)->with('bank')->get();
         return $deposits;
     }
 
     public function getBanks()
     {
-        // TODO: Implement getBanks() method.
         $banks = Bank::orderBy('name', 'asc')->get();
         return $banks;
     }
 
     public function fetchDailyexpenses($month)
     {
+        $carbonTime =  Carbon::parse($month)->setTimezone('Asia/Dhaka');
         $expensecategories = Expensecategory::where('category', null)->orderBy('type')->get();
-        $expenses = Dailyexpense::whereMonth('date', Carbon::parse($month)->setTimezone('Asia/Dhaka'))->with('expensecategory')->get();
+        $expenses = Dailyexpense::whereYear('date', $carbonTime->year)->whereMonth('date', $carbonTime->month)->with('expensecategory')->get();
 
         foreach ($expensecategories as $expensecategory) {
             $cost = 0;
@@ -80,7 +83,6 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function fetchBookingReceiptInfo($id)
     {
-        // TODO: Implement fetchBookingReceiptInfo() method.
         $booking = Booking::where('id',$id)
             ->with('client')
             ->first();
@@ -112,7 +114,6 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function fetchLoanDisbursementInfo($id)
     {
-        // TODO: Implement fetchLoanDisbursementInfo() method.
         $loanDisbursements = Loandisbursement::where('id',$id)->first();
         $loanDisbursements->load('booking', 'booking.client', 'loancollections', 'loancollections.deliverygroup');
         return $loanDisbursements;
@@ -120,7 +121,6 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function fetchLoanCollectionInfo($id)
     {
-        // TODO: Implement fetchLoanCollectionInfo() method.
         $loanCollection = Loancollection::where('id',$id)->first();
         $loanCollection->load('loandisbursement', 'loandisbursement.booking.client', 'deliverygroup');
         return $loanCollection;
@@ -139,17 +139,10 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function fetchGatepass($deliverygroup_id)
     {
-        // TODO: Implement fetchGatepass() method.
         $gatepass = Gatepass::where('deliverygroup_id', $deliverygroup_id)
-            ->with('deliverygroup')
-            ->with('deliverygroup.deliveries')
-            ->with('deliverygroup.deliveries.booking')
-            ->with('deliverygroup.deliveries.booking.client')
-            ->with('deliverygroup.deliveries.deliveryitems')
-            ->with('deliverygroup.deliveries.deliveryitems.unloadings')
-            ->with('deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution')
-            ->with('deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution.receive')
             ->first();
+        $gatepass->load('deliverygroup', 'deliverygroup.deliveries', 'deliverygroup.deliveries.booking', 'deliverygroup.deliveries.booking.client', 'deliverygroup.deliveries.deliveryitems', 'deliverygroup.deliveries.deliveryitems.unloadings', 'deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution', 'deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution.receive');
+
         $potatoArr = [];
         foreach ($gatepass->deliverygroup->deliveries as $delivery){
             foreach ($delivery->deliveryitems as $item){

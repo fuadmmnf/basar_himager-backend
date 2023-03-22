@@ -91,7 +91,7 @@
         @endforeach
         <tr>
             <td colspan="2"></td>
-            <td> <b>TOTAL:{{$expenses->sum('amount')}}</b></td>
+            <td> <b>Total: {{$expenses->sum('amount')}}</b></td>
         </tr>
     @endif
     </tbody>
