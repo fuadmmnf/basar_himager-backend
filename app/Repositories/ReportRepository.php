@@ -107,7 +107,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchDeliveryReceiptInfo($deliverygroup_id)
     {
         $deliverygroup = Deliverygroup::findOrFail($deliverygroup_id);
-        $deliverygroup->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.booking.client');
+        $deliverygroup->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.booking.client', 'loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
         return $deliverygroup;
     }
 

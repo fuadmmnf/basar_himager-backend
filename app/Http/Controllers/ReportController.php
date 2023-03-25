@@ -39,7 +39,8 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function getLoaddistributionReport($receive_group_id){
+    public function getLoaddistributionReport($receive_group_id)
+    {
         $loaddistributionRepository = new LoaddistributionRepository();
         $pdf = PDF::loadView('loaddistribution', [
             'receives' => $loaddistributionRepository->getLoadDistributionsByReceive($receive_group_id),
@@ -95,7 +96,8 @@ class ReportController extends Controller
     public function getDeliveriesReceipt($deliverygroup_id)
     {
         $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($deliverygroup_id);
-        $pdf = PDF::loadView('delivery_receipt',[
+        $pdf = PDF::loadView('delivery_receipt', [
+            'booking' => ((count($receiptinfo->deliveries) > 0) ? $receiptinfo->deliveries[0]->booking : $receiptinfo->loancollection[0]->loandisbursement->booking),
             'receiptinfo' => $receiptinfo
         ]);
         return $pdf->stream();
@@ -105,7 +107,7 @@ class ReportController extends Controller
     public function getBookingReceipt($id)
     {
         $bookinginfo = $this->reportRepository->fetchBookingReceiptInfo($id);
-        $pdf = PDF::loadView('booking_receipt',[
+        $pdf = PDF::loadView('booking_receipt', [
             'bookinginfo' => $bookinginfo
         ]);
         return $pdf->stream();
@@ -115,32 +117,35 @@ class ReportController extends Controller
     public function getBookingDetailsReport($id)
     {
         $bookingdetails = $this->reportRepository->fetchBookingDetailsInfo($id);
-        $pdf = PDF::loadView('booking_details',[
+        $pdf = PDF::loadView('booking_details', [
             'bookinginfo' => $bookingdetails
         ]);
         return $pdf->stream();
     }
+
     public function getLoandisbursementReport($id)
     {
         $loandisbursement = $this->reportRepository->fetchLoanDisbursementInfo($id);
-        $pdf = PDF::loadView('loandisbursement_report',[
+        $pdf = PDF::loadView('loandisbursement_report', [
             'loandisbursement' => $loandisbursement
         ]);
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
+
     public function getLoandisbursmentReportByClientId($client_id)
     {
         $clientInfoForLoandisbursments = $this->reportRepository->fetchLoanDisbursementInfoByClientId($client_id);
-        $pdf = PDF::loadView('loandisbursments_report_by_client',[
+        $pdf = PDF::loadView('loandisbursments_report_by_client', [
             'clientInfo' => $clientInfoForLoandisbursments
         ]);
         return $pdf->stream();
     }
 
-    public function getDateWiseLoandisbursmentReportByClientId($client_id, $start_date, $end_date) {
+    public function getDateWiseLoandisbursmentReportByClientId($client_id, $start_date, $end_date)
+    {
         $loandisbursements = $this->reportRepository->fetchDateWiseLoanDisbursementInfoByClientId($client_id, $start_date, $end_date);
-        $pdf = PDF::loadView('date_wise_loandisbursments_report_by_client',[
+        $pdf = PDF::loadView('date_wise_loandisbursments_report_by_client', [
             'infos' => $loandisbursements['infos'],
             'client' => $loandisbursements['client'],
             'start_date' => $start_date,
@@ -152,7 +157,7 @@ class ReportController extends Controller
     public function getLoancollectionReceipt($id)
     {
         $loancollection = $this->reportRepository->fetchLoanCollectionInfo($id);
-        $pdf = PDF::loadView('loancollection_receipt',[
+        $pdf = PDF::loadView('loancollection_receipt', [
             'loancollection' => $loancollection
         ]);
         return $pdf->stream();
@@ -168,9 +173,10 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function downloadStorePotatoReceipt($client_id,$date){
-        $client = $this->reportRepository->downloadStorePotatoReceipt($client_id,$date);
-        $pdf = PDF::loadView('store_potato_receipt',[
+    public function downloadStorePotatoReceipt($client_id, $date)
+    {
+        $client = $this->reportRepository->downloadStorePotatoReceipt($client_id, $date);
+        $pdf = PDF::loadView('store_potato_receipt', [
             'client' => $client
         ]);
         return $pdf->stream();
@@ -207,18 +213,15 @@ class ReportController extends Controller
             dd("Please Provide Appropriate Date");
         }
         $total = 0;
-        foreach ($receivegroups as $receivegroup)
-        {
-            foreach ($receivegroup->receives as $receive)
-            {
-                foreach ($receive->receiveitems as $item)
-                {
+        foreach ($receivegroups as $receivegroup) {
+            foreach ($receivegroup->receives as $receive) {
+                foreach ($receive->receiveitems as $item) {
                     $total += $item->quantity;
                 }
             }
         }
         $pdf = PDF::loadView('receive_report', [
-           'receivegroups' => $receivegroups,
+            'receivegroups' => $receivegroups,
             'start_date' => $start_date,
             'end_date' => $end_date,
             'total' => $total
@@ -226,7 +229,8 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function downloadFanchargeReportInRange($start_date, $end_date){
+    public function downloadFanchargeReportInRange($start_date, $end_date)
+    {
 
         try {
             $fancharges = $this->reportRepository->fetchFanchargeInformation($start_date, $end_date);
@@ -234,7 +238,7 @@ class ReportController extends Controller
             dd("Please Provide Appropriate Date");
         }
         $total = 0;
-        foreach ($fancharges as $fancharge){
+        foreach ($fancharges as $fancharge) {
             $total += $fancharge->total_amount;
         }
 
@@ -247,7 +251,8 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function downloadDailyStatementReport($start_date) {
+    public function downloadDailyStatementReport($start_date)
+    {
         try {
             $statements = $this->reportRepository->fetchDailyStatements($start_date);
         } catch (\Exception $e) {
@@ -263,7 +268,8 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function downloadDeliveriesTyped($type, $start_date, $end_date) {
+    public function downloadDeliveriesTyped($type, $start_date, $end_date)
+    {
         try {
             $statements = $this->reportRepository->fetchDeliveryTyped($start_date, $end_date);
         } catch (\Exception $e) {
@@ -271,13 +277,12 @@ class ReportController extends Controller
         }
 
 
-        if($type == 2) {
+        if ($type == 2) {
             $pdf = PDF::loadView('deliveries', [
                 'statements' => $statements,
                 'start_date' => $start_date,
             ]);
-        }
-        else {
+        } else {
             $pdf = PDF::loadView('deliveries_typed', [
                 'statements' => $statements,
                 'start_date' => $start_date,
@@ -287,9 +292,10 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function downloadStorePotatoReportByDate($start_date,$end_date){
-        $loaddistributions = $this->reportRepository->fetchLoadDistributions($start_date,$end_date);
-        $pdf = PDF::loadView('loaddistribution_by_range',[
+    public function downloadStorePotatoReportByDate($start_date, $end_date)
+    {
+        $loaddistributions = $this->reportRepository->fetchLoadDistributions($start_date, $end_date);
+        $pdf = PDF::loadView('loaddistribution_by_range', [
             'loaddistributions' => $loaddistributions
         ]);
         return $pdf->stream();
