@@ -17,7 +17,7 @@ interface ReportRepositoryInterface
     public function fetchLoanDisbursementInfoByClientId($client_id);
     public function fetchDateWiseLoanDisbursementInfoByClientId($client_id, $start_date, $end_date);
     public function fetchLoanCollectionInfo($id);
-    public function fetchGatepass($delivey_id);
+    public function fetchGatepass($deliverygroup_id);
     public function fetchAccountingInformation($start_date, $end_date): array;
     public function fetchReceivesInformation($start_date, $end_date);
     public function fetchFanchargeInformation($start_date, $end_date);

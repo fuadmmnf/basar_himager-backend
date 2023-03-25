@@ -41,7 +41,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             ->where('type', 0)
             ->paginate(20);
 
-        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems', 'loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
         return $deliveryGroups;
     }
 

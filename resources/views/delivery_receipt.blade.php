@@ -33,19 +33,23 @@
         <td style="width: 50%; text-align: left">
             <div>
                 <div>
-                    <p><b>নাম:</b> {{$receiptinfo->deliveries[0]->booking->client->name}}</p>
+                    <p><b>নাম:</b> {{$booking->client->name}}</p>
                 </div>
             </div>
         </td>
         <td class="td-right-align" style="text-align: right; width: 50%">
-            <p><b>ফোন নম্বর:</b> {{$receiptinfo->deliveries[0]->booking->client->phone}}</p>
+            <p><b>ফোন নম্বর:</b> {{$booking->client->phone}}</p>
         </td>
     </tr>
 
 </table>
 
 
-<div style="text-align: center; padding-bottom: 10px; font-size: 1.2em">
+@php
+    $total = 0;
+@endphp
+@if(count($receiptinfo->deliveries)>0)
+<div style="text-align: center; padding-bottom: 5px; font-size: 1.2em">
     <span><b>সংগ্রহের তথ্য</b></span>
 </div>
 <table class="bordertable">
@@ -62,7 +66,7 @@
     <tbody>
     @foreach($receiptinfo->deliveries as $delivery)
         <tr>
-            <td>{{$delivery->booking->booking_no}}</td>
+            <td>{{$booking->booking_no}}</td>
             <td>
                 @foreach($delivery->deliveryitems as $item)
                     {{$item->potato_type}} ({{$item->quantity}}) <br />
@@ -76,13 +80,52 @@
             <td>
                 <p>মোট ব্যাগ: {{($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)/($delivery->cost_per_bag + $delivery->do_charge)}}</p>
                 <p>বস্তা প্রতি খরচ: {{$delivery->cost_per_bag}}</p>
-                <p>ডি.ও চার্জ: {{$delivery->do_charge}}</p>
-                <p>ফ্যান খরচ: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</p>
+                <p>বস্তা প্রতি ডি.ও চার্জ: {{$delivery->do_charge}}</p>
+{{--                <p>ফ্যান খরচ: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</p>--}}
             </td>
             <td>{{$delivery->total_charge}} ৳</td>
+            @php
+                $total += $delivery->total_charge;
+            @endphp
         </tr>
     @endforeach
     </tbody>
 </table>
+@endif
 
+
+@if(count($receiptinfo->loancollection)>0)
+<div style="text-align: center; padding-top: 10px; padding-bottom: 5px; font-size: 1.2em">
+    <span><b>লোনের তথ্য</b></span>
+</div>
+<table class="bordertable">
+    <thead>
+    <tr>
+        <th>বুকিং নম্বর</th>
+        <th>দিন</th>
+        <th>সারচার্জ</th>
+        <th>পরিমান</th>
+        <th>মোট</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    @foreach($receiptinfo->loancollection as $collection)
+        <tr>
+            <td>{{$booking->booking_no}}</td>
+            <td>{{ round((strtotime($collection->payment_date) - strtotime($collection->loandisbursement->payment_date)) / 86400) }}</td>
+            <td>{{$collection->surcharge}}</td>
+            <td>{{$collection->payment_amount}}</td>
+            <td>{{$collection->payment_amount + $collection->surcharge}} ৳</td>
+            @php
+                $total += ($collection->payment_amount+ $collection->surcharge)
+            @endphp
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+@endif
+<div style="text-align: right; padding-top: 10px; font-size: 1.2em">
+    <span><b>সর্বমোট:</b> {{$total}} ৳</span>
+</div>
 @endsection
