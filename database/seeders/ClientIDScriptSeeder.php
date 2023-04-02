@@ -12,7 +12,7 @@ class ClientIDScriptSeeder extends Seeder
         $all_clients = Client::get()->groupBy('year');
         foreach ($all_clients as $client_group) {
             foreach ($client_group as $key => $client) {
-                $client->client_no = sprintf('%04d', $key+1). $client->year % 100;
+                $client->client_no = sprintf('%04d', $key+1). '_' . $client->year % 100;
                 $client->save();
             }
         }
