@@ -52,14 +52,14 @@
     </style>
 </head>
 <body>
-<br />
+<br/>
 
 <div style="text-align: center">
-    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br />
-    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
+    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br/>
+    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br/> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">ব্যাংক ডিপজিট রিপোর্ট</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">ব্যাংক ডিপজিট রিপোর্ট</b> <br/>
 
     </div>
 
@@ -88,8 +88,8 @@
         @endforeach
         <tr>
             <td></td>
-            <td> <b>মোট:</b></td>
-            <td> <b>{{$banks->sum('total')}}</b></td>
+            <td><b>মোট:</b></td>
+            <td><b>{{$banks->sum('total')}}</b></td>
         </tr>
     @endif
     </tbody>
@@ -98,7 +98,7 @@
 <div class="page-break"></div>
 
 <div style="text-align: center; color: darkblue">
-    <h3>ব্যাংক লেনদেন<small>(জমা)</small> </h3>
+    <h3>ব্যাংক লেনদেন<small>(জমা)</small></h3>
 </div>
 
 <table class="bordertable">
@@ -107,7 +107,7 @@
         <th>ব্যাংক</th>
         <th>অ্যাকাউন্ট নম্বর</th>
         <th>এস.আই নম্বর</th>
-        <th>ব্রাঞ্চ </th>
+        <th>ব্রাঞ্চ</th>
         <th>পরিমাণ<small>(টাকা)</small></th>
     </tr>
 
@@ -116,28 +116,28 @@
     @if(count($deposits))
         @foreach($deposits as $deposit)
             @if($deposit->type == 0)
-            <tr>
-                <td>{{$deposit->bank->name}}</td>
-                <td>{{$deposit->bank->account_no}}</td>
-                <td>{{$deposit->si_no}}</td>
-                <td>{{$deposit->branch}}</td>
-                <td>{{$deposit->amount}}</td>
-            </tr>
+                <tr>
+                    <td>{{$deposit->bank->name}}</td>
+                    <td>{{$deposit->bank->account_no}}</td>
+                    <td>{{$deposit->si_no}}</td>
+                    <td>{{$deposit->branch}}</td>
+                    <td>{{$deposit->amount}}</td>
+                </tr>
             @endif
         @endforeach
         <tr>
             <td></td>
             <td></td>
-            <td> </td>
-            <td> <b>মোট:</b></td>
-            <td> <b>{{$deposits->sum('amount')}}</b></td>
+            <td></td>
+            <td><b>মোট:</b></td>
+            <td><b>{{$deposits->filter(function ($val) {return $val->type == 0;})->sum('amount')}}</b></td>
         </tr>
     @endif
     </tbody>
 </table>
 
 <div style="text-align: center; color: darkblue">
-    <h3>ব্যাংক লেনদেন<small>(উত্তোলন)</small> </h3>
+    <h3>ব্যাংক লেনদেন<small>(উত্তোলন)</small></h3>
 </div>
 
 <table class="bordertable">
@@ -146,7 +146,7 @@
         <th>ব্যাংক</th>
         <th>অ্যাকাউন্ট নম্বর</th>
         <th>এস.আই নম্বর</th>
-        <th>ব্রাঞ্চ </th>
+        <th>ব্রাঞ্চ</th>
         <th>পরিমাণ<small>(টাকা)</small></th>
     </tr>
 
@@ -167,9 +167,9 @@
         <tr>
             <td></td>
             <td></td>
-            <td> </td>
-            <td> <b>মোট:</b></td>
-            <td> <b>{{$deposits->sum('amount')}}</b></td>
+            <td></td>
+            <td><b>মোট:</b></td>
+            <td><b>{{$deposits->filter(function ($val) {return $val->type == 1;})->sum('amount')}}</b></td>
         </tr>
     @endif
     </tbody>
