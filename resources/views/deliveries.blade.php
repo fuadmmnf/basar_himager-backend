@@ -66,9 +66,11 @@
 </div>
 <br>
 
+
+
 <table>
     <tr>
-        <td>
+        <td align="left">
             <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
         </td>
         <td align="right" style="font-size: 1.2em">মোট পরিমান: {{$statements->sum(function ($statement) {
