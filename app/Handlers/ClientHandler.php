@@ -26,8 +26,7 @@ class ClientHandler
 
         $newClient->address = $info['address'];
         $newClient->year = Carbon::parse($info['year'])->year;
-        $newClient->client_no = sprintf('%04d', Client::whereYear('year', $newClient->year)->count() + 1) . '_' .  $newClient->year % 100;
-
+        $newClient->client_no = sprintf('%04d', Client::where('year', $newClient->year)->count() + 1) . '_' .  $newClient->year % 100;
         if ($info['photo']) {
             // $image = time(). '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ':')))[1])[0];
             $filename = random_string(5) . time() . '.' . explode(';', explode('/', $info['photo'])[1])[0];

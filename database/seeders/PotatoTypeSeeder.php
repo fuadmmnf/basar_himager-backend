@@ -13,15 +13,21 @@ class PotatoTypeSeeder extends Seeder
     {
         $keys = [
             'Diamond',
+            'Astorik',
             'Cardinal',
             'Shapla',
             'Burma',
             'Saita',
+            'Kumorika',
+            'Kai',
             'Diamond Seeds',
+            'Astorik Seeds',
             'Cardinal Seeds',
             'Shapla Seeds',
             'Burma Seeds',
             'Saita Seeds',
+            'Kumorika Seeds',
+            'Kai Seeds',
         ];
         foreach ($keys as $key){
             PotatoType::create([

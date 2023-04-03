@@ -31,7 +31,7 @@
             <td style="width: 50%; text-align: left">
                 <div>
                     <p><b>গেট পাস নং:</b> {{$gatepassInfo->gatepass_no}}</p>
-                    <p><b>দেলিভারী নং:</b> {{$gatepassInfo->deliverygroup->delivery_no}}</p>
+                    <p><b>ডেলিভারি নং:</b> {{$gatepassInfo->deliverygroup->delivery_no}}</p>
                     <p><b>সময়:</b> {{ date('F d, Y', strtotime($gatepassInfo->gatepass_time)) }}</p>
                 </div>
             </td>

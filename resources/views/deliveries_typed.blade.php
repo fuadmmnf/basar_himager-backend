@@ -70,9 +70,19 @@
 </div>
 <br>
 
-<div>
-    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
-</div>
+<table>
+    <tr>
+        <td>
+            <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($start_date)) }}</p>
+        </td>
+        <td align="right" style="font-size: 1.2em">মোট পরিমান: {{$statements->sum(function ($statement) use($type) {
+            return $statement->deliveries->filter(function ($delivery) use($type) {return $delivery->booking->type == $type;})->sum(function ($delivery) {
+                return $delivery->deliveryitems->sum('quantity');
+            });
+        })
+    }} বস্তা</td>
+    </tr>
+</table>
 <table class="bordertable">
     <thead>
     <tr>
@@ -80,6 +90,8 @@
         <th>বুকিং নং</th>
         <th>ডি ও নং</th>
         <th>এস আর/লট সংখ্যা</th>
+        <th>সংগ্রহকৃত পরিমান</th>
+
         <th>শেষ অবস্থান</th>
         <th>টাকা</th>
         <th>লোন</th>
@@ -100,6 +112,7 @@
                                 <td rowspan="{{count($delivery->deliveryitems)}}">{{$statement->delivery_no}}</td>
                             @endif
                             <td>{{$deliveryitem->srlot_no}}</td>
+                            <td>{{$deliveryitem->quantity}}</td>
                             <td>
                                 @if( count($deliveryitem->unloadings))
                                     Compartment: {{$deliveryitem->unloadings[0]->loaddistribution->inventory_tree->name}}

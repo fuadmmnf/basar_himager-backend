@@ -157,17 +157,15 @@ class ReportRepository implements ReportRepositoryInterface
         $lotArr = [];
         foreach ($gatepass->deliverygroup->deliveries as $delivery){
             foreach ($delivery->deliveryitems as $item) {
-                foreach ($item->unloadings as $unloading) {
-                    $lot = $unloading->loaddistribution->receive->lot_no;
                     if(isset($lotArr[$item->potato_type])){
-                        if(!in_array($lot, $lotArr[$item->potato_type])){
-                            array_push($lotArr[$item->potato_type], $lot);
+                        if(!in_array($item->srlot_no, $lotArr[$item->potato_type])){
+                            array_push($lotArr[$item->potato_type], $item->srlot_no);
                         }
                     } else {
-                        $lotArr[$item->potato_type] = [$lot];
+                        $lotArr[$item->potato_type] = [$item->srlot_no];
                     }
 
-                }
+
             }
 
         }
