@@ -94,7 +94,7 @@
                 <td>
                     {{$fancharge->total_amount}}
                 </td>
-                @if($loop->index === 0)
+                @if($loop->index == 0)
                     <td rowspan="{{count($fancharges)}}">
                         {{$fancharges->sum('total_amount')}}
                     </td>
