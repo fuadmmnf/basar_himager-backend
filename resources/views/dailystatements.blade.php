@@ -144,7 +144,7 @@
                             <td>{{$deliveryitem->quantity}}</td>
 
                             <td>
-                                @if($delivery->booking->type === 0)
+                                @if($delivery->booking->type == 0)
                                     {{$deliveryitem->quantity}}
                                     @php
                                         $totalNormalBags += $deliveryitem->quantity;
@@ -161,7 +161,7 @@
                                 @endif
                             </td>
                             <td>
-                                @if($delivery->booking->type === 1)
+                                @if($delivery->booking->type == 1)
                                     {{$deliveryitem->quantity}}
                                     @php
                                         $totalAdvanceBags += $deliveryitem->quantity;
