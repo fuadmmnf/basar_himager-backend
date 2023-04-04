@@ -35,7 +35,7 @@ class ReportController extends Controller
         $deliveryRepository = new DeliveryRepository();
         $pdf = PDF::loadView('gatepass_receipt', [
             'receive' => $deliveryRepository->getGatepassDetails($gatepass_no),
-        ], [], ['format' => 'A5-L']);
+        ]);
         return $pdf->stream();
     }
 
@@ -88,7 +88,7 @@ class ReportController extends Controller
         $receiptinfo = $this->reportRepository->fetchReceiveReceiptInfo($receivegroup_id);
         $pdf = PDF::loadView('receive_receipt', [
             'receiptinfo' => $receiptinfo
-        ], [], ['format' => 'A5-L']);
+        ]);
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
@@ -99,7 +99,8 @@ class ReportController extends Controller
         $pdf = PDF::loadView('delivery_receipt', [
             'booking' => ((count($receiptinfo->deliveries) > 0) ? $receiptinfo->deliveries[0]->booking : $receiptinfo->loancollection[0]->loandisbursement->booking),
             'receiptinfo' => $receiptinfo
-        ], [], ['format' => 'A5-L']);
+        ]);
+//        , [], ['format' => 'A5-L']
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
@@ -109,7 +110,7 @@ class ReportController extends Controller
         $bookinginfo = $this->reportRepository->fetchBookingReceiptInfo($id);
         $pdf = PDF::loadView('booking_receipt', [
             'bookinginfo' => $bookinginfo
-        ], [], ['format' => 'A5-L']);
+        ]);
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
@@ -159,7 +160,7 @@ class ReportController extends Controller
         $loancollection = $this->reportRepository->fetchLoanCollectionInfo($id);
         $pdf = PDF::loadView('loancollection_receipt', [
             'loancollection' => $loancollection
-        ], [], ['format' => 'A5-L']);
+        ]);
         return $pdf->stream();
         //return $pdf->download('bank_deposit_report');
     }
@@ -169,7 +170,7 @@ class ReportController extends Controller
         $gatePass = $this->reportRepository->fetchGatepass($deliverygroup_id);
         $pdf = PDF::loadView('gatepass_receipt', [
             'gatepassInfo' => $gatePass
-        ], [], ['format' => 'A5-L']);
+        ]);
         return $pdf->stream();
     }
 
@@ -178,7 +179,7 @@ class ReportController extends Controller
         $client = $this->reportRepository->downloadStorePotatoReceipt($client_id, $date);
         $pdf = PDF::loadView('store_potato_receipt', [
             'client' => $client
-        ], [], ['format' => 'A5-L']);
+        ]);
         return $pdf->stream();
     }
 
