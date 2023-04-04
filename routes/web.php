@@ -20,8 +20,8 @@ Route::get('/', function () {
 
 
 Route::get('/clear', function () {
-    Artisan::call('route:clear');
-    Artisan::call('config:cache');
+    Artisan::call('optimize');
+//    Artisan::call('config:cache');
     return 'cache cleared';
 });
 
