@@ -92,7 +92,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchBookingDetailsInfo($id)
     {
         $booking = Booking::where('id',$id)
-            ->with('client', 'receives', 'deliveries', 'loanDisbursements', 'loanDisbursements.loancollections')
+            ->with('client', 'receives', 'deliveries', 'loanDisbursements', 'loanDisbursements.loancollections', 'loanDisbursements.loancollections.deliverygroup')
             ->first();
         return $booking;
     }
