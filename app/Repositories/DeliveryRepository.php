@@ -36,9 +36,8 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     }
 
     public function getRecentDeliveryGroups($year){
-        $deliveryGroups = Deliverygroup::orderByDesc('delivery_time')
-            ->where('delivery_year', $year)
-            ->where('type', 0)
+        $deliveryGroups = Deliverygroup::where('delivery_year', $year)
+            ->orderByDesc('id')
             ->paginate(20);
 
         $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems', 'loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
@@ -278,16 +277,17 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
     public function getDeliveriesBySearchedQuery($year, $query)
     {
-        $deliveryGroups = Deliverygroup::select('deliverygroups.*')
-            ->where('deliverygroups.delivery_year', $year)
-            ->join('deliveries', 'deliveries.deliverygroup_id', '=', 'deliverygroups.id')
-            ->join('bookings', 'bookings.id', '=', 'deliveries.booking_id')
-            ->where(function ($q) use ($query) {
-                $q->where('deliverygroups.delivery_no', 'LIKE', $query . '%')
-                    ->orWhere('bookings.booking_no', 'LIKE', $query . '%');
-            })
+//        select('deliverygroups.*')
+        $deliveryGroups = Deliverygroup::where('deliverygroups.delivery_year', $year)
+            ->where('deliverygroups.delivery_no', 'LIKE', $query . '%')
+//            ->join('deliveries', 'deliveries.deliverygroup_id', '=', 'deliverygroups.id')
+//            ->join('bookings', 'bookings.id', '=', 'deliveries.booking_id')
+//            ->where(function ($q) use ($query) {
+//                $q->where('deliverygroups.delivery_no', 'LIKE', $query . '%')
+//                    ->orWhere('bookings.booking_no', 'LIKE', $query . '%');
+//            })
             ->paginate(15);
-        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems','loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
         return $deliveryGroups;
     }
 
