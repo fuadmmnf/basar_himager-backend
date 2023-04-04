@@ -182,10 +182,10 @@
                     @endforeach
                 </td>
                 <td>
-                    <p>মোট ব্যাগ: {{($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)/($delivery->cost_per_bag + $delivery->do_charge)}}</p>
+                    <p>মোট ব্যাগ: {{$delivery->deliveryitems->sum('quantity')}}</p>
                     <p>বস্তা প্রতি খরচ: {{$delivery->cost_per_bag}}</p>
-                    <p>ডি.ও চার্জ: {{$delivery->do_charge}}</p>
-                    <p>ফ্যান খরচ: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</p>
+                    <p>বস্তা প্রতি ডি.ও চার্জ: {{$delivery->do_charge}}</p>
+{{--                    <p>ফ্যান খরচ: {{$delivery->quantity_bags_fanned}}({{$delivery->fancost_per_bag}})</p>--}}
                 </td>
                 <td>{{$delivery->total_charge}} ৳</td>
             </tr>
@@ -231,7 +231,7 @@
 <table class="bordertable">
     <thead>
     <tr>
-        <th>সংগ্রহের নং</th>
+        <th>ডি ও নং</th>
         <th>তারিখ</th>
         <th>সারচার্জ</th>
         <th>পরিমান</th>
@@ -249,7 +249,7 @@
             @if(count($loanDisbursement->loancollections))
                 @foreach($loanDisbursement->loancollections as $collection)
                     <tr>
-                        <td>{{$collection->loancollection_no}}</td>
+                        <td>{{$collection->deliverygroup->delivery_no}}</td>
                         <td>{{ date('F d, Y', strtotime($collection->payment_date)) }}</td>
                         <td>{{$collection->surcharge}}</td>
                         <td>{{$collection->payment_amount}}</td>

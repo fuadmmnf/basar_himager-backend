@@ -24,8 +24,8 @@ class Loaddistribution extends Model
         return $this->belongsTo('App\Models\Receive');
     }
 
-    public function receiveitems(){
-        return $this->hasMany('App\Models\Receiveitem');
+    public function receiveitem(){
+        return $this->belongsTo('App\Models\Receiveitem');
     }
 
     public function unloadings(){
