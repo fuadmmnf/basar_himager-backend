@@ -14,6 +14,6 @@ class Receiveitem extends Model
     }
 
     public function loaddistributions(){
-        return $this->belongsTo('App\Models\Loaddistribution');
+        return $this->hasMany('App\Models\Loaddistribution');
     }
 }

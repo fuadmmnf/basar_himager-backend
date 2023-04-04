@@ -56,7 +56,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                     $newLoaddistribution->quantity = $distribution['quantity'];
                     $newLoaddistribution->current_quantity = $distribution['quantity'];
                     $newLoaddistribution->save();
-                    $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
+//                    $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
 
                     $floor = Inventory::where('id', $compartment->parent_id)->first();
                     $chamber = Inventory::where('id', $floor->parent_id)->first();
@@ -69,10 +69,13 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                     $chamber->save();
 
                 }
-                $receive->status = 1;
-                $receive->palot_status = 'load';
-                $receive->save();
+                $receiveItem->loaded_quantity += $totalReceiveitemLoaded;
+                $receiveItem->save();
+
             }
+            $receive->status = 1;
+            $receive->palot_status = 'load';
+            $receive->save();
         } catch (\Exception $e) {
             DB::rollback();
             throw new \Exception($e->getMessage());

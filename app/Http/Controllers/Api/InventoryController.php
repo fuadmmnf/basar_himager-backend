@@ -22,7 +22,7 @@ class InventoryController extends ApiController
 
     public function createInventory(CreateInventoryRequest $request){
         $inventory = $this->inventoryRepository->saveInventory($request->validated());
-        if($inventory == 'AlreadyExisting' || $inventory==='NotEnoughCapacity'){
+        if($inventory == 'AlreadyExisting' || $inventory=='NotEnoughCapacity'){
             return response()->json($inventory, 203);
         }
         else return response()->json($inventory, 201);

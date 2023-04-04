@@ -30,12 +30,15 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             ->paginate(20);
         return $deliveries;
     }
-    public function getDeliveryStats($year) {
+
+    public function getDeliveryStats($year)
+    {
         $total_do = Deliverygroup::where('delivery_year', $year)->count();
         return $total_do;
     }
 
-    public function getRecentDeliveryGroups($year){
+    public function getRecentDeliveryGroups($year)
+    {
         $deliveryGroups = Deliverygroup::where('delivery_year', $year)
             ->orderByDesc('id')
             ->paginate(20);
@@ -59,38 +62,42 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     public function getPaginatedDeliveriesByBookingId($booking_id)
     {
         $booking = Booking::findOrFail($booking_id);
-        $deliveries =Delivery::where('booking_id', $booking->id)
-        ->with('deliverygroup')
-        ->paginate(15);
+        $deliveries = Delivery::where('booking_id', $booking->id)
+            ->with('deliverygroup')
+            ->paginate(15);
 
         return $deliveries;
     }
 
-    private function validateDeliveryQuantity($receiveItems, $deliveryItems)
+    private function validateDeliveryQuantity($receives, $deliveryItems)
     {
-        $receivesLeft = [];
-        foreach ($receiveItems as $receiveItem) {
-            if (isset($receivesLeft[$receiveItem->potato_type])) {
-                $receivesLeft[$receiveItem->potato_type] += $receiveItem->quantity_left;
-            } else {
-                $receivesLeft[$receiveItem->potato_type] = $receiveItem->quantity_left;
+        // check by sr lot not received potato type and block delivery if amount exceed srlot quantity_left
+        $receivesLeftBySr = [];
+        foreach ($receives as $receive) {
+            if (!isset($receivesLeftBySr[$receive->lot_no])) {
+                $receivesLeftBySr[$receive->lot_no] = 0;
+            }
+            foreach ($receive->receiveItems as $receiveItem) {
+                $receivesLeftBySr[$receive->lot_no] += $receiveItem->quantity_left;
             }
         }
 
-        $deliveryQuantities = [];
+        $deliveryQuantitiesBySr = [];
         foreach ($deliveryItems as $deliveryItem) {
-            if (isset($deliveryQuantities[$deliveryItem['potato_type']])) {
-                $deliveryQuantities[$deliveryItem['potato_type']] += $deliveryItem['quantity'];
+            if (isset($deliveryQuantitiesBySr[$deliveryItem['srlot_no']])) {
+                $deliveryQuantitiesBySr[$deliveryItem['srlot_no']] += $deliveryItem['quantity'];
             } else {
-                $deliveryQuantities[$deliveryItem['potato_type']] = $deliveryItem['quantity'];
+                $deliveryQuantitiesBySr[$deliveryItem['srlot_no']] = $deliveryItem['quantity'];
             }
         }
 
-        foreach ($deliveryQuantities as $key => $value) {
-            if (!isset($receivesLeft[$key]) || $receivesLeft[$key] < $value) {
+        foreach ($deliveryQuantitiesBySr as $key => $value) {
+            if (!isset($receivesLeftBySr[$key]) || $receivesLeftBySr[$key] < $value) {
                 return false;
             }
         }
+
+
 
         return true;
     }
@@ -98,8 +105,8 @@ class DeliveryRepository implements DeliveryRepositoryInterface
     private function createDelivery(Deliverygroup $deliverygroup, array $deliveryRequest)
     {
         $booking = Booking::findOrFail($deliveryRequest['booking_id']);
-        if (!$this->validateDeliveryQuantity($booking->receiveitems, $deliveryRequest['deliveryitems'])) {
-            return null;
+        if (!$this->validateDeliveryQuantity($booking->receives, $deliveryRequest['deliveryitems'])) {
+            throw new \Exception("Delivery quantity mismatch");
         }
         $totalQuantity = 0;
         foreach ($deliveryRequest['deliveryitems'] as $deliveryitem) {
@@ -162,12 +169,12 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $newDelivery;
     }
 
-    public function saveLoancollection(Deliverygroup $deliverygroup,array $request)
+    public function saveLoancollection(Deliverygroup $deliverygroup, array $request)
     {
         $loandisbursement = Loandisbursement::findOrFail($request['loandisbursement_id']);
 
         error_log($loandisbursement);
-        if($loandisbursement->amount_left < $request['payment_amount']){
+        if ($loandisbursement->amount_left < $request['payment_amount']) {
             return null;
         }
         error_log($deliverygroup);
@@ -189,7 +196,8 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $newLoancollection;
     }
 
-    private function createDeliverygroup($time){
+    private function createDeliverygroup($time)
+    {
         $newDeliverygroup = new Deliverygroup();
         $newDeliverygroup->delivery_time = Carbon::parse($time)->setTimezone('Asia/Dhaka');
         $newDeliverygroup->delivery_year = Carbon::parse($time)->setTimezone('Asia/Dhaka')->year;
@@ -197,12 +205,13 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newDeliverygroup->save();
         return $newDeliverygroup;
     }
+
     public function saveDeliverygroup(array $request)
     {
         DB::beginTransaction();
         try {
             $bookingnoArr = array_column($request['deliveries'], 'booking_no');
-            if(count($bookingnoArr) != 1 && count($bookingnoArr) != count(array_unique($bookingnoArr))){
+            if (count($bookingnoArr) != 1 && count($bookingnoArr) != count(array_unique($bookingnoArr))) {
                 throw new \Exception('duplicate booking no. exists');
             }
 
@@ -211,15 +220,19 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
             foreach ($request['deliveries'] as $deliveryRequest) {
                 $this->createDelivery($newDeliverygroup, $deliveryRequest);
-                for ($i=0; $i<count($deliveryRequest['loancollections']); $i++) { // only first collection will go under same DO
-                    if($i == 0){
-                        $this->saveLoancollection($newDeliverygroup, $deliveryRequest['loancollections'][$i]);
-                    } else{
-                        $additionalDeliverygroup = $this->createDeliverygroup($request['delivery_time']);
-                        $this->saveLoancollection($additionalDeliverygroup, $deliveryRequest['loancollections'][$i]);
-                    }
-
+                if (count($deliveryRequest['loancollections']) > 0) {
+                    $this->saveLoancollection($newDeliverygroup, $deliveryRequest['loancollections'][0]);
                 }
+//                for ($i=0; $i<count($deliveryRequest['loancollections']); $i++) { // only first collection will go under same DO
+//                    if($i == 0){
+//                        $this->saveLoancollection($newDeliverygroup, $deliveryRequest['loancollections'][$i]);
+//                    }
+//                    else{
+//                        $additionalDeliverygroup = $this->createDeliverygroup($request['delivery_time']);
+//                        $this->saveLoancollection($additionalDeliverygroup, $deliveryRequest['loancollections'][$i]);
+//                    }
+//
+//                }
             }
 
         } catch (\Exception $e) {
@@ -231,17 +244,18 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $newDeliverygroup;
     }
 
-    public function updateDeliverygroup(array $request){
+    public function updateDeliverygroup(array $request)
+    {
         DB::beginTransaction();
         try {
             foreach ($request['deliveries'] as $deliveryRequest) {
-               $delivery = Delivery::find($deliveryRequest["delivery_id"]);
+                $delivery = Delivery::find($deliveryRequest["delivery_id"]);
 
-               $delivery->fancost_per_bag = $deliveryRequest["fancost_per_bag"];
-               $delivery->quantity_bags_fanned = $deliveryRequest["fan_quantity"];
-               $delivery->fancharge_added = 1;
+                $delivery->fancost_per_bag = $deliveryRequest["fancost_per_bag"];
+                $delivery->quantity_bags_fanned = $deliveryRequest["fan_quantity"];
+                $delivery->fancharge_added = 1;
 
-               $delivery->save();
+                $delivery->save();
             }
 
         } catch (\Exception $e) {
@@ -287,7 +301,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 //                    ->orWhere('bookings.booking_no', 'LIKE', $query . '%');
 //            })
             ->paginate(15);
-        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems','loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems', 'loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
         return $deliveryGroups;
     }
 
