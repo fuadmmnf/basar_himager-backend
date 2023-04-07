@@ -127,6 +127,7 @@
                     <td>{{ $total_loan + $surcharge}}</td>
                 </tr>
             @else
+
                 @foreach($statement->deliveries as $delivery)
                     @foreach($delivery->deliveryitems as $deliveryitem)
                         <tr>
@@ -179,19 +180,26 @@
                             <td>{{(($delivery->cost_per_bag * $deliveryitem->quantity))+ ($delivery->do_charge * $deliveryitem->quantity) + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag)}}</td>
 
                             @if($loop->index == 0)
+                                @php
+                                    $total_loan = 0;
+                                    $surcharge = 0;
+                                @endphp
 
                                 <td rowspan="{{count($delivery->deliveryitems)}}">
-                                    @php
-                                        $total_loan = 0;
-                                        $surcharge = 0;
-                                        foreach ($statement->loancollection as $loan){
-                                            $total_loan += $loan->payment_amount;
-                                            $surcharge += $loan->surcharge;
-                                        }
-                                    @endphp
+                                    @if($statement->deliveries[0]->id == $delivery->id)
+                                        @php
+                                            foreach ($statement->loancollection as $loan){
+                                                $total_loan += $loan->payment_amount;
+                                                $surcharge += $loan->surcharge;
+                                            }
+                                        @endphp
+
+                                    @endif
                                     {{$total_loan}}
                                 </td>
-                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$surcharge}}</td>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">
+                                        {{$surcharge}}
+                                </td>
 
                                 <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge  + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag) + $total_loan + $surcharge}}</td>
                                 @php
