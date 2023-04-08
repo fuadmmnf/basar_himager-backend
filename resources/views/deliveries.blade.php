@@ -131,6 +131,7 @@
                                     $surcharge = 0;
                                 @endphp
 
+
                                 <td rowspan="{{count($delivery->deliveryitems)}}">
                                     @if($statement->deliveries[0]->id == $delivery->id)
                                         @php
