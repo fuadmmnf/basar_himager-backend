@@ -126,13 +126,27 @@
                         <td>{{($delivery->cost_per_bag * $deliveryitem->quantity) + ($delivery->do_charge*$deliveryitem->quantity)}}</td>
 
                         @if($loop->index == 0)
+                                @php
+                                    $total_loan = 0;
+                                    $surcharge = 0;
+                                @endphp
+
+                                <td rowspan="{{count($delivery->deliveryitems)}}">
+                                    @if($statement->deliveries[0]->id == $delivery->id)
+                                        @php
+                                            foreach ($statement->loancollection as $loan){
+                                                $total_loan += $loan->payment_amount;
+                                                $surcharge += $loan->surcharge;
+                                            }
+                                        @endphp
+
+                                    @endif
+                                    {{$total_loan}}
+                                </td>
                             <td rowspan="{{count($delivery->deliveryitems)}}">
-                                {{$delivery->deliverygroup->loancollection->sum('payment_amount')}}
+                                {{$surcharge}}
                             </td>
-                            <td rowspan="{{count($delivery->deliveryitems)}}">
-                                {{$delivery->deliverygroup->loancollection->sum('surcharge')}}
-                            </td>
-                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge + $delivery->deliverygroup->loancollection->sum('payment_amount') + $delivery->deliverygroup->loancollection->sum('surcharge')}}</td>
+                            <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge + $total_loan + $surcharge}}</td>
                         @endif
                     </tr>
                 @endforeach
