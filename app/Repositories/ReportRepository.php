@@ -141,37 +141,37 @@ class ReportRepository implements ReportRepositoryInterface
     {
         $gatepass = Gatepass::where('deliverygroup_id', $deliverygroup_id)
             ->first();
-        $gatepass->load('deliverygroup', 'deliverygroup.deliveries', 'deliverygroup.deliveries.booking', 'deliverygroup.deliveries.booking.client', 'deliverygroup.deliveries.deliveryitems', 'deliverygroup.deliveries.deliveryitems.unloadings', 'deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution', 'deliverygroup.deliveries.deliveryitems.unloadings.loaddistribution.receive');
-
-        $potatoArr = [];
-        foreach ($gatepass->deliverygroup->deliveries as $delivery){
-            foreach ($delivery->deliveryitems as $item){
-                if(isset($potatoArr[$item->potato_type])){
-                    $potatoArr[$item->potato_type] += $item->quantity;
-                } else {
-                    $potatoArr[$item->potato_type] = $item->quantity;
-                }
-            }
-        }
-
-        $lotArr = [];
-        foreach ($gatepass->deliverygroup->deliveries as $delivery){
-            foreach ($delivery->deliveryitems as $item) {
-                    if(isset($lotArr[$item->potato_type])){
-                        if(!in_array($item->srlot_no, $lotArr[$item->potato_type])){
-                            array_push($lotArr[$item->potato_type], $item->srlot_no);
-                        }
-                    } else {
-                        $lotArr[$item->potato_type] = [$item->srlot_no];
-                    }
-
-
-            }
-
-        }
-
-        $gatepass->deliverygroup->potato_list = $potatoArr;
-        $gatepass->deliverygroup->lot_list = $lotArr;
+        $gatepass->load('deliverygroup', 'deliverygroup.deliveries', 'deliverygroup.deliveries.booking', 'deliverygroup.deliveries.booking.client', 'deliverygroup.deliveries.deliveryitems');
+//
+//        $potatoArr = [];
+//        foreach ($gatepass->deliverygroup->deliveries as $delivery){
+//            foreach ($delivery->deliveryitems as $item){
+//                if(isset($potatoArr[$item->potato_type])){
+//                    $potatoArr[$item->potato_type] += $item->quantity;
+//                } else {
+//                    $potatoArr[$item->potato_type] = $item->quantity;
+//                }
+//            }
+//        }
+//
+//        $lotArr = [];
+//        foreach ($gatepass->deliverygroup->deliveries as $delivery){
+//            foreach ($delivery->deliveryitems as $item) {
+//                    if(isset($lotArr[$item->potato_type])){
+//                        if(!in_array($item->srlot_no, $lotArr[$item->potato_type])){
+//                            array_push($lotArr[$item->potato_type], $item->srlot_no);
+//                        }
+//                    } else {
+//                        $lotArr[$item->potato_type] = [$item->srlot_no];
+//                    }
+//
+//
+//            }
+//
+//        }
+//
+//        $gatepass->deliverygroup->potato_list = $potatoArr;
+//        $gatepass->deliverygroup->lot_list = $lotArr;
         return $gatepass;
     }
 

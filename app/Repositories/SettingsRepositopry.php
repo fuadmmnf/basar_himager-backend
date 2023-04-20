@@ -9,7 +9,7 @@ use App\Models\settings;
 class SettingsRepositopry implements Interfaces\SettingsRepositoryInterface
 {
     public function set(array $request){
-        $setting = settings::where('key',$request['key'])->first();
+        $setting = settings::where('key', $request['key'])->first();
         if(!$setting){
             return 'NotAvailable';
         }

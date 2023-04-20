@@ -11,7 +11,7 @@ class CreatePalotRequest extends FormRequest
         return [
             'receive_id' => 'required |numeric',
             'loaddistributions' => 'required | array',
-            'palot_status' => 'required|in:load,first,second,third,fourth"'
+            'palot_status' => 'required|in:load,first,second,third,fourth'
         ];
     }
 
