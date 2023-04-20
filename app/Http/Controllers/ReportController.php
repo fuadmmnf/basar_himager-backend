@@ -30,14 +30,14 @@ class ReportController extends Controller
 //        return $pdf->stream();
 //    }
 
-    public function downloadGatepass($gatepass_no)
-    {
-        $deliveryRepository = new DeliveryRepository();
-        $pdf = PDF::loadView('gatepass_receipt', [
-            'receive' => $deliveryRepository->getGatepassDetails($gatepass_no),
-        ]);
-        return $pdf->stream();
-    }
+//    public function downloadGatepass($gatepass_no)
+//    {
+//        $deliveryRepository = new DeliveryRepository();
+//        $pdf = PDF::loadView('gatepass_receipt', [
+//            'receive' => $deliveryRepository->getGatepassDetails($gatepass_no),
+//        ]);
+//        return $pdf->stream();
+//    }
 
     public function getLoaddistributionReport($receive_group_id)
     {

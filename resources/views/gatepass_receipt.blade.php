@@ -79,20 +79,20 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($gatepassInfo->deliverygroup->potato_list as $potatoe_type=>$quantity)
-            <tr>
-                <td>{{$potatoe_type}}</td>
-                <td>@if(isset($gatepassInfo->deliverygroup->lot_list[$potatoe_type]))
-                        {{ implode(", ", $gatepassInfo->deliverygroup->lot_list[$potatoe_type]) }}
-                    @else
-                        -
-                    @endif </td>
-                <td>{{$quantity}}</td>
-            </tr>
+        @foreach($gatepassInfo->deliverygroup->deliveries as $delivery)
+            @foreach($delivery->deliveryitems as $deliveryitem)
+                <tr>
+                    <td>{{$deliveryitem->potato_type}}</td>
+                    <td>{{$deliveryitem->srlot_no}}</td>
+                    <td>{{$deliveryitem->quantity}}</td>
+                </tr>
+            @endforeach
         @endforeach
         <tr>
             <td colspan="2"><b>Total</b></td>
-            <td>{{array_sum($gatepassInfo->deliverygroup->potato_list)}}</td>
+            <td>{{$gatepassInfo->deliverygroup->deliveries->sum(function ($deliveru){
+    return $deliveru->deliveryitems->sum('quantity');
+})}}</td>
         </tr>
         </tbody>
     </table>

@@ -38,7 +38,9 @@
                 </div>
             </div>
         </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
+        <td class="td-right-align" style="text-align: right; width: 50%;font-size: 1.3rem">
+{{--            <p style="font-size: 1.3rem"> মোট সংরক্ষণ: {{$loaddistributions->sum('quantity')}}</p>--}}
+
         </td>
     </tr>
 </table>
@@ -55,6 +57,9 @@
             </tr>
             </thead>
         <tbody>
+        @php
+            $totalBags = 0;
+        @endphp
                 @foreach($client->bookings as $booking)
                     @foreach($booking->receives as $receive)
                         @foreach($receive->receiveitems as $receiveitem)
@@ -71,6 +76,9 @@
                                                 <b>Floor: </b>{{$load->inventory->parent_info->name}}<br/>
                                                 <b>Compartment: </b>{{$load->inventory->name}}<br/>
                                                 (পরিমাণ: {{$load->quantity}})
+                                                @php
+                                                    $totalBags += $load->quantity;
+                                                @endphp
                                             </td>
                                         </tr>
                                     @endif
@@ -78,6 +86,10 @@
                         @endforeach
                     @endforeach
                 @endforeach
+        <tr>
+            <td colspan="5"></td>
+            <td style="font-size: 1.2rem"><b>মোট সংরক্ষণ: {{$totalBags}}</b></td>
+        </tr>
             </tbody>
 </table>
 @endsection

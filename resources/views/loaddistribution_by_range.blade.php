@@ -95,6 +95,8 @@
 
 <br>
 
+<p style="font-size: 1.3rem"> মোট সংরক্ষণ: {{$loaddistributions->sum('quantity')}}</p>
+
 <table class="bordertable">
     <thead>
     <tr>
