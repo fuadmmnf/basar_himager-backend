@@ -38,18 +38,18 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
             }
         }
 
-
         $newEmployeeSalary = new Employeesalary();
         $newEmployeeSalary->employee_id = $employee->id;
         $newEmployeeSalary->amount = $salary;
         $newEmployeeSalary->loan_payment = $request['loan_payment'];
         $newEmployeeSalary->bonus = $request['bonus'];
         $newEmployeeSalary->remark = $request['remark'];
+        $newEmployeeSalary->fine = $request['fine'];
+        $newEmployeeSalary->fine_remark = $request['fine_remark'];
+        $newEmployeeSalary->current_designation = $request['current_designation'];
         $newEmployeeSalary->salary_month = Carbon::parse($request['salary_month'])->setTimezone('Asia/Dhaka');
         $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka');
         $newEmployeeSalary->save();
-
-
         return $newEmployeeSalary;
     }
 

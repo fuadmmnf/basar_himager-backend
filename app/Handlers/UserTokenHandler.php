@@ -20,6 +20,23 @@ class UserTokenHandler
         return $newUser;
     }
 
+    public function updateUser($userId, $nid, $name, $phone): User
+    {
+        $user = User::findOrFail($userId);
+
+        // Update user details
+        $user->nid = $nid;
+        $user->name = $name;
+        $user->phone = $phone;
+
+        // Save the updated user details
+        $user->save();
+
+
+        return $user;
+    }
+
+
 
     public function regenerateUserToken(User $user){
 //        $user->tokens()->delete();

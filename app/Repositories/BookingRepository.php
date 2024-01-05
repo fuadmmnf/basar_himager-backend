@@ -106,27 +106,21 @@ class BookingRepository implements BookingRepositoryInterface
     private function getBookingNumberForSession($booking)
     {
         $bookingSessionCount = Booking::where('type', $booking->type)
-            ->whereBetween('booking_time',
-                [
-                    Carbon::create($booking->booking_year - 1, 4, 1, 0)->setTimezone('Asia/Dhaka'),
-                    Carbon::create($booking->booking_year, 3, 31, 23, 59)->setTimezone('Asia/Dhaka')
-                ]
-            )->count();
+            ->where('booking_year',$booking->booking_year)->count();
         return (($booking->type) ? 'A' : 'N')
-            . sprintf('%04d', $bookingSessionCount + ($booking->type ? 1 : 2101))
+            . sprintf('%04d' , $bookingSessionCount + ($booking->type ? 1 : 2101))
             . '_' . ($booking->booking_year ) % 100;
-
     }
 
     public function saveBooking(array $request)
     {
         $newBooking = new Booking();
-
         $newBooking->client_id = $request['client_id'];
         $newBooking->booking_time = Carbon::parse($request['booking_time'])->setTimezone('Asia/Dhaka');
-        $newBooking->booking_year = $newBooking->booking_time->month > 3 ? ($newBooking->booking_time->year+1) : $newBooking->booking_time->year;
-        $newBooking->type = $request['type'];
+//        $newBooking->booking_year = $newBooking->booking_time->month > 3 ? ($newBooking->booking_time->year+1) : $newBooking->booking_time->year;
 
+        $newBooking->booking_year = $request['selected_year'];
+        $newBooking->type = $request['type'];
         $newBooking->booking_no = $this->getBookingNumberForSession($newBooking);
         $newBooking->advance_payment = $request['advance_payment'];
         $newBooking->quantity = $request['quantity'];
