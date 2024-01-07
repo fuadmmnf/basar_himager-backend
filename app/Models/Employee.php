@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'status',
+
+    ];
     protected $casts = [
         'present_address' => 'array',
         'permanent_address' => 'array',

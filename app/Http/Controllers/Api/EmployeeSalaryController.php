@@ -37,6 +37,7 @@ class EmployeeSalaryController extends ApiController
         }
         return response()->json($salary, 201);
     }
+
     public function getTotalAdvanceSalary($employee_id){
         $advance = $this->employeeSalaryRepository->getAdvanceSalary($employee_id);
         return response()->json($advance, 200);

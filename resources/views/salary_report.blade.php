@@ -76,6 +76,7 @@
         <th>মূল বেতন</th>
         <th>বিশেষ বেতন</th>
         <th>বোনাস</th>
+        <th>জরিমানা</th>
         <th>অগ্রীম গ্রহন</th>
         <th>অগ্রীম ফেরত</th>
         <th>সর্বমোট পরিশোধ</th>
@@ -88,10 +89,11 @@
         @foreach($salaries as $salary)
             <tr>
                 <td>{{$salary->employee->name}}</td>
-                <td>{{$salary->employee->designation}}</td>
+                <td>{{$salary->current_designation}}</td>
                 <td>{{$salary->employee->basic_salary}}</td>
                 <td>{{$salary->employee->special_salary}}</td>
                 <td>{{$salary->bonus}}<br><small>({{$salary->remark}})</small></td>
+                <td>{{$salary->fine}}<br><small>({{$salary->fine_remark}})</small></td>
                 <td>{{$salary->loan_taken}}</td>
                 <td>{{$salary->loan_returned}}</td>
                 <td>{{$salary->amount + $salary->bonus}}</td>

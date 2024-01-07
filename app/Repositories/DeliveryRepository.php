@@ -10,6 +10,7 @@ use App\Models\Deliveryitem;
 use App\Models\Gatepass;
 use App\Models\Loancollection;
 use App\Models\Loandisbursement;
+use App\Models\Receive;
 use App\Models\Unloading;
 use App\Repositories\Interfaces\DeliveryRepositoryInterface;
 use Carbon\Carbon;
@@ -142,7 +143,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $booking->save();
         $newDelivery->save();
 
-        $receiveitems = $booking->receiveitems;
+
         foreach ($deliveryRequest['deliveryitems'] as $deliveryitem) {
             $newDeliveyItem = new Deliveryitem();
             $newDeliveyItem->delivery_id = $newDelivery->id;
@@ -150,7 +151,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
             $newDeliveyItem->potato_type = $deliveryitem['potato_type'];
             $newDeliveyItem->srlot_no = $deliveryitem['srlot_no'];
             $newDeliveyItem->save();
-
+            $receiveitems =Receive::where('booking_id',$deliveryRequest['booking_id'])->where('lot_no',$deliveryitem['srlot_no'])->first()->receiveitems;
             $quantity = $newDeliveyItem->quantity;
             foreach ($receiveitems as $receiveitem) {
                 if ($receiveitem->quantity_left > 0 &&
@@ -159,7 +160,6 @@ class DeliveryRepository implements DeliveryRepositoryInterface
                     $used = min($quantity, $receiveitem->quantity_left);
                     $receiveitem->quantity_left = $receiveitem->quantity_left - $used;
                     $receiveitem->save();
-
                     $quantity -= $used;
                 }
             }
@@ -196,12 +196,12 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $newLoancollection;
     }
 
-    private function createDeliverygroup($time)
+    private function createDeliverygroup($request)
     {
         $newDeliverygroup = new Deliverygroup();
-        $newDeliverygroup->delivery_time = Carbon::parse($time)->setTimezone('Asia/Dhaka');
-        $newDeliverygroup->delivery_year = Carbon::parse($time)->setTimezone('Asia/Dhaka')->year;
-        $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::whereYear('delivery_time', $newDeliverygroup->delivery_time)->count() + 1) . $newDeliverygroup->delivery_time->year % 100;
+        $newDeliverygroup->delivery_time = Carbon::parse($request['delivery_time'])->setTimezone('Asia/Dhaka');
+        $newDeliverygroup->delivery_year =$request['selected_year'];
+        $newDeliverygroup->delivery_no = sprintf('%04d', Deliverygroup::where('delivery_year',  $newDeliverygroup->delivery_year)->count() + 1) . $newDeliverygroup->delivery_year % 100;
         $newDeliverygroup->save();
         return $newDeliverygroup;
     }
@@ -215,7 +215,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
                 throw new \Exception('duplicate booking no. exists');
             }
 
-            $newDeliverygroup = $this->createDeliverygroup($request['delivery_time']);
+            $newDeliverygroup = $this->createDeliverygroup($request);
 
 
             foreach ($request['deliveries'] as $deliveryRequest) {

@@ -126,8 +126,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
 //        $newReceive->sr_no = date('Y') . '_' . $currentSR;
         $receive_count = Receive::where('receiving_year', $receivegroup->receiving_year)->count();
-
-        $newReceive->sr_no = date('Y') . '_' . ($receive_count+1);
+        $newReceive->sr_no =  $receivegroup->receiving_year . '_' . ($receive_count+1);
         $newReceive->lot_no = ($receive_count+1) . '/' . $totalQuantity;
         $newReceive->booking_currently_left = $booking->quantity - $booking->bags_in - $totalQuantity;
         $newReceive->transport = $reciveRequest['transport'];
@@ -144,14 +143,10 @@ class ReceiveRepository implements ReceiveRepositoryInterface
             $newReceiveItem->potato_type = $potato_type;
             $newReceiveItem->save();
         }
-
-
         $booking->bags_in = $booking->bags_in + $totalQuantity;
         $booking->save();
         return $newReceive;
     }
-
-
 
     public function saveReceivegroup(array $request)
     {
@@ -159,14 +154,14 @@ class ReceiveRepository implements ReceiveRepositoryInterface
         try {
             $bookingnoArr = array_column($request['receives'], 'booking_no');
             if(count($bookingnoArr) != -1 && count($bookingnoArr) != count(array_unique($bookingnoArr))){
-
                 throw new \Exception('duplicate booking no. exists');
             }
 
-
             $newReceivegroup = new Receivegroup();
             $newReceivegroup->receiving_time = Carbon::parse($request['receiving_time'])->setTimezone('Asia/Dhaka');
-            $newReceivegroup->receiving_year = Carbon::parse($request['receiving_time'])->setTimezone('Asia/Dhaka')->year;
+            $newReceivegroup->receiving_year =$request['selected_year'];
+
+//            $newReceivegroup->receiving_year =   Carbon::parse($request['selected_year'])->year;
             $newReceivegroup->receiving_no = sprintf('%04d', Receivegroup::whereYear('receiving_time', $newReceivegroup->receiving_time)->count() + 1) . $newReceivegroup->receiving_time->year % 100;
             $newReceivegroup->save();
 

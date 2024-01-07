@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Request;
 
 class CreateEmployeeRequest extends FormRequest
 {
@@ -14,7 +15,6 @@ class CreateEmployeeRequest extends FormRequest
     public function authorize()
     {
         $user = auth()->guard('api')->user();
-
         return $user != null && $this->has('role') && $user->can('crud:' . $this->role);
     }
 
@@ -25,11 +25,12 @@ class CreateEmployeeRequest extends FormRequest
      */
     public function rules()
     {
+        $userId = Request::input('user_id');
         return [
             'role' => 'required',
             'nid' => 'required',
             'name' => 'required',
-            'phone' => 'required| unique:users',
+            'phone' => 'required|unique:users,phone,' . $userId,
             'photo' => 'sometimes',
             'nid_photo' => 'sometimes',
             'designation' => 'required',

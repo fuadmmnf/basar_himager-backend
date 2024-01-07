@@ -25,6 +25,10 @@ class EmployeeController extends ApiController
         $employee = $this->employeeRepository->createEmployee($request->validated());
         return response()->json($employee, 201);
     }
+    public function update($employee_id,CreateEmployeeRequest $request){
+        $employee = $this->employeeRepository->editEmployee($employee_id ,$request->validated());
+        return response()->json($employee, 201);
+    }
     public function getAllEmployees()
     {
         $employees = $this->employeeRepository->getEmployees();
@@ -37,4 +41,12 @@ class EmployeeController extends ApiController
 
         return response()->json($employees, 200);
     }
+    public function disableEmployee($employee_id)
+    {
+        $employees = $this->employeeRepository->disableEmployee($employee_id);
+
+        return response()->json($employees, 200);
+    }
+
+
 }

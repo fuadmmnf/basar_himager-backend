@@ -28,6 +28,7 @@ class CreateReceiveRequest extends FormRequest
         return [
             'receiving_time' => 'required',
             'receives' => 'required| array',
+            'selected_year' => 'required',
 //              items in receives
 //            'booking_id' => 'required',
 //            'receiveitems' => 'required| array',
