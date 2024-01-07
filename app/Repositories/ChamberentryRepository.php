@@ -14,7 +14,6 @@ use Carbon\Carbon;
 
 class ChamberentryRepository implements ChamberentryRepositoryInterface
 {
-
     public function getChamberEntriesByChamber($chamber_id)
     {
         $chamberentries = Chamberentry::where('chamber_id', $chamber_id)

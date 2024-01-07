@@ -82,10 +82,12 @@
         <th>অগ্রিম বস্তা</th>
         <th>খালি বস্তার দাম</th>
         <th>ডি ও চার্জ</th>
-        {{--        <th>ফ্যান ভাড়া</th>--}}
+{{--        <th>ফ্যান ভাড়া</th>--}}
         <th>টাকা</th>
         <th>লোন</th>
         <th>লোনের সার চার্জ</th>
+        <th>মোট বস্তা</th>
+        <th>মোট ফ্যান চার্জ</th>
         <th>মোট টাকা</th>
 
     </tr>
@@ -184,7 +186,6 @@
                                     $total_loan = 0;
                                     $surcharge = 0;
                                 @endphp
-
                                 <td rowspan="{{count($delivery->deliveryitems)}}">
                                     @if($statement->deliveries[0]->id == $delivery->id)
                                         @php
@@ -200,13 +201,13 @@
                                 <td rowspan="{{count($delivery->deliveryitems)}}">
                                         {{$surcharge}}
                                 </td>
-
+                                    <td>-</td>
+                                    <td>-</td>
                                 <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge  + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag) + $total_loan + $surcharge}}</td>
                                 @php
                                     $totalAmount += ($delivery->total_charge  + ($delivery->quantity_bags_fanned * $delivery->fancost_per_bag) + $total_loan + $surcharge);
                                 @endphp
                             @endif
-
                         </tr>
                     @endforeach
                 @endforeach
@@ -221,7 +222,9 @@
             <td>-</td>
             <td><b>{{$totalAdvanceBags}}</b></td>
             <td colspan="5">-</td>
-            <td><b>{{$totalAmount}}</b></td>
+            <td >{{$fanChargeInfo['total_quantity_bags_fanned']}}</td>
+            <td >{{$fanChargeInfo['total_amount']}}</td>
+            <td><b>{{$totalAmount+$fanChargeInfo['total_amount']}}</b></td>
         </tr>
     @endif
     </tbody>

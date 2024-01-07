@@ -28,6 +28,7 @@ class CreateDeliveryRequest extends FormRequest
         return [
             'delivery_time' => 'required',
             'deliveries' => 'required|array',
+            'selected_year' => 'required',
 //            items in deliveries
 //            'booking_id' => 'required | numeric',
 ////            'potato_type' => 'required',

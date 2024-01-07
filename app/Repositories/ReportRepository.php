@@ -305,6 +305,23 @@ class ReportRepository implements ReportRepositoryInterface
         return $statements;
     }
 
+    public function fetchFanCharge($start_date)
+    {
+        $start_date = Carbon::parse($start_date)->setTimezone('Asia/Dhaka');
+
+        $fanChargeData = Fancharge::whereDate('date', '=', $start_date)->get();
+
+        $totalQuantity = $fanChargeData->sum('quantity_bags_fanned');
+        $totalAmount = $fanChargeData->sum('total_amount');
+
+        return [
+            'total_quantity_bags_fanned' => $totalQuantity,
+            'total_amount' => $totalAmount,
+        ];
+    }
+
+
+
     public function fetchDeliveryTyped($start_date, $end_date) {
         $statements = Deliverygroup::whereDate('delivery_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
             ->whereDate('delivery_time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))

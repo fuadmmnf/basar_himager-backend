@@ -96,7 +96,6 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                 $previousFloor = Inventory::where('id', $previousCompartment->parent_id)->first();
                 $previousChamber = Inventory::where('id', $previousFloor->parent_id)->first();
 
-
                 $totalItemPalotted = 0;
                 foreach ($loaddistribution['distributions'] as $distribution) {
                     $totalItemPalotted += $distribution['quantity'];

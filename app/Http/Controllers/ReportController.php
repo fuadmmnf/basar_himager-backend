@@ -256,14 +256,15 @@ class ReportController extends Controller
     {
         try {
             $statements = $this->reportRepository->fetchDailyStatements($start_date);
+            $fanChargeInfo=$this->reportRepository->fetchFanCharge($start_date);
         } catch (\Exception $e) {
             dd("Please Provide Appropriate Date");
         }
-
-
         $pdf = PDF::loadView('dailystatements', [
             'statements' => $statements,
+            'fanChargeInfo'=> $fanChargeInfo,
             'start_date' => $start_date,
+
 
         ]);
         return $pdf->stream();

@@ -21,6 +21,7 @@ class StoreEmployeeSalaryRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [
@@ -28,8 +29,11 @@ class StoreEmployeeSalaryRequest extends FormRequest
             'amount' => 'required| numeric',
             'loan_payment' => 'required| numeric',
             'bonus' => 'required| numeric',
+            'fine' => 'required| numeric',
             'remark' => 'required',
+            'fine_remark' => 'required',
             'salary_month' => 'required',
+            'current_designation'=>'required',
             'payment_time' => 'required',
             'working_day' => 'required',
         ];

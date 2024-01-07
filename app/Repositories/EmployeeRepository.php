@@ -54,20 +54,72 @@ class EmployeeRepository implements EmployeeRepositoryInterface
 
         return $newEmployee;
     }
+    public function editEmployee($employee_id, array $request)
+    {
+        $employee = Employee::findOrFail($employee_id);
+
+        // Assuming you have a method to handle user updates
+        $userTokenHandler = new UserTokenHandler();
+        $user = $userTokenHandler->updateUser($employee->user_id, $request['nid'], $request['name'], $request['phone']);
+
+        // Update employee details
+        $employee->name = $request['name'];
+        $employee->designation = $request['designation'];
+        $employee->father_name = $request['father_name'];
+        $employee->mother_name = $request['mother_name'];
+        $employee->present_address = $request['present_address'];
+        $employee->permanent_address = $request['permanent_address'];
+        $employee->basic_salary = $request['basic_salary'];
+        $employee->special_salary = $request['special_salary'];
+
+        // Update employee photo if provided
+        if ($request['photo']) {
+            $filename = random_string(5) . time() . '.' . explode(';', explode('/', $request['photo'])[1])[0];
+            $location = public_path('/images/employees/' . $filename);
+            Image::make($request['photo'])->save($location);
+            $employee->photo = $filename;
+        }
+
+        // Update employee NID photo if provided
+        if ($request['nid_photo']) {
+            $filename = random_string(5) . time() . '_nid.' . explode(';', explode('/', $request['nid_photo'])[1])[0];
+            $location = public_path('/images/employees/' . $filename);
+            Image::make($request['nid_photo'])->save($location);
+            $employee->nid_photo = $filename;
+        }
+
+        // Save the updated employee details
+        $employee->save();
+
+        return $employee;
+    }
 
     public function getEmployeesByRole($role)
     {
         // TODO: Implement getEmployeesByRole() method.
-        $users = User::role($role)->with('employee')->paginate(15);
-        //$employees = Employee::where('role', $role)->paginate(15);
-        return $users;
+        $users = User::role($role)
+            ->with(['employee' => function($query) {
+                $query->where('status', 'active');
+            }])
+            ->paginate(15);
+        return  $users;
     }
 
     public function getEmployees()
     {
-        // TODO: Implement getEmployees() method.
-        $employees = Employee::with('user')->paginate(15);
+        $employees = Employee::with('user')
+            ->where('status', 'active') // Add this line to filter by status
+            ->paginate(15);
         return $employees;
+    }
+    public function disableEmployee($employee_id)
+    {
+        $employee = Employee::findOrFail($employee_id);
+
+        // Update the status to 'disabled'
+        $employee =  $employee->update(['status' => 'disabled']);
+
+        return $employee;
     }
 }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Booking;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateBookingRequest extends FormRequest
 {
@@ -34,6 +35,7 @@ class CreateBookingRequest extends FormRequest
             'advance_payment' => 'required| numeric',
             'discount' => 'required| numeric',
             'booking_time' => 'required',
+            'selected_year' => 'required',
         ];
     }
 }
