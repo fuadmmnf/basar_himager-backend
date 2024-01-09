@@ -30,12 +30,11 @@ Route::get('employees/{employee_id}/loans', [\App\Http\Controllers\Api\EmployeeL
 Route::get('employees/salaries/{employee_id}',[\App\Http\Controllers\Api\EmployeeSalaryController::class,'getSalaryByEmployeeId']);
 Route::post('employees', [\App\Http\Controllers\Api\EmployeeController::class, 'store']);
 
-
+Route::post('employees/loans', [\App\Http\Controllers\Api\EmployeeLoanController::class, 'store']);
 Route::post('employees/salaries', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'storeEmployeeSalary']);
 Route::post('employees/{employee_id}', [\App\Http\Controllers\Api\EmployeeController::class, 'update']);
 
 
-Route::post('employees/loans', [\App\Http\Controllers\Api\EmployeeLoanController::class, 'store']);
 Route::put('/employees/{employee_id}/disable',  [\App\Http\Controllers\Api\EmployeeController::class, 'disableEmployee']);
 
 
