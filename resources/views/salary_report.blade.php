@@ -106,12 +106,14 @@
             <td> </td>
             <td> </td>
             <td></td>
+            <td></td>
             <td>{{$salaries->sum('loan_taken')}}</td>
             <td> {{$salaries->sum('loan_returned')}}</td>
             <td> {{$salaries->sum('amount') + $salaries->sum('bonus')}}</td>
             <td></td>
         </tr>
         <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

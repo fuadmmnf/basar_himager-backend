@@ -29,6 +29,7 @@ class CreateLoandisbursementRequest extends FormRequest
             'booking_id' => 'required',
             'amount' => 'required | numeric',
             'payment_date' => 'required',
+            'selected_year'=>'required'
         ];
     }
 }

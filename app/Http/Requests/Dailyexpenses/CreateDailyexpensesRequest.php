@@ -31,6 +31,7 @@ class CreateDailyexpensesRequest extends FormRequest
             'voucher_no' => 'required',
             'date' => 'required',
             'amount' => 'required | numeric',
+            'selected_year'=>'required',
             'remarks' => 'sometimes'
         ];
     }

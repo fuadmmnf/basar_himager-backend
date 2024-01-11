@@ -241,19 +241,22 @@ class ReportRepository implements ReportRepositoryInterface
     public function downloadStorePotatoReceipt($client_id, $date)
     {
         $temp_date = Carbon::parse($date)->setTimezone('Asia/Dhaka');
-        // TODO: Implement downloadStorePotatoReceipt() method.
+
         $client = Client::where('id', $client_id)
             ->with('bookings')
             ->with('bookings.receives')
             ->with('bookings.receives.receivegroup')
             ->with('bookings.receives.receiveitems')
             ->first();
-
         $client->report_date = $temp_date;
 
         foreach ($client->bookings as $booking){
             foreach ($booking->receives as $receive){
                 $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->whereDate('created_at',$temp_date)->get();
+                if(count( $receive->loaddistributions)>0){
+                    $receive->loaddistributions=$receive->loaddistributions->groupBy('palot_status')->last();
+                }
+
             }
         }
 

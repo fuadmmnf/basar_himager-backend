@@ -56,6 +56,7 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
                     $newLoaddistribution->quantity = $distribution['quantity'];
                     $newLoaddistribution->current_quantity = $distribution['quantity'];
                     $newLoaddistribution->save();
+
 //                    $receiveItem->loaded_quantity = $receiveItem->loaded_quantity + $distribution['quantity'];
 
                     $floor = Inventory::where('id', $compartment->parent_id)->first();
