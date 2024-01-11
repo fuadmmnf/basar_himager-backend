@@ -34,7 +34,6 @@ Route::post('employees/loans', [\App\Http\Controllers\Api\EmployeeLoanController
 Route::post('employees/salaries', [\App\Http\Controllers\Api\EmployeeSalaryController::class, 'storeEmployeeSalary']);
 Route::post('employees/{employee_id}', [\App\Http\Controllers\Api\EmployeeController::class, 'update']);
 
-
 Route::put('/employees/{employee_id}/disable',  [\App\Http\Controllers\Api\EmployeeController::class, 'disableEmployee']);
 
 
