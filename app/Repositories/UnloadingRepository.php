@@ -45,16 +45,11 @@ class UnloadingRepository implements UnloadingRepositoryInterface
                 }
 
                 foreach ($unloading['loadings'] as $loading) {
-                    $loaddistribution = Loaddistribution::where('id', $loading['loaddistribution_id'])->with('receiveitem')->first();
-                    $receiveitem = $loaddistribution->receiveitem;
+                    $loaddistribution = Loaddistribution::where('id', $loading['loaddistribution_id'])->first();
 
                     $compartment_id = $loaddistribution->compartment_id;
                     $loaddistribution->current_quantity -= $loading['quantity'];
                     $loaddistribution->save();
-                    $receiveitem->quantity_left -= $loading['quantity'];
-                    $receiveitem->save();
-
-
                     $compartment = Inventory::where('id', $compartment_id)->first();
                     $floor = Inventory::where('id', $compartment->parent_id)->first();
                     $chamber = Inventory::where('id', $floor->parent_id)->first();

@@ -46,7 +46,7 @@ class LoandisbursementRepository implements LoandisbursementRepositoryInterface
         $newLoandisbursement->amount = $request['amount'];
         $newLoandisbursement->amount_left = $newLoandisbursement->amount;
         $newLoandisbursement->payment_date = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');
-        $newLoandisbursement->payment_year = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka')->year;
+        $newLoandisbursement->payment_year = $request['selected_year'];
         $newLoandisbursement->save();
 
         return $newLoandisbursement;
