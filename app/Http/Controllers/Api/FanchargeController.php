@@ -20,8 +20,8 @@ class FanchargeController extends ApiController
         $this->fanchargeRepository = $fanchargeRepository;
     }
 
-    public function fetchFancharges(){
-        $fancharges = $this->fanchargeRepository->getFancharges();
+    public function fetchFancharges(Request $request){
+        $fancharges = $this->fanchargeRepository->getFancharges($request->query('selected_year'));
         return response()->json($fancharges, 200);
     }
 
