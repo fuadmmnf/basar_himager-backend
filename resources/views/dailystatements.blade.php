@@ -114,6 +114,8 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
                     <td>
                         @php
                             $total_loan = 0;
@@ -129,7 +131,6 @@
                     <td>{{ $total_loan + $surcharge}}</td>
                 </tr>
             @else
-
                 @foreach($statement->deliveries as $delivery)
                     @foreach($delivery->deliveryitems as $deliveryitem)
                         <tr>

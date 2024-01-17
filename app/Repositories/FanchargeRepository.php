@@ -13,10 +13,10 @@ use Carbon\Carbon;
 class FanchargeRepository implements FanchargeRepositoryInterface
 {
 
-    public function getFancharges()
+    public function getFancharges($year)
     {
         // TODO: Implement getPotatotypes() method.
-        $fancharges = Fancharge::orderBy('created_at')
+        $fancharges = Fancharge::orderBy('created_at')->where('year',$year)
             ->with('booking')
             ->paginate(20);
         return $fancharges;
@@ -32,6 +32,7 @@ class FanchargeRepository implements FanchargeRepositoryInterface
                 $newFancharge = new Fancharge();
                 $newFancharge->booking_id = $fi['booking_id'];
                 $newFancharge->date =Carbon::parse($request['fancharge_time'])->setTimezone('Asia/Dhaka');
+                $newFancharge->year =$request['selected_year'];
                 $newFancharge->srlot_no = $item['srlot_no'];
                 $newFancharge->quantity_bags_fanned = $item['quantity'];
                 $newFancharge->total_amount = $item['quantity'] * $sttings->value;
