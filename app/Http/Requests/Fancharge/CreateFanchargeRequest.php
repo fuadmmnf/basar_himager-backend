@@ -27,6 +27,7 @@ class CreateFanchargeRequest extends FormRequest
         return [
             'fancharge_time' => 'required',
             'fanneditems' => 'required|array',
+            'selected_year'=>'required|numeric'
         ];
     }
 }

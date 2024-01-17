@@ -158,12 +158,15 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
     }
 
 
-    public function getLoadDistributionsByReceive($receive_group_id)
+    public function getLoadDistributionsByReceive($receive_group_id,$only_latest=false)
     {
 
         $receives = Receive::where('receivegroup_id', $receive_group_id)->with('booking')->with('booking.client')->with('receivegroup')->get();
         foreach ($receives as $receive) {
             $receive->loaddistributions = Loaddistribution::where('receive_id', $receive->id)->get();
+            if($only_latest && count($receive->loaddistributions)>0){
+                $receive->loaddistributions=$receive->loaddistributions->groupBy('palot_status')->last();
+            }
             $inventoryHandler = new InventoryHandler();
             foreach ($receive->loaddistributions as $loaddistribution) {
                 $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);

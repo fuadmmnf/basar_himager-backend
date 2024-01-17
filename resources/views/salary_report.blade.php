@@ -96,7 +96,7 @@
                 <td>{{$salary->fine}}<br><small>({{$salary->fine_remark}})</small></td>
                 <td>{{$salary->loan_taken}}</td>
                 <td>{{$salary->loan_returned}}</td>
-                <td>{{$salary->amount + $salary->bonus}}</td>
+                <td>{{$salary->amount + $salary->bonus-$salary->fine}}</td>
                 <td>{{ date('F d, Y', strtotime($salary->payment_time)) }}</td>
             </tr>
         @endforeach
@@ -109,7 +109,7 @@
             <td></td>
             <td>{{$salaries->sum('loan_taken')}}</td>
             <td> {{$salaries->sum('loan_returned')}}</td>
-            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')}}</td>
+            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')- $salaries->sum('fine')}}</td>
             <td></td>
         </tr>
         <tr>
