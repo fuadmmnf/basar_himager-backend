@@ -121,7 +121,7 @@
             <td></td>
             <td></td>
             <td> <b>মোট<small>(পরিশোধ)</small>:</b></td>
-            <td><b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('loan_payment')}} </b></td>
+            <td><b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('loan_payment')- $salaries->sum('fine')}} </b></td>
             <td></td>
         </tr>
     @endif
