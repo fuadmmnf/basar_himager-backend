@@ -163,7 +163,7 @@ class ReceiveRepository implements ReceiveRepositoryInterface
 
 //            $newReceivegroup->receiving_year =   Carbon::parse($request['selected_year'])->year;
 
-            $newReceivegroup->receiving_no = sprintf('%04d', Receivegroup::whereYear('receiving_year', $newReceivegroup->receiving_year)->count() + 1) . $newReceivegroup->receiving_year % 100;
+            $newReceivegroup->receiving_no = sprintf('%04d', Receivegroup::where('receiving_year', $newReceivegroup->receiving_year)->count() + 1) . $newReceivegroup->receiving_year % 100;
 
             $newReceivegroup->save();
 
