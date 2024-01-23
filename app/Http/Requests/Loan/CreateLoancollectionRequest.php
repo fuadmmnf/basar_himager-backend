@@ -32,6 +32,7 @@ class CreateLoancollectionRequest extends FormRequest
             'payment_amount' => 'required | numeric',
             'pending_loan_amount' => 'required | numeric',
             'payment_date' => 'required',
+            'selected_year'=>'required| numeric'
         ];
     }
 }

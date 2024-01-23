@@ -18,13 +18,13 @@ class BookingObserver
         if ($booking->advance_payment > 0) {
             $transactionHandler = new TransactionHandler();
             $transactionHandler->createTransaction(0, $booking->advance_payment, $booking->booking_time,
-                $booking, 'Advance Booking'
+                $booking, 'Advance Booking',$booking->booking_year
             );
         }
         if ($booking->booking_amount > 0) {
             $transactionHandler = new TransactionHandler();
             $transactionHandler->createTransaction(0, $booking->booking_amount, $booking->booking_time,
-                $booking, 'Booking Money'
+                $booking, 'Booking Money',$booking->booking_year
             );
         }
 

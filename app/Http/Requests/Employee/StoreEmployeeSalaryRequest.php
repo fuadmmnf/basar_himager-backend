@@ -36,6 +36,7 @@ class StoreEmployeeSalaryRequest extends FormRequest
             'current_designation'=>'required',
             'payment_time' => 'required',
             'working_day' => 'required',
+            'selected_year'=>'required'
         ];
     }
 }

@@ -123,7 +123,7 @@
                     <p><b>লোন বিতরণের নং:</b> {{$loandisbursement->loandisbursement_no}}</p>
                     <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($loandisbursement->payment_date)) }}</p>
                     <p><b>লোনের পরিমান:</b> {{$loandisbursement->amount}}</p>
-                    <p><b>পরিশোধ করতে হবে:</b> {{$loandisbursement->amount_left}}</p>
+                    <p><b>মূল পরিশোধনীয়:</b> {{$loandisbursement->amount_left}}</p>
                 </div>
             </div>
         </td>
@@ -131,6 +131,7 @@
 
 </table>
 
+@if(count($loandisbursement->loancollections))
 <div style="text-align: center; color: darkblue">
     <h3>লোন সংগ্রহ </h3>
 </div>
@@ -147,7 +148,7 @@
 
     </thead>
     <tbody>
-    @if(count($loandisbursement->loancollections))
+
         @foreach($loandisbursement->loancollections as $collection)
             <tr>
                 <td>{{$collection->deliverygroup->delivery_no}}</td>
@@ -170,9 +171,9 @@
             <td> <b>TOTAL:</b></td>
             <td><b>{{$loandisbursement->loancollections->sum('surcharge')+ $loandisbursement->loancollections->sum('payment_amount')}} </b></td>
         </tr>
-    @endif
     </tbody>
 </table>
+@endif
 
 <htmlpageheader name="page-header">
     <table>

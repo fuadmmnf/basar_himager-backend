@@ -18,7 +18,7 @@ class FanchargeObserver
         if ($fancharge->total_amount > 0) {
             $transactionHandler = new TransactionHandler();
             $transactionHandler->createTransaction(0, $fancharge->total_amount, $fancharge->date,
-                $fancharge, 'Fan Charge'
+                $fancharge, 'Fan Charge',$fancharge->year
             );
         }
     }

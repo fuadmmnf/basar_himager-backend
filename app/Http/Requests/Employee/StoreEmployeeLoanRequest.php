@@ -28,6 +28,7 @@ class StoreEmployeeLoanRequest extends FormRequest
             'type' => 'required| numeric',
             'amount' => 'required| numeric',
             'payment_time' => 'required',
+            'selected_year'=>'required|numeric'
         ];
     }
 }

@@ -17,7 +17,7 @@ class EmployeesalaryObserver
     {
         $transactionHandler = new TransactionHandler();
         $transactionHandler->createTransaction(1, $employeesalary->amount + $employeesalary->bonus, $employeesalary->payment_time,
-            $employeesalary, 'Employee Monthly Salary'
+            $employeesalary, 'Employee Monthly Salary',$employeesalary->year
         );
     }
 
