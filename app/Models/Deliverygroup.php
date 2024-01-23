@@ -13,7 +13,7 @@ class Deliverygroup extends Model
         return $this->hasMany('App\Models\Delivery');
     }
 
-    public function loancollection(){
+    public function loancollections(){
         return $this->hasMany('App\Models\Loancollection');
     }
 
