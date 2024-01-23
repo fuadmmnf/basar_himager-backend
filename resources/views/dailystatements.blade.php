@@ -101,12 +101,10 @@
         @endphp
 
         @foreach($statements as $statement)
-            @if(count($statement->deliveries) == 0)
+            @if($statement->type ==1)
                 <tr>
-                    <td>{{$delivery->booking->booking_no}}</td>
+                    <td>{{$statement->loancollection->loandisbursement->booking->booking_no}}</td>
                     <td>{{$statement->delivery_no}}</td>
-                    <td>-</td>
-                    <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -128,7 +126,10 @@
                         {{$total_loan}}
                     </td>
                     <td>{{$surcharge}}</td>
+                    <td>-</td>
+                    <td>-</td>
                     <td>{{ $total_loan + $surcharge}}</td>
+
                 </tr>
             @else
                 @foreach($statement->deliveries as $delivery)

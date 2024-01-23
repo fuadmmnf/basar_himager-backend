@@ -17,7 +17,7 @@ class LoancollectionObserver
     {
         $transactionHandler = new TransactionHandler();
         $transactionHandler->createTransaction(0, $loancollection->payment_amount + $loancollection->surcharge, $loancollection->payment_date,
-            $loancollection, 'Booking Loan Collection'
+            $loancollection, 'Booking Loan Collection',$loancollection->year
         );
     }
 

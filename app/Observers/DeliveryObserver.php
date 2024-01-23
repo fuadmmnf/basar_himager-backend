@@ -23,11 +23,10 @@ class DeliveryObserver
             $transactionHandler = new TransactionHandler();
 
             $transactionHandler->createTransaction(0, $quantity * $delivery->cost_per_bag, Carbon::parse($delivery->deliverygroup->delivery_time)->setTimezone('Asia/Dhaka'),
-                $delivery, 'Delivery Charge'
+                $delivery, 'Delivery Charge',$delivery->year
             );
-
             $transactionHandler->createTransaction(0, $quantity * $delivery->do_charge, Carbon::parse($delivery->deliverygroup->delivery_time)->setTimezone('Asia/Dhaka'),
-                $delivery, 'Delivery DO Charge'
+                $delivery, 'Delivery DO Charge',$delivery->year
             );
         }
 
@@ -43,7 +42,7 @@ class DeliveryObserver
     {
         $transactionHandler = new TransactionHandler();
         $transactionHandler->createTransaction(0, $delivery->quantity_bags_fanned * $delivery->fancost_per_bag, Carbon::parse($delivery->deliverygroup->delivery_time)->setTimezone('Asia/Dhaka'),
-            $delivery, 'Delivery Fan Charge'
+            $delivery, 'Delivery Fan Charge',$delivery->year
         );
     }
 

@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class EmployeeLoanHandler
 {
-    public function createEmployeeLoan(Employee $employee, $type, $amount, Carbon $time)
+    public function createEmployeeLoan(Employee $employee, $type, $amount, Carbon $time,$year)
     {
         if($type == 1 && $employee->loan < $amount){
             return null;
@@ -19,6 +19,7 @@ class EmployeeLoanHandler
         $newEmployeeLoan->employee_id = $employee->id;
         $newEmployeeLoan->type = $type;
         $newEmployeeLoan->amount = $amount;
+        $newEmployeeLoan->year = $year;
         $newEmployeeLoan->payment_time = $time;
         $newEmployeeLoan->save();
 

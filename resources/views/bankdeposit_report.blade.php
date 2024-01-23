@@ -104,6 +104,7 @@
 <table class="bordertable">
     <thead>
     <tr>
+        <th>তারিখ</th>
         <th>ব্যাংক</th>
         <th>অ্যাকাউন্ট নম্বর</th>
         <th>এস.আই নম্বর</th>
@@ -117,6 +118,7 @@
         @foreach($deposits as $deposit)
             @if($deposit->type == 0)
                 <tr>
+                    <td>{{$deposit->created_at}}</td>
                     <td>{{$deposit->bank->name}}</td>
                     <td>{{$deposit->bank->account_no}}</td>
                     <td>{{$deposit->si_no}}</td>
@@ -126,6 +128,7 @@
             @endif
         @endforeach
         <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -143,6 +146,7 @@
 <table class="bordertable">
     <thead>
     <tr>
+        <th>তারিখ</th>
         <th>ব্যাংক</th>
         <th>অ্যাকাউন্ট নম্বর</th>
         <th>এস.আই নম্বর</th>
@@ -156,6 +160,7 @@
         @foreach($deposits as $deposit)
             @if($deposit->type == 1)
                 <tr>
+                    <td>{{$deposit->created_at}}</td>
                     <td>{{$deposit->bank->name}}</td>
                     <td>{{$deposit->bank->account_no}}</td>
                     <td>{{$deposit->si_no}}</td>
@@ -165,6 +170,7 @@
             @endif
         @endforeach
         <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
