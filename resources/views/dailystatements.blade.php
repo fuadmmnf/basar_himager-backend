@@ -103,7 +103,7 @@
         @foreach($statements as $statement)
             @if($statement->type ==1)
                 <tr>
-                    <td>{{$statement->loancollection->loandisbursement->booking->booking_no}}</td>
+                    <td>{{$statement->loancollection->first->loandisbursement->booking->booking_no}}</td>
                     <td>{{$statement->delivery_no}}</td>
                     <td>-</td>
                     <td>-</td>
