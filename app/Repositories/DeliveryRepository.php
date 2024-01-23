@@ -43,7 +43,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $deliveryGroups = Deliverygroup::where('delivery_year', $year)
             ->orderByDesc('id')
             ->paginate(20);
-        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems', 'loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems', 'loancollections', 'loancollections.loandisbursement', 'loancollections.loandisbursement.booking', 'loancollections.loandisbursement.booking.client');
         return $deliveryGroups;
     }
 
@@ -301,7 +301,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 //                    ->orWhere('bookings.booking_no', 'LIKE', $query . '%');
 //            })
             ->paginate(15);
-        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems', 'loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
+        $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems', 'loancollections', 'loancollections.loandisbursement', 'loancollections.loandisbursement.booking', 'loancollections.loandisbursement.booking.client');
         return $deliveryGroups;
     }
 

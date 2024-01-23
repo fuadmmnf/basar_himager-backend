@@ -108,7 +108,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function fetchDeliveryReceiptInfo($deliverygroup_id)
     {
         $deliverygroup = Deliverygroup::findOrFail($deliverygroup_id);
-        $deliverygroup->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.booking.client', 'loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
+        $deliverygroup->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.booking.client', 'loancollections', 'loancollections.loandisbursement', 'loancollections.loandisbursement.booking', 'loancollections.loandisbursement.booking.client');
         return $deliverygroup;
     }
 
@@ -304,7 +304,7 @@ class ReportRepository implements ReportRepositoryInterface
             ->whereDate('delivery_time', '<=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
             ->get();
 
-        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'loancollection','loancollection.loandisbursement','loancollection.loandisbursement.booking');
+        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'loancollections','loancollections.loandisbursement','loancollections.loandisbursement.booking');
 
         return $statements;
     }
@@ -331,7 +331,7 @@ class ReportRepository implements ReportRepositoryInterface
             ->whereDate('delivery_time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
             ->get();
 
-        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.deliveryitems.unloadings.loaddistribution', 'deliveries.deliverygroup.loancollection');
+        $statements->load('deliveries', 'deliveries.deliveryitems', 'deliveries.booking', 'deliveries.deliveryitems.unloadings.loaddistribution', 'deliveries.deliverygroup.loancollections');
 
         return $statements;
     }

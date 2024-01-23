@@ -103,7 +103,7 @@
         @foreach($statements as $statement)
             @if($statement->type ==1)
                 <tr>
-                    <td>{{$statement->loancollection->first->loandisbursement->booking->booking_no}}</td>
+                    <td>{{$statement->loancollections->first()->loandisbursement->booking->booking_no}}</td>
                     <td>{{$statement->delivery_no}}</td>
                     <td>-</td>
                     <td>-</td>
@@ -118,7 +118,7 @@
                         @php
                             $total_loan = 0;
                             $surcharge = 0;
-                            foreach ($statement->loancollection as $loan){
+                            foreach ($statement->loancollections as $loan){
                                 $total_loan += $loan->payment_amount;
                                 $surcharge += $loan->surcharge;
                             }
@@ -191,7 +191,7 @@
                                 <td rowspan="{{count($delivery->deliveryitems)}}">
                                     @if($statement->deliveries[0]->id == $delivery->id)
                                         @php
-                                            foreach ($statement->loancollection as $loan){
+                                            foreach ($statement->loancollections as $loan){
                                                 $total_loan += $loan->payment_amount;
                                                 $surcharge += $loan->surcharge;
                                             }
