@@ -93,7 +93,7 @@
                 <td>{{$salary->current_designation}}</td>
                 <td>{{$salary->basic_salary ?? $salary->employee->basic_salary}}</td>
                 <td>{{$salary->special_salary ??$salary->employee->special_salary}}</td>
-                <td>{{$salary->amount}}({{$salary->working_days}} দিন)</td>
+                <td>{{$salary->amount}}<br><small>({{$salary->working_days}} দিন)</small></td>
                 <td>{{$salary->bonus}}<br><small>({{$salary->remark}})</small></td>
                 <td>{{$salary->fine}}<br><small>({{$salary->fine_remark}})</small></td>
                 <td>{{$salary->loan_taken}}</td>

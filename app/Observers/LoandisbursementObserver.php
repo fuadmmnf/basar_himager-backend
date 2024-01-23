@@ -17,7 +17,7 @@ class LoandisbursementObserver
     {
         $transactionHandler = new TransactionHandler();
         $transactionHandler->createTransaction(1, $loandisbursement->amount, $loandisbursement->payment_date,
-            $loandisbursement, 'Loan Disbursement',$loandisbursement->year
+            $loandisbursement, 'Loan Disbursement',$loandisbursement->payment_year
         );
     }
 
