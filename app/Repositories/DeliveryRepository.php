@@ -43,7 +43,6 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $deliveryGroups = Deliverygroup::where('delivery_year', $year)
             ->orderByDesc('id')
             ->paginate(20);
-
         $deliveryGroups->load('gatepasses', 'deliveries', 'deliveries.booking', 'deliveries.booking.client', 'deliveries.deliveryitems', 'loancollection', 'loancollection.loandisbursement', 'loancollection.loandisbursement.booking', 'loancollection.loandisbursement.booking.client');
         return $deliveryGroups;
     }
@@ -103,7 +102,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return true;
     }
 
-    private function createDelivery(Deliverygroup $deliverygroup, array $deliveryRequest)
+    private function createDelivery(Deliverygroup $deliverygroup, array $deliveryRequest,$year)
     {
         $booking = Booking::findOrFail($deliveryRequest['booking_id']);
         if (!$this->validateDeliveryQuantity($booking->receives, $deliveryRequest['deliveryitems'])) {
@@ -115,6 +114,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         }
 
         $newDelivery = new Delivery();
+        $newDelivery->year=$year;
         $newDelivery->deliverygroup_id = $deliverygroup->id;
         $newDelivery->booking_id = $booking->id;
         $newDelivery->cost_per_bag = $deliveryRequest['cost_per_bag'];
@@ -169,7 +169,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $newDelivery;
     }
 
-    public function saveLoancollection(Deliverygroup $deliverygroup, array $request)
+    public function saveLoancollection(Deliverygroup $deliverygroup, array $request,$year)
     {
         $loandisbursement = Loandisbursement::findOrFail($request['loandisbursement_id']);
 
@@ -187,6 +187,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newLoancollection->service_charge_rate = $request['service_charge_rate'];
         $newLoancollection->payment_amount = $request['payment_amount'];
         $newLoancollection->pending_loan_amount = $request['pending_loan_amount'];
+        $newLoancollection->year =$year;
         $newLoancollection->payment_date = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');
         $newLoancollection->save();
 
@@ -217,11 +218,10 @@ class DeliveryRepository implements DeliveryRepositoryInterface
 
             $newDeliverygroup = $this->createDeliverygroup($request);
 
-
             foreach ($request['deliveries'] as $deliveryRequest) {
-                $this->createDelivery($newDeliverygroup, $deliveryRequest);
+                $this->createDelivery($newDeliverygroup, $deliveryRequest,$request['selected_year']);
                 if (count($deliveryRequest['loancollections']) > 0) {
-                    $this->saveLoancollection($newDeliverygroup, $deliveryRequest['loancollections'][0]);
+                    $this->saveLoancollection($newDeliverygroup, $deliveryRequest['loancollections'][0],$request['selected_year']);
                 }
 //                for ($i=0; $i<count($deliveryRequest['loancollections']); $i++) { // only first collection will go under same DO
 //                    if($i == 0){

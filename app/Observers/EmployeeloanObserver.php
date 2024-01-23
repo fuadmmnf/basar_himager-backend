@@ -17,7 +17,7 @@ class EmployeeloanObserver
     {
         $transactionHandler = new TransactionHandler();
         $transactionHandler->createTransaction($employeeloan->type == 0? 1: 0, $employeeloan->amount, $employeeloan->payment_time,
-            $employeeloan, $employeeloan->type == 0? 'Employee Loan Disbursement': 'Employee Loan Collection'
+            $employeeloan, $employeeloan->type == 0? 'Employee Loan Disbursement': 'Employee Loan Collection',$employeeloan->year
         );
     }
 

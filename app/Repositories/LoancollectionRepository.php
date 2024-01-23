@@ -31,8 +31,11 @@ class LoancollectionRepository implements LoancollectionRepositoryInterface
 
         $deliveryGroup = new Deliverygroup();
         $deliveryGroup->delivery_time = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');;
-        $deliveryGroup->delivery_year = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka')->year;
-        $deliveryGroup->delivery_no =  sprintf('%04d', Deliverygroup::whereYear('delivery_time', $deliveryGroup->delivery_time)->count() + 1) . $deliveryGroup->delivery_time->year % 100;
+
+
+        $deliveryGroup->delivery_year =$request['selected_year'];
+        $deliveryGroup->delivery_no = sprintf('%04d', Deliverygroup::where('delivery_year',  $deliveryGroup->delivery_year)->count() + 1) . $deliveryGroup->delivery_year % 100;
+
         $deliveryGroup->type = 1;
         $deliveryGroup->save();
 
@@ -45,8 +48,8 @@ class LoancollectionRepository implements LoancollectionRepositoryInterface
         $newLoancollection->payment_amount = $request['payment_amount'];
         $newLoancollection->pending_loan_amount = $request['pending_loan_amount'];
         $newLoancollection->payment_date = Carbon::parse($request['payment_date'])->setTimezone('Asia/Dhaka');
+        $newLoancollection->year= $request['selected_year'];
         $newLoancollection->save();
-
         $loandisbursement->amount_left = $loandisbursement->amount_left - $newLoancollection->payment_amount;
         $loandisbursement->save();
 

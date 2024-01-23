@@ -32,7 +32,7 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
 
         if($request['loan_payment'] > 0){
             $employeeloanHandler = new EmployeeLoanHandler();
-            $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka'));
+            $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka'),$request['selected_year']);
             if (!$employeeLoan) {
                 return null;
             }
@@ -46,7 +46,11 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
         $newEmployeeSalary->remark = $request['remark'];
         $newEmployeeSalary->fine = $request['fine'];
         $newEmployeeSalary->fine_remark = $request['fine_remark'];
-        $newEmployeeSalary->current_designation = $request['current_designation'];
+        $newEmployeeSalary->working_days = $request['working_day'];
+        $newEmployeeSalary->current_designation =  $employee->designation;
+        $newEmployeeSalary->basic_salary =  $employee->basic_salary;
+        $newEmployeeSalary->special_salary =  $employee->special_salary;
+        $newEmployeeSalary->year= $request['selected_year'];
         $newEmployeeSalary->salary_month = Carbon::parse($request['salary_month'])->setTimezone('Asia/Dhaka');
         $newEmployeeSalary->payment_time = Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka');
         $newEmployeeSalary->save();

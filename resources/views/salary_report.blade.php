@@ -52,14 +52,14 @@
     </style>
 </head>
 <body>
-<br />
+<br/>
 
 <div style="text-align: center">
-    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br />
-    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br /> <br/>
+    <b style="font-size: 2.2rem">Basar Himager Limited</b> <br/>
+    <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br/> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
-        <b style="font-size: 1.6rem;padding: 20px">বেতনের রিপোর্ট</b> <br />
+        <b style="font-size: 1.6rem;padding: 20px">বেতনের রিপোর্ট</b> <br/>
 
     </div>
 
@@ -75,6 +75,7 @@
         <th>উপাধি</th>
         <th>মূল বেতন</th>
         <th>বিশেষ বেতন</th>
+        <th>বেতন</th>
         <th>বোনাস</th>
         <th>জরিমানা</th>
         <th>অগ্রীম গ্রহন</th>
@@ -90,26 +91,28 @@
             <tr>
                 <td>{{$salary->employee->name}}</td>
                 <td>{{$salary->current_designation}}</td>
-                <td>{{$salary->employee->basic_salary}}</td>
-                <td>{{$salary->employee->special_salary}}</td>
+                <td>{{$salary->basic_salary ?? $salary->employee->basic_salary}}</td>
+                <td>{{$salary->special_salary ??$salary->employee->special_salary}}</td>
+                <td>{{$salary->amount}}({{$salary->working_days}} দিন)</td>
                 <td>{{$salary->bonus}}<br><small>({{$salary->remark}})</small></td>
                 <td>{{$salary->fine}}<br><small>({{$salary->fine_remark}})</small></td>
                 <td>{{$salary->loan_taken}}</td>
                 <td>{{$salary->loan_returned}}</td>
-                <td>{{$salary->amount + $salary->bonus-$salary->fine}}</td>
+                <td>{{$salary->amount + $salary->bonus-$salary->fine-$salary->loan_taken+$salary->loan_returned}}</td>
                 <td>{{ date('F d, Y', strtotime($salary->payment_time)) }}</td>
             </tr>
         @endforeach
         <tr>
             <td></td>
-            <td> <b>SUBTOTAL:</b></td>
-            <td> </td>
-            <td> </td>
+            <td><b>SUBTOTAL:</b></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td>{{$salaries->sum('loan_taken')}}</td>
             <td> {{$salaries->sum('loan_returned')}}</td>
-            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')- $salaries->sum('fine')}}</td>
+            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')- $salaries->sum('fine')-$salaries->sum('loan_taken')+$salaries->sum('loan_returned')}}</td>
             <td></td>
         </tr>
         <tr>
@@ -120,8 +123,11 @@
             <td></td>
             <td></td>
             <td></td>
-            <td> <b>মোট<small>(পরিশোধ)</small>:</b></td>
-            <td><b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('loan_payment')- $salaries->sum('fine')}} </b></td>
+            <td></td>
+            <td><b>মোট<small>(পরিশোধ)</small>:</b></td>
+            <td>
+                <b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('fine')-$salaries->sum('loan_taken')+$salaries->sum('loan_returned')}} </b>
+            </td>
             <td></td>
         </tr>
     @endif

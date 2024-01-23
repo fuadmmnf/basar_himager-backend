@@ -27,12 +27,26 @@ class LoandisbursementRepository implements LoandisbursementRepositoryInterface
     }
 
     public function fetchPaginatedClientsWithLoan($year){
-        $loanDisbursements = Loandisbursement::select('loandisbursements.*')->orderByDesc('updated_at')
-            ->where('payment_year', $year)->where('amount_left', '>', 0)
+
+//        $loanDisbursements = Loandisbursement::select('loandisbursements.*')->orderByDesc('updated_at')
+//            ->where('payment_year', $year)->where('amount_left', '>', 0)
+//            ->join('bookings', 'bookings.id', '=', 'loandisbursements.booking_id')
+//            ->join('clients', 'clients.id', '=', 'bookings.client_id')
+//            ->select('clients.*', DB::raw('SUM(amount) as amount' ), DB::raw('SUM(amount_left) as amount_left' )) ->groupBy('clients.id')
+//            ->paginate(20);
+//        return $loanDisbursements;
+
+        $loanDisbursements = Loandisbursement::select('clients.*')
+            ->selectRaw('SUM(loandisbursements.amount) as amount')
+            ->selectRaw('SUM(loandisbursements.amount_left) as amount_left')
+            ->orderByDesc('loandisbursements.updated_at')
+            ->where('loandisbursements.payment_year', $year)
+            ->where('loandisbursements.amount_left', '>', 0)
             ->join('bookings', 'bookings.id', '=', 'loandisbursements.booking_id')
             ->join('clients', 'clients.id', '=', 'bookings.client_id')
-            ->select('clients.*', DB::raw('SUM(amount) as amount' ), DB::raw('SUM(amount_left) as amount_left' )) ->groupBy('clients.id')
+            ->groupBy('clients.id')
             ->paginate(20);
+
         return $loanDisbursements;
     }
 
