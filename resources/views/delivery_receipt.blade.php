@@ -102,7 +102,7 @@
     @endif
 
 
-    @if(count($receiptinfo->loancollection)>0)
+    @if(count($receiptinfo->loancollections)>0)
         <div style="text-align: center; padding-top: 10px; padding-bottom: 5px; font-size: 1.2em">
             <span><b>লোনের তথ্য</b></span>
         </div>
@@ -118,7 +118,7 @@
 
             </thead>
             <tbody>
-            @foreach($receiptinfo->loancollection as $collection)
+            @foreach($receiptinfo->loancollections as $collection)
                 <tr>
                     <td>{{$booking->booking_no}}</td>
                     <td>{{ round((strtotime($collection->payment_date) - strtotime($collection->loandisbursement->payment_date)) / 86400) }}</td>
