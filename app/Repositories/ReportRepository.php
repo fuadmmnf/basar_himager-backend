@@ -52,7 +52,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function getDeposits($month)
     {
         $carbonTIme = Carbon::parse($month)->setTimezone('Asia/Dhaka');
-        $deposits = Bankdeposit::whereYear('created_at', $carbonTIme->year)->whereMonth('created_at', $carbonTIme->month)->with('bank')->get();
+        $deposits = Bankdeposit::whereYear('time', $carbonTIme->year)->whereMonth('time', $carbonTIme->month)->with('bank')->get();
         return $deposits;
     }
 

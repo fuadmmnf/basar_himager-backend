@@ -126,12 +126,12 @@
 
                             @if($loop->index == 0)
                                 <td rowspan="{{count($delivery->deliveryitems)}}">
-                                    {{$delivery->deliverygroup->loancollection->sum('payment_amount')}}
+                                    {{$delivery->deliverygroup->loancollections->sum('payment_amount')}}
                                 </td>
                                 <td rowspan="{{count($delivery->deliveryitems)}}">
-                                    {{$delivery->deliverygroup->loancollection->sum('surcharge')}}
+                                    {{$delivery->deliverygroup->loancollections->sum('surcharge')}}
                                 </td>
-                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge + $delivery->deliverygroup->loancollection->sum('payment_amount') + $delivery->deliverygroup->loancollection->sum('surcharge')}}</td>
+                                <td rowspan="{{count($delivery->deliveryitems)}}">{{$delivery->total_charge + $delivery->deliverygroup->loancollections->sum('payment_amount') + $delivery->deliverygroup->loancollections->sum('surcharge')}}</td>
                             @endif
 
                         </tr>

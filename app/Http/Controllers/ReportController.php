@@ -97,7 +97,7 @@ class ReportController extends Controller
     {
         $receiptinfo = $this->reportRepository->fetchDeliveryReceiptInfo($deliverygroup_id);
         $pdf = PDF::loadView('delivery_receipt', [
-            'booking' => ((count($receiptinfo->deliveries) > 0) ? $receiptinfo->deliveries[0]->booking : $receiptinfo->loancollection[0]->loandisbursement->booking),
+            'booking' => ((count($receiptinfo->deliveries) > 0) ? $receiptinfo->deliveries[0]->booking : $receiptinfo->loancollections[0]->loandisbursement->booking),
             'receiptinfo' => $receiptinfo
         ]);
 //        , [], ['format' => 'A5-L']
