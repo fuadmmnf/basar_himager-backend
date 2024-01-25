@@ -135,7 +135,7 @@
                                 <td rowspan="{{count($delivery->deliveryitems)}}">
                                     @if($statement->deliveries[0]->id == $delivery->id)
                                         @php
-                                            foreach ($statement->loancollection as $loan){
+                                            foreach ($statement->loancollections as $loan){
                                                 $total_loan += $loan->payment_amount;
                                                 $surcharge += $loan->surcharge;
                                             }
