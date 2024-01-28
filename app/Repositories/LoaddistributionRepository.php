@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Inventory;
 use App\Models\Loaddistribution;
 use App\Models\Receive;
+use App\Models\Receivegroup;
 use App\Models\Receiveitem;
 use App\Models\settings;
 use App\Repositories\Interfaces\LoaddistributionRepositoryInterface;
@@ -191,12 +192,19 @@ class LoaddistributionRepository implements LoaddistributionRepositoryInterface
     public function getLoadDistributionDatesByClient($client_id)
     {
         $bookingIds = Booking::where('client_id', $client_id)->pluck('id');
-        $loaddistributionDates = Loaddistribution::whereIn('booking_id', $bookingIds)
-            ->select(DB::raw('DATE(created_at) as date'))
+        $receiveIds= Receive::whereIn('booking_id', $bookingIds)->pluck('receivegroup_id');
+        $receiveGroupIds=Receivegroup::whereIn('id',$receiveIds)
+            ->select(DB::raw('DATE(receiving_time) as date'))
             ->distinct()
             ->orderBy('date', 'desc')
             ->pluck('date');
-        return $loaddistributionDates;
+        return $receiveGroupIds;
+
+//        $loaddistributionDates = Loaddistribution::whereIn('booking_id', $bookingIds)
+//            ->select(DB::raw('DATE(created_at) as date'))
+//            ->distinct()
+//            ->orderBy('date', 'desc')
+//            ->pluck('date');
     }
 
     public function getLoadPositionsByBooking($booking_id)
