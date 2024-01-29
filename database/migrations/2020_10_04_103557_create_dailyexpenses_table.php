@@ -17,7 +17,7 @@ class CreateDailyexpensesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('expensecategory_id');
             $table->integer('type');
-            $table->string('voucher_no')->unique();
+            $table->string('voucher_no');
             $table->dateTime('date');
             $table->double('amount');
             $table->timestamps();
