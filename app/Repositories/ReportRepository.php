@@ -242,18 +242,34 @@ class ReportRepository implements ReportRepositoryInterface
     public function downloadStorePotatoReceipt($client_id, $date)
     {
         $temp_date = Carbon::parse($date)->setTimezone('Asia/Dhaka');
+//        $client = Client::where('id', $client_id)
+//            ->with('bookings')
+//            ->with('bookings.receives')
+//            ->with('bookings.receives.receivegroup')
+//            ->with('bookings.receives.receiveitems')
+//            ->first();
+
 
         $client = Client::where('id', $client_id)
-            ->with('bookings')
-            ->with('bookings.receives')
-            ->with('bookings.receives.receivegroup')
-            ->with('bookings.receives.receiveitems')
+            ->with([
+                'bookings',
+                'bookings.receives' => function ($query) use ($temp_date) {
+                    $query->whereHas('receivegroup', function ($subQuery) use ($temp_date) {
+                        $subQuery->whereDate('receiving_time', '=', $temp_date);
+                    })->with('receiveitems');
+                },
+            ])
             ->first();
+
+
+
         $client->report_date = $temp_date;
 
         foreach ($client->bookings as $booking){
             foreach ($booking->receives as $receive){
-                $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->whereDate('created_at',$temp_date)->get();
+//                $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->whereDate('created_at',$temp_date)->get();
+                $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->get();
+
                 if(count( $receive->loaddistributions)>0){
                     $receive->loaddistributions=$receive->loaddistributions->groupBy('palot_status')->last();
                 }
@@ -269,6 +285,9 @@ class ReportRepository implements ReportRepositoryInterface
                 }
             }
         }
+
+//        dd( $client);
+
         return $client;
     }
 

@@ -41,7 +41,6 @@ class LoandisbursementRepository implements LoandisbursementRepositoryInterface
             ->selectRaw('SUM(loandisbursements.amount_left) as amount_left')
             ->orderByDesc('loandisbursements.updated_at')
             ->where('loandisbursements.payment_year', $year)
-            ->where('loandisbursements.amount_left', '>', 0)
             ->join('bookings', 'bookings.id', '=', 'loandisbursements.booking_id')
             ->join('clients', 'clients.id', '=', 'bookings.client_id')
             ->groupBy('clients.id')
