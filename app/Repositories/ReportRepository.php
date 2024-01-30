@@ -266,10 +266,8 @@ class ReportRepository implements ReportRepositoryInterface
         $client->report_date = $temp_date;
 
         foreach ($client->bookings as $booking){
-            foreach ($booking->receives as $receive){
-//                $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->whereDate('created_at',$temp_date)->get();
+            foreach ($booking->receives as $receive){;
                 $receive->loaddistributions = Loaddistribution::where('receive_id',$receive->id)->get();
-
                 if(count( $receive->loaddistributions)>0){
                     $receive->loaddistributions=$receive->loaddistributions->groupBy('palot_status')->last();
                 }
@@ -357,8 +355,6 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function fetchLoadDistributions($start_date, $end_date)
     {
-
-
         $loads = Loaddistribution::whereDate('created_at', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
             ->whereDate('created_at', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))->get();
         $loads->load('receive','receive.booking');

@@ -53,16 +53,13 @@
 </head>
 <body>
 <br/>
-
 <div style="text-align: center">
     <b style="font-size: 2.2rem">Basar Himager Limited</b> <br/>
     <span style="font-size: 1.2rem">Chanpara, Bhabaniganj, Bagmara, Rajshahi</span> <br/> <br/>
 
     <div style=" border: 3px solid black; width: 45%; border-radius: 8px; margin: auto">
         <b style="font-size: 1.6rem;padding: 20px">বেতনের রিপোর্ট</b> <br/>
-
     </div>
-
 </div>
 <span align="center" style="line-height: 1.2;">
     <p><b>মাস:</b> {{ date('F, Y', strtotime($month)) }}</p>
@@ -102,7 +99,7 @@
                 <td>{{$salary->loan_returned}}</td>
                 <td>{{$salary->loan_payment}}</td>
                 <td>{{$salary->loan_taken-$salary->loan_payment-$salary->loan_returned}}</td>
-                <td>{{$salary->amount + $salary->bonus-$salary->fine-$salary->loan_taken+$salary->loan_returned-$salary->loan_payment}}</td>
+                <td>{{$salary->amount + $salary->bonus-$salary->fine-$salary->loan_payment}}</td>
                 <td>{{ date('F d, Y', strtotime($salary->payment_time)) }}</td>
             </tr>
         @endforeach
@@ -118,7 +115,7 @@
             <td> {{$salaries->sum('loan_returned')}}</td>
             <td> {{$salaries->sum('loan_payment')}}</td>
             <td> {{$salaries->sum('loan_taken')-$salaries->sum('loan_payment')-$salaries->sum('loan_returned')}}</td>
-            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')- $salaries->sum('fine')-$salaries->sum('loan_taken')+$salaries->sum('loan_returned')-$salaries->sum('loan_payment')}}</td>
+            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')- $salaries->sum('fine')-$salaries->sum('loan_payment')}}</td>
             <td></td>
         </tr>
         <tr>
@@ -134,10 +131,11 @@
             <td></td>
             <td><b>মোট<small>(পরিশোধ)</small>:</b></td>
             <td>
-                <b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('fine')-$salaries->sum('loan_taken')+$salaries->sum('loan_returned')-$salaries->sum('loan_payment')}} </b>
+                <b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('fine')-$salaries->sum('loan_payment')}} </b>
             </td>
             <td></td>
         </tr>
+
     @endif
     </tbody>
 </table>
