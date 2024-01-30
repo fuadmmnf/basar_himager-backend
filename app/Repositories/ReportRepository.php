@@ -355,12 +355,18 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function fetchLoadDistributions($start_date, $end_date)
     {
-        $loads = Loaddistribution::whereDate('created_at', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
-            ->whereDate('created_at', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))->get();
+
+        $receivegroupIds = Receivegroup::whereDate('receiving_time', '>=', Carbon::parse($start_date)->setTimezone('Asia/Dhaka'))
+            ->whereDate('receiving_time', '<=', Carbon::parse($end_date)->setTimezone('Asia/Dhaka'))
+            ->pluck('id');
+        $receiveIds = Receive::whereIn('receivegroup_id', $receivegroupIds)->pluck('id');
+        $loads = Loaddistribution::whereIn('receive_id', $receiveIds)->get();
+
         $loads->load('receive','receive.booking');
         $loads=$loads->groupBy('receive_id')->transform(function ($rg){
             return $rg->groupBy('palot_status')->last();
         })->flatten();
+
         $inventoryHandler = new InventoryHandler();
         foreach ($loads as $loaddistribution) {
             $loaddistribution->inventory = $inventoryHandler->fetchFullInventoryWithParentById($loaddistribution->compartment_id);
