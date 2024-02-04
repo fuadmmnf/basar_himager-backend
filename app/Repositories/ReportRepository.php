@@ -34,18 +34,22 @@ class ReportRepository implements ReportRepositoryInterface
         $carbonTIme = Carbon::parse($month)->setTimezone('Asia/Dhaka');
         $salaries = Employeesalary::whereYear('salary_month', $carbonTIme->year)->whereMonth('salary_month', $carbonTIme->month)
             ->with('employee')->get();
-        foreach ($salaries as $salary)
-        {
-            $salary->loan_taken = Employeeloan::where('employee_id', $salary->employee->id)
-            ->whereYear('payment_time', $carbonTIme->year)
-            ->whereMonth('payment_time', $carbonTIme->month)
-            ->where('type', 0)->sum('amount');
 
-            $salary->loan_returned = Employeeloan::where('employee_id', $salary->employee->id)
-                ->whereYear('payment_time', $carbonTIme->year)
-                ->whereMonth('payment_time', $carbonTIme->month)
-                ->where('type', 1)->sum('amount');
-        }
+//        foreach ($salaries as $salary)
+//        {
+//            $salary->loan_taken = Employeeloan::where('employee_id', $salary->employee->id)
+//            ->whereYear('payment_time', $carbonTIme->year)
+//            ->whereMonth('payment_time', $carbonTIme->month)
+//            ->where('type', 0)->sum('amount');
+//
+//
+//            $salary->loan_returned = Employeeloan::where('employee_id', $salary->employee->id)
+//                ->whereYear('payment_time', $carbonTIme->year)
+//                ->whereMonth('payment_time', $carbonTIme->month)
+//                ->where('type', 1)->sum('amount');
+//
+//        }
+
         return $salaries;
     }
 
@@ -205,6 +209,7 @@ class ReportRepository implements ReportRepositoryInterface
         $loanCollectionIds = [];
         $totalSurCharge = 0;
         foreach ($transactions as $transaction){
+
             if($transaction->model_name === "App\Models\Loancollection") {
                 array_push($loanCollectionIds, $transaction->model_id);
             }
@@ -217,6 +222,7 @@ class ReportRepository implements ReportRepositoryInterface
                 ];
             }
         }
+
 
         $loanCollections = Loancollection::whereIn('id', $loanCollectionIds)->get();
         foreach ($loanCollections as $lc) {

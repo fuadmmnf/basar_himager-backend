@@ -192,7 +192,6 @@ class ReportController extends Controller
             dd($e->getMessage());
         }
 
-
         $pdf = PDF::loadView('accounting', [
             'expenses' => array_filter($transactions, function ($transaction) {
                 return $transaction['type'] == 1;

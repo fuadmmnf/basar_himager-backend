@@ -24,7 +24,6 @@ class EmployeeLoanRepository implements EmployeeLoanRepositoryInterface
 
         $employeeloanHandler = new EmployeeLoanHandler();
         $employeeloan = $employeeloanHandler->createEmployeeLoan($employee, $request['type'], $request['amount'], Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka'),$request['selected_year']);
-
         return $employeeloan;
     }
 
