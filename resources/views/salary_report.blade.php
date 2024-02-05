@@ -75,10 +75,10 @@
         <th>বেতন</th>
         <th>বোনাস</th>
         <th>জরিমানা</th>
-        <th>অগ্রীম গ্রহন</th>
-        <th>অগ্রীম ফেরত</th>
-        <th>লোন পেমেন্ট</th>
-        <th>লোন অবশিষ্ট</th>
+{{--        <th>অগ্রীম গ্রহন</th>--}}
+{{--        <th>অগ্রীম ফেরত</th>--}}
+{{--        <th>লোন পেমেন্ট</th>--}}
+{{--        <th>লোন অবশিষ্ট</th>--}}
         <th>সর্বমোট পরিশোধ</th>
         <th>পরিশোধের তারিখ</th>
     </tr>
@@ -95,11 +95,13 @@
                 <td>{{$salary->amount}}<br><small>({{$salary->working_days}} দিন)</small></td>
                 <td>{{$salary->bonus}}<br><small>({{$salary->remark}})</small></td>
                 <td>{{$salary->fine}}<br><small>({{$salary->fine_remark}})</small></td>
-                <td>{{$salary->loan_taken}}</td>
-                <td>{{$salary->loan_returned}}</td>
-                <td>{{$salary->loan_payment}}</td>
-                <td>{{$salary->loan_taken-$salary->loan_payment-$salary->loan_returned}}</td>
-                <td>{{$salary->amount + $salary->bonus-$salary->fine-$salary->loan_payment}}</td>
+{{--                <td>{{$salary->loan_taken}}</td>--}}
+{{--                <td>{{$salary->loan_returned}}</td>--}}
+{{--                <td>{{$salary->loan_payment}}</td>--}}
+{{--                <td>{{$salary->pending_loan}}</td>--}}
+{{--                <td>{{$salary->amount + $salary->bonus-$salary->fine-$salary->loan_payment}}</td>--}}
+
+                <td>{{$salary->amount + $salary->bonus-$salary->fine}}</td>
                 <td>{{ date('F d, Y', strtotime($salary->payment_time)) }}</td>
             </tr>
         @endforeach
@@ -111,11 +113,12 @@
             <td></td>
             <td></td>
             <td></td>
-            <td>{{$salaries->sum('loan_taken')}}</td>
-            <td> {{$salaries->sum('loan_returned')}}</td>
-            <td> {{$salaries->sum('loan_payment')}}</td>
-            <td> {{$salaries->sum('loan_taken')-$salaries->sum('loan_payment')-$salaries->sum('loan_returned')}}</td>
-            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')- $salaries->sum('fine')-$salaries->sum('loan_payment')}}</td>
+{{--            <td>{{$salaries->sum('loan_taken')}}</td>--}}
+{{--            <td> {{$salaries->sum('loan_returned')}}</td>--}}
+{{--            <td> {{$salaries->sum('loan_payment')}}</td>--}}
+{{--            <td> {{$salaries->sum('pending_loan')}}</td>--}}
+{{--            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')- $salaries->sum('fine')-$salaries->sum('loan_payment')}}</td>--}}
+            <td> {{$salaries->sum('amount') + $salaries->sum('bonus')- $salaries->sum('fine')}}</td>
             <td></td>
         </tr>
         <tr>
@@ -125,13 +128,14 @@
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+{{--            <td></td>--}}
+{{--            <td></td>--}}
+{{--            <td></td>--}}
+{{--            <td></td>--}}
             <td><b>মোট<small>(পরিশোধ)</small>:</b></td>
             <td>
-                <b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('fine')-$salaries->sum('loan_payment')}} </b>
+{{--                <b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('fine')-$salaries->sum('loan_payment')}} </b>--}}
+                <b>{{$salaries->sum('amount')+ $salaries->sum('bonus') - $salaries->sum('fine')}} </b>
             </td>
             <td></td>
         </tr>

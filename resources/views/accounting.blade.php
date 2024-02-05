@@ -125,11 +125,13 @@
             @php
                 $totalIncome += $income['amount'];
             @endphp
-            <tr>
-                <td>{{ $counter++ }}</td>
-                <td>{{ $key }}</td>
-                <td>{{ $income['amount'] }}</td>
-            </tr>
+            @if($key!='Delivery Fan Charge')
+                <tr>
+                    <td>{{ $counter++ }}</td>
+                    <td>{{ $key }}</td>
+                    <td>{{ $income['amount'] }}</td>
+                </tr>
+            @endif
         @endforeach
         <tr>
             <td colspan="2"></td>

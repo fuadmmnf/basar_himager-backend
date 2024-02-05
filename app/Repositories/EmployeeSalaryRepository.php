@@ -32,10 +32,11 @@ class EmployeeSalaryRepository implements EmployeeSalaryRepositoryInterface
 
         if($request['loan_payment'] > 0){
             $employeeloanHandler = new EmployeeLoanHandler();
-            $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 1, $request['loan_payment'], Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka'),$request['selected_year']);
+            $employeeLoan = $employeeloanHandler->createEmployeeLoan($employee, 2, $request['loan_payment'], Carbon::parse($request['payment_time'])->setTimezone('Asia/Dhaka'),$request['selected_year']);
             if (!$employeeLoan) {
                 return null;
             }
+
         }
 
         $newEmployeeSalary = new Employeesalary();
