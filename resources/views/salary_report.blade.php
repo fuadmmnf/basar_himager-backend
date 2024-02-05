@@ -95,7 +95,6 @@
                 <td>{{$salary->amount}}<br><small>({{$salary->working_days}} দিন)</small></td>
                 <td>{{$salary->bonus}}<br><small>({{$salary->remark}})</small></td>
                 <td>{{$salary->fine}}<br><small>({{$salary->fine_remark}})</small></td>
-
 {{--                <td>{{$salary->loan_taken}}</td>--}}
 {{--                <td>{{$salary->loan_returned}}</td>--}}
 {{--                <td>{{$salary->loan_payment}}</td>--}}
