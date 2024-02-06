@@ -69,67 +69,140 @@
     <p><b>তারিখ:</b> {{ date('F d, Y') }}</p>
 </span>
 
-<table>
+
+<h3 style="text-align: center;">গ্রাহকের তথ্য</h3>
+<table style="width: 100%;" class="bordertable">
     <tr>
-        <td style="width: 50%; text-align: left">
-            <div  >
-                <h3>গ্রাহকের তথ্য</h3>
-                <div>
-                    <p><b>নাম:</b> {{$loandisbursement->booking->client->name}}</p>
-                    <p><b>ফোন নম্বর:</b> {{$loandisbursement->booking->client->phone}}</p>
-                    <p><b>বাবার নাম:</b> {{$loandisbursement->booking->client->father_name}}</p>
-                </div>
-            </div>
+        <td>
+            <p><b>নাম:</b></p>
         </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
+        <td >
+            <p>{{$loandisbursement->booking->client->name}}</p>
         </td>
     </tr>
-
-</table>
-
-
-<table>
     <tr>
-        <td style="width: 50%; text-align: left">
-            <div   >
-                <h3>বুকিং তথ্য</h3>
-                <br>
-                <div>
-                    <p><b>বুকিং নম্বর:</b> {{$loandisbursement->booking->booking_no}}</p>
-                    <p><b>বুকিং ধরন:</b>
-                        @if($loandisbursement->booking->type == 0)
-                            Normal
-                        @elseif($loandisbursement->booking->type == 1)
-                            Advance
-                        @endif
-                    </p>
-
-                    @if($loandisbursement->booking->advance_payment > 0)
-                        <p><b>অগ্রীম পরিশোধ:</b> {{$loandisbursement->booking->advance_payment}}</p>
-                    @elseif($loandisbursement->booking->booking_amount > 0)
-                        <p><b>বুকিং মানি:</b> {{$loandisbursement->booking->booking_amount}}</p>
-                    @endif
-                    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($loandisbursement->booking->booking_time)) }}</p>
-                    <p><b>মোট পরিমাণ:</b> {{$loandisbursement->booking->quantity}}</p>
-                    <p><b>অবশিষ্ট :</b> {{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
-                </div>
-            </div>
+        <td>
+            <p><b>ফোন নম্বর:</b></p>
         </td>
-        <td class="td-right-align" style="text-align: right; width: 50%">
-            <div>
-                <h3>লোন বিবরণ</h3>
-                <br>
-                <div>
-                    <p><b>লোন বিতরণের নং:</b> {{$loandisbursement->loandisbursement_no}}</p>
-                    <p><b>তারিখ:</b> {{ date('F d, Y', strtotime($loandisbursement->payment_date)) }}</p>
-                    <p><b>লোনের পরিমান:</b> {{$loandisbursement->amount}}</p>
-                    <p><b>মূল পরিশোধনীয়:</b> {{$loandisbursement->amount_left}}</p>
-                </div>
-            </div>
+        <td >
+            <p>{{$loandisbursement->booking->client->phone}}</p>
         </td>
     </tr>
-
+    <tr>
+        <td >
+            <p><b>বাবার নাম:</b></p>
+        </td>
+        <td >
+            <p>{{$loandisbursement->booking->client->father_name}}</p>
+        </td>
+    </tr>
 </table>
+
+<h3 style="text-align: center;margin-top: 10px">বুকিং তথ্য</h3>
+<table style="width: 100%;" class="bordertable">
+    <tr>
+        <td >
+            <p><b>বুকিং নম্বর:</b></p>
+        </td>
+        <td >
+            <p>{{$loandisbursement->booking->booking_no}}</p>
+        </td>
+    </tr>
+    <tr>
+        <td >
+            <p><b>বুকিং ধরন:</b></p>
+        </td>
+        <td >
+            <p>
+                @if($loandisbursement->booking->type == 0)
+                    Normal
+                @elseif($loandisbursement->booking->type == 1)
+                    Advance
+                @endif
+            </p>
+        </td>
+    </tr>
+    @if($loandisbursement->booking->advance_payment > 0)
+        <tr>
+            <td >
+                <p><b>অগ্রীম পরিশোধ:</b></p>
+            </td>
+            <td >
+                <p>{{$loandisbursement->booking->advance_payment}}</p>
+            </td>
+        </tr>
+    @elseif($loandisbursement->booking->booking_amount > 0)
+        <tr>
+            <td >
+                <p><b>বুকিং মানি:</b></p>
+            </td>
+            <td >
+                <p>{{$loandisbursement->booking->booking_amount}}</p>
+            </td>
+        </tr>
+    @endif
+    <tr>
+        <td >
+            <p><b>তারিখ:</b></p>
+        </td>
+        <td >
+            <p>{{ date('F d, Y', strtotime($loandisbursement->booking->booking_time)) }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td >
+            <p><b>মোট পরিমাণ:</b></p>
+        </td>
+        <td >
+            <p>{{$loandisbursement->booking->quantity}}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><b>অবশিষ্ট :</b></p>
+        </td>
+        <td>
+            <p>{{$loandisbursement->booking->quantity - $loandisbursement->booking->bags_in}}</p>
+        </td>
+    </tr>
+</table>
+
+<h3 style="text-align: center; margin-top: 10px">লোন বিবরণ</h3>
+<table style="width: 100%;" class="bordertable">
+    <tr>
+        <td>
+            <p><b>লোন বিতরণের নং:</b></p>
+        </td>
+        <td>
+            <p>{{$loandisbursement->loandisbursement_no}}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><b>তারিখ:</b></p>
+        </td>
+        <td>
+            <p>{{ date('F d, Y', strtotime($loandisbursement->payment_date)) }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><b>লোনের পরিমান:</b></p>
+        </td>
+        <td>
+            <p>{{$loandisbursement->amount}}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><b>মূল পরিশোধনীয়:</b></p>
+        </td>
+        <td>
+            <p>{{$loandisbursement->amount_left}}</p>
+        </td>
+    </tr>
+</table>
+
 
 @if(count($loandisbursement->loancollections))
 <div style="text-align: center; color: darkblue">
@@ -166,6 +239,7 @@
             <td> <b>{{$loandisbursement->loancollections->sum('payment_amount')}}</b></td>
         </tr>
         <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td> <b>TOTAL:</b></td>
