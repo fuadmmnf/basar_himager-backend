@@ -276,6 +276,8 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         return $gatepass;
     }
 
+
+
     public function saveGatepass(array $request)
     {
         $deliverygroup = Deliverygroup::findOrFail($request['deliverygroup_id']);
@@ -285,9 +287,12 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newGatepass->gatepass_no = sprintf('%04d', Gatepass::whereYear('gatepass_time', $newGatepass->gatepass_time)->count()) . $newGatepass->gatepass_time->year % 100;
         $newGatepass->transport = $request['transport'];
         $newGatepass->save();
-
         return $newGatepass;
     }
+
+
+
+
 
     public function getDeliveriesBySearchedQuery($year, $query)
     {
