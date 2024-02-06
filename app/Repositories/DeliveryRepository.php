@@ -282,7 +282,7 @@ class DeliveryRepository implements DeliveryRepositoryInterface
         $newGatepass = new Gatepass();
         $newGatepass->deliverygroup_id = $deliverygroup->id;
         $newGatepass->gatepass_time = Carbon::parse($request['gatepass_time'])->setTimezone('Asia/Dhaka');
-        $newGatepass->gatepass_no = sprintf('%04d', Gatepass::whereYear('gatepass_time', $newGatepass->gatepass_time)->count()) . $newGatepass->gatepass_time->year % 100;
+        $newGatepass->gatepass_no = sprintf('%04d', Gatepass::whereYear('gatepass_time', $newGatepass->gatepass_time)->count() + 1) . $newGatepass->gatepass_time->year % 100;
         $newGatepass->transport = $request['transport'];
         $newGatepass->save();
 
